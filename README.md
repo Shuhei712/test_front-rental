@@ -19,6 +19,51 @@ $ npm run generate
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
+
+## gitの運用方法
+
+### 各ブランチについて
+```bash
+# master：
+大元。一番上の親となるブランチ。
+本番環境のリソースはこのブランチのリソースと一致する。
+
+# develop：
+開発用ブランチ。featureブランチはすべてここにマージされる。
+このブランチは複数切らず、案件開始時に一回のみ切るブランチ。
+
+# feature：
+各機能ごとに作るブランチ。
+よくfutureと間違えて「フューチャー」と読む方がいるが、正しい読み方は「フィーチャー」。
+複数切るブランチになるのため「feature/機能名」のようにする。
+
+#release：
+リリース用ブランチ。段階リリースを行う場合に作成するブランチ。
+複数切るブランチになるため「release/リリース日」のようにする。
+
+#hotfix：
+バグ修正用ブランチ。バグ修正が必要になった場合に一時的に作成するブランチ。
+複数切るブランチになるため「hotfix/バグ名」のようにする。
+```
+
+### 運用手順
+```
+1. masterからdevelopを切る。
+2. masterからreleaseを切る。
+3. developからfeatureを切る。（機能ごとにブランチを切るので、複数のfeatureを切ることがほとんど）
+4. feature内で作業し、変更内容をdevelopにマージ。
+5. 全てのfeatureをdevelopにマージできたら、developをreleaseにマージ。
+6. releaseを本番環境にデプロイして、問題が無ければreleaseをmasterにマージ。
+7. masterをdevelopにマージ。
+8. 本番運用中にバグが発生した場合は、masterからhotfixを切る。
+9. hotfixでバグ修正を行い、hotfixをデプロイ。
+10. 問題なければhotfixをmasterにマージ。
+11. masterをdevelopにマージ。
+12. 次のリリースに向けてmasterからreleaseを切る。
+13. 以降、3番の手順に戻って繰り返し。
+```
+
+
 ## Special Directories
 
 You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
