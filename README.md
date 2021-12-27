@@ -1,7 +1,7 @@
 # takenaka_rental
 
 ## Build Setup
-
+### nodejsのバージョン  `v16.13.0`
 ```bash
 # install dependencies
 $ npm install
