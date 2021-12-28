@@ -1,4 +1,6 @@
 <template>
-  <Nuxt />
+  <v-app>
+    <Nuxt />
+  </v-app>
 </template>
 
