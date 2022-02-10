@@ -6,7 +6,7 @@ export default {
     titleTemplate: '%s - takenaka_rental',
     title: 'takenaka_rental',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'ja',
     },
     meta: [
       { charset: 'utf-8' },
