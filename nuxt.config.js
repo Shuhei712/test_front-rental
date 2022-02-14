@@ -91,6 +91,8 @@ export default {
           line: '#AFAFAF',
           cushion: '#F2F2F2',
           footer: '#4B5654',
+          main: '#3BB2A3',
+          emphasis: '#DD6743',
         },
       },
     },
