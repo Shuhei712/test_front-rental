@@ -1,6 +1,33 @@
+// カラー
+$text-color: #232323;
+$main: #3bb2a3;
+$emphasis: #dd6743;
+
+// リセット・上書き
 body,
 html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
     sans-serif;
-  color: #232323;
+  color: $text-color;
+}
+
+a {
+  color: $text-color !important;
+  text-decoration: none !important;
+}
+
+button {
+  color: #ffffff !important;
+}
+
+.v-icon {
+  color: $main;
+}
+
+.v-list-item--active,
+.v-list-item--active .v-icon,
+.v-item--active .v-icon,
+.v-list-item[aria-expanded='true'],
+.v-list-item[aria-expanded='true'] .v-icon {
+  color: $emphasis !important;
 }
