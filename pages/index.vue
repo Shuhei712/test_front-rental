@@ -6,6 +6,7 @@
 </template>
 
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 
 .test {
   width: 100%;
