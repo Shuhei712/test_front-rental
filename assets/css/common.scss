@@ -9,6 +9,8 @@ html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
     sans-serif;
   color: $text-color;
+  line-height: 1.8em;
+  letter-spacing: 0.05em;
 }
 
 a {
@@ -16,8 +18,52 @@ a {
   text-decoration: none !important;
 }
 
-button {
+.width-50 {
+  width: 50%;
+}
+
+.container {
+  width: 95%;
+  max-width: 1700px;
+  margin: 0 auto;
+}
+
+.text-white {
   color: #ffffff !important;
+}
+
+.letter-space-015em {
+  letter-spacing: 0.15em !important;
+}
+.letter-space-02em {
+  letter-spacing: 0.2em !important;
+}
+.letter-space-03em {
+  letter-spacing: 0.3em !important;
+}
+
+.line-height-25em {
+  line-height: 2.5em;
+}
+
+.bold {
+  font-weight: 600 !important;
+}
+
+.zen-kaku-gothic {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif !important;
+}
+
+.bg-white {
+  background-color: #ffffff !important;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.icon {
+  width: 24px;
 }
 
 .v-icon {
