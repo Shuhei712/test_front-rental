@@ -83,7 +83,7 @@
           prepend-inner-icon="mdi-magnify"
           hide-details="auto"
         ></v-text-field>
-        <v-btn color="main" class="ml-2 text-body-2"
+        <v-btn color="main" class="ml-2 text-body-2 text-white"
           ><v-icon class="mr-1" color="#fff">mdi-text-search</v-icon
           >詳細検索</v-btn
         >
