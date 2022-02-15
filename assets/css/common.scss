@@ -1,20 +1,25 @@
 // カラー
-$text-color: #232323;
-$main: #3bb2a3;
-$emphasis: #dd6743;
+$text: #232323;
+$primary: #3bb2a3;
+$accent: #dd6743;
+$headingText: #4b5654;
+$outline: #4b5654;
+$line: #afafaf;
+$cushion: #f2f2f2;
+$footer: #4b5654;
 
 // リセット・上書き
 body,
 html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
     sans-serif;
-  color: $text-color;
+  color: $text;
   line-height: 1.8em;
   letter-spacing: 0.05em;
 }
 
 a {
-  color: $text-color !important;
+  color: $text !important;
   text-decoration: none !important;
 }
 
@@ -54,6 +59,10 @@ a {
   font-family: 'Zen Kaku Gothic Antique', sans-serif !important;
 }
 
+.montserrat {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
 .bg-white {
   background-color: #ffffff !important;
 }
@@ -67,7 +76,7 @@ a {
 }
 
 .v-icon {
-  color: $main;
+  color: $primary;
 }
 
 .v-list-item--active,
@@ -75,5 +84,5 @@ a {
 .v-item--active .v-icon,
 .v-list-item[aria-expanded='true'],
 .v-list-item[aria-expanded='true'] .v-icon {
-  color: $emphasis !important;
+  color: $accent !important;
 }
