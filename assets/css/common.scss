@@ -12,10 +12,10 @@ $footer: #4b5654;
 body,
 html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
-    sans-serif;
+    sans-serif !important;
   color: $text;
-  line-height: 1.8em;
-  letter-spacing: 0.05em;
+  line-height: 1.8em !important;
+  letter-spacing: 0.05em !important;
 }
 
 a {
@@ -35,6 +35,10 @@ a {
 
 .text-white {
   color: #ffffff !important;
+}
+
+.bg-white {
+  background-color: #ffffff !important;
 }
 
 .letter-space-015em {
@@ -75,11 +79,16 @@ a {
   width: 24px;
 }
 
+.orange_line {
+  background: rgba(0, 0, 0, 0)
+    linear-gradient(transparent 60%, rgba($accent, 0.3) 0%) repeat scroll 0 0;
+}
+
 .v-icon {
   color: $primary;
 }
 
-.v-list-item--active,
+.v-list-item--active .v-list-item__title,
 .v-list-item--active .v-icon,
 .v-item--active .v-icon,
 .v-list-item[aria-expanded='true'],
