@@ -3,7 +3,11 @@
     <top-main></top-main>
     <div class="top__container d-flex py-16">
       <category-lists></category-lists>
-      <div class="content"></div>
+      <div class="content">
+        <top-new></top-new>
+        <top-article></top-article>
+        <top-pickup></top-pickup>
+      </div>
     </div>
   </div>
 </template>
@@ -18,5 +22,10 @@
     height: 100vh;
     margin: 0 auto;
   }
+}
+
+.content {
+  width: 70%;
+  flex-grow: 1;
 }
 </style>
