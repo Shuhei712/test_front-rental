@@ -14,7 +14,7 @@
           :key="childCategory.name"
           :value="false"
         >
-          <template v-slot:activator>
+          <template #activator>
             <v-list-item-title class="text-body-2">{{
               childCategory.name
             }}</v-list-item-title>
