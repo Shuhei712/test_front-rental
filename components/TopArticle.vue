@@ -14,61 +14,13 @@
     </div>
     <v-container class="article__content">
       <v-row class="mx-3 mt-3">
-        <v-col cols="3">
-          <v-card height="220" color="#C97061" elevation="0" link>
-            <v-img
-              height="110"
-              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            />
-            <v-card-title class="text-body-2 mb-2 text-white">
-              <span class="tag rounded-pill px-5 text-body-2 mb-3"
-                >機材特集</span
-              >
-              <p class="text-body-2">センダーボックス特集</p>
-            </v-card-title>
-          </v-card>
-        </v-col>
-        <v-col cols="3">
-          <v-card height="220" color="#579B8F" elevation="0" link>
-            <v-img
-              height="110"
-              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            />
-            <v-card-title class="text-body-2 mb-2 text-white">
-              <span class="tag rounded-pill px-5 text-body-2 mb-3"
-                >活用提案</span
-              >
-              <p class="text-body-2">ライブ配信ソリューション</p>
-            </v-card-title>
-          </v-card>
-        </v-col>
-        <v-col cols="3">
-          <v-card height="220" color="#C97061" elevation="0" link>
-            <v-img
-              height="110"
-              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            />
-            <v-card-title class="text-body-2 mb-2 text-white">
-              <span class="tag rounded-pill px-5 text-body-2 mb-3"
-                >機材特集</span
-              >
-              <p class="text-body-2">体表面温度測定 サーモグラフィカメラ</p>
-            </v-card-title>
-          </v-card>
-        </v-col>
-        <v-col cols="3">
-          <v-card height="220" color="#C19C49" elevation="0" link>
-            <v-img
-              height="110"
-              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            />
-            <v-card-title class="text-body-2 mb-2 text-white">
-              <span class="tag rounded-pill px-5 text-body-2 mb-3"
-                >チラシ/カタログ</span
-              >
-              <p class="text-body-2">取扱機材チラシ/PDFダウンロード</p>
-            </v-card-title>
-          </v-card>
+        <v-col v-for="(list, index) in articleLists" :key="index" cols="3">
+          <article-card
+            :color="list.color"
+            :path="list.path"
+            :category="list.category"
+            :title="list.title"
+          ></article-card>
         </v-col>
       </v-row>
     </v-container>
