@@ -24,17 +24,15 @@
         </v-col>
       </v-row>
     </v-container>
-    <div
-      class="article__search px-10 d-flex justify-lg-space-around align-center"
-    >
+    <div class="article__search px-10 d-flex justify-space-around align-center">
       <span class="mr-3 text-body-2">絞り込み</span>
       <v-divider></v-divider>
-      <v-list flat class="tag-groups">
+      <v-list flat class="search__category">
         <v-list-item-group
+          v-model="tag"
           color="line"
           mandatory
           class="d-flex text-body-2 no-wrap"
-          v-model="tag"
         >
           <v-list-item v-for="list in categoryLists" :key="list.value">
             <v-list-item-content
@@ -125,11 +123,6 @@ export default {
 .article {
   &__content {
     width: 100%;
-
-    .tag {
-      display: inline-block;
-      border: 1px solid #ffffff;
-    }
   }
 
   .tag--all {
@@ -137,59 +130,62 @@ export default {
     color: $outline;
   }
 
-  .v-list-item--active .tag--all {
-    color: #ffffff;
-    background-color: $outline;
-  }
-
   .tag--feature {
-    border: 1px solid #c97061;
-    color: #c97061;
-  }
-
-  .v-list-item--active .tag--feature {
-    color: #ffffff;
-    background-color: #c97061;
+    border: 1px solid $feature;
+    color: $feature;
   }
 
   .tag--suggest {
-    border: 1px solid #579b8f;
-    color: #579b8f;
-  }
-
-  .v-list-item--active .tag--suggest {
-    color: #ffffff;
-    background-color: #579b8f;
+    border: 1px solid $suggest;
+    color: $suggest;
   }
 
   .tag--catalog {
-    border: 1px solid #c19c49;
-    color: #c19c49;
-  }
-
-  .v-list-item--active .tag--catalog {
-    color: #ffffff;
-    background-color: #c19c49;
+    border: 1px solid $catalog;
+    color: $catalog;
   }
 
   .tag--sns {
-    border: 1px solid #638bba;
-    color: #638bba;
-  }
-
-  .v-list-item--active .tag--sns {
-    color: #ffffff;
-    background-color: #638bba;
+    border: 1px solid $sns;
+    color: $sns;
   }
 
   .tag--sales {
-    border: 1px solid #af69aa;
-    color: #af69aa;
+    border: 1px solid $sales;
+    color: $sales;
+  }
+
+  .v-list-item--active .tag--all,
+  .v-list-item--active .tag--feature,
+  .v-list-item--active .tag--suggest,
+  .v-list-item--active .tag--catalog,
+  .v-list-item--active .tag--sns,
+  .v-list-item--active .tag--sales {
+    color: #ffffff !important;
+  }
+
+  .v-list-item--active .tag--all {
+    background-color: $outline;
+  }
+
+  .v-list-item--active .tag--feature {
+    background-color: $feature;
+  }
+
+  .v-list-item--active .tag--suggest {
+    background-color: $suggest;
+  }
+
+  .v-list-item--active .tag--catalog {
+    background-color: $catalog;
+  }
+
+  .v-list-item--active .tag--sns {
+    background-color: $sns;
   }
 
   .v-list-item--active .tag--sales {
-    color: #ffffff;
-    background-color: #af69aa;
+    background-color: $sales;
   }
 }
 </style>
