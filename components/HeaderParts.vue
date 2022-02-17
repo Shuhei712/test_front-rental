@@ -6,7 +6,7 @@
       <img
         class="logo__img"
         src="@/assets/img/top/logo.png"
-        alt="TAKENAKA the SOLID WATER LOGO"
+        alt="TAKENAKA the SOLID WATER"
       />
       <span class="logo__service text-body-2 no-wrap"
         >映像 / 音響機材の<br />レンタルサービス</span
