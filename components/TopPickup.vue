@@ -9,281 +9,25 @@
       <img class="monitan" src="/img/pickup/monitan.png" alt="" />
       <img class="protan" src="/img/pickup/protan.png" alt="" />
       <div class="item">
+      <div v-for="(list, index) in pickupLists" :key="index" class="item">
         <div class="item__heading px-10 d-flex align-center">
-          <img class="icon mr-3" src="/img/category/led-display.png" alt="" />
-          <h3 class="zen-kaku-gothic text-h5 letter-space-02em">
-            LEDディスプレイ
-          </h3>
+          <img class="icon mr-3" :src="list.icon" :alt="list.title" />
+          <h4 class="zen-kaku-gothic text-h5 letter-space-02em">
+            {{ list.title }}
+          </h4>
           <v-divider color="line" inset></v-divider>
-          <v-btn class="ml-5 px-5" outlined
+          <v-btn :to="list.link" class="ml-5 px-5" outlined
             >一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn
           >
         </div>
         <v-container class="item__content">
           <v-row class="ma-3">
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_01.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2"
-                  >ArkVentures</v-card-title
-                >
-                <v-card-subtitle class="text-body-2" color="text"
-                  >屋内・屋外兼用 シースル ーLED BlackModel A…</v-card-subtitle
-                >
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_01.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2"
-                  >ArkVentures</v-card-title
-                >
-                <v-card-subtitle class="text-body-2" color="text"
-                  >屋内・屋外兼用 シースル ーLED BlackModel A…</v-card-subtitle
-                >
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_01.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2"
-                  >ArkVentures</v-card-title
-                >
-                <v-card-subtitle class="text-body-2" color="text"
-                  >屋内・屋外兼用 シースル ーLED BlackModel A…</v-card-subtitle
-                >
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_01.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2"
-                  >ArkVentures</v-card-title
-                >
-                <v-card-subtitle class="text-body-2" color="text"
-                  >屋内・屋外兼用 シースル ーLED BlackModel A…</v-card-subtitle
-                >
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </div>
-      <div class="item">
-        <div class="item__heading px-10 d-flex align-center">
-          <img class="icon mr-3" src="/img/category/projector.png" alt="" />
-          <h3 class="zen-kaku-gothic text-h5 letter-space-02em">
-            プロジェクター
-          </h3>
-          <v-divider color="line" inset></v-divider>
-          <v-btn class="ml-5 px-5" outlined
-            >一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn
-          >
-        </div>
-        <v-container class="item__content">
-          <v-row class="ma-3">
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_02.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Panasonic</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >レーザープロジェクター 50000lm PT-RQ50KJ…
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_02.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Panasonic</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >レーザープロジェクター 50000lm PT-RQ50KJ…
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_02.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Panasonic</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >レーザープロジェクター 50000lm PT-RQ50KJ…
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_02.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Panasonic</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >レーザープロジェクター 50000lm PT-RQ50KJ…
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </div>
-      <div class="item">
-        <div class="item__heading px-10 d-flex align-center">
-          <img class="icon mr-3" src="/img/category/display.png" alt="" />
-          <h3 class="zen-kaku-gothic text-h5 letter-space-02em">
-            ディスプレイ・モニター
-          </h3>
-          <v-divider color="line" inset></v-divider>
-          <v-btn class="ml-5 px-5" outlined
-            >一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn
-          >
-        </div>
-        <v-container class="item__content">
-          <v-row class="ma-3">
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_03.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Panasonic</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >4K対応 86in液晶ディスプレイ TH-86SQ1HJ
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_03.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Panasonic</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >4K対応 86in液晶ディスプレイ TH-86SQ1HJ
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_03.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Panasonic</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >4K対応 86in液晶ディスプレイ TH-86SQ1HJ
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_03.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Panasonic</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >4K対応 86in液晶ディスプレイ TH-86SQ1HJ
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </div>
-      <div class="item">
-        <div class="item__heading px-10 d-flex align-center">
-          <img class="icon mr-3" src="/img/category/network.png" alt="" />
-          <h3 class="zen-kaku-gothic text-h5 letter-space-02em">
-            PC/ICTネットワーク機器
-          </h3>
-          <v-divider color="line" inset></v-divider>
-          <v-btn class="ml-5 px-5" outlined
-            >一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn
-          >
-        </div>
-        <v-container class="item__content">
-          <v-row class="ma-3">
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_04.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Logicool</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >4K小型カメラ BRIO C1000eR
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_04.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Logicool</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >4K小型カメラ BRIO C1000eR
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_04.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Logicool</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >4K小型カメラ BRIO C1000eR
-                </v-card-subtitle>
-              </v-card>
-            </v-col>
-            <v-col cols="3">
-              <v-card elevation="0" link>
-                <v-img
-                  contain
-                  height="125"
-                  src="/img/pickup/pickup_04.png"
-                ></v-img>
-                <v-card-title class="text-body-2 mb-2">Logicool</v-card-title>
-                <v-card-subtitle class="text-body-2" color="text"
-                  >4K小型カメラ BRIO C1000eR
-                </v-card-subtitle>
-              </v-card>
+            <v-col v-for="(item, num) in list.itemLists" :key="num" cols="3">
+              <item-card
+                :path="item.path"
+                :maker="item.maker"
+                :name="item.name"
+              ></item-card>
             </v-col>
           </v-row>
         </v-container>
@@ -299,6 +43,125 @@
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      pickupLists: [
+        {
+          title: 'LEDディスプレイ',
+          icon: '/img/category/led-display.png',
+          link: '/catgory',
+          itemLists: [
+            {
+              path: '/img/pickup/pickup_01.png',
+              maker: 'ArkVentures',
+              name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
+            },
+            {
+              path: '/img/pickup/pickup_01.png',
+              maker: 'ArkVentures',
+              name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
+            },
+            {
+              path: '/img/pickup/pickup_01.png',
+              maker: 'ArkVentures',
+              name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
+            },
+            {
+              path: '/img/pickup/pickup_01.png',
+              maker: 'ArkVentures',
+              name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
+            },
+          ],
+        },
+        {
+          title: 'プロジェクター',
+          icon: '/img/category/projector.png',
+          link: '/catgory',
+          itemLists: [
+            {
+              path: '/img/pickup/pickup_02.png',
+              maker: 'Panasonic',
+              name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
+            },
+            {
+              path: '/img/pickup/pickup_02.png',
+              maker: 'Panasonic',
+              name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
+            },
+            {
+              path: '/img/pickup/pickup_02.png',
+              maker: 'Panasonic',
+              name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
+            },
+            {
+              path: '/img/pickup/pickup_02.png',
+              maker: 'Panasonic',
+              name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
+            },
+          ],
+        },
+        {
+          title: 'ディスプレイ・モニター',
+          icon: '/img/category/display.png',
+          link: '/catgory',
+          itemLists: [
+            {
+              path: '/img/pickup/pickup_03.png',
+              maker: 'Panasonic',
+              name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
+            },
+            {
+              path: '/img/pickup/pickup_03.png',
+              maker: 'Panasonic',
+              name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
+            },
+            {
+              path: '/img/pickup/pickup_03.png',
+              maker: 'Panasonic',
+              name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
+            },
+            {
+              path: '/img/pickup/pickup_03.png',
+              maker: 'Panasonic',
+              name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
+            },
+          ],
+        },
+        {
+          title: 'PC/ICTネットワーク機器',
+          icon: '/img/category/network.png',
+          link: '/catgory',
+          itemLists: [
+            {
+              path: '/img/pickup/pickup_04.png',
+              maker: 'Logicool',
+              name: '4K小型カメラ BRIO C1000eR',
+            },
+            {
+              path: '/img/pickup/pickup_04.png',
+              maker: 'Logicool',
+              name: '4K小型カメラ BRIO C1000eR',
+            },
+            {
+              path: '/img/pickup/pickup_04.png',
+              maker: 'Logicool',
+              name: '4K小型カメラ BRIO C1000eR',
+            },
+            {
+              path: '/img/pickup/pickup_04.png',
+              maker: 'Logicool',
+              name: '4K小型カメラ BRIO C1000eR',
+            },
+          ],
+        },
+      ],
+    }
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
