@@ -36,45 +36,12 @@
           class="d-flex text-body-2 no-wrap"
           v-model="tag"
         >
-          <v-list-item key="0">
+          <v-list-item v-for="list in categoryLists" :key="list.value">
             <v-list-item-content
-              ><v-list-item-titles class="rounded-pill px-3 py-1 tag--all"
-                >ALL</v-list-item-titles
-              ></v-list-item-content
-            >
-          </v-list-item>
-          <v-list-item key="1">
-            <v-list-item-content
-              ><v-list-item-titles class="rounded-pill px-3 py-1 tag--feature"
-                >機材特集</v-list-item-titles
-              ></v-list-item-content
-            >
-          </v-list-item>
-          <v-list-item key="2">
-            <v-list-item-content
-              ><v-list-item-titles class="rounded-pill px-3 py-1 tag--suggest"
-                >活用提案</v-list-item-titles
-              ></v-list-item-content
-            >
-          </v-list-item>
-          <v-list-item key="3">
-            <v-list-item-content
-              ><v-list-item-titles class="rounded-pill px-3 py-1 tag--catalog"
-                >チラシ/カタログ</v-list-item-titles
-              ></v-list-item-content
-            >
-          </v-list-item>
-          <v-list-item key="4">
-            <v-list-item-content
-              ><v-list-item-titles class="rounded-pill px-3 py-1 tag--sns"
-                >SNS/情報</v-list-item-titles
-              ></v-list-item-content
-            >
-          </v-list-item>
-          <v-list-item key="5">
-            <v-list-item-content
-              ><v-list-item-titles class="rounded-pill px-3 py-1 tag--sales"
-                >販売</v-list-item-titles
+              ><v-list-item-title
+                class="rounded-pill px-3 py-1"
+                :class="list.style"
+                >{{ list.name }}</v-list-item-title
               ></v-list-item-content
             >
           </v-list-item>
@@ -88,7 +55,65 @@
 export default {
   data() {
     return {
-      tag: '0',
+      tag: 0,
+      articleLists: [
+        {
+          color: 'feature',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: '機材特集',
+          title: 'センダーボックス特集',
+        },
+        {
+          color: 'suggest',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: '活用提案',
+          title: 'ライブ配信ソリューション',
+        },
+        {
+          color: 'feature',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: '機材特集',
+          title: '体表面温度測定 サーモグラフィカメラ',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+      ],
+      categoryLists: [
+        {
+          name: 'ALL',
+          value: 0,
+          style: 'tag--all',
+        },
+        {
+          name: '機材特集',
+          value: 1,
+          style: 'tag--feature',
+        },
+        {
+          name: '活用提案',
+          value: 2,
+          style: 'tag--suggest',
+        },
+        {
+          name: 'チラシ/カタログ',
+          value: 3,
+          style: 'tag--catalog',
+        },
+        {
+          name: 'sns',
+          value: 4,
+          style: 'tag--sns',
+        },
+        {
+          name: '販売',
+          value: 5,
+          style: 'tag--sales',
+        },
+      ],
     }
   },
 }
