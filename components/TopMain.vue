@@ -1,5 +1,13 @@
 <template>
   <section class="top__main">
+    <a
+      class="top__corporate-link d-flex align-center letter-space-03em text-body-2 hover-opacity mt-6 mt-xl-10 mr-2 mr-xl-10"
+      href="https://www.takenaka-co.co.jp/"
+      target="_blank"
+      rel="noopener noreferrer"
+      ><v-icon class="mb-2" color="#1A264B">mdi-login-variant</v-icon
+      >株式会社タケナカ</a
+    >
     <v-container class="top__inner">
       <v-row class="main__catch width-50">
         <v-col cols="12">
@@ -94,6 +102,15 @@
   background-position: right;
   background-size: cover;
   padding-top: calc(100px + 32px);
+}
+
+.top__corporate-link {
+  position: absolute;
+  top: 0;
+  right: 0rem;
+  writing-mode: vertical-rl;
+  text-orientation: sideways;
+  color: #1a264b !important;
 }
 
 .top__notice {
