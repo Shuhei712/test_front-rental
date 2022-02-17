@@ -1,15 +1,15 @@
 <template>
-  <section class="main">
-    <v-container class="">
-      <v-row class="main-catch width-50">
+  <section class="top__main">
+    <v-container class="top__inner">
+      <v-row class="main__catch width-50">
         <v-col cols="12">
           <h1
-            class="text-h5 letter-space-03em text-white mt-4 mt-xl-15 no-wrap"
+            class="text-h5 letter-space-03em text-white no-wrap mt-4 mt-xl-15"
           >
             映像/音響機材のレンタルサービス
           </h1>
           <h2
-            class="text-h2 bold letter-space-015em zen-kaku-gothic text-white mt-4 mt-xl-15 no-wrap"
+            class="text-h2 bold letter-space-015em zen-kaku-gothic no-wrap text-white mt-4 mt-xl-15"
           >
             必要<span class="text-h3 bold letter-space-015em line-height-25em"
               >な</span
@@ -28,7 +28,7 @@
           </p>
         </v-col>
       </v-row>
-      <v-row class="main-search width-50">
+      <v-row class="main__search width-50">
         <v-col cols="8"
           ><v-text-field
             class="bg-white"
@@ -42,12 +42,12 @@
         ></v-col>
         <v-col cols="4">
           <v-btn class="text-white" color="primary" block
-            ><v-icon class="mr-1" color="#fff">mdi-text-search</v-icon
+            ><v-icon class="mr-1" color="#ffffff">mdi-text-search</v-icon
             >詳細検索</v-btn
           >
         </v-col>
       </v-row>
-      <v-row class="main-menu width-50">
+      <v-row class="main__menu width-50">
         <v-col cols="6">
           <v-btn block
             ><img
@@ -69,13 +69,15 @@
         </v-col>
       </v-row>
     </v-container>
-    <div class="notice d-flex text-body-2">
+    <div class="top__notice d-flex text-body-2">
       <div class="notice__pickup text-center">
-        <span class="text-white mr-3 px-6 py-1">CATEGORY</span>
+        <span class="pickup__category text-white mr-3 px-6 py-1">CATEGORY</span>
         新型コロナウイルス対策のための土曜日休業、 時差出退勤のお知らせ
       </div>
-      <div class="notice__lists text-white pl-10">
-        お知らせ一覧へ<v-icon>mdi-chevron-right</v-icon>
+      <div class="notice__lists pl-10">
+        <a class="text-white" href="/"
+          >お知らせ一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></a
+        >
       </div>
     </div>
   </section>
@@ -84,39 +86,39 @@
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
 
-.main {
+.top__main {
   position: relative;
   width: 100%;
   min-height: 100vh;
   background-image: url('~@/assets/img/top/main.png');
-  background-position: center;
+  background-position: right;
   background-size: cover;
   padding-top: calc(100px + 32px);
 }
 
-.notice {
+.top__notice {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 40px;
-  background-color: #f2f2f2;
+  background-color: $cushion;
 
-  &__pickup {
+  .notice__pickup {
     width: 70%;
     line-height: 40px;
-    color: #cc2929;
+    color: $category;
+    flex-grow: 1;
 
-    span {
-      background-color: #cc2929;
+    .pickup__category {
+      background-color: $category;
       border-radius: 30px;
-      font-family: 'Montserrat';
     }
   }
 
-  &__lists {
+  .notice__lists {
     width: 30%;
-    background-color: #4b5654;
+    background-color: $outline;
     line-height: 40px;
   }
 }
