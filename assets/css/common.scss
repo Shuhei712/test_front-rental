@@ -8,7 +8,6 @@ $line: #afafaf;
 $cushion: #f2f2f2;
 $footer: #4b5654;
 
-// リセット・上書き
 body,
 html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
@@ -23,6 +22,7 @@ a {
   text-decoration: none !important;
 }
 
+// 共通css
 .width-50 {
   width: 50%;
 }
@@ -82,6 +82,27 @@ a {
 .orange_line {
   background: rgba(0, 0, 0, 0)
     linear-gradient(transparent 60%, rgba($accent, 0.3) 0%) repeat scroll 0 0;
+}
+
+// vuetifyのcssを上書き
+.v-application {
+  font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
+    sans-serif !important;
+  color: $text;
+  line-height: 1.8em !important;
+  letter-spacing: 0.05em !important;
+}
+
+.text-h1,
+.text-h2,
+.text-h3,
+.text-h4,
+.text-h5,
+.text-h6,
+.text-body-1,
+.text-body-2 {
+  font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
+    sans-serif !important;
 }
 
 .v-icon {
