@@ -36,7 +36,7 @@
         </div>
       </div>
       <v-row class="footer__info mt-10">
-        <v-col cols="6" v-for="(list, index) in informationLists" :key="index">
+        <v-col v-for="(list, index) in informationLists" :key="index" cols="6">
           <div class="information mx-5">
             <div class="information__head d-flex align-center">
               <h5 class="text-h6 letter-space-02em">{{ list.branchName }}</h5>
