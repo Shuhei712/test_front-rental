@@ -1,13 +1,11 @@
 <template>
   <section class="category">
-    <div
-      class="category__heading text-h6 px-12 text-center montserrat letter-space-015em"
-    >
+    <div class="category__heading text-h6 px-12 text-center letter-space-015em">
       <v-icon class="mr-2" color="accent">mdi-shape-outline</v-icon>CATEGORY
     </div>
-    <div class="category__lists">
+    <div class="category__lists mt-5">
       <v-list v-for="category in categoryLists" :key="category.name">
-        <v-subheader class="montserrat bold"
+        <v-subheader class="bold"
           ><img class="mr-2" :src="category.path" />
           {{ category.name }}</v-subheader
         >
