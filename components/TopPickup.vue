@@ -6,9 +6,8 @@
       >
     </h3>
     <div class="pickup__content mt-5 py-10">
-      <img class="monitan" src="/img/pickup/monitan.png" alt="" />
-      <img class="protan" src="/img/pickup/protan.png" alt="" />
-      <div class="item">
+      <img class="monitan" src="/img/pickup/monitan.png" alt="モニタン" />
+      <img class="protan" src="/img/pickup/protan.png" alt="プロタン" />
       <div v-for="(list, index) in pickupLists" :key="index" class="item">
         <div class="item__heading px-10 d-flex align-center">
           <img class="icon mr-3" :src="list.icon" :alt="list.title" />
@@ -188,11 +187,11 @@ export default {
   }
 
   &__heading:before {
-    transform: rotate(-35deg); //角度調整
+    transform: rotate(-35deg);
   }
 
   &__heading:after {
-    transform: rotate(35deg); //角度調整
+    transform: rotate(35deg);
   }
 
   &__content {
