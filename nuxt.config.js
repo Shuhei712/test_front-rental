@@ -2,6 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  mode: 'spa',
   head: {
     titleTemplate: '%s - takenaka_rental',
     title: 'takenaka_rental',
@@ -102,5 +103,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['gsap'],
+  },
 }

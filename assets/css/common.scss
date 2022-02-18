@@ -94,6 +94,11 @@ a {
   opacity: 0.75 !important;
 }
 
+.rotate-90 {
+  transform-origin: center center;
+  transform: rotate(-90deg);
+}
+
 // vuetifyのcssを上書き
 .v-application {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
@@ -113,6 +118,10 @@ a {
 .text-body-2 {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
     sans-serif !important;
+}
+
+.v-btn {
+  text-transform: none !important;
 }
 
 .v-icon {
