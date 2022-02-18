@@ -41,7 +41,7 @@ export default {
   css: ['@/assets/css/common.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~plugins/vue-scrollto'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -58,6 +58,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    'vue-scrollto/nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
