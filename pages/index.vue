@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <top-main></top-main>
-    <div class="top__container d-flex py-16">
+    <div class="top__inner d-flex py-16">
       <category-lists></category-lists>
       <div class="content">
         <top-new></top-new>
@@ -16,7 +16,10 @@
 @import 'assets/css/common.scss';
 
 .top {
-  &__container {
+  position: relative;
+  height: auto;
+
+  &__inner {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
