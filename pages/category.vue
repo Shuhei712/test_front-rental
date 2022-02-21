@@ -1,3 +1,5 @@
 <template>
-  <div>Category一覧ページ</div>
+  <section class="category">
+    <top-bar title="カテゴリー 一覧"></top-bar>
+  </section>
 </template>
