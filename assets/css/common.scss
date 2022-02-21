@@ -135,3 +135,11 @@ a {
 .v-list-item[aria-expanded='true'] .v-icon {
   color: $accent !important;
 }
+
+.v-breadcrumbs {
+  padding: 0 !important;
+}
+
+.v-breadcrumbs__item {
+  color: #ffffff !important;
+}

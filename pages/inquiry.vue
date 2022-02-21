@@ -1,3 +1,3 @@
 <template>
-  <div>お問い合わせページ</div>
+  <div><top-bar title="お問い合わせ"></top-bar></div>
 </template>

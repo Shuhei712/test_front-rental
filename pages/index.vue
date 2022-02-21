@@ -10,7 +10,7 @@
       >
     </div>
     <div class="top__back top__back--fix">
-      <v-btn class="text-body-2" v-scroll-to="'#top'" color="cushion"
+      <v-btn v-scroll-to="'#top'" class="text-body-2" color="cushion"
         ><v-icon color="accent">mdi-chevron-up</v-icon>トップにもどる</v-btn
       >
     </div>
