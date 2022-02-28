@@ -27,10 +27,9 @@ export default {
   width: 100%;
   height: auto;
   max-height: 280px;
-  background-color: $accent;
+  background-image: url('/img/top_bar/top_bar.png');
+  background-position: center;
+  background-size: cover;
   padding-top: calc(100px + 32px);
-
-  .bar__inner {
-  }
 }
 </style>
