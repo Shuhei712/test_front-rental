@@ -1,3 +1,5 @@
 <template>
-  <section class="products"></section>
+  <section class="products">
+    <top-bar title="スイッチャー 一覧"></top-bar>
+  </section>
 </template>
