@@ -49,7 +49,7 @@
           ></v-text-field
         ></v-col>
         <v-col cols="4">
-          <v-btn class="text-white" color="primary" block
+          <v-btn class="text-white" color="primary" to="/products" block
             ><v-icon class="mr-1" color="#ffffff">mdi-text-search</v-icon
             >詳細検索</v-btn
           >

@@ -60,6 +60,7 @@
             class="product mt-8"
             elevation="0"
             link
+            to="/products/name"
           >
             <div class="product__info d-flex">
               <div class="info__img mr-3">
