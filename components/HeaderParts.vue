@@ -109,7 +109,7 @@ export default {
   top: 0%;
   left: 50%;
   transform: translate(-50%, 0%);
-  z-index: 999;
+  z-index: 100;
   width: 95%;
   max-width: 1700px;
   height: auto;

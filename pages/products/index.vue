@@ -1,5 +1,9 @@
 <template>
   <section class="products">
+    <search-refinement
+      :dialog="dialog"
+      @change-dialog="reseiveDialogFlg"
+    ></search-refinement>
     <top-bar title="スイッチャー 一覧"></top-bar>
     <div class="products__inner d-flex py-16">
       <category-lists></category-lists>
@@ -11,7 +15,7 @@
           <div class="serach__condition flex-grow-1 pa-3">
             <div class="condition__head text-body-2 d-flex align-center">
               現在の検索条件<v-icon>mdi-chevron-right</v-icon
-              ><v-btn text
+              ><v-btn text @click="dialog = true"
                 ><v-icon color="primary">mdi-text-search</v-icon
                 >変更して絞り込む</v-btn
               >
@@ -131,9 +135,12 @@
 </template>
 
 <script>
+import SearchRefinement from '~/components/SearchRefinement.vue'
 export default {
+  components: { SearchRefinement },
   data() {
     return {
+      dialog: false,
       page: 1,
       productLists: [
         {
@@ -372,6 +379,11 @@ export default {
         },
       ],
     }
+  },
+  methods: {
+    reseiveDialogFlg(value) {
+      this.dialog = value
+    },
   },
 }
 </script>
