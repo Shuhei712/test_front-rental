@@ -1,8 +1,11 @@
 <template>
   <footer class="footer pt-15">
     <v-container class="footer__inner">
-      <div class="footer__head d-flex align-center">
-        <a class="head__logo hover-opacity d-flex align-center mr-10" href="/">
+      <div class="footer__head d-flex align-center flex-column flex-md-row">
+        <a
+          class="head__logo hover-opacity d-flex align-center mr-0 mr-md-10"
+          href="/"
+        >
           <img
             class="logo__img mr-5"
             src="/img/footer/logo.png"
@@ -13,7 +16,7 @@
           >
         </a>
         <a
-          class="head__corporate hover-opacity"
+          class="head__corporate hover-opacity mt-10 mt-md-0"
           href="https://www.takenaka-co.co.jp/"
           target="_blank"
           rel="noopener noreferrer"
@@ -22,8 +25,8 @@
             >株式会社タケナカ コーポレートサイトへ</span
           ></a
         >
-        <v-spacer></v-spacer>
-        <div class="head__links">
+        <v-spacer class="hidden-sm-and-down"></v-spacer>
+        <div class="head__links mt-5 mt-md-0">
           <a
             v-for="(list, index) in snsLists"
             :key="index"
@@ -36,8 +39,14 @@
         </div>
       </div>
       <v-row class="footer__info mt-10">
-        <v-col v-for="(list, index) in informationLists" :key="index" cols="6">
-          <div class="information mx-5">
+        <v-col
+          v-for="(list, index) in informationLists"
+          :key="index"
+          cols="12"
+          md="6"
+          class="pa-1 pa-lg-3 mt-10 mt-lg-0"
+        >
+          <div class="information mx-0 mx-md-2 mx-lg-5">
             <div class="information__head d-flex align-center">
               <h5 class="text-h6 letter-space-02em">{{ list.branchName }}</h5>
               <v-divider inset color="#ffffff"></v-divider>
@@ -59,12 +68,16 @@
                   >{{ list.fax }}
                 </div>
               </div>
-              <div class="content__mail mt-5 d-flex align-center text-body-2">
+              <div
+                class="content__mail mt-5 d-flex align-center text-body-2 flex-wrap"
+              >
                 <div class="mail__address mr-5">
                   <v-icon class="mr-2" color="primary">mdi-email-outline</v-icon
                   >{{ list.email }}
                 </div>
-                <v-btn class="mail__copy text-white text-body-2" outlined
+                <v-btn
+                  class="mail__copy text-white text-body-2 mt-5 mt-lg-0"
+                  outlined
                   ><v-icon class="mr-2" color="primary">mdi-content-copy</v-icon
                   >メールアドレスをコピー</v-btn
                 >
@@ -74,17 +87,18 @@
         </v-col>
       </v-row>
       <div
-        class="footer__company-group d-flex justify-center align-center text-body-2"
+        class="footer__company-group d-flex justify-center align-center flex-column-reverse flex-lg-row text-body-2"
       >
-        株式会社タケナカはシンユニティグループの一員です。
+        株式会社タケナカはシンユニティグループの一員です
         <img
-          class="ml-5"
+          class="ml-0 ml-lg-5 mb-5 mb-lg-0"
           src="/img/footer/symunity_logo.png"
           alt="SYMUNITY GROUP"
         />
       </div>
-      <div class="footer__copy-light text-center">
-        <span class="montserrat">2022</span> © Takenaka All Rights Reserved.
+      <div class="footer__copy-light text-center text-body-2">
+        <span class="montserrat text-body-2">2022</span> © Takenaka All Rights
+        Reserved.
       </div>
     </v-container>
   </footer>
@@ -170,6 +184,14 @@ export default {
       .logo__img {
         max-width: 400px;
         object-fit: contain;
+
+        @include mq(md) {
+          max-width: 200px;
+        }
+
+        @include mq(sm) {
+          max-width: 180px;
+        }
       }
       .logo__service {
         display: inline-block;

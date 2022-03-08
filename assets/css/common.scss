@@ -14,6 +14,20 @@ $catalog: #c19c49;
 $sns: #638bba;
 $sales: #af69aa;
 
+// ブレイクポイント
+$breakpoints: (
+  'sm': 'screen and (max-width: 599px)',
+  'md': 'screen and (max-width: 1024px)',
+  'lg': 'screen and (max-width: 1264px)',
+  'xl': 'screen and (max-width: 1904px)',
+) !default;
+
+@mixin mq($breakpoint) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
 body,
 html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
