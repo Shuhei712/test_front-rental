@@ -1,16 +1,25 @@
 <template>
   <section class="new">
-    <div class="new__heading px-10 d-flex align-center">
+    <div class="new__heading px-3 px-md-10 d-flex align-center">
       <v-icon class="mr-5" color="accent">mdi-creation</v-icon>
-      <h3 class="zen-kaku-gothic text-h5 letter-space-02em">新着機材</h3>
-      <v-divider color="line" inset></v-divider>
+      <h3
+        class="zen-kaku-gothic text-h6 text-md-h5 letter-space-02em mr-3 mr-md-10"
+      >
+        新着機材
+      </h3>
+      <v-divider color="line"></v-divider>
       <v-btn class="ml-5 px-5" outlined
         >一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn
       >
     </div>
     <v-container class="new__content">
-      <v-row class="ma-3">
-        <v-col v-for="(list, index) in newItemLists" :key="index" cols="3">
+      <v-row class="ma-0 ma-lg-3">
+        <v-col
+          v-for="(list, index) in newItemLists"
+          :key="index"
+          cols="6"
+          lg="3"
+        >
           <item-card
             :path="list.path"
             :maker="list.maker"

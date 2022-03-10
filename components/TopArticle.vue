@@ -1,51 +1,86 @@
 <template>
   <section class="article">
-    <div class="article__heading px-10 d-flex align-center">
+    <div class="article__heading px-3 px-md-10 d-flex align-center">
       <v-icon class="mr-5" color="accent">mdi-creation</v-icon>
-      <h3 class="zen-kaku-gothic text-h5 letter-space-02em">
-        特設ページ<span class="zen-kaku-gothic text-h6 letter-space-02em"
+      <h3 class="zen-kaku-gothic text-h6 text-md-h5 letter-space-02em">
+        特設ページ<span
+          class="zen-kaku-gothic text-body-2 text-md-h6 letter-space-02em"
           >ほか</span
         >
       </h3>
-      <v-divider color="line" inset></v-divider>
+      <v-divider color="line"></v-divider>
       <v-btn class="ml-5 px-5" outlined
         >一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn
       >
     </div>
-    <v-container class="article__content">
-      <v-row class="mx-3 mt-3">
-        <v-col v-for="(list, index) in articleLists" :key="index" cols="3">
-          <article-card
-            :color="list.color"
-            :path="list.path"
-            :category="list.category"
-            :title="list.title"
-          ></article-card>
-        </v-col>
-      </v-row>
+    <v-container class="article__content px-1 px-lg-8 d-flex flex-column">
+      <div class="article__list order-1 order-lg-0">
+        <v-row no-gutters>
+          <v-col
+            v-for="(list, index) in articleLists"
+            :key="index"
+            class="pa-md-2 mt-3 mt-md-0"
+            cols="12"
+            md="3"
+          >
+            <article-card
+              :color="list.color"
+              :path="list.path"
+              :category="list.category"
+              :title="list.title"
+            ></article-card>
+          </v-col>
+        </v-row>
+      </div>
+      <div class="artcle__search mt-3 pa-md-2">
+        <v-row align="center" no-gutters>
+          <v-col cols="2"
+            ><div class="text-body-2 text-no-wrap">絞り込み</div></v-col
+          >
+          <v-col cols="1"><v-divider></v-divider></v-col>
+          <v-col cols="9">
+            <div class="search__input ml-2">
+              <input type="radio" id="all" name="tag" />
+              <label
+                for="all"
+                class="tag--all rounded-pill px-3 py-1 text-body-2"
+                >ALL</label
+              >
+              <input type="radio" id="feature" name="tag" />
+              <label
+                for="feature"
+                class="tag--feature rounded-pill px-3 py-1 text-body-2"
+                >機材特集</label
+              >
+              <input type="radio" id="suggest" name="tag" />
+              <label
+                for="suggest"
+                class="tag--suggest rounded-pill px-3 py-1 text-body-2"
+                >活用提案</label
+              >
+              <input type="radio" id="catalog" name="tag" />
+              <label
+                for="catalog"
+                class="tag--catalog rounded-pill px-3 py-1 text-body-2"
+                >チラシ/カタログ</label
+              >
+              <input type="radio" id="sns" name="tag" />
+              <label
+                for="sns"
+                class="tag--sns rounded-pill px-3 py-1 text-body-2"
+                >SNS</label
+              >
+              <input type="radio" id="sales" name="tag" />
+              <label
+                for="sales"
+                class="tag--sales rounded-pill px-3 py-1 text-body-2"
+                >販売</label
+              >
+            </div>
+          </v-col>
+        </v-row>
+      </div>
     </v-container>
-    <div class="article__search px-10 d-flex justify-space-around align-center">
-      <span class="mr-3 text-body-2">絞り込み</span>
-      <v-divider></v-divider>
-      <v-list flat class="search__category">
-        <v-list-item-group
-          v-model="tag"
-          color="line"
-          mandatory
-          class="d-flex text-body-2 no-wrap"
-        >
-          <v-list-item v-for="list in categoryLists" :key="list.value">
-            <v-list-item-content
-              ><v-list-item-title
-                class="rounded-pill px-3 py-1"
-                :class="list.style"
-                >{{ list.name }}</v-list-item-title
-              ></v-list-item-content
-            >
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </div>
   </section>
 </template>
 
@@ -53,7 +88,7 @@
 export default {
   data() {
     return {
-      tag: 0,
+      tag: 'ALL',
       articleLists: [
         {
           color: 'feature',
@@ -125,67 +160,107 @@ export default {
     width: 100%;
   }
 
-  .tag--all {
-    border: 1px solid $outline;
-    color: $outline;
+  .search__input {
+    input {
+      display: none;
+    }
+
+    input:checked + label {
+      color: #ffffff;
+    }
+
+    label {
+      display: inline-block;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .tag--all {
+      border: 1px solid $outline;
+      color: $outline;
+    }
+
+    input:checked + .tag--all {
+      background-color: $outline;
+    }
+
+    .tag--feature {
+      border: 1px solid $feature;
+      color: $feature;
+    }
+
+    input:checked + .tag--feature {
+      background-color: $feature;
+    }
+
+    .tag--suggest {
+      border: 1px solid $suggest;
+      color: $suggest;
+    }
+
+    input:checked + .tag--suggest {
+      background-color: $suggest;
+    }
+
+    .tag--catalog {
+      border: 1px solid $catalog;
+      color: $catalog;
+    }
+
+    input:checked + .tag--catalog {
+      background-color: $catalog;
+    }
+
+    .tag--sns {
+      border: 1px solid $sns;
+      color: $sns;
+    }
+
+    input:checked + .tag--sns {
+      background-color: $sns;
+    }
+
+    .tag--sales {
+      border: 1px solid $sales;
+      color: $sales;
+    }
+
+    input:checked + .tag--sales {
+      background-color: $sales;
+    }
   }
 
-  .tag--feature {
-    border: 1px solid $feature;
-    color: $feature;
-  }
+  // .v-list-item--active .tag--all,
+  // .v-list-item--active .tag--feature,
+  // .v-list-item--active .tag--suggest,
+  // .v-list-item--active .tag--catalog,
+  // .v-list-item--active .tag--sns,
+  // .v-list-item--active .tag--sales {
+  //   color: #ffffff !important;
+  // }
 
-  .tag--suggest {
-    border: 1px solid $suggest;
-    color: $suggest;
-  }
+  // .v-list-item--active .tag--all {
+  //   background-color: $outline;
+  // }
 
-  .tag--catalog {
-    border: 1px solid $catalog;
-    color: $catalog;
-  }
+  // .v-list-item--active .tag--feature {
+  //   background-color: $feature;
+  // }
 
-  .tag--sns {
-    border: 1px solid $sns;
-    color: $sns;
-  }
+  // .v-list-item--active .tag--suggest {
+  //   background-color: $suggest;
+  // }
 
-  .tag--sales {
-    border: 1px solid $sales;
-    color: $sales;
-  }
+  // .v-list-item--active .tag--catalog {
+  //   background-color: $catalog;
+  // }
 
-  .v-list-item--active .tag--all,
-  .v-list-item--active .tag--feature,
-  .v-list-item--active .tag--suggest,
-  .v-list-item--active .tag--catalog,
-  .v-list-item--active .tag--sns,
-  .v-list-item--active .tag--sales {
-    color: #ffffff !important;
-  }
+  // .v-list-item--active .tag--sns {
+  //   background-color: $sns;
+  // }
 
-  .v-list-item--active .tag--all {
-    background-color: $outline;
-  }
-
-  .v-list-item--active .tag--feature {
-    background-color: $feature;
-  }
-
-  .v-list-item--active .tag--suggest {
-    background-color: $suggest;
-  }
-
-  .v-list-item--active .tag--catalog {
-    background-color: $catalog;
-  }
-
-  .v-list-item--active .tag--sns {
-    background-color: $sns;
-  }
-
-  .v-list-item--active .tag--sales {
-    background-color: $sales;
-  }
+  // .v-list-item--active .tag--sales {
+  //   background-color: $sales;
+  // }
 }
 </style>

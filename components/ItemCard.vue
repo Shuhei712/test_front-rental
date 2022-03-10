@@ -1,6 +1,8 @@
 <template>
-  <v-card elevation="0" link to="/products/name">
-    <v-img contain height="125" :src="path"></v-img>
+  <v-card class="item-card" elevation="0" link to="/products/name">
+    <div class="text-center">
+      <img class="pa-3" :src="path" />
+    </div>
     <v-card-title class="text-body-2 mb-2">{{ maker }}</v-card-title>
     <v-card-subtitle class="text-body-2" color="text">{{
       name
@@ -26,3 +28,13 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.item-card {
+  img {
+    max-width: 100%;
+    display: inline-block;
+    object-fit: cover;
+  }
+}
+</style>

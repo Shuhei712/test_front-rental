@@ -326,5 +326,9 @@ export default {
   &__heading {
     background-color: $cushion;
   }
+
+  @include mq(lg) {
+    display: none;
+  }
 }
 </style>

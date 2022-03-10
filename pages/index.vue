@@ -14,7 +14,8 @@
         ><v-icon color="accent">mdi-chevron-up</v-icon>トップにもどる</v-btn
       >
     </div>
-    <top-main></top-main>
+    <top-main class="hidden-md-and-down"></top-main>
+    <top-main-rp class="hidden-lg-and-up"></top-main-rp>
     <div class="top__inner d-flex py-16">
       <category-lists></category-lists>
       <div class="content">
@@ -103,6 +104,10 @@ export default {
   transform-origin: right top;
   transform: rotate(90deg) translate(0, 0);
 
+  @include mq(lg) {
+    display: none;
+  }
+
   .share__twitter {
     box-shadow: 5px -5px 0px -2px #ffffff;
     border-radius: 10px;
@@ -146,5 +151,9 @@ export default {
 .content {
   width: 70%;
   flex-grow: 1;
+
+  @include mq(lg) {
+    width: 100%;
+  }
 }
 </style>

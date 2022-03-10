@@ -16,8 +16,8 @@ $sales: #af69aa;
 
 // ブレイクポイント
 $breakpoints: (
-  'sm': 'screen and (max-width: 599px)',
-  'md': 'screen and (max-width: 1024px)',
+  'sm': 'screen and (max-width: 600px)',
+  'md': 'screen and (max-width: 960px)',
   'lg': 'screen and (max-width: 1264px)',
   'xl': 'screen and (max-width: 1904px)',
 ) !default;
@@ -30,8 +30,7 @@ $breakpoints: (
 
 body,
 html {
-  font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
-    sans-serif !important;
+  font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique', sans-serif !important;
   color: $text !important;
   line-height: 1.8em !important;
   letter-spacing: 0.05em !important;
@@ -91,6 +90,10 @@ a {
   background-color: #ffffff !important;
 }
 
+.bg-accent {
+  background-color: $accent !important;
+}
+
 .no-wrap {
   white-space: nowrap !important;
 }
@@ -100,8 +103,7 @@ a {
 }
 
 .orange_line {
-  background: rgba(0, 0, 0, 0)
-    linear-gradient(transparent 60%, rgba($accent, 0.3) 0%) repeat scroll 0 0 !important;
+  background: rgba(0, 0, 0, 0) linear-gradient(transparent 60%, rgba($accent, 0.3) 0%) repeat scroll 0 0 !important;
 }
 
 .hover-opacity:hover {
@@ -115,8 +117,7 @@ a {
 
 // vuetifyのcssを上書き
 .v-application {
-  font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
-    sans-serif !important;
+  font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique', sans-serif !important;
   color: $text !important;
   line-height: 1.8em !important;
   letter-spacing: 0.05em !important;
@@ -130,8 +131,7 @@ a {
 .text-h6,
 .text-body-1,
 .text-body-2 {
-  font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique',
-    sans-serif !important;
+  font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique', sans-serif !important;
 }
 
 .v-btn {
