@@ -1,7 +1,8 @@
 <template>
-  <section class="pickup mx-5 mb-5">
+  <section class="pickup mx-0 mx-sm-5 mb-5">
     <h3 class="pickup__heading text-center">
-      <span class="orange_line zen-kaku-gothic text-h6 letter-space-015em"
+      <span
+        class="orange_line zen-kaku-gothic text-lg-h6 text-subtitle-1 letter-space-015em"
         >おすすめレンタル機材ピックアップ</span
       >
     </h3>
@@ -9,19 +10,29 @@
       <img class="monitan" src="/img/pickup/monitan.png" alt="モニタン" />
       <img class="protan" src="/img/pickup/protan.png" alt="プロタン" />
       <div v-for="(list, index) in pickupLists" :key="index" class="item">
-        <div class="item__heading px-10 d-flex align-center">
-          <img class="icon mr-3" :src="list.icon" :alt="list.title" />
-          <h4 class="zen-kaku-gothic text-h5 letter-space-02em">
-            {{ list.title }}
-          </h4>
-          <v-divider color="line" inset></v-divider>
-          <v-btn :to="list.link" class="ml-5 px-5" outlined
+        <div
+          class="item__heading px-10 d-flex align-center flex-column flex-lg-row mt-8 mt-lg-0"
+        >
+          <div class="d-flex align-center">
+            <img class="icon mr-3" :src="list.icon" :alt="list.title" />
+            <h4 class="zen-kaku-gothic text-h6 text-lg-h5 letter-space-02em">
+              {{ list.title }}
+            </h4>
+          </div>
+          <v-divider class="hidden-md-and-down" color="line" inset></v-divider>
+          <v-btn :to="list.link" class="ml-5 px-5 mt-8 mt-lg-0" outlined
             >一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn
           >
         </div>
-        <v-container class="item__content">
+        <v-container class="item__content pa-0 pa-lg-3">
           <v-row class="ma-3">
-            <v-col v-for="(item, num) in list.itemLists" :key="num" cols="3">
+            <v-col
+              v-for="(item, num) in list.itemLists"
+              :key="num"
+              class="pa-1 pa-lg-0"
+              cols="6"
+              lg="3"
+            >
               <item-card
                 :path="item.path"
                 :maker="item.maker"
@@ -169,8 +180,17 @@ export default {
   margin-top: 100px;
   position: relative;
 
+  @include mq(sm) {
+    margin-top: 100px;
+    background-color: $cushion;
+  }
+
   &__heading {
     position: relative;
+
+    @include mq(sm) {
+      margin-bottom: 150px;
+    }
   }
 
   &__heading::before,
@@ -199,12 +219,21 @@ export default {
     border: 1px solid $accent;
     border-radius: 10px;
 
+    @include mq(sm) {
+      border: none;
+    }
+
     .monitan {
       height: 135px;
       object-fit: contain;
       position: absolute;
       top: calc(-135px / 1.25);
       left: 0;
+
+      @include mq(sm) {
+        height: 100px;
+        left: 100px;
+      }
     }
     .protan {
       height: 90px;
@@ -212,6 +241,11 @@ export default {
       position: absolute;
       top: calc(-90px / 1.25);
       right: 0;
+
+      @include mq(sm) {
+        height: 70px;
+        right: 100px;
+      }
     }
   }
 
@@ -220,6 +254,14 @@ export default {
     bottom: -15px;
     left: 50%;
     transform: translate(-50%, 0);
+  }
+
+  .item__heading {
+    .v-btn {
+      @include mq(sm) {
+        background-color: #ffffff !important;
+      }
+    }
   }
 }
 </style>
