@@ -1,66 +1,69 @@
 <template>
-  <section class="products">
-    <search-refinement :dialog="dialog" @change-dialog="reseiveDialogFlg"></search-refinement>
-    <top-bar title="スイッチャー 一覧"></top-bar>
-    <div class="products__inner d-lg-flex py-16 px-2 px-lg-0">
-      <category-lists></category-lists>
-      <div class="content ml-lg-15">
-        <div class="product__search d-flex align-center">
-          <div class="search__number text-center px-3 text-body-2 no-wrap">
-            <span class="text-h5 mr-2">50</span>件<br />見つかりました
-          </div>
-          <div class="serach__condition flex-grow-1 pa-3">
-            <div class="condition__head text-body-2 d-flex align-center flex-wrap text-no-wrap">
-              現在の検索条件<v-icon>mdi-chevron-right</v-icon
-              ><v-btn class="px-0" text @click="dialog = true"
-                ><v-icon color="primary">mdi-text-search</v-icon>変更して絞り込む</v-btn
-              >
-            </div>
-            <div class="condition__tags mt-1 d-flex align-center flex-wrap">
-              <div class="search-tag text-body-2 mr-2"><v-icon class="mr-2">mdi-check</v-icon>スイッチャー</div>
-              <div class="search-tag text-body-2 mr-2"><v-icon class="mr-2">mdi-check</v-icon>Blackmagic Design</div>
-              <div class="search-tag text-body-2 mr-2"><v-icon class="mr-2">mdi-check</v-icon>0-10,000円</div>
-            </div>
-          </div>
-        </div>
-        <div class="product__sort mt-3 d-flex align-center flex-column flex-lg-row">
-          <div class="d-flex align-center order-1 order-lg-0 mt-5 mt-lg-0">
-            <div class="sort__release d-flex align-center flex-column flex-lg-row mr-8">
-              <div class="release__head mr-2 px-5 py-1 text-body-2 text-white">発売日</div>
-              <v-btn-toggle mandatory dense tile group>
-                <v-btn text>新着順</v-btn>
-                <v-btn text>古い順</v-btn>
-              </v-btn-toggle>
-            </div>
-            <div class="sort__price d-flex align-center flex-column flex-lg-row">
-              <div class="price__head mr-2 px-5 py-1 text-body-2 text-white">価格</div>
-              <v-btn-toggle mandatory dense tile group>
-                <v-btn text>低い順</v-btn>
-                <v-btn text>高い順</v-btn>
-              </v-btn-toggle>
-            </div>
-          </div>
-          <v-spacer class="hidden-md-and-down"></v-spacer>
-          <v-btn class="condition__reset mt-3 mt-lg-0" color="line" outlined>カテゴリ以外の条件をリセット</v-btn>
-        </div>
-        <div class="product__main">
-          <product-card class="hidden-sm-and-down"></product-card>
-          <product-card-rp class="hidden-md-and-up"></product-card-rp>
-        </div>
-        <div class="product__pagination text-center mt-15">
-          <v-pagination v-model="page" :length="2"></v-pagination>
+  <div>
+    <v-card
+      v-for="(list, index) in productLists"
+      :key="index"
+      class="product mt-8"
+      elevation="0"
+      link
+      to="/products/name">
+      <div class="categories d-flex px-3 py-1 flex-wrap">
+        <div v-for="category in list.categoryLists" :key="category.name" class="search-tag text-body-2 mr-2">
+          <v-icon class="mr-2">mdi-check</v-icon>{{ category.name }}
         </div>
       </div>
-    </div>
-  </section>
+      <div class="product__info d-flex mt-5">
+        <div class="info__img mr-3">
+          <img :src="list.image" :alt="list.name" />
+        </div>
+        <div class="info__details flex-grow-1 d-flex flex-column">
+          <div class="name mt-2">
+            <div class="name__maker text-body-2">{{ list.maker }}</div>
+            <div class="name__product text-body-1 text-sm-h6 letter-space-015em mt-2">
+              {{ list.name }}
+            </div>
+          </div>
+          <v-spacer class="hidden-xs-only"></v-spacer>
+        </div>
+      </div>
+      <div class="price price--xs d-flex align-center mt-5 text-body-2">
+        <div class="mr-5">
+          <div class="price__head text-body-2 px-3 py-1 text-no-wrap text-center">レンタル価格</div>
+          <div class="price__day text-body-2 letter-space-015em px-3 py-1 text-center text-no-wrap">1日/税別</div>
+        </div>
+        <span class="price__product text-h5 letter-space-015em px-3 py-1">{{ list.price }}</span
+        >円
+        <v-btn class="price__more text-body-2 ml-5 hidden-xs-only" color="primary"
+          ><span class="price__class text-body-1 font-weight-bold text-center mr-2">{{ list.class }}</span
+          >２日目以降の料金</v-btn
+        >
+      </div>
+      <v-btn class="price__more text-body-2 mt-5 hidden-sm-only" color="primary" block
+        ><span class="price__class text-body-1 font-weight-bold text-center mr-2">{{ list.class }}</span
+        >２日目以降の料金</v-btn
+      >
+      <div class="product__tags mt-2">
+        <v-btn
+          v-for="tag in list.tagLists"
+          :key="tag.name"
+          class="product-tag px-3 py-1 mr-2 mt-2"
+          elevation="0"
+          tile
+          small
+          >{{ tag.name }}</v-btn
+        >
+      </div>
+      <div class="product__descriptions mt-5 text-body-1">
+        {{ list.description }}
+      </div>
+    </v-card>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      dialog: false,
-      page: 1,
       productLists: [
         {
           name: 'ストリーミングビデオスイッチャー V-160HD',
@@ -256,88 +259,49 @@ export default {
       ],
     }
   },
-  methods: {
-    reseiveDialogFlg(value) {
-      this.dialog = value
-    },
-  },
 }
 </script>
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
-
-.products {
-  position: relative;
-  height: auto;
-
-  &__inner {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .content {
-    width: 70%;
-    flex-grow: 1;
-    max-width: 860px;
-
-    @include mq(lg) {
-      width: 100%;
-      margin: 0 auto;
-    }
-  }
-
-  .product__search {
-    width: 100%;
-    border: 1px solid $outline;
+.product__main {
+  .categories {
     background-color: $cushion;
-    border-radius: 5px;
+  }
+  .info__img img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
 
-    .search__number {
-      max-width: 185px;
-      border-radius: 5px;
-    }
-
-    .serach__condition {
-      background-color: #ffffff;
-      border-radius: 5px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+    @include mq(sm) {
+      width: 100px;
+      height: 100px;
     }
   }
 
-  .product__sort {
-    .sort__release,
-    .sort__price {
-      @include mq(md) {
-      }
-
-      .release__head,
-      .price__head {
-        background-color: $primary;
-
-        @include mq(lg) {
-          width: 200px;
-          text-align: center;
-        }
-
-        @include mq(sm) {
-          width: 150px;
-          text-align: center;
-        }
-      }
-
-      .v-btn--active {
-        font-weight: 600 !important;
-      }
-
-      .v-btn--active::before {
-        background-color: #ffffff !important;
-        border-bottom: 2px solid $primary !important;
-        opacity: 1 !important;
-      }
+  .price {
+    .price__head {
+      background-color: $accent;
+      color: #ffffff;
     }
+    .price__day {
+      background-color: $cushion;
+    }
+  }
+
+  .price__class {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: $primary;
+  }
+
+  .product-tag {
+    background-color: $cushion;
+    color: $primary;
   }
 }
 </style>
