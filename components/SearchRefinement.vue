@@ -2,13 +2,7 @@
   <div class="search-refinement text-center">
     <v-dialog v-model="dialogFlg" width="700">
       <v-card class="dialog-card">
-        <v-btn
-          class="dialog-close"
-          fab
-          color="#ffffff"
-          elevation="0"
-          @click="closeDialog()"
-        >
+        <v-btn class="dialog-close" fab color="#ffffff" elevation="0" @click="closeDialog()">
           <v-icon color="primary"> mdi-close </v-icon>
         </v-btn>
         <v-btn
@@ -17,97 +11,55 @@
           fab
           color="#ffffff"
           elevation="0"
-          @click="toggleFlg()"
-        >
+          @click="toggleFlg()">
           <v-icon color="primary"> mdi-chevron-left </v-icon>
         </v-btn>
-        <v-card-title
-          class="refinement__title text-h6 zen-kaku-gothic d-flex justify-center"
-        >
+        <v-card-title class="refinement__title text-subtitle-1 text-lg-h6 zen-kaku-gothic d-flex justify-center">
           検索条件を変更して検索する
         </v-card-title>
         <v-card-text class="refinement__terms mt-5">
-          <div
-            class="terms__category pa-8 text-body-1 d-flex flex-column"
-            :class="{ active: categoryFlg }"
-          >
+          <div class="terms__category pa-4 pa-lg-8 text-body-1 d-flex flex-column" :class="{ active: categoryFlg }">
             <div class="category__title">
-              カテゴリーを選択<v-btn
-                class="ml-5"
-                elevation="0"
-                color="cushion"
-                small
-                ><v-icon class="mr-2" color="outline" small
-                  >mdi-selection-ellipse</v-icon
-                >選択解除</v-btn
+              カテゴリーを選択<v-btn class="ml-5" elevation="0" color="cushion" small
+                ><v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除</v-btn
               >
             </div>
             <div class="category__lists mt-8 flex-grow-1 overflow-auto">
               <v-row justify="center">
-                <v-col
-                  v-for="(list, index) in categoryLists"
-                  :key="index"
-                  cols="11"
-                  class="category-list py-4"
-                >
+                <v-col v-for="(list, index) in categoryLists" :key="index" cols="11" class="category-list py-4">
                   <label
-                    ><input
-                      class="terms__checkbox"
-                      type="checkbox"
-                      :value="list.name"
-                    /><span class="checkbox__parts">{{
-                      list.name
-                    }}</span></label
+                    ><input class="terms__checkbox" type="checkbox" :value="list.name" /><span
+                      class="checkbox__parts text-body-2"
+                      >{{ list.name }}</span
+                    ></label
                   >
                 </v-col>
               </v-row>
             </div>
           </div>
-          <div
-            class="terms__maker pa-8 text-body-1 d-flex flex-column"
-            :class="{ active: makerFlg }"
-          >
+          <div class="terms__maker pa-4 pa-lg-8 text-body-1 d-flex flex-column" :class="{ active: makerFlg }">
             <div class="maker__title">
-              メーカーを選択<v-btn
-                class="ml-5"
-                elevation="0"
-                color="cushion"
-                small
-                ><v-icon class="mr-2" color="outline" small
-                  >mdi-selection-ellipse</v-icon
-                >選択解除</v-btn
+              メーカーを選択<v-btn class="ml-5" elevation="0" color="cushion" small
+                ><v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除</v-btn
               >
             </div>
             <div class="maker__lists mt-8 flex-grow-1 overflow-auto">
               <v-row>
-                <v-col
-                  v-for="(list, index) in makerLists"
-                  :key="index"
-                  cols="6"
-                  class="maker-list py-4"
-                >
+                <v-col v-for="(list, index) in makerLists" :key="index" cols="11" md="6" class="maker-list py-4">
                   <label
-                    ><input
-                      class="terms__checkbox"
-                      type="checkbox"
-                      :value="list.name"
-                    /><span class="checkbox__parts">{{
-                      list.name
-                    }}</span></label
+                    ><input class="terms__checkbox" type="checkbox" :value="list.name" /><span
+                      class="checkbox__parts text-body-2"
+                      >{{ list.name }}</span
+                    ></label
                   >
                 </v-col>
               </v-row>
             </div>
           </div>
-          <div
-            class="terms__price pa-8 text-body-1 d-flex flex-column"
-            :class="{ active: priceFlg }"
-          >
+          <div class="terms__price pa-4 pa-lg-8 text-body-1 d-flex flex-column" :class="{ active: priceFlg }">
             <div class="price__title">
               価格を選択<v-btn class="ml-5" elevation="0" color="cushion" small
-                ><v-icon class="mr-2" color="outline" small
-                  >mdi-selection-ellipse</v-icon
-                >選択解除</v-btn
+                ><v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除</v-btn
               >
             </div>
             <div class="price__lists mt-8 pa-5 flex-grow-1 overflow-auto">
@@ -118,8 +70,7 @@
                     :max="max"
                     :min="min"
                     hide-details
-                    prepend-icon="mdi-cash-check"
-                  ></v-range-slider
+                    prepend-icon="mdi-cash-check"></v-range-slider
                 ></v-col>
                 <v-col cols="6">
                   <v-text-field
@@ -129,8 +80,7 @@
                     type="number"
                     label="Min"
                     suffix="円"
-                    @change="$set(range, 0, $event)"
-                  ></v-text-field>
+                    @change="$set(range, 0, $event)"></v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <div class="text-right"></div>
@@ -141,39 +91,25 @@
                     type="number"
                     label="Max"
                     suffix="円"
-                    @change="$set(range, 1, $event)"
-                  ></v-text-field>
+                    @change="$set(range, 1, $event)"></v-text-field>
                 </v-col>
               </v-row>
             </div>
           </div>
-          <div
-            class="terms__tag pa-8 text-body-1 d-flex flex-column"
-            :class="{ active: tagFlg }"
-          >
+          <div class="terms__tag pa-4 pa-lg-8 text-body-1 d-flex flex-column" :class="{ active: tagFlg }">
             <div class="tag__title">
               特徴を選択<v-btn class="ml-5" elevation="0" color="cushion" small
-                ><v-icon class="mr-2" color="outline" small
-                  >mdi-selection-ellipse</v-icon
-                >選択解除</v-btn
+                ><v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除</v-btn
               >
             </div>
             <div class="tag__lists mt-8 flex-grow-1 overflow-auto">
               <v-row>
-                <v-col
-                  v-for="(list, index) in tagLists"
-                  :key="index"
-                  cols="6"
-                  class="maker-list py-4"
-                >
+                <v-col v-for="(list, index) in tagLists" :key="index" cols="11" md="6" class="maker-list py-4">
                   <label
-                    ><input
-                      class="terms__checkbox"
-                      type="checkbox"
-                      :value="list.name"
-                    /><span class="checkbox__parts">{{
-                      list.name
-                    }}</span></label
+                    ><input class="terms__checkbox" type="checkbox" :value="list.name" /><span
+                      class="checkbox__parts text-body-2"
+                      >{{ list.name }}</span
+                    ></label
                   >
                 </v-col>
               </v-row>
@@ -187,29 +123,19 @@
                 label="キーワードを入力できます"
                 dense
                 outlined
-                hide-details="auto"
-              ></v-text-field>
+                hide-details="auto"></v-text-field>
             </v-col>
             <v-col cols="12">
               <div class="terms__title d-flex">
                 カテゴリー
                 <v-spacer></v-spacer>
                 <v-btn elevation="0" color="cushion" small
-                  ><v-icon class="mr-2" color="outline" small
-                    >mdi-selection-ellipse</v-icon
-                  >選択解除</v-btn
+                  ><v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除</v-btn
                 >
               </div>
-              <v-row
-                class="terms__box mt-2 px-3"
-                no-gutters
-                align="center"
-                @click="openCategory()"
-              >
+              <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openCategory()">
                 <v-col cols="11">スイッチャー</v-col>
-                <v-col cols="1" class="d-flex justify-end align-center"
-                  ><v-icon>mdi-chevron-right</v-icon></v-col
-                >
+                <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
               </v-row>
             </v-col>
             <v-col cols="12">
@@ -217,21 +143,12 @@
                 メーカー
                 <v-spacer></v-spacer>
                 <v-btn elevation="0" color="cushion" small
-                  ><v-icon class="mr-2" color="outline" small
-                    >mdi-selection-ellipse</v-icon
-                  >選択解除</v-btn
+                  ><v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除</v-btn
                 >
               </div>
-              <v-row
-                class="terms__box mt-2 px-3"
-                no-gutters
-                align="center"
-                @click="openMaker()"
-              >
-                <v-col cols="11">Blackmagic Design / Roland / BARCO</v-col>
-                <v-col cols="1" class="d-flex justify-end align-center"
-                  ><v-icon>mdi-chevron-right</v-icon></v-col
-                >
+              <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openMaker()">
+                <v-col cols="11">Blackmagic Design / Roland </v-col>
+                <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
               </v-row>
             </v-col>
             <v-col cols="12">
@@ -239,21 +156,12 @@
                 価格
                 <v-spacer></v-spacer>
                 <v-btn elevation="0" color="cushion" small
-                  ><v-icon class="mr-2" color="outline" small
-                    >mdi-selection-ellipse</v-icon
-                  >選択解除</v-btn
+                  ><v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除</v-btn
                 >
               </div>
-              <v-row
-                class="terms__box mt-2 px-3"
-                no-gutters
-                align="center"
-                @click="openPrice()"
-              >
+              <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openPrice()">
                 <v-col cols="11">0 - 10,000 円</v-col>
-                <v-col cols="1" class="d-flex justify-end align-center"
-                  ><v-icon>mdi-chevron-right</v-icon></v-col
-                >
+                <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
               </v-row>
             </v-col>
             <v-col cols="12">
@@ -261,51 +169,33 @@
                 特徴
                 <v-spacer></v-spacer>
                 <v-btn elevation="0" color="cushion" small
-                  ><v-icon class="mr-2" color="outline" small
-                    >mdi-selection-ellipse</v-icon
-                  >選択解除</v-btn
+                  ><v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除</v-btn
                 >
               </div>
-              <v-row
-                class="terms__box mt-2 px-3"
-                no-gutters
-                align="center"
-                @click="openTag()"
-              >
+              <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openTag()">
                 <v-col cols="11">未設定</v-col>
-                <v-col cols="1" class="d-flex justify-end align-center"
-                  ><v-icon>mdi-chevron-right</v-icon></v-col
-                >
+                <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
               </v-row>
             </v-col>
           </v-row>
         </v-card-text>
         <v-card-actions>
           <v-row justify="center">
-            <v-col cols="5"
+            <v-col cols="10" lg="5"
               ><v-btn color="primary" elevation="0" block
-                ><v-icon class="mr-2">mdi-text-search</v-icon
-                >この条件で検索</v-btn
+                ><v-icon class="mr-2">mdi-text-search</v-icon>この条件で検索</v-btn
               ></v-col
             >
-            <v-col cols="5"
+            <v-col cols="10" lg="5"
               ><v-btn v-if="!backBtnFlg" color="cushion" elevation="0" block
-                ><v-icon class="mr-2">mdi-selection-ellipse</v-icon
-                >すべての条件をリセット</v-btn
-              ><v-btn
-                v-else
-                color="primary"
-                elevation="0"
-                block
-                @click="toggleFlg()"
-                ><v-icon class="mr-2">mdi-chevron-left</v-icon
-                >選択状態で戻る</v-btn
+                ><v-icon class="mr-2">mdi-selection-ellipse</v-icon>すべての条件をリセット</v-btn
+              ><v-btn v-else color="primary" elevation="0" block @click="toggleFlg()"
+                ><v-icon class="mr-2">mdi-chevron-left</v-icon>選択状態で戻る</v-btn
               >
             </v-col>
-            <v-col cols="5"
+            <v-col cols="10" lg="5"
               ><v-btn color="outline" block outlined @click="closeDialog()"
-                ><v-icon class="mr-2" color="primary">mdi-close</v-icon
-                >変更せずに閉じる</v-btn
+                ><v-icon class="mr-2" color="primary">mdi-close</v-icon>変更せずに閉じる</v-btn
               ></v-col
             >
           </v-row>
@@ -341,7 +231,7 @@ export default {
         { name: 'メディアサーバー' },
         { name: 'カメラ周辺機器' },
         { name: 'VRゴーグル' },
-        { name: 'モーションキャプチャー・センサー' },
+        { name: 'モーションキャプチャ・センサ' },
         { name: 'クロマキー合成' },
         { name: '照明機器' },
         { name: 'エンコーダ・デコーダ' },
@@ -471,7 +361,7 @@ export default {
   }
 
   .category-list {
-    border-bottom: 1px solid $line;
+    // border-bottom: 1px solid $line;
   }
 }
 
