@@ -11,26 +11,27 @@
           <div class="page-link__list pt-7 pb-2">
             <ul class="d-flex flex-wrap justify-center pl-7">
               <li v-for="article in articleLists" :key="article.category" class="mr-7 mb-5">
-                <a  v-scroll-to="{ el: '#'+ article.anchor, offset: -130 }" class="d-flex align-center">
-                  <v-icon class="mr-2">{{ article.icon }}</v-icon>{{ article.category }}<v-icon color="#878787">mdi-chevron-down</v-icon>
+                <a v-scroll-to="{ el: '#' + article.anchor, offset: -130 }" class="d-flex align-center">
+                  <v-icon class="mr-2">{{ article.icon }}</v-icon
+                  >{{ article.category }}<v-icon color="#878787">mdi-chevron-down</v-icon>
                 </a>
               </li>
             </ul>
           </div>
         </div>
-        <div v-for="article in articleLists"
-          :id="article.anchor"
-          :key="article.category"
-          class="group mb-16">
+        <div v-for="article in articleLists" :id="article.anchor" :key="article.category" class="group mb-16">
           <h3 class="group__ttl d-flex flex-column text-center text-h5 bold letter-space-015em mb-10">
-            <v-icon class="group__ttl-icon mb-4">{{ article.icon }}</v-icon>{{ article.category }}
+            <v-icon class="group__ttl-icon mb-4">{{ article.icon }}</v-icon
+            >{{ article.category }}
           </h3>
           <v-container class="group__container">
             <v-row no-gutters class="group__row justify-center">
               <v-col v-for="(articleItem, index) in article.items" :key="index" cols="3" class="group__col d-flex">
                 <v-card :color="article.color" class="article-card" :href="articleItem.anchor" target="_blank">
                   <v-img height="108" :src="articleItem.path" />
-                  <v-card-subtitle class="article-card__subtitle bg-white text-caption text-center pa-1">{{ articleItem.subTitle }}</v-card-subtitle>
+                  <v-card-subtitle class="article-card__subtitle bg-white text-caption text-center pa-1">{{
+                    articleItem.subTitle
+                  }}</v-card-subtitle>
                   <v-card-title class="article-card__title text-white text-body-1 bold px-3">
                     <!-- eslint-disable-next-line vue/no-v-html -->
                     <h4 class="article-card__title-text" v-html="articleItem.title">{{ articleItem.title }}</h4>
@@ -40,7 +41,6 @@
             </v-row>
           </v-container>
         </div>
-
       </div>
     </div>
   </section>
@@ -50,7 +50,8 @@ export default {
   data() {
     return {
       articleLists: [
-        {// 機材特集
+        {
+          // 機材特集
           category: '機材特集',
           anchor: 'feature',
           color: 'feature',
@@ -106,7 +107,8 @@ export default {
             },
           ],
         },
-        {// 活用提案
+        {
+          // 活用提案
           category: '活用提案',
           anchor: 'suggest',
           color: 'suggest',
@@ -144,7 +146,8 @@ export default {
             },
           ],
         },
-        {// チラシ/カタログ
+        {
+          // チラシ/カタログ
           category: 'チラシ/カタログ',
           anchor: 'catalog',
           color: 'catalog',
@@ -164,7 +167,8 @@ export default {
             },
           ],
         },
-        {// SNS/情報
+        {
+          // SNS/情報
           category: 'SNS/情報',
           anchor: 'sns',
           color: 'sns',
@@ -190,7 +194,8 @@ export default {
             },
           ],
         },
-        {// 販売
+        {
+          // 販売
           category: '販売',
           anchor: 'sales',
           color: 'sales',
@@ -201,10 +206,10 @@ export default {
               subTitle: 'お得なアウトレット',
               anchor: 'https://www.takenaka-co.co.jp/01rental/tyukohanbaikizai/tyukohanbai.html',
               path: '/img/article/sales-01.png',
-            }
+            },
           ],
         },
-      ]
+      ],
     }
   },
 }
@@ -256,14 +261,14 @@ export default {
       margin: -10px -9px !important;
     }
     &__col {
-      min-width: 218px;//200px + padding-x 9px = 218px
+      min-width: 218px; //200px + padding-x 9px = 218px
       padding: 10px 9px !important;
     }
   }
   .article-card {
     &__title,
     &__subtitle {
-      letter-spacing: .1em !important;
+      letter-spacing: 0.1em !important;
     }
   }
   #feature {

@@ -1,18 +1,18 @@
 @font-face {
-  font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?jkprrj');
-  src:  url('fonts/icomoon.eot?jkprrj#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?jkprrj') format('truetype'),
-    url('fonts/icomoon.woff?jkprrj') format('woff'),
+  font-family: icomoon;
+  src: url('fonts/icomoon.eot?jkprrj');
+  src: url('fonts/icomoon.eot?jkprrj#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?jkprrj') format('truetype'), url('fonts/icomoon.woff?jkprrj') format('woff'),
     url('fonts/icomoon.svg?jkprrj#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^='icon-'],
+[class*=' icon-'] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: icomoon !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -25,67 +25,82 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-suggest:before {
-  content: "\e90b";
+.icon-suggest::before {
+  content: '\e90b';
   color: #579b8f;
 }
-.icon-sns:before {
-  content: "\e90c";
+
+.icon-sns::before {
+  content: '\e90c';
   color: #638bba;
 }
-.icon-sales:before {
-  content: "\e90d";
+
+.icon-sales::before {
+  content: '\e90d';
   color: #af69aa;
 }
-.icon-feature:before {
-  content: "\e90e";
+
+.icon-feature::before {
+  content: '\e90e';
   color: #c97061;
 }
-.icon-catalog:before {
-  content: "\e90f";
+
+.icon-catalog::before {
+  content: '\e90f';
   color: #c19c49;
 }
-.icon-video-device:before {
-  content: "\e901";
+
+.icon-video-device::before {
+  content: '\e901';
   color: #bf9540;
 }
-.icon-camera:before {
-  content: "\e902";
+
+.icon-camera::before {
+  content: '\e902';
   color: #c56a84;
 }
-.icon-display:before {
-  content: "\e903";
+
+.icon-display::before {
+  content: '\e903';
   color: #7b9456;
 }
-.icon-led:before {
-  content: "\e904";
+
+.icon-led::before {
+  content: '\e904';
   color: #c986d1;
 }
-.icon-media-player:before {
-  content: "\e905";
+
+.icon-media-player::before {
+  content: '\e905';
   color: #bf9540;
 }
-.icon-network:before {
-  content: "\e906";
+
+.icon-network::before {
+  content: '\e906';
   color: #867cc7;
 }
-.icon-other:before {
-  content: "\e907";
+
+.icon-other::before {
+  content: '\e907';
   color: #97745f;
 }
-.icon-projector:before {
-  content: "\e908";
+
+.icon-projector::before {
+  content: '\e908';
   color: #cc8071;
 }
-.icon-sensor:before {
-  content: "\e909";
+
+.icon-sensor::before {
+  content: '\e909';
   color: #62a3ca;
 }
-.icon-sound:before {
-  content: "\e90a";
+
+.icon-sound::before {
+  content: '\e90a';
   color: #94847b;
 }
-.icon-online:before {
-  content: "\e900";
+
+.icon-online::before {
+  content: '\e900';
   color: #7f7fcc;
 }

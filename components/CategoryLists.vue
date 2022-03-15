@@ -5,28 +5,16 @@
     </div>
     <div class="category__lists mt-5">
       <v-list v-for="category in categoryLists" :key="category.name">
-        <v-subheader class="bold"
-          ><img class="mr-2" :src="category.path" />
-          {{ category.name }}</v-subheader
-        >
-        <v-list-group
-          v-for="childCategory in category.childCategoryLists"
-          :key="childCategory.name"
-          :value="false"
-        >
+        <v-subheader class="bold"><img class="mr-2" :src="category.path" /> {{ category.name }}</v-subheader>
+        <v-list-group v-for="childCategory in category.childCategoryLists" :key="childCategory.name" :value="false">
           <template #activator>
-            <v-list-item-title class="text-body-2">{{
-              childCategory.name
-            }}</v-list-item-title>
+            <v-list-item-title class="text-body-2">{{ childCategory.name }}</v-list-item-title>
           </template>
           <v-list-item
             v-for="grandChildCategory in childCategory.grandchildCategoryLists"
             :key="grandChildCategory.name"
-            link
-          >
-            <v-list-item-title class="text-body-2">{{
-              grandChildCategory.name
-            }}</v-list-item-title>
+            link>
+            <v-list-item-title class="text-body-2">{{ grandChildCategory.name }}</v-list-item-title>
           </v-list-item>
         </v-list-group>
       </v-list>
@@ -159,11 +147,7 @@ export default {
           },
           {
             name: '関連機器',
-            grandchildCategoryLists: [
-              { name: '自立スタンド' },
-              { name: '壁掛け金具' },
-              { name: '吊り金具' },
-            ],
+            grandchildCategoryLists: [{ name: '自立スタンド' }, { name: '壁掛け金具' }, { name: '吊り金具' }],
           },
         ],
       },

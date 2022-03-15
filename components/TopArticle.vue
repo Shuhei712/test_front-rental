@@ -3,79 +3,41 @@
     <div class="article__heading px-3 px-md-10 d-flex align-center">
       <v-icon class="mr-5" color="accent">mdi-creation</v-icon>
       <h3 class="zen-kaku-gothic text-h6 text-md-h5 letter-space-02em">
-        特設ページ<span
-          class="zen-kaku-gothic text-body-2 text-md-h6 letter-space-02em"
-          >ほか</span
-        >
+        特設ページ<span class="zen-kaku-gothic text-body-2 text-md-h6 letter-space-02em">ほか</span>
       </h3>
       <v-divider color="line"></v-divider>
-      <v-btn class="ml-5 px-5" outlined
-        >一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn
-      >
+      <v-btn class="ml-5 px-5" outlined>一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn>
     </div>
     <v-container class="article__content px-1 px-lg-8 d-flex flex-column">
       <div class="article__list order-1 order-lg-0">
         <v-row no-gutters>
-          <v-col
-            v-for="(list, index) in articleLists"
-            :key="index"
-            class="pa-md-2 mt-3 mt-md-0"
-            cols="12"
-            md="3"
-          >
+          <v-col v-for="(list, index) in articleLists" :key="index" class="pa-md-2 mt-3 mt-md-0" cols="12" md="3">
             <article-card
               :color="list.color"
               :path="list.path"
               :category="list.category"
-              :title="list.title"
-            ></article-card>
+              :title="list.title"></article-card>
           </v-col>
         </v-row>
       </div>
       <div class="artcle__search mt-3 pa-md-2">
         <v-row align="center" no-gutters>
-          <v-col cols="2"
-            ><div class="text-body-2 text-no-wrap">絞り込み</div></v-col
-          >
+          <v-col cols="2"><div class="text-body-2 text-no-wrap">絞り込み</div></v-col>
           <v-col cols="1"><v-divider></v-divider></v-col>
           <v-col cols="9">
             <div class="search__input ml-2">
-              <input type="radio" id="all" name="tag" />
-              <label
-                for="all"
-                class="tag--all rounded-pill px-3 py-1 text-body-2"
-                >ALL</label
-              >
-              <input type="radio" id="feature" name="tag" />
-              <label
-                for="feature"
-                class="tag--feature rounded-pill px-3 py-1 text-body-2"
-                >機材特集</label
-              >
-              <input type="radio" id="suggest" name="tag" />
-              <label
-                for="suggest"
-                class="tag--suggest rounded-pill px-3 py-1 text-body-2"
-                >活用提案</label
-              >
-              <input type="radio" id="catalog" name="tag" />
-              <label
-                for="catalog"
-                class="tag--catalog rounded-pill px-3 py-1 text-body-2"
-                >チラシ/カタログ</label
-              >
-              <input type="radio" id="sns" name="tag" />
-              <label
-                for="sns"
-                class="tag--sns rounded-pill px-3 py-1 text-body-2"
-                >SNS</label
-              >
-              <input type="radio" id="sales" name="tag" />
-              <label
-                for="sales"
-                class="tag--sales rounded-pill px-3 py-1 text-body-2"
-                >販売</label
-              >
+              <input id="all" type="radio" name="tag" />
+              <label for="all" class="tag--all rounded-pill px-3 py-1 text-body-2">ALL</label>
+              <input id="feature" type="radio" name="tag" />
+              <label for="feature" class="tag--feature rounded-pill px-3 py-1 text-body-2">機材特集</label>
+              <input id="suggest" type="radio" name="tag" />
+              <label for="suggest" class="tag--suggest rounded-pill px-3 py-1 text-body-2">活用提案</label>
+              <input id="catalog" type="radio" name="tag" />
+              <label for="catalog" class="tag--catalog rounded-pill px-3 py-1 text-body-2">チラシ/カタログ</label>
+              <input id="sns" type="radio" name="tag" />
+              <label for="sns" class="tag--sns rounded-pill px-3 py-1 text-body-2">SNS</label>
+              <input id="sales" type="radio" name="tag" />
+              <label for="sales" class="tag--sales rounded-pill px-3 py-1 text-body-2">販売</label>
             </div>
           </v-col>
         </v-row>
@@ -229,38 +191,5 @@ export default {
       background-color: $sales;
     }
   }
-
-  // .v-list-item--active .tag--all,
-  // .v-list-item--active .tag--feature,
-  // .v-list-item--active .tag--suggest,
-  // .v-list-item--active .tag--catalog,
-  // .v-list-item--active .tag--sns,
-  // .v-list-item--active .tag--sales {
-  //   color: #ffffff !important;
-  // }
-
-  // .v-list-item--active .tag--all {
-  //   background-color: $outline;
-  // }
-
-  // .v-list-item--active .tag--feature {
-  //   background-color: $feature;
-  // }
-
-  // .v-list-item--active .tag--suggest {
-  //   background-color: $suggest;
-  // }
-
-  // .v-list-item--active .tag--catalog {
-  //   background-color: $catalog;
-  // }
-
-  // .v-list-item--active .tag--sns {
-  //   background-color: $sns;
-  // }
-
-  // .v-list-item--active .tag--sales {
-  //   background-color: $sales;
-  // }
 }
 </style>

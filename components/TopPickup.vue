@@ -1,8 +1,7 @@
 <template>
   <section class="pickup mx-0 mx-sm-5 mb-5">
     <h3 class="pickup__heading text-center">
-      <span
-        class="orange_line zen-kaku-gothic text-lg-h6 text-subtitle-1 letter-space-015em"
+      <span class="orange_line zen-kaku-gothic text-lg-h6 text-subtitle-1 letter-space-015em"
         >おすすめレンタル機材ピックアップ</span
       >
     </h3>
@@ -10,9 +9,7 @@
       <img class="monitan" src="/img/pickup/monitan.png" alt="モニタン" />
       <img class="protan" src="/img/pickup/protan.png" alt="プロタン" />
       <div v-for="(list, index) in pickupLists" :key="index" class="item">
-        <div
-          class="item__heading px-10 d-flex align-center flex-column flex-lg-row mt-8 mt-lg-0"
-        >
+        <div class="item__heading px-10 d-flex align-center flex-column flex-lg-row mt-8 mt-lg-0">
           <div class="d-flex align-center">
             <img class="icon mr-3" :src="list.icon" :alt="list.title" />
             <h4 class="zen-kaku-gothic text-h6 text-lg-h5 letter-space-02em">
@@ -26,18 +23,8 @@
         </div>
         <v-container class="item__content pa-0 pa-lg-3">
           <v-row class="ma-3">
-            <v-col
-              v-for="(item, num) in list.itemLists"
-              :key="num"
-              class="pa-1 pa-lg-0"
-              cols="6"
-              lg="3"
-            >
-              <item-card
-                :path="item.path"
-                :maker="item.maker"
-                :name="item.name"
-              ></item-card>
+            <v-col v-for="(item, num) in list.itemLists" :key="num" class="pa-1 pa-lg-0" cols="6" lg="3">
+              <item-card :path="item.path" :maker="item.maker" :name="item.name"></item-card>
             </v-col>
           </v-row>
         </v-container>
@@ -45,8 +32,7 @@
     </div>
     <div class="pickup__btn text-center">
       <v-btn to="/category" class="bg-white" outlined
-        ><v-icon class="mr-2" color="primary">mdi-shape-outline</v-icon
-        >すべてのカテゴリから探す<v-icon color="primary"
+        ><v-icon class="mr-2" color="primary">mdi-shape-outline</v-icon>すべてのカテゴリから探す<v-icon color="primary"
           >mdi-chevron-right</v-icon
         ></v-btn
       >

@@ -2,18 +2,9 @@
   <footer class="footer pt-15">
     <v-container class="footer__inner">
       <div class="footer__head d-flex align-center flex-column flex-md-row">
-        <a
-          class="head__logo hover-opacity d-flex align-center mr-0 mr-md-10"
-          href="/"
-        >
-          <img
-            class="logo__img mr-5"
-            src="/img/footer/logo.png"
-            alt="TAKENAKA the SOLID WATER LOGO"
-          />
-          <span class="logo__service text-body-2 no-wrap text-white"
-            >映像 / 音響機材の<br />レンタルサービス</span
-          >
+        <a class="head__logo hover-opacity d-flex align-center mr-0 mr-md-10" href="/">
+          <img class="logo__img mr-5" src="/img/footer/logo.png" alt="TAKENAKA the SOLID WATER LOGO" />
+          <span class="logo__service text-body-2 no-wrap text-white">映像 / 音響機材の<br />レンタルサービス</span>
         </a>
         <a
           class="head__corporate hover-opacity mt-10 mt-md-0"
@@ -21,9 +12,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><v-icon class="mr-2" color="#ffffff">mdi-login-variant</v-icon
-          ><span class="text-white text-body-2"
-            >株式会社タケナカ コーポレートサイトへ</span
-          ></a
+          ><span class="text-white text-body-2">株式会社タケナカ コーポレートサイトへ</span></a
         >
         <v-spacer class="hidden-sm-and-down"></v-spacer>
         <div class="head__links mt-5 mt-md-0">
@@ -44,8 +33,7 @@
           :key="index"
           cols="12"
           md="6"
-          class="pa-1 pa-lg-3 mt-10 mt-lg-0"
-        >
+          class="pa-1 pa-lg-3 mt-10 mt-lg-0">
           <div class="information mx-0 mx-md-2 mx-lg-5">
             <div class="information__head d-flex align-center">
               <h5 class="text-h6 letter-space-02em">{{ list.branchName }}</h5>
@@ -56,49 +44,30 @@
                 <span class="mr-3">{{ list.postCode }}</span
                 >{{ list.address }}
               </div>
-              <div
-                class="content__contact mt-5 d-flex align-center text-body-2"
-              >
+              <div class="content__contact mt-5 d-flex align-center text-body-2">
                 <div class="contact__tel mr-10">
-                  <v-icon class="mr-2" color="primary">mdi-phone</v-icon
-                  >{{ list.phone }}
+                  <v-icon class="mr-2" color="primary">mdi-phone</v-icon>{{ list.phone }}
                 </div>
-                <div class="contact__fax">
-                  <v-icon class="mr-2" color="primary">mdi-fax</v-icon
-                  >{{ list.fax }}
-                </div>
+                <div class="contact__fax"><v-icon class="mr-2" color="primary">mdi-fax</v-icon>{{ list.fax }}</div>
               </div>
-              <div
-                class="content__mail mt-5 d-flex align-center text-body-2 flex-wrap"
-              >
+              <div class="content__mail mt-5 d-flex align-center text-body-2 flex-wrap">
                 <div class="mail__address mr-5">
-                  <v-icon class="mr-2" color="primary">mdi-email-outline</v-icon
-                  >{{ list.email }}
+                  <v-icon class="mr-2" color="primary">mdi-email-outline</v-icon>{{ list.email }}
                 </div>
-                <v-btn
-                  class="mail__copy text-white text-body-2 mt-5 mt-lg-0"
-                  outlined
-                  ><v-icon class="mr-2" color="primary">mdi-content-copy</v-icon
-                  >メールアドレスをコピー</v-btn
+                <v-btn class="mail__copy text-white text-body-2 mt-5 mt-lg-0" outlined
+                  ><v-icon class="mr-2" color="primary">mdi-content-copy</v-icon>メールアドレスをコピー</v-btn
                 >
               </div>
             </div>
           </div>
         </v-col>
       </v-row>
-      <div
-        class="footer__company-group d-flex justify-center align-center flex-column-reverse flex-lg-row text-body-2"
-      >
+      <div class="footer__company-group d-flex justify-center align-center flex-column-reverse flex-lg-row text-body-2">
         株式会社タケナカはシンユニティグループの一員です
-        <img
-          class="ml-0 ml-lg-5 mb-5 mb-lg-0"
-          src="/img/footer/symunity_logo.png"
-          alt="SYMUNITY GROUP"
-        />
+        <img class="ml-0 ml-lg-5 mb-5 mb-lg-0" src="/img/footer/symunity_logo.png" alt="SYMUNITY GROUP" />
       </div>
       <div class="footer__copy-light text-center text-body-2">
-        <span class="montserrat text-body-2">2022</span> © Takenaka All Rights
-        Reserved.
+        <span class="montserrat text-body-2">2022</span> © Takenaka All Rights Reserved.
       </div>
     </v-container>
   </footer>
