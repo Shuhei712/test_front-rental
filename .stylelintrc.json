@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-prettier",
+    "stylelint-config-recommended-scss",
+    "stylelint-config-recommended-vue"
+  ],
+  "customSyntax": "postcss-scss",
+  "rules": {
+    "block-no-empty": true
+  },
+  "overrides": [
+    {
+      "files": ["*.vue", "**/*.vue", "**/*.{jsx,tsx}"],
+      "customSyntax": "@stylelint/postcss-css-in-js",
+      "rules": {
+        "unit-allowed-list": ["em", "rem", "s"]
+      }
+    }
+  ],
+  "ignoreFiles": ["node_modules/**/*.css", "assets/**"]
+}
