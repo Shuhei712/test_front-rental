@@ -10,11 +10,8 @@
             outlined
             dense
             prepend-inner-icon="mdi-magnify"
-            hide-details="auto"
-          ></v-text-field>
-          <v-btn color="primary" class="ml-5">
-            <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索
-          </v-btn>
+            hide-details="auto"></v-text-field>
+          <v-btn color="primary" class="ml-5"> <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索 </v-btn>
         </v-form>
       </div>
       <div class="category__list mb-16">
@@ -22,27 +19,27 @@
           <v-icon class="mr-2" color="accent">mdi-shape-outline</v-icon>CATEGORY
         </div>
         <div class="py-4">
-          <p class="text-center text-body-2 mb-7">
-            クリックでページ内項目にジャンプします
-          </p>
-          <ul class="d-flex flex-wrap justify-center pl-7">
+          <p class="text-center text-body-2 mb-7">クリックでページ内項目にジャンプします</p>
+          <ul class="d-flex flex-wrap justify-start justify-lg-center pl-7 text-body-2 text-lg-subtitle-1">
             <li v-for="category in categoryLists" :key="category.name" class="mr-7 mb-5">
-              <a v-scroll-to="{ el: '#'+ category.anchor, offset: 200 }" class="d-flex align-center">
-                <v-icon class="mr-2">{{ category.icon }}</v-icon>{{ category.nameJp }}<v-icon color="#878787">mdi-chevron-down</v-icon>
+              <a v-scroll-to="{ el: '#' + category.anchor, offset: 200 }" class="d-flex align-center">
+                <v-icon class="mr-2">{{ category.icon }}</v-icon
+                >{{ category.nameJp }}<v-icon color="#878787">mdi-chevron-down</v-icon>
               </a>
             </li>
           </ul>
         </div>
       </div>
-      <div v-for="category in categoryLists"
-        :id="category.anchor"
-        :key="category.name"
-        class="cat-group mb-16">
+      <div v-for="category in categoryLists" :id="category.anchor" :key="category.name" class="cat-group mb-16">
         <!-- 大カテゴリー -->
         <h3 class="cat-group__ttl d-flex flex-column text-center text-h5 bold letter-space-015em mb-10">
-          <v-icon class="cat-group__ttl-icon mb-4">{{ category.icon }}</v-icon>{{ category.name }}
+          <v-icon class="cat-group__ttl-icon mb-4">{{ category.icon }}</v-icon
+          >{{ category.name }}
         </h3>
-        <div v-for="categoryChild in category.childCategoryLists" :key="categoryChild.name" class="cat-group__child mb-8">
+        <div
+          v-for="categoryChild in category.childCategoryLists"
+          :key="categoryChild.name"
+          class="cat-group__child mb-8">
           <!-- 中カテゴリー -->
           <h4 class="cat-group__child-ttl text-h6 mont-zenkaku bold pa-5">
             {{ categoryChild.name }}
@@ -51,11 +48,13 @@
           <!-- 小カテゴリー -->
           <v-container class="cat-group__container px-0">
             <v-row no-gutters class="cat-group__row">
-              <v-col v-for="(catItem, index) in categoryChild.grandchildCategoryLists" :key="index" cols="4"
+              <v-col
+                v-for="(catItem, index) in categoryChild.grandchildCategoryLists"
+                :key="index"
+                cols="6"
+                lg="4"
                 class="cat-group__col">
-                <a
-                  class="cat-group__btn text-body-1 mont-zenkaku bold px-3 py-2"
-                  :href="catItem.anchor">
+                <a class="cat-group__btn text-body-1 mont-zenkaku bold px-3 py-2" :href="catItem.anchor">
                   <span class="cat-group__btn-name">{{ catItem.name }}</span>
                 </a>
               </v-col>
@@ -72,7 +71,8 @@
 export default {
   data: () => ({
     categoryLists: [
-      {// online
+      {
+        // online
         name: 'Online',
         nameJp: 'オンライン',
         anchor: 'online',
@@ -96,7 +96,8 @@ export default {
           },
         ],
       },
-      {// LED display
+      {
+        // LED display
         name: 'LED display',
         nameJp: 'LEDディスプレイ',
         anchor: 'led',
@@ -107,18 +108,19 @@ export default {
             name: 'LEDディスプレイ',
             grandchildCategoryLists: [
               { name: '屋内・屋外兼用', anchor: '#', path: '/img/category/led/1-01.png' },
-              { name: '屋内専用', anchor: '#', path: '/img/category/led/1-02.png'  },
-              { name: 'ビジョン用', anchor: '#', path: '/img/category/led/1-03.png'  },
-              { name: '特殊形状', anchor: '#', path: '/img/category/led/1-04.png'  },
-              { name: 'シースルー', anchor: '#', path: '/img/category/led/1-05.png'  },
-              { name: '床用', anchor: '#', path: '/img/category/led/1-06.png'  },
-              { name: 'センダーボックス', anchor: '#', path: '/img/category/led/1-07.png'  },
-              { name: '電源BOX', anchor: '#', path: '/img/category/led/1-08.png'  },
+              { name: '屋内専用', anchor: '#', path: '/img/category/led/1-02.png' },
+              { name: 'ビジョン用', anchor: '#', path: '/img/category/led/1-03.png' },
+              { name: '特殊形状', anchor: '#', path: '/img/category/led/1-04.png' },
+              { name: 'シースルー', anchor: '#', path: '/img/category/led/1-05.png' },
+              { name: '床用', anchor: '#', path: '/img/category/led/1-06.png' },
+              { name: 'センダーボックス', anchor: '#', path: '/img/category/led/1-07.png' },
+              { name: '電源BOX', anchor: '#', path: '/img/category/led/1-08.png' },
             ],
           },
         ],
       },
-      {// Projector
+      {
+        // Projector
         name: 'Projector',
         nameJp: 'プロジェクター',
         anchor: 'projector',
@@ -162,7 +164,8 @@ export default {
           },
         ],
       },
-      {// Display/Monitor
+      {
+        // Display/Monitor
         name: 'Display/Monitor',
         nameJp: 'ディスプレイ/モニター',
         anchor: 'display',
@@ -200,7 +203,8 @@ export default {
           },
         ],
       },
-      {// Media/Player
+      {
+        // Media/Player
         name: 'Media/Player',
         nameJp: 'メディア/プレイヤー',
         anchor: 'media-player',
@@ -210,7 +214,7 @@ export default {
           {
             name: 'メディアサーバー',
             grandchildCategoryLists: [
-              { name: 'メディアサーバー', anchor: '#', path: '/img/category/media-player/1-01.png' }
+              { name: 'メディアサーバー', anchor: '#', path: '/img/category/media-player/1-01.png' },
             ],
           },
           {
@@ -237,7 +241,8 @@ export default {
           },
         ],
       },
-      {// Video Peripheral Devices/Cable
+      {
+        // Video Peripheral Devices/Cable
         name: 'Video Peripheral Devices/Cable',
         nameJp: '映像周辺機器・ケーブル',
         anchor: 'video-peripheral',
@@ -252,7 +257,11 @@ export default {
               { name: 'マトリックススイッチャー', anchor: '#', path: '/img/category/video-peripheral/1-03.png' },
               { name: 'セレクター', anchor: '#', path: '/img/category/video-peripheral/1-04.png' },
               { name: '分配器 / インターフェイス', anchor: '#', path: '/img/category/video-peripheral/1-05.png' },
-              { name: 'スキャンコンバーター/コンバーター', anchor: '#', path: '/img/category/video-peripheral/1-06.png' },
+              {
+                name: 'スキャンコンバーター/コンバーター',
+                anchor: '#',
+                path: '/img/category/video-peripheral/1-06.png',
+              },
               { name: 'フレームシンクロナイザー/TBC', anchor: '#', path: '/img/category/video-peripheral/1-07.png' },
               { name: 'エンハンサー / ケーブル補償器', anchor: '#', path: '/img/category/video-peripheral/1-08.png' },
               { name: 'ハムノイズフィルター', anchor: '#', path: '/img/category/video-peripheral/1-09.png' },
@@ -261,7 +270,11 @@ export default {
               { name: '伝送器', anchor: '#', path: '/img/category/video-peripheral/1-12.png' },
               { name: 'マルチビューワ', anchor: '#', path: '/img/category/video-peripheral/1-13.png' },
               { name: 'デジタル・アナログ放送システム', anchor: '#', path: '/img/category/video-peripheral/1-14.png' },
-              { name: 'midiタイムコードインターフェース', anchor: '#', path: '/img/category/video-peripheral/1-15.png' },
+              {
+                name: 'midiタイムコードインターフェース',
+                anchor: '#',
+                path: '/img/category/video-peripheral/1-15.png',
+              },
             ],
           },
           {
@@ -277,7 +290,8 @@ export default {
           },
         ],
       },
-      {// Camera
+      {
+        // Camera
         name: 'Camera',
         nameJp: 'カメラ',
         anchor: 'camera',
@@ -299,7 +313,8 @@ export default {
           },
         ],
       },
-      {// Sensor/App
+      {
+        // Sensor/App
         name: 'Sensor/App',
         nameJp: 'センサー/App',
         anchor: 'sensor',
@@ -310,12 +325,13 @@ export default {
             name: 'メディアアプリケーション/ センサー/インタラクティブ関連',
             grandchildCategoryLists: [
               { name: 'センサー', anchor: '#', path: '/img/category/sensor/1-01.png' },
-              { name: 'VR機器', anchor: '#', path: '/img/category/sensor/1-02.png' }
+              { name: 'VR機器', anchor: '#', path: '/img/category/sensor/1-02.png' },
             ],
           },
         ],
       },
-      {// Sound
+      {
+        // Sound
         name: 'Sound',
         nameJp: '音響機器',
         anchor: 'sound',
@@ -328,7 +344,11 @@ export default {
               { name: '有線マイク', anchor: '#', path: '/img/category/sound/1-01.png' },
               { name: 'ワイヤレス機器', anchor: '#', path: '/img/category/sound/1-02.png' },
               { name: 'マイクスタンド', path: '/img/category/sound/1-03.png' },
-              { name: 'CD / MD / カセットテープデッキ / フィールドレコーダー', anchor: '#', path: '/img/category/sound/1-04.png' },
+              {
+                name: 'CD / MD / カセットテープデッキ / フィールドレコーダー',
+                anchor: '#',
+                path: '/img/category/sound/1-04.png',
+              },
               { name: 'ミキサー', anchor: '#', path: '/img/category/sound/1-05.png' },
               { name: 'DJ機器', anchor: '#', path: '/img/category/sound/1-06.png' },
               { name: 'アンプ', anchor: '#', path: '/img/category/sound/1-07.png' },
@@ -340,12 +360,13 @@ export default {
           {
             name: 'インカム / トランシーバー',
             grandchildCategoryLists: [
-              { name: 'インカム・トランシーバー', anchor: '#', path: '/img/category/sound/2-01.png' }
+              { name: 'インカム・トランシーバー', anchor: '#', path: '/img/category/sound/2-01.png' },
             ],
           },
         ],
       },
-      {// Network
+      {
+        // Network
         name: 'Network',
         nameJp: 'ネットワーク/会議',
         anchor: 'network',
@@ -372,7 +393,8 @@ export default {
           },
         ],
       },
-      {// Other
+      {
+        // Other
         name: 'Other',
         nameJp: 'その他',
         anchor: 'other',
@@ -381,9 +403,7 @@ export default {
         childCategoryLists: [
           {
             name: '照明機器',
-            grandchildCategoryLists: [
-              { name: '照明機器', anchor: '#', path: '/img/category/other/1-01.png' }
-            ],
+            grandchildCategoryLists: [{ name: '照明機器', anchor: '#', path: '/img/category/other/1-01.png' }],
           },
           {
             name: '多目的用品 ',
@@ -397,8 +417,8 @@ export default {
           },
         ],
       },
-    ]
-  })
+    ],
+  }),
 }
 </script>
 
@@ -449,6 +469,7 @@ $other-bg: #563a2e;
   }
 }
 .cat-group {
+  overflow-x: hidden;
   &__ttl {
     &-icon {
       display: inline-block;
@@ -464,12 +485,12 @@ $other-bg: #563a2e;
       position: relative;
     }
     &-icon {
-      opacity: .5;
+      opacity: 0.5;
       top: 50%;
       right: 7%;
       transform: translateY(-50%) rotate(20deg);
       position: absolute;
-      #online &{
+      #online & {
         font-size: 163px;
       }
       #led & {
@@ -529,7 +550,7 @@ $other-bg: #563a2e;
     margin: -7px -8px;
   }
   &__col {
-    height: 82px;// 82px-padding:14px =中身68px
+    height: 82px; // 82px-padding:14px =中身68px
     padding: 7px 8px !important;
   }
   &__btn {
@@ -540,7 +561,7 @@ $other-bg: #563a2e;
     border: {
       width: 1px;
       style: solid;
-      radius: .5em;
+      radius: 0.5em;
     }
     display: inline-block;
     overflow: hidden;
@@ -572,37 +593,37 @@ $other-bg: #563a2e;
       top: 0;
       left: 0;
       #online & {
-        background-color: rgba($online-bg, .6);
+        background-color: rgba($online-bg, 0.6);
       }
       #led & {
-        background-color: rgba($led-bg, .5);
+        background-color: rgba($led-bg, 0.5);
       }
       #projector & {
-        background-color: rgba($pj-bg, .5);
+        background-color: rgba($pj-bg, 0.5);
       }
       #display & {
-        background-color: rgba($display-bg, .5);
+        background-color: rgba($display-bg, 0.5);
       }
       #media-player & {
-        background-color: rgba($media-bg, .5);
+        background-color: rgba($media-bg, 0.5);
       }
       #video-peripheral & {
-        background-color: rgba($video-bg, .5);
+        background-color: rgba($video-bg, 0.5);
       }
       #camera & {
-        background-color: rgba($camera-bg, .5);
+        background-color: rgba($camera-bg, 0.5);
       }
       #sensor & {
-        background-color: rgba($sensor-bg, .5);
+        background-color: rgba($sensor-bg, 0.5);
       }
       #sound & {
-        background-color: rgba($sound-bg, .5);
+        background-color: rgba($sound-bg, 0.5);
       }
       #network & {
-        background-color: rgba($network-bg, .5);
+        background-color: rgba($network-bg, 0.5);
       }
       #other & {
-        background-color: rgba($other-bg, .5);
+        background-color: rgba($other-bg, 0.5);
       }
     }
   }
@@ -645,7 +666,8 @@ $other-bg: #563a2e;
 }
 #online {
   .cat-group__child {
-    &:nth-of-type(1) {// オンラインイベント機器
+    &:nth-of-type(1) {
+      // オンラインイベント機器
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/online/1-01.png');
@@ -689,7 +711,8 @@ $other-bg: #563a2e;
 }
 #led {
   .cat-group__child {
-    &:nth-of-type(1) {// LEDディスプレイ
+    &:nth-of-type(1) {
+      // LEDディスプレイ
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/led/1-01.png');
@@ -723,7 +746,8 @@ $other-bg: #563a2e;
 }
 #projector {
   .cat-group__child {
-    &:nth-of-type(1) {// プロジェクター本体 / レンズ
+    &:nth-of-type(1) {
+      // プロジェクター本体 / レンズ
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/projector/1-01.png');
@@ -748,7 +772,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(2) {// プロジェクター関連機器
+    &:nth-of-type(2) {
+      // プロジェクター関連機器
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/projector/2-01.png');
@@ -772,7 +797,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(3) {// スクリーン
+    &:nth-of-type(3) {
+      // スクリーン
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/projector/3-01.png');
@@ -806,7 +832,8 @@ $other-bg: #563a2e;
 }
 #display {
   .cat-group__child {
-    &:nth-of-type(1) {// フラットディスプレイ
+    &:nth-of-type(1) {
+      // フラットディスプレイ
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/display/1-01.png');
@@ -824,7 +851,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(2) {// その他ディスプレイ
+    &:nth-of-type(2) {
+      // その他ディスプレイ
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/display/2-01.png');
@@ -854,7 +882,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(3) {// 自立スタンド / 壁掛・吊金具
+    &:nth-of-type(3) {
+      // 自立スタンド / 壁掛・吊金具
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/display/3-01.png');
@@ -872,14 +901,16 @@ $other-bg: #563a2e;
 }
 #media-player {
   .cat-group__child {
-    &:nth-of-type(1) {// メディアサーバー
+    &:nth-of-type(1) {
+      // メディアサーバー
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/media-player/1-01.png');
         }
       }
     }
-    &:nth-of-type(2) {// プレーヤー / レコーダー
+    &:nth-of-type(2) {
+      // プレーヤー / レコーダー
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/media-player/2-01.png');
@@ -889,7 +920,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(3) {// ハードディスク（メディア）レコーダー / プレーヤー
+    &:nth-of-type(3) {
+      // ハードディスク（メディア）レコーダー / プレーヤー
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/media-player/3-01.png');
@@ -902,7 +934,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(4) {// ビデオカセットレコーダー(VCR)
+    &:nth-of-type(4) {
+      // ビデオカセットレコーダー(VCR)
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/media-player/4-01.png');
@@ -913,7 +946,8 @@ $other-bg: #563a2e;
 }
 #video-peripheral {
   .cat-group__child {
-    &:nth-of-type(1) {// 映像周辺機器
+    &:nth-of-type(1) {
+      // 映像周辺機器
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/video-peripheral/1-01.png');
@@ -965,7 +999,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(2) {// ケーブル
+    &:nth-of-type(2) {
+      // ケーブル
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/video-peripheral/2-01.png');
@@ -994,7 +1029,8 @@ $other-bg: #563a2e;
 }
 #camera {
   .cat-group__child {
-    &:nth-of-type(1) {// カメラ
+    &:nth-of-type(1) {
+      // カメラ
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/camera/1-01.png');
@@ -1028,7 +1064,8 @@ $other-bg: #563a2e;
 }
 #sensor {
   .cat-group__child {
-    &:nth-of-type(1) {// メディアアプリケーション/ センサー/インタラクティブ関連
+    &:nth-of-type(1) {
+      // メディアアプリケーション/ センサー/インタラクティブ関連
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/sensor/1-01.png');
@@ -1044,7 +1081,8 @@ $other-bg: #563a2e;
 }
 #sound {
   .cat-group__child {
-    &:nth-of-type(1) {// 音響機器
+    &:nth-of-type(1) {
+      // 音響機器
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/sound/1-01.png');
@@ -1082,7 +1120,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(2) {// インカム / トランシーバー
+    &:nth-of-type(2) {
+      // インカム / トランシーバー
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/sound/2-01.png');
@@ -1093,7 +1132,8 @@ $other-bg: #563a2e;
 }
 #network {
   .cat-group__child {
-    &:nth-of-type(1) {// 会議用機器
+    &:nth-of-type(1) {
+      // 会議用機器
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/network/1-01.png');
@@ -1108,7 +1148,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(2) {// PC / ICTネットワーク機器
+    &:nth-of-type(2) {
+      // PC / ICTネットワーク機器
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/network/2-01.png');
@@ -1133,7 +1174,8 @@ $other-bg: #563a2e;
 }
 #other {
   .cat-group__child {
-    &:nth-of-type(1) {// 照明機器
+    &:nth-of-type(1) {
+      // 照明機器
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/other/1-01.png');
@@ -1141,7 +1183,8 @@ $other-bg: #563a2e;
         }
       }
     }
-    &:nth-of-type(2) {// 多目的用品
+    &:nth-of-type(2) {
+      // 多目的用品
       .cat-group__col {
         &:nth-child(1) .cat-group__btn::before {
           background-image: url('/img/category/other/2-01.png');
