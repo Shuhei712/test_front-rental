@@ -1,21 +1,9 @@
 <template>
-  <header
-    class="header d-flex align-center mt-6 mt-xl-10 px-4 px-xl-10 py-4 py-xl-8"
-  >
+  <header class="header d-flex align-center mt-6 mt-xl-10 px-4 px-xl-10 py-4 py-xl-8">
     <a class="header__logo d-flex align-center" href="/">
-      <img
-        class="logo__img"
-        src="@/assets/img/top/logo.png"
-        alt="TAKENAKA the SOLID WATER"
-      />
-      <img
-        class="logo__img--sp mr-2"
-        src="/img/sp/top/logo.png"
-        alt="TAKENAKA the SOLID WATER"
-      />
-      <span class="logo__service text-body-2 no-wrap"
-        >映像 / 音響機材の<br />レンタルサービス</span
-      >
+      <img class="logo__img" src="@/assets/img/top/logo.png" alt="TAKENAKA the SOLID WATER" />
+      <img class="logo__img--sp mr-2" src="/img/sp/top/logo.png" alt="TAKENAKA the SOLID WATER" />
+      <span class="logo__service text-body-2 no-wrap">映像 / 音響機材の<br />レンタルサービス</span>
     </a>
     <nav class="header__menu d-flex justify-center align-center ml-auto">
       <v-menu offset-y>
@@ -25,9 +13,7 @@
               <v-icon color="primary">mdi-information-outline</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="text-body-2"
-                >レンタルご利用案内</v-list-item-title
-              >
+              <v-list-item-title class="text-body-2">レンタルご利用案内</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -35,9 +21,7 @@
           <v-list-item-group>
             <v-list-item v-for="(list, index) in guidanceLists" :key="index">
               <v-list-item-content>
-                <v-list-item-title class="text-body-2">{{
-                  list.title
-                }}</v-list-item-title>
+                <v-list-item-title class="text-body-2">{{ list.title }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -45,18 +29,12 @@
       </v-menu>
       <v-list flat>
         <v-list-item-group class="d-flex align-center">
-          <v-list-item
-            v-for="(list, index) in menuLists"
-            :key="index"
-            :to="list.link"
-          >
+          <v-list-item v-for="(list, index) in menuLists" :key="index" :to="list.link">
             <v-list-item-icon class="mr-1">
               <v-icon color="primary">{{ list.icon }}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="text-body-2">{{
-                list.title
-              }}</v-list-item-title>
+              <v-list-item-title class="text-body-2">{{ list.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -69,20 +47,15 @@
         outlined
         dense
         prepend-inner-icon="mdi-magnify"
-        hide-details="auto"
-      ></v-text-field>
+        hide-details="auto"></v-text-field>
       <v-btn color="primary" class="ml-2 text-body-2 text-white" to="/products"
-        ><v-icon class="mr-1" color="#fff">mdi-text-search</v-icon
-        >詳細検索</v-btn
+        ><v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索</v-btn
       >
     </v-form>
     <v-spacer class="hidden-lg-and-up"></v-spacer>
     <div class="header__icon d-flex align-center">
       <v-btn text><v-icon color="primary" large>mdi-magnify</v-icon></v-btn>
-      <div
-        class="icon__trigger d-flex flex-column align-center"
-        @click="toggleMenu()"
-      >
+      <div class="icon__trigger d-flex flex-column align-center" @click="toggleMenu()">
         <div class="trigger__humberger" :class="{ active: menuFlg }">
           <span></span>
           <span></span>
@@ -107,13 +80,7 @@
             </v-list-item-icon>
           </v-list-item>
         </v-list-group>
-        <v-list-item
-          v-for="(list, index) in menuLists"
-          :key="index"
-          :to="list.link"
-          class="px-0"
-          link
-        >
+        <v-list-item v-for="(list, index) in menuLists" :key="index" :to="list.link" class="px-0" link>
           <v-list-item>
             <v-list-item-icon
               ><v-icon>{{ list.icon }}</v-icon>
@@ -136,17 +103,11 @@
             outlined
             dense
             prepend-inner-icon="mdi-magnify"
-            hide-details="auto"
-          ></v-text-field
+            hide-details="auto"></v-text-field
         ></v-col>
         <v-col cols="4">
-          <v-btn
-            color="primary"
-            class="text-body-2 text-white"
-            to="/products"
-            block
-            ><v-icon class="mr-1" color="#fff">mdi-text-search</v-icon
-            >詳細検索</v-btn
+          <v-btn color="primary" class="text-body-2 text-white" to="/products" block
+            ><v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索</v-btn
           ></v-col
         >
       </v-row>
@@ -157,9 +118,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><v-icon class="mr-2" color="#1A264B">mdi-login-variant</v-icon
-          ><span class="text-body-2"
-            >株式会社タケナカ コーポレートサイトへ</span
-          ></a
+          ><span class="text-body-2">株式会社タケナカ コーポレートサイトへ</span></a
         >
       </div>
     </nav>

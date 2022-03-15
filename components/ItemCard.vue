@@ -4,9 +4,7 @@
       <img class="pa-3" :src="path" />
     </div>
     <v-card-title class="text-body-2 mb-2">{{ maker }}</v-card-title>
-    <v-card-subtitle class="text-body-2" color="text">{{
-      name
-    }}</v-card-subtitle>
+    <v-card-subtitle class="text-body-2" color="text">{{ name }}</v-card-subtitle>
   </v-card>
 </template>
 
