@@ -10,10 +10,10 @@
           class="head__corporate hover-opacity mt-10 mt-md-0"
           href="https://www.takenaka-co.co.jp/"
           target="_blank"
-          rel="noopener noreferrer"
-          ><v-icon class="mr-2" color="#ffffff">mdi-login-variant</v-icon
-          ><span class="text-white text-body-2">株式会社タケナカ コーポレートサイトへ</span></a
-        >
+          rel="noopener noreferrer">
+          <v-icon class="mr-2" color="#ffffff">mdi-login-variant</v-icon>
+          <span class="text-white text-body-2">株式会社タケナカ コーポレートサイトへ</span>
+        </a>
         <v-spacer class="hidden-sm-and-down"></v-spacer>
         <div class="head__links mt-5 mt-md-0">
           <a
@@ -22,9 +22,9 @@
             class="hover-opacity mx-2"
             :href="list.link"
             target="_blank"
-            rel="noopener noreferrer"
-            ><img :src="list.src" :alt="list.alt"
-          /></a>
+            rel="noopener noreferrer">
+            <img :src="list.src" :alt="list.alt" />
+          </a>
         </div>
       </div>
       <v-row class="footer__info mt-10">
@@ -41,22 +41,22 @@
             </div>
             <div class="information__content mt-5">
               <div class="content__address text-body-2">
-                <span class="mr-3">{{ list.postCode }}</span
-                >{{ list.address }}
+                <span class="mr-3">{{ list.postCode }}</span>
+                {{ list.address }}
               </div>
-              <div class="content__contact mt-5 d-flex align-center text-body-2">
+              <div class="content__contact d-flex align-center text-body-2 mt-5">
                 <div class="contact__tel mr-10">
                   <v-icon class="mr-2" color="primary">mdi-phone</v-icon>{{ list.phone }}
                 </div>
                 <div class="contact__fax"><v-icon class="mr-2" color="primary">mdi-fax</v-icon>{{ list.fax }}</div>
               </div>
-              <div class="content__mail mt-5 d-flex align-center text-body-2 flex-wrap">
+              <div class="content__mail d-flex align-center flex-wrap text-body-2 mt-5">
                 <div class="mail__address mr-5">
                   <v-icon class="mr-2" color="primary">mdi-email-outline</v-icon>{{ list.email }}
                 </div>
-                <v-btn class="mail__copy text-white text-body-2 mt-5 mt-lg-0" outlined
-                  ><v-icon class="mr-2" color="primary">mdi-content-copy</v-icon>メールアドレスをコピー</v-btn
-                >
+                <v-btn class="mail__copy text-white text-body-2 mt-5 mt-lg-0" outlined>
+                  <v-icon class="mr-2" color="primary">mdi-content-copy</v-icon>メールアドレスをコピー
+                </v-btn>
               </div>
             </div>
           </div>

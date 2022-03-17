@@ -1,18 +1,18 @@
 <template>
   <div id="top" class="top">
     <div class="top__share top__share--fixed">
-      <v-btn class="share__twitter text-white text-body-2 mr-2" color="#00ACED"
-        ><div class="btn-shadow"></div>
-        <v-icon class="mr-2 rotate-90">mdi-twitter</v-icon>Tweet</v-btn
-      >
-      <v-btn class="share__twitter text-white text-body-2 mr-2" color="#3B5998"
-        ><v-icon class="mr-2 rotate-90">mdi-facebook</v-icon>Share</v-btn
-      >
+      <v-btn class="share__twitter text-white text-subtitle-2 mr-2" color="twitter">
+        <div class="btn-shadow"></div>
+        <v-icon class="mr-2 rotate-90">mdi-twitter</v-icon>Tweet
+      </v-btn>
+      <v-btn class="share__twitter text-white text-subtitle-2 mr-2" color="facebook">
+        <v-icon class="mr-2 rotate-90">mdi-facebook</v-icon>Share
+      </v-btn>
     </div>
     <div class="top__back top__back--fix">
-      <v-btn v-scroll-to="'#top'" class="text-body-2" color="cushion"
-        ><v-icon color="accent">mdi-chevron-up</v-icon>トップにもどる</v-btn
-      >
+      <v-btn v-scroll-to="'#top'" class="text-caption" color="cushion">
+        <v-icon color="accent">mdi-chevron-up</v-icon>トップにもどる
+      </v-btn>
     </div>
     <top-main class="hidden-md-and-down"></top-main>
     <top-main-rp class="hidden-lg-and-up"></top-main-rp>

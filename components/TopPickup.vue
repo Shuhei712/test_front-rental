@@ -17,13 +17,13 @@
             </h4>
           </div>
           <v-divider class="hidden-md-and-down" color="line" inset></v-divider>
-          <v-btn :to="list.link" class="ml-5 px-5 mt-8 mt-lg-0" outlined
-            >一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn
-          >
+          <v-btn :to="list.link" class="ml-5 mt-8 mt-lg-0" outlined>
+            一覧へ<v-icon color="primary">mdi-chevron-right</v-icon>
+          </v-btn>
         </div>
         <v-container class="item__content pa-0 pa-lg-3">
           <v-row class="ma-3">
-            <v-col v-for="(item, num) in list.itemLists" :key="num" class="pa-1 pa-lg-0" cols="6" lg="3">
+            <v-col v-for="(item, num) in list.itemLists" :key="num" class="pa-1 pa-lg-0" cols="6" md="3">
               <item-card :path="item.path" :maker="item.maker" :name="item.name"></item-card>
             </v-col>
           </v-row>
@@ -31,11 +31,10 @@
       </div>
     </div>
     <div class="pickup__btn text-center">
-      <v-btn to="/category" class="bg-white" outlined
-        ><v-icon class="mr-2" color="primary">mdi-shape-outline</v-icon>すべてのカテゴリから探す<v-icon color="primary"
-          >mdi-chevron-right</v-icon
-        ></v-btn
-      >
+      <v-btn to="/category" class="bg-white" outlined>
+        <v-icon class="mr-2" color="primary">mdi-shape-outline</v-icon>すべてのカテゴリから探す
+        <v-icon color="primary">mdi-chevron-right</v-icon>
+      </v-btn>
     </div>
   </section>
 </template>

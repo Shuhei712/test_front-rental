@@ -23,8 +23,8 @@
           <ul class="d-flex flex-wrap justify-start justify-lg-center pl-7 text-body-2 text-lg-subtitle-1">
             <li v-for="category in categoryLists" :key="category.name" class="mr-7 mb-5">
               <a v-scroll-to="{ el: '#' + category.anchor, offset: 200 }" class="d-flex align-center">
-                <v-icon class="mr-2">{{ category.icon }}</v-icon
-                >{{ category.nameJp }}<v-icon color="#878787">mdi-chevron-down</v-icon>
+                <v-icon class="mr-2">{{ category.icon }}</v-icon>
+                {{ category.nameJp }}<v-icon color="#878787">mdi-chevron-down</v-icon>
               </a>
             </li>
           </ul>
@@ -33,8 +33,8 @@
       <div v-for="category in categoryLists" :id="category.anchor" :key="category.name" class="cat-group mb-16">
         <!-- 大カテゴリー -->
         <h3 class="cat-group__ttl d-flex flex-column text-center text-h5 bold letter-space-015em mb-10">
-          <v-icon class="cat-group__ttl-icon mb-4">{{ category.icon }}</v-icon
-          >{{ category.name }}
+          <v-icon class="cat-group__ttl-icon mb-4">{{ category.icon }}</v-icon>
+          {{ category.name }}
         </h3>
         <div
           v-for="categoryChild in category.childCategoryLists"

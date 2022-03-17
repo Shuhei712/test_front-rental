@@ -5,7 +5,9 @@
     </div>
     <div class="category__lists mt-5">
       <v-list v-for="category in categoryLists" :key="category.name">
-        <v-subheader class="bold"><img class="mr-2" :src="category.path" /> {{ category.name }}</v-subheader>
+        <v-subheader class="text-h6 font-weight-medium">
+          <img class="mr-2" :src="category.path" /> {{ category.name }}
+        </v-subheader>
         <v-list-group v-for="childCategory in category.childCategoryLists" :key="childCategory.name" :value="false">
           <template #activator>
             <v-list-item-title class="text-body-2">{{ childCategory.name }}</v-list-item-title>
@@ -27,7 +29,7 @@ export default {
   data: () => ({
     categoryLists: [
       {
-        name: 'online',
+        name: 'Online',
         path: '/img/category/online.png',
         childCategoryLists: [
           {
@@ -73,7 +75,7 @@ export default {
         path: '/img/category/projector.png',
         childCategoryLists: [
           {
-            name: 'プロジェクタ-',
+            name: 'プロジェクター',
             grandchildCategoryLists: [
               { name: '10000lm以上' },
               { name: '7000lm～10000lm' },

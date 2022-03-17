@@ -12,8 +12,8 @@
             <ul class="d-flex flex-wrap justify-center pl-7">
               <li v-for="article in articleLists" :key="article.category" class="mr-7 mb-5">
                 <a v-scroll-to="{ el: '#' + article.anchor, offset: -130 }" class="d-flex align-center">
-                  <v-icon class="mr-2">{{ article.icon }}</v-icon
-                  >{{ article.category }}<v-icon color="#878787">mdi-chevron-down</v-icon>
+                  <v-icon class="mr-2">{{ article.icon }}</v-icon>
+                  {{ article.category }}<v-icon color="#878787">mdi-chevron-down</v-icon>
                 </a>
               </li>
             </ul>
@@ -21,17 +21,17 @@
         </div>
         <div v-for="article in articleLists" :id="article.anchor" :key="article.category" class="group mb-16">
           <h3 class="group__ttl d-flex flex-column text-center text-h5 bold letter-space-015em mb-10">
-            <v-icon class="group__ttl-icon mb-4">{{ article.icon }}</v-icon
-            >{{ article.category }}
+            <v-icon class="group__ttl-icon mb-4">{{ article.icon }}</v-icon>
+            {{ article.category }}
           </h3>
           <v-container class="group__container">
             <v-row no-gutters class="group__row justify-center">
               <v-col v-for="(articleItem, index) in article.items" :key="index" cols="3" class="group__col d-flex">
                 <v-card :color="article.color" class="article-card" :href="articleItem.anchor" target="_blank">
                   <v-img height="108" :src="articleItem.path" />
-                  <v-card-subtitle class="article-card__subtitle bg-white text-caption text-center pa-1">{{
-                    articleItem.subTitle
-                  }}</v-card-subtitle>
+                  <v-card-subtitle class="article-card__subtitle bg-white text-caption text-center pa-1">
+                    {{ articleItem.subTitle }}
+                  </v-card-subtitle>
                   <v-card-title class="article-card__title text-white text-body-1 bold px-3">
                     <!-- eslint-disable-next-line vue/no-v-html -->
                     <h4 class="article-card__title-text" v-html="articleItem.title">{{ articleItem.title }}</h4>

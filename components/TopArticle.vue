@@ -1,22 +1,19 @@
 <template>
   <section class="article">
-    <div class="article__heading px-3 px-md-10 d-flex align-center">
+    <div class="article__heading d-flex align-center px-3 px-md-10">
       <v-icon class="mr-5" color="accent">mdi-creation</v-icon>
       <h3 class="zen-kaku-gothic text-h6 text-md-h5 letter-space-02em">
         特設ページ<span class="zen-kaku-gothic text-body-2 text-md-h6 letter-space-02em">ほか</span>
       </h3>
       <v-divider color="line"></v-divider>
-      <v-btn class="ml-5 px-5" outlined>一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn>
+      <v-btn class="ml-5" to="/article" outlined>一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn>
     </div>
-    <v-container class="article__content px-1 px-lg-8 d-flex flex-column">
+    <v-container class="article__content d-flex flex-column px-1 px-lg-8">
       <div class="article__list order-1 order-lg-0">
         <v-row no-gutters>
-          <v-col v-for="(list, index) in articleLists" :key="index" class="pa-md-2 mt-3 mt-md-0" cols="12" md="3">
-            <article-card
-              :color="list.color"
-              :path="list.path"
-              :category="list.category"
-              :title="list.title"></article-card>
+          <v-col v-for="(list, index) in articleLists" :key="index" class="mt-3 mt-md-0 pa-md-2" cols="12" md="3">
+            <article-card :color="list.color" :path="list.path" :category="list.category" :title="list.title">
+            </article-card>
           </v-col>
         </v-row>
       </div>
@@ -25,19 +22,13 @@
           <v-col cols="2"><div class="text-body-2 text-no-wrap">絞り込み</div></v-col>
           <v-col cols="1"><v-divider></v-divider></v-col>
           <v-col cols="9">
-            <div class="search__input ml-2">
-              <input id="all" type="radio" name="tag" />
-              <label for="all" class="tag--all rounded-pill px-3 py-1 text-body-2">ALL</label>
-              <input id="feature" type="radio" name="tag" />
-              <label for="feature" class="tag--feature rounded-pill px-3 py-1 text-body-2">機材特集</label>
-              <input id="suggest" type="radio" name="tag" />
-              <label for="suggest" class="tag--suggest rounded-pill px-3 py-1 text-body-2">活用提案</label>
-              <input id="catalog" type="radio" name="tag" />
-              <label for="catalog" class="tag--catalog rounded-pill px-3 py-1 text-body-2">チラシ/カタログ</label>
-              <input id="sns" type="radio" name="tag" />
-              <label for="sns" class="tag--sns rounded-pill px-3 py-1 text-body-2">SNS</label>
-              <input id="sales" type="radio" name="tag" />
-              <label for="sales" class="tag--sales rounded-pill px-3 py-1 text-body-2">販売</label>
+            <div class="search__input d-flex flex-wrap ml-2">
+              <div v-for="(list, index) in categoryLists" :key="index">
+                <input :id="list.style" type="radio" name="tag" />
+                <label :for="list.style" :class="list.class" class="rounded-pill px-3 py-1 text-body-2">
+                  {{ list.name }}
+                </label>
+              </div>
             </div>
           </v-col>
         </v-row>
@@ -81,32 +72,38 @@ export default {
         {
           name: 'ALL',
           value: 0,
-          style: 'tag--all',
+          style: 'all',
+          class: 'tag--all',
         },
         {
           name: '機材特集',
           value: 1,
-          style: 'tag--feature',
+          style: 'feature',
+          class: 'tag--feature',
         },
         {
           name: '活用提案',
           value: 2,
-          style: 'tag--suggest',
+          style: 'suggest',
+          class: 'tag--suggest',
         },
         {
           name: 'チラシ/カタログ',
           value: 3,
-          style: 'tag--catalog',
+          style: 'catalog',
+          class: 'tag--catalog',
         },
         {
           name: 'sns',
           value: 4,
-          style: 'tag--sns',
+          style: 'sns',
+          class: 'tag--sns',
         },
         {
           name: '販売',
           value: 5,
-          style: 'tag--sales',
+          style: 'sales',
+          class: 'tag--sales',
         },
       ],
     }

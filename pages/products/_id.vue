@@ -13,11 +13,11 @@
           {{ productList.name }}
         </div>
         <div class="detail__top d-flex flex-column flex-sm-row">
-          <div class="top__image mr-5 d-flex d-sm-block">
+          <div class="top__image mr-0 mr-sm-5 d-flex d-sm-block">
             <div class="image__main mr-3 mr-md-0 mt-3 mt-md-0">
               <img :src="productList.image" :alt="productList.name" />
             </div>
-            <div class="image__sub mt-3 mt-md-0">
+            <div class="image__sub mt-3 mt-md-0 flex-grow-1">
               <button id="sub--01"></button>
               <button id="sub--02"></button>
               <button id="sub--03"></button>
@@ -49,21 +49,37 @@
                   >2日目以降の料金</v-btn
                 >
               </div>
-              <div class="price--sp d-flex align-center flex-wrap mt-5 text-body-2">
-                <div class="mr-5">
-                  <div class="price__head text-body-2 px-3 py-1 text-no-wrap text-center">レンタル価格</div>
-                  <div class="price__day text-body-2 letter-space-015em px-3 py-1 text-center text-no-wrap">
+              <div class="price--md d-flex align-center flex-wrap mt-5 text-body-2">
+                <div class="mr-4">
+                  <div class="price__head text-caption px-3 py-2 text-no-wrap text-center">レンタル価格</div>
+                  <div class="price__day text-caption letter-space-015em px-3 py-2 text-center text-no-wrap">
                     1日/税別
                   </div>
                 </div>
-                <span class="price__product text-h5 letter-space-015em px-3 py-1">{{ productList.price }}</span
-                >円
-                <v-btn class="price__more text-body-2 mt-3" color="primary" block
-                  ><span class="price__class text-body-1 font-weight-bold text-center mr-2">{{
-                    productList.class
-                  }}</span
-                  >２日目以降の料金</v-btn
-                >
+                <span class="price__product text-h5 letter-space-015em font-weight-medium">{{
+                  productList.price
+                }}</span>
+                円
+                <button class="price__more pa-2 ml-4">
+                  <span class="price__class text-caption mb-1">{{ productList.class }}</span>
+                  2日目以降<br />の料金
+                </button>
+              </div>
+              <div class="price--sp d-flex justify-space-between align-center flex-wrap mt-5 text-body-2">
+                <div>
+                  <div class="price__head text-caption px-3 py-2 text-no-wrap text-center">レンタル価格</div>
+                  <div class="price__day text-caption letter-space-015em px-3 py-2 text-center text-no-wrap">
+                    1日/税別
+                  </div>
+                </div>
+                <span class="price__product text-h5 letter-space-015em font-weight-medium">{{
+                  productList.price
+                }}</span>
+                円
+                <button class="price__more pa-2 ml-4">
+                  <span class="price__class text-caption mb-1">{{ productList.class }}</span>
+                  2日目以降<br />の料金
+                </button>
               </div>
               <div class="tags mt-8">
                 <v-btn
@@ -149,12 +165,6 @@
               </div>
               <div class="product-info__content mt-10">
                 <table>
-                  <!-- <thead>
-                    <tr>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                  </thead> -->
                   <tbody>
                     <tr>
                       <th class="text-center">この商品の特徴</th>
@@ -464,6 +474,7 @@ export default {
 .detail {
   position: relative;
   height: auto;
+  overflow-x: hidden;
 
   &__inner {
     width: 100%;
@@ -580,18 +591,40 @@ export default {
         }
       }
 
+      .price--md,
       .price--sp {
         display: none !important;
-
-        @include mq(md) {
-          display: flex !important;
-        }
         .price__head {
           background-color: $accent;
           color: #ffffff;
         }
         .price__day {
           background-color: $cushion;
+        }
+
+        .price__more {
+          min-width: 75px;
+          display: inline-block;
+          font-size: 11px;
+          line-height: 15px;
+          border-radius: 10px;
+          height: 100%;
+          background-color: $primary;
+          color: #ffffff;
+
+          span {
+            display: block;
+            margin: 0 auto;
+            font-size: 11px;
+            line-height: 11px;
+            font-weight: bold;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            color: $primary;
+          }
         }
 
         .price__class {
@@ -602,6 +635,22 @@ export default {
           border-radius: 50%;
           background-color: #ffffff;
           color: $primary;
+        }
+      }
+
+      .price--md {
+        @include mq(md) {
+          display: flex !important;
+        }
+
+        @include mq(sm) {
+          display: none !important;
+        }
+      }
+
+      .price--sp {
+        @include mq(sm) {
+          display: flex !important;
         }
       }
 
