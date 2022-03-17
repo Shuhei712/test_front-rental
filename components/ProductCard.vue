@@ -1,61 +1,114 @@
 <template>
-  <div>
-    <v-card
-      v-for="(list, index) in productLists"
-      :key="index"
-      class="product mt-8"
-      elevation="0"
-      link
-      to="/products/name">
-      <div class="product__info d-flex">
-        <div class="info__img mr-3">
-          <img :src="list.image" :alt="list.name" />
-        </div>
-        <div class="info__details flex-grow-1 d-flex flex-column">
-          <div class="categories d-flex px-3 py-1">
-            <div v-for="category in list.categoryLists" :key="category.name" class="search-tag text-body-2 mr-2">
-              <v-icon class="mr-2">mdi-check</v-icon>{{ category.name }}
-            </div>
-          </div>
-          <div class="name mt-2">
-            <div class="name__maker text-body-2">{{ list.maker }}</div>
-            <div class="name__product text-h6 font-weight-bold letter-space-015em mt-2">
-              {{ list.name }}
-            </div>
-          </div>
-          <v-spacer></v-spacer>
-          <div class="price d-flex align-center mb-2 text-body-2">
-            <span class="price__head text-body-2 px-3 py-1 text-no-wrap">レンタル価格</span>
-            <span class="price__day text-body-2 letter-space-015em px-3 py-1 text-no-wrap">1日/税別</span>
-            <span class="price__product text-h5 letter-space-015em px-3 py-1">{{ list.price }}</span
-            >円
-            <v-btn class="price__more text-body-2 ml-5" color="primary"
-              ><span class="price__class text-body-1 mr-2 font-weight-bold text-center">{{ list.class }}</span
-              >2日目以降の料金</v-btn
-            >
+  <v-card class="product mt-8" elevation="0" link :to="link">
+    <div class="categories--sp d-flex flex-wrap px-3 py-1 mb-4">
+      <div v-for="category in categoryLists" :key="category.name" class="search-tag text-caption mr-2">
+        <v-icon class="mr-2" small>mdi-check</v-icon>{{ category.name }}
+      </div>
+    </div>
+    <div class="product__info d-flex">
+      <div class="info__img mr-3">
+        <img :src="image" :alt="name" />
+      </div>
+      <div class="info__details flex-grow-1 d-flex flex-column">
+        <div class="categories d-flex px-3 py-1">
+          <div v-for="category in categoryLists" :key="category.name" class="search-tag text-body-2 mr-2">
+            <v-icon class="mr-2">mdi-check</v-icon>{{ category.name }}
           </div>
         </div>
+        <div class="name mt-2">
+          <div class="name__maker text-caption text-sm-body-2">{{ maker }}</div>
+          <div class="name__product text-body-2 font-weight-medium text-sm-h6 letter-space-015em mt-2">
+            {{ name }}
+          </div>
+        </div>
+        <v-spacer></v-spacer>
+        <div class="price d-flex align-center mb-2 text-body-2">
+          <span class="price__head text-body-2 px-3 py-1 text-no-wrap">レンタル価格</span>
+          <span class="price__day text-body-2 letter-space-015em px-3 py-1 text-no-wrap">1日/税別</span>
+          <span class="price__product text-h5 letter-space-015em px-3 py-1">{{ price }}</span
+          >円
+          <v-btn class="price__more text-body-2 ml-5" color="primary"
+            ><span class="price__class text-body-1 mr-2 font-weight-bold text-center">{{ section }}</span
+            >2日目以降の料金</v-btn
+          >
+        </div>
+        <div class="price--md d-flex align-center flex-wrap mt-5 text-body-2">
+          <div class="mr-4">
+            <div class="price__head text-caption px-3 py-2 text-no-wrap text-center">レンタル価格</div>
+            <div class="price__day text-caption letter-space-015em px-3 py-2 text-center text-no-wrap">1日/税別</div>
+          </div>
+          <span class="price__product text-h5 letter-space-015em font-weight-medium">{{ price }}</span>
+          円
+          <button class="price__more pa-2 ml-4">
+            <span class="price__class text-caption mb-1">{{ section }}</span>
+            2日目以降<br />の料金
+          </button>
+        </div>
       </div>
-      <div class="product__tags mt-2">
-        <v-btn
-          v-for="tag in list.tagLists"
-          :key="tag.name"
-          class="product-tag px-3 py-1 mr-2"
-          elevation="0"
-          tile
-          small
-          >{{ tag.name }}</v-btn
-        >
+    </div>
+    <div class="price--sp d-flex justify-space-between align-center flex-wrap mt-5 text-body-2">
+      <div>
+        <div class="price__head text-caption px-3 py-2 text-no-wrap text-center">レンタル価格</div>
+        <div class="price__day text-caption letter-space-015em px-3 py-2 text-center text-no-wrap">1日/税別</div>
       </div>
-      <div class="product__descriptions mt-2">
-        {{ list.description }}
-      </div>
-    </v-card>
-  </div>
+      <span class="price__product text-h5 letter-space-015em font-weight-medium">{{ price }}</span>
+      円
+      <button class="price__more pa-2 ml-4">
+        <span class="price__class text-caption mb-1">{{ section }}</span>
+        2日目以降<br />の料金
+      </button>
+    </div>
+    <div class="product__tags mt-2">
+      <v-btn v-for="tag in tagLists" :key="tag.name" class="product-tag px-3 py-1 mr-2 mt-2" elevation="0" tile small>{{
+        tag.name
+      }}</v-btn>
+    </div>
+    <div class="product__descriptions text-caption text-sm-body-1 mt-4">
+      {{ description }}
+    </div>
+  </v-card>
 </template>
 
 <script>
 export default {
+  props: {
+    name: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    maker: {
+      type: String,
+      required: true,
+    },
+    categoryLists: {
+      type: Array,
+      required: true,
+    },
+    price: {
+      type: String,
+      required: true,
+    },
+    section: {
+      type: String,
+      required: true,
+    },
+    tagLists: {
+      type: Array,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    link: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       productLists: [
@@ -147,7 +200,7 @@ export default {
           name: '4K対応 HDMIファイバーケーブル 100m / 70m / 50m / 30m /10m APF100.70.50.30.10-HDM',
           image: '/img/products/product_img_08.png',
           maker: 'CANARE',
-          price: '1,000~7,000',
+          price: '7,000',
           class: 'A',
           description:
             'プラスチックファイバで曲げやすく扱いやすいケーブルです。グラスファイバ仕様を超える強度。定電圧ICにより外部給電は不要です。※すべての機器での動作を保証するものではありません。',
@@ -263,15 +316,28 @@ export default {
     width: 185px;
     height: 185px;
     object-fit: cover;
+
+    @include mq(sm) {
+      width: 100px;
+      height: 100px;
+    }
   }
 
   .info__details {
     .categories {
       background-color: $cushion;
+
+      @include mq(md) {
+        display: none !important;
+      }
     }
   }
 
   .price {
+    @include mq(md) {
+      display: none !important;
+    }
+
     .price__head {
       background-color: $accent;
       color: #ffffff;
@@ -294,6 +360,79 @@ export default {
   .product-tag {
     background-color: $cushion;
     color: $primary;
+  }
+
+  // レスポンシブ用のクラス
+  .categories--sp {
+    background-color: $cushion;
+    display: none !important;
+
+    @include mq(md) {
+      display: flex !important;
+    }
+  }
+
+  .price--md,
+  .price--sp {
+    display: none !important;
+    .price__head {
+      background-color: $accent;
+      color: #ffffff;
+    }
+    .price__day {
+      background-color: $cushion;
+    }
+
+    .price__more {
+      min-width: 75px;
+      display: inline-block;
+      font-size: 11px;
+      line-height: 15px;
+      border-radius: 10px;
+      height: 100%;
+      background-color: $primary;
+      color: #ffffff;
+
+      span {
+        display: block;
+        margin: 0 auto;
+        font-size: 11px;
+        line-height: 11px;
+        font-weight: bold;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        color: $primary;
+      }
+    }
+
+    .price__class {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      color: $primary;
+    }
+  }
+
+  .price--md {
+    @include mq(md) {
+      display: flex !important;
+    }
+
+    @include mq(sm) {
+      display: none !important;
+    }
+  }
+
+  .price--sp {
+    @include mq(sm) {
+      display: flex !important;
+    }
   }
 }
 </style>
