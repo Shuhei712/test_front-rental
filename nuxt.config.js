@@ -101,6 +101,8 @@ export default {
           catalog: '#c19c49',
           sns: '#638bba',
           sales: '#af69aa',
+          twitter: '#00ACED',
+          facebook: '#3B5998',
         },
       },
     },
