@@ -50,10 +50,10 @@
               :name="list.name"
               :image="list.image"
               :maker="list.maker"
-              :categoryLists="list.categoryLists"
+              :category-lists="list.categoryLists"
               :price="list.price"
               :section="list.class"
-              :tagLists="list.tagLists"
+              :tag-lists="list.tagLists"
               :description="list.description"
               link="/products/name">
             </product-card>
