@@ -31,5 +31,9 @@ export default {
   background-position: center;
   background-size: cover;
   padding-top: calc(100px + 32px);
+
+  @include mq(sm) {
+    background-image: url('/img/sp/top_bar/top_bar.png');
+  }
 }
 </style>
