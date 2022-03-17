@@ -31,6 +31,7 @@ export default {
 .item-card {
   img {
     max-width: 100%;
+    max-height: 115px;
     display: inline-block;
     object-fit: cover;
   }

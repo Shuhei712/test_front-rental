@@ -21,18 +21,16 @@
       </v-row>
       <v-row class="main__menu mt-5 mt-sm-15">
         <v-col cols="12">
-          <v-btn block
-            ><img class="icon mr-1" src="@/assets/img/top/beginner-icon.png" />はじめての方へ<v-icon color="primary"
-              >mdi-chevron-right</v-icon
-            ></v-btn
-          >
+          <v-btn block>
+            <img class="icon mr-1" src="@/assets/img/top/beginner-icon.png" />はじめての方へ
+            <v-icon color="primary"> mdi-chevron-right </v-icon>
+          </v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block
-            ><v-icon class="mr-1" color="primary">mdi-help-circle-outline</v-icon>よくある質問<v-icon color="primary"
-              >mdi-chevron-right</v-icon
-            ></v-btn
-          >
+          <v-btn block>
+            <v-icon class="mr-1" color="primary">mdi-help-circle-outline</v-icon>よくある質問
+            <v-icon color="primary">mdi-chevron-right</v-icon>
+          </v-btn>
         </v-col>
       </v-row>
       <v-row class="main__search">
@@ -44,12 +42,12 @@
             outlined
             dense
             prepend-inner-icon="mdi-magnify"
-            hide-details="auto"></v-text-field
-        ></v-col>
+            hide-details="auto"></v-text-field>
+        </v-col>
         <v-col cols="12">
-          <v-btn class="text-white" color="primary" to="/products" block
-            ><v-icon class="mr-1" color="#ffffff">mdi-text-search</v-icon>詳細検索</v-btn
-          >
+          <v-btn class="text-white" color="primary" to="/products" block>
+            <v-icon class="mr-1" color="#ffffff">mdi-text-search</v-icon>詳細検索
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>

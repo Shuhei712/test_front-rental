@@ -11,10 +11,11 @@
           </div>
           <div class="serach__condition flex-grow-1 pa-3">
             <div class="condition__head text-body-2 d-flex align-center flex-wrap text-no-wrap">
-              現在の検索条件<v-icon>mdi-chevron-right</v-icon
-              ><v-btn class="px-0" text @click="dialog = true"
-                ><v-icon color="primary">mdi-text-search</v-icon>変更して絞り込む</v-btn
-              >
+              現在の検索条件
+              <v-icon>mdi-chevron-right</v-icon>
+              <v-btn class="px-0" text @click="dialog = true">
+                <v-icon color="primary">mdi-text-search</v-icon>変更して絞り込む
+              </v-btn>
             </div>
             <div class="condition__tags mt-1 d-flex align-center flex-wrap">
               <div class="search-tag text-body-2 mr-2"><v-icon class="mr-2">mdi-check</v-icon>スイッチャー</div>
@@ -44,8 +45,19 @@
           <v-btn class="condition__reset mt-3 mt-lg-0" color="line" outlined>カテゴリ以外の条件をリセット</v-btn>
         </div>
         <div class="product__main">
-          <product-card class="hidden-sm-and-down"></product-card>
-          <product-card-rp class="hidden-md-and-up"></product-card-rp>
+          <div v-for="(list, index) in productLists" :key="index">
+            <product-card
+              :name="list.name"
+              :image="list.image"
+              :maker="list.maker"
+              :category-lists="list.categoryLists"
+              :price="list.price"
+              :section="list.class"
+              :tag-lists="list.tagLists"
+              :description="list.description"
+              link="/products/name">
+            </product-card>
+          </div>
         </div>
         <div class="product__pagination text-center mt-15">
           <v-pagination v-model="page" :length="2"></v-pagination>

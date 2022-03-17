@@ -3,7 +3,7 @@
     <a class="header__logo d-flex align-center" href="/">
       <img class="logo__img" src="@/assets/img/top/logo.png" alt="TAKENAKA the SOLID WATER" />
       <img class="logo__img--sp mr-2" src="/img/sp/top/logo.png" alt="TAKENAKA the SOLID WATER" />
-      <span class="logo__service text-body-2 no-wrap">映像 / 音響機材の<br />レンタルサービス</span>
+      <span class="logo__service text-caption no-wrap">映像 / 音響機材の<br />レンタルサービス</span>
     </a>
     <nav class="header__menu d-flex justify-center align-center ml-auto">
       <v-menu offset-y>
@@ -13,7 +13,7 @@
               <v-icon color="primary">mdi-information-outline</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="text-body-2">レンタルご利用案内</v-list-item-title>
+              <v-list-item-title class="text-body-2 text-xl-body-1">レンタルご利用案内</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -21,7 +21,7 @@
           <v-list-item-group>
             <v-list-item v-for="(list, index) in guidanceLists" :key="index">
               <v-list-item-content>
-                <v-list-item-title class="text-body-2">{{ list.title }}</v-list-item-title>
+                <v-list-item-title class="text-body-2 text-xl-body-1">{{ list.title }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -34,7 +34,7 @@
               <v-icon color="primary">{{ list.icon }}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="text-body-2">{{ list.title }}</v-list-item-title>
+              <v-list-item-title class="text-body-2 text-xl-body-1">{{ list.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -48,9 +48,9 @@
         dense
         prepend-inner-icon="mdi-magnify"
         hide-details="auto"></v-text-field>
-      <v-btn color="primary" class="ml-2 text-body-2 text-white" to="/products"
-        ><v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索</v-btn
-      >
+      <v-btn color="primary" class="ml-2 text-body-2 text-white" to="/products">
+        <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
+      </v-btn>
     </v-form>
     <v-spacer class="hidden-lg-and-up"></v-spacer>
     <div class="header__icon d-flex align-center">
@@ -71,10 +71,10 @@
             <v-list-item-icon>
               <v-icon>mdi-information-outline</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>レンタルご利用案内</v-list-item-title>
+            <v-list-item-title class="text-body-2">レンタルご利用案内</v-list-item-title>
           </template>
           <v-list-item v-for="(list, index) in guidanceLists" :key="index" link>
-            <v-list-item-title>{{ list.title }}</v-list-item-title>
+            <v-list-item-title class="text-body-2">{{ list.title }}</v-list-item-title>
             <v-list-item-icon>
               <v-icon>mdi-chevron-right</v-icon>
             </v-list-item-icon>
@@ -85,7 +85,7 @@
             <v-list-item-icon
               ><v-icon>{{ list.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>
+            <v-list-item-title class="text-body-2">
               {{ list.title }}
             </v-list-item-title>
             <v-list-item-icon>
@@ -94,32 +94,32 @@
           </v-list-item>
         </v-list-item>
       </v-list>
-      <v-row class="menu__search mt-5 pa-2" justify="center" no-gutters>
-        <v-col cols="8"
-          ><v-text-field
+      <v-row class="menu__search mt-8" justify="center" no-gutters>
+        <v-col cols="8">
+          <v-text-field
             class="mr-3"
             color="primary"
             placeholder="キーワード検索"
             outlined
             dense
             prepend-inner-icon="mdi-magnify"
-            hide-details="auto"></v-text-field
-        ></v-col>
+            hide-details="auto"></v-text-field>
+        </v-col>
         <v-col cols="4">
-          <v-btn color="primary" class="text-body-2 text-white" to="/products" block
-            ><v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索</v-btn
-          ></v-col
-        >
+          <v-btn color="primary" class="text-body-2 text-white" to="/products" block>
+            <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
+          </v-btn>
+        </v-col>
       </v-row>
       <div class="menu__corporate text-center mt-10">
         <a
           class="hover-opacity mt-10 mt-md-0 text-center"
           href="https://www.takenaka-co.co.jp/"
           target="_blank"
-          rel="noopener noreferrer"
-          ><v-icon class="mr-2" color="#1A264B">mdi-login-variant</v-icon
-          ><span class="text-body-2">株式会社タケナカ コーポレートサイトへ</span></a
-        >
+          rel="noopener noreferrer">
+          <v-icon class="mr-2" color="#1A264B">mdi-login-variant</v-icon>
+          <span class="text-caption">株式会社タケナカ コーポレートサイトへ</span>
+        </a>
       </div>
     </nav>
   </header>
@@ -226,6 +226,7 @@ export default {
     .icon__trigger {
       cursor: pointer;
       z-index: 110;
+      font-size: 10px !important;
     }
 
     .trigger__humberger {
