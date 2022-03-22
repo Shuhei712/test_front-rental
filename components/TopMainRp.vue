@@ -53,7 +53,7 @@
     </v-container>
     <div class="top__notice d-flex flex-column text-body-2 mt-10 mt-md-15">
       <div class="notice__lists text-center">
-        <a class="text-white" href="/">お知らせ一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></a>
+        <a class="text-white" href="/notice">お知らせ一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></a>
       </div>
       <div class="notice__pickup px-3 px-sm-10 no-wrap">
         <p class="mb-0">新型コロナウイルス対策のための土曜日休業、 時差出退勤のお知らせ</p>
