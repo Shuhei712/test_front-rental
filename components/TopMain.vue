@@ -63,7 +63,9 @@
         新型コロナウイルス対策のための土曜日休業、 時差出退勤のお知らせ
       </div>
       <div class="notice__lists pl-10">
-        <a class="text-white text-body-2" href="/">お知らせ一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></a>
+        <a class="text-white text-body-2" href="/notice">
+          お知らせ一覧へ<v-icon color="primary">mdi-chevron-right</v-icon>
+        </a>
       </div>
     </div>
   </section>
