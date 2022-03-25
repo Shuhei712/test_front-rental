@@ -89,6 +89,22 @@ export default {
       // console.log(res)
       return res
     },
+    async getCategoryList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_category_list.php', param)
+      // console.log(res)
+      return res
+    },
+    async getNewsList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_news_list_top.php', param)
+      // console.log(res)
+      return res
+    },
   },
 }
 </script>
