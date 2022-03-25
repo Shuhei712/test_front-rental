@@ -81,6 +81,14 @@ export default {
         },
       })
     },
+    async getMenuList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_menu_list.php', param)
+      // console.log(res)
+      return res
+    },
   },
 }
 </script>
