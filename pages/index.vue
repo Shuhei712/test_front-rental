@@ -113,6 +113,15 @@ export default {
       // console.log(res)
       return res
     },
+    async getNewProductList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ListMaxCnt', 4)
+      const res = await this.$axios.$post('get_new_product_list_top.php', param)
+      console.log(res)
+      return res.NewProductList
+    },
   },
 }
 </script>
