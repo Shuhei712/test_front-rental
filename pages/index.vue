@@ -19,7 +19,7 @@
     <div class="top__inner d-flex py-16">
       <category-lists></category-lists>
       <div class="content">
-        <top-new></top-new>
+        <top-new :new-product-lists="newProductLists"></top-new>
         <top-article></top-article>
         <top-pickup></top-pickup>
       </div>
