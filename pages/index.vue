@@ -35,6 +35,7 @@ if (process.client) {
 }
 
 export default {
+  async fetch() {
     const [menuLists, categoryLists, newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] =
       await Promise.all([
         this.getMenuList(),
@@ -45,6 +46,26 @@ export default {
         this.getSpecialPageList(),
         this.getPickUpTagList(),
       ])
+
+    this.menuLists = menuLists
+    this.categoryLists = categoryLists
+    this.newsLists = newsLists
+    this.pickupLists = pickupLists
+    this.newProductLists = newProductLists
+    this.specialPageLists = specialPageLists
+    this.pickupTagLists = pickupTagLists
+  },
+  data() {
+    return {
+      menuLists: [],
+      categoryLists: [],
+      newsLists: [],
+      pickupLists: [],
+      newProductLists: [],
+      specialPageLists: [],
+      pickupTagLists: [],
+    }
+  },
   mounted() {
     this.scrollShareButton()
     this.scrollBackButton()
