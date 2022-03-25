@@ -67,6 +67,14 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
+  publicRuntimeConfig: {
+    PROJECT_KEY: process.env.PROJECT_KEY,
+    LANG_JAPANESE: process.env.LANG_JAPANESE,
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+    },
+  },
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
