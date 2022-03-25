@@ -12,7 +12,7 @@
 export default {
   props: {
     path: {
-      type: String,
+      // type: String,
       required: true,
     },
     maker: {
