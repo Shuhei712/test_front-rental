@@ -11,10 +11,14 @@
     <v-container class="article__content d-flex flex-column px-1 px-lg-8">
       <div class="article__list order-1 order-lg-0">
         <v-row no-gutters>
-          <v-col v-for="(list, index) in articleLists" :key="index" class="mt-3 mt-md-0 pa-md-2" cols="12" md="3">
-            <article-card :color="list.color" :path="list.path" :category="list.category" :title="list.title">
-            </article-card>
-          </v-col>
+          <swiper :options="swiperOption">
+            <swiper-slide v-for="(list, index) in articleLists" :key="index">
+              <v-col class="mt-3 mt-md-0 pa-md-2" cols="11">
+                <article-card :color="list.color" :path="list.path" :category="list.category" :title="list.title">
+                </article-card>
+              </v-col>
+            </swiper-slide>
+          </swiper>
         </v-row>
       </div>
       <div class="artcle__search mt-3 pa-md-2">
@@ -41,6 +45,19 @@
 export default {
   data() {
     return {
+      swiperOption: {
+        slidesPerView: 4,
+        spaceBetween: 0,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        loop: false,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+      },
       tag: 'ALL',
       articleLists: [
         {
@@ -60,6 +77,42 @@ export default {
           path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
           category: '機材特集',
           title: '体表面温度測定 サーモグラフィカメラ',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
         },
         {
           color: 'catalog',
