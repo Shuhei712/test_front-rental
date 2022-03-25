@@ -122,6 +122,14 @@ export default {
       console.log(res)
       return res.NewProductList
     },
+    async getSpecialPageList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_special_page_list_top.php', param)
+      console.log(res)
+      return res
+    },
   },
 }
 </script>
