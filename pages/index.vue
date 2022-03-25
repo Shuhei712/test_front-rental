@@ -130,6 +130,14 @@ export default {
       console.log(res)
       return res
     },
+    async getPickUpTagList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_pickup_tag_list_top.php', param)
+      // console.log(res)
+      return res
+    },
   },
 }
 </script>
