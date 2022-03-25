@@ -35,6 +35,16 @@ if (process.client) {
 }
 
 export default {
+    const [menuLists, categoryLists, newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] =
+      await Promise.all([
+        this.getMenuList(),
+        this.getCategoryList(),
+        this.getNewsList(),
+        this.getPickupList(),
+        this.getNewProductList(),
+        this.getSpecialPageList(),
+        this.getPickUpTagList(),
+      ])
   mounted() {
     this.scrollShareButton()
     this.scrollBackButton()
