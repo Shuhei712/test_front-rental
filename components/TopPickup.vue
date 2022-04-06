@@ -11,20 +11,24 @@
       <div v-for="(list, index) in pickupLists" :key="index" class="item">
         <div class="item__heading px-10 d-flex align-center flex-column flex-lg-row mt-8 mt-lg-0">
           <div class="d-flex align-center">
-            <img class="icon mr-3" :src="list.icon" :alt="list.title" />
+            <img class="icon mr-3" :src="list.IconImageURL" :alt="list.IconImageURL" />
             <h4 class="zen-kaku-gothic text-h6 text-lg-h5 letter-space-02em">
-              {{ list.title }}
+              {{ list.PageCategoryName }}
             </h4>
           </div>
           <v-divider class="hidden-md-and-down" color="line" inset></v-divider>
-          <v-btn :to="list.link" class="ml-5 mt-8 mt-lg-0" outlined>
-            一覧へ<v-icon color="primary">mdi-chevron-right</v-icon>
+          <v-btn
+            :to="'/category/' + list.PageCategoryID + '?categoryName=' + list.PageCategoryName"
+            class="ml-5 mt-8 mt-lg-0"
+            outlined>
+            一覧へ
+            <v-icon color="primary">mdi-chevron-right</v-icon>
           </v-btn>
         </div>
         <v-container class="item__content pa-0 pa-lg-3">
           <v-row class="ma-3">
-            <v-col v-for="(item, num) in list.itemLists" :key="num" class="pa-1 pa-lg-0" cols="6" md="3">
-              <item-card :path="item.path" :maker="item.maker" :name="item.name"></item-card>
+            <v-col v-for="(item, num) in list.PickupProductList" :key="num" class="pa-1 pa-lg-0" cols="6" md="3">
+              <item-card :path="item.ImageURL" :maker="item.MakerName" :name="item.ProductName"></item-card>
             </v-col>
           </v-row>
         </v-container>
@@ -41,118 +45,124 @@
 
 <script>
 export default {
+  props: {
+    pickupLists: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      pickupLists: [
-        {
-          title: 'LEDディスプレイ',
-          icon: '/img/category/led-display.png',
-          link: '/catgory',
-          itemLists: [
-            {
-              path: '/img/pickup/pickup_01.png',
-              maker: 'ArkVentures',
-              name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
-            },
-            {
-              path: '/img/pickup/pickup_01.png',
-              maker: 'ArkVentures',
-              name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
-            },
-            {
-              path: '/img/pickup/pickup_01.png',
-              maker: 'ArkVentures',
-              name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
-            },
-            {
-              path: '/img/pickup/pickup_01.png',
-              maker: 'ArkVentures',
-              name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
-            },
-          ],
-        },
-        {
-          title: 'プロジェクター',
-          icon: '/img/category/projector.png',
-          link: '/catgory',
-          itemLists: [
-            {
-              path: '/img/pickup/pickup_02.png',
-              maker: 'Panasonic',
-              name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
-            },
-            {
-              path: '/img/pickup/pickup_02.png',
-              maker: 'Panasonic',
-              name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
-            },
-            {
-              path: '/img/pickup/pickup_02.png',
-              maker: 'Panasonic',
-              name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
-            },
-            {
-              path: '/img/pickup/pickup_02.png',
-              maker: 'Panasonic',
-              name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
-            },
-          ],
-        },
-        {
-          title: 'ディスプレイ・モニター',
-          icon: '/img/category/display.png',
-          link: '/catgory',
-          itemLists: [
-            {
-              path: '/img/pickup/pickup_03.png',
-              maker: 'Panasonic',
-              name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
-            },
-            {
-              path: '/img/pickup/pickup_03.png',
-              maker: 'Panasonic',
-              name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
-            },
-            {
-              path: '/img/pickup/pickup_03.png',
-              maker: 'Panasonic',
-              name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
-            },
-            {
-              path: '/img/pickup/pickup_03.png',
-              maker: 'Panasonic',
-              name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
-            },
-          ],
-        },
-        {
-          title: 'PC/ICTネットワーク機器',
-          icon: '/img/category/network.png',
-          link: '/catgory',
-          itemLists: [
-            {
-              path: '/img/pickup/pickup_04.png',
-              maker: 'Logicool',
-              name: '4K小型カメラ BRIO C1000eR',
-            },
-            {
-              path: '/img/pickup/pickup_04.png',
-              maker: 'Logicool',
-              name: '4K小型カメラ BRIO C1000eR',
-            },
-            {
-              path: '/img/pickup/pickup_04.png',
-              maker: 'Logicool',
-              name: '4K小型カメラ BRIO C1000eR',
-            },
-            {
-              path: '/img/pickup/pickup_04.png',
-              maker: 'Logicool',
-              name: '4K小型カメラ BRIO C1000eR',
-            },
-          ],
-        },
-      ],
+      // pickupLists: [
+      //   {
+      //     title: 'LEDディスプレイ',
+      //     icon: '/img/category/led-display.png',
+      //     link: '/catgory',
+      //     itemLists: [
+      //       {
+      //         path: '/img/pickup/pickup_01.png',
+      //         maker: 'ArkVentures',
+      //         name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_01.png',
+      //         maker: 'ArkVentures',
+      //         name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_01.png',
+      //         maker: 'ArkVentures',
+      //         name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_01.png',
+      //         maker: 'ArkVentures',
+      //         name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     title: 'プロジェクター',
+      //     icon: '/img/category/projector.png',
+      //     link: '/catgory',
+      //     itemLists: [
+      //       {
+      //         path: '/img/pickup/pickup_02.png',
+      //         maker: 'Panasonic',
+      //         name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_02.png',
+      //         maker: 'Panasonic',
+      //         name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_02.png',
+      //         maker: 'Panasonic',
+      //         name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_02.png',
+      //         maker: 'Panasonic',
+      //         name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     title: 'ディスプレイ・モニター',
+      //     icon: '/img/category/display.png',
+      //     link: '/catgory',
+      //     itemLists: [
+      //       {
+      //         path: '/img/pickup/pickup_03.png',
+      //         maker: 'Panasonic',
+      //         name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_03.png',
+      //         maker: 'Panasonic',
+      //         name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_03.png',
+      //         maker: 'Panasonic',
+      //         name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_03.png',
+      //         maker: 'Panasonic',
+      //         name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     title: 'PC/ICTネットワーク機器',
+      //     icon: '/img/category/network.png',
+      //     link: '/catgory',
+      //     itemLists: [
+      //       {
+      //         path: '/img/pickup/pickup_04.png',
+      //         maker: 'Logicool',
+      //         name: '4K小型カメラ BRIO C1000eR',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_04.png',
+      //         maker: 'Logicool',
+      //         name: '4K小型カメラ BRIO C1000eR',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_04.png',
+      //         maker: 'Logicool',
+      //         name: '4K小型カメラ BRIO C1000eR',
+      //       },
+      //       {
+      //         path: '/img/pickup/pickup_04.png',
+      //         maker: 'Logicool',
+      //         name: '4K小型カメラ BRIO C1000eR',
+      //       },
+      //     ],
+      //   },
+      // ],
     }
   },
 }
