@@ -1,5 +1,5 @@
 <template>
-  <div id="top" class="top">
+  <div v-if="!$fetchState.pending && !$fetchState.error" id="top" class="top">
     <div class="top__share top__share--fixed">
       <v-btn class="share__twitter text-white text-subtitle-2 mr-2" color="twitter">
         <div class="btn-shadow"></div>
@@ -39,6 +39,7 @@ if (process.client) {
 }
 
 export default {
+  loading: false,
   data() {
     return {
       menuLists: [],
@@ -51,6 +52,7 @@ export default {
     }
   },
   async fetch() {
+    this.$store.commit('loading/changeStatus', true)
     const [menuLists, categoryLists, newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] =
       await Promise.all([
         this.getMenuList(),
@@ -69,9 +71,10 @@ export default {
     this.newProductLists = newProductLists
     this.specialPageLists = specialPageLists
     this.pickupTagLists = pickupTagLists
+    this.$store.commit('loading/changeStatus', false)
   },
-
-  mounted() {
+  mounted() {},
+  updated() {
     this.scrollShareButton()
     this.scrollBackButton()
   },
@@ -146,7 +149,7 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_pickup_list_top.php', param)
-      console.log(res)
+      // console.log(res)
       return res
     },
     async getNewProductList() {
