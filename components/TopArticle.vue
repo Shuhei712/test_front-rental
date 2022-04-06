@@ -10,16 +10,17 @@
     </div>
     <v-container class="article__content d-flex flex-column px-1 px-lg-8">
       <div class="article__list order-1 order-lg-0">
-        <v-row no-gutters>
-          <swiper :options="swiperOption">
-            <swiper-slide v-for="(list, index) in articleLists" :key="index">
-              <v-col class="mt-3 mt-md-0 pa-md-2" cols="11">
-                <article-card :color="list.color" :path="list.path" :category="list.category" :title="list.title">
-                </article-card>
-              </v-col>
-            </swiper-slide>
-          </swiper>
-        </v-row>
+        <hooper class="hooper" :settings="hooperSettings">
+          <slide v-for="(list, index) in specialPageLists" :key="index">
+            <article-card
+              :color="toPageClassColorFrom(list.PageClassID)"
+              :path="list.SpecialPageImageURL"
+              :class-name="toPageClassNameFrom(list.PageClassID)"
+              :title="list.SpecialPageName"
+              :link="list.PageURL">
+            </article-card>
+          </slide>
+        </hooper>
       </div>
       <div class="artcle__search mt-3 pa-md-2">
         <v-row align="center" no-gutters>
@@ -42,7 +43,14 @@
 </template>
 
 <script>
+import { Hooper, Slide } from 'hooper'
+import 'hooper/dist/hooper.css'
+
 export default {
+  components: {
+    Hooper,
+    Slide,
+  },
   data() {
     return {
       swiperOption: {
@@ -159,6 +167,17 @@ export default {
           class: 'tag--sales',
         },
       ],
+      hooperSettings: {
+        itemsToShow: 4,
+        vertical: true,
+        autoPlay: true,
+        playSpeed: 3000,
+        breakpoints: {
+          960: {
+            vertical: false,
+          },
+        },
+      },
     }
   },
 }
@@ -240,6 +259,22 @@ export default {
     input:checked + .tag--sales {
       background-color: $sales;
     }
+  }
+}
+
+.hooper {
+  height: 220px;
+  @include mq(md) {
+    height: calc(70px * 4 + 10px * 4);
+  }
+}
+
+.hooper-slide {
+  // margin: 0 5px;
+  padding: 0 5px;
+  @include mq(md) {
+    max-height: 70px !important;
+    margin: 5px 0;
   }
 }
 </style>
