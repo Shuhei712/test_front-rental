@@ -66,6 +66,7 @@
 .top__main {
   position: relative;
   width: 100%;
+  height: calc(1035 / 1920 * 100vw);
   background-image: url('~@/assets/img/top/main.png');
   background-position: right;
   background-size: cover;
