@@ -1,7 +1,7 @@
 <template>
   <v-card class="item-card" elevation="0" link to="/products/name">
     <div class="text-center">
-      <img class="pa-3" :src="path" />
+      <img class="pa-3" :src="isNullCheckImageURL" />
     </div>
     <v-card-title class="text-body-2 mb-2">{{ maker }}</v-card-title>
     <v-card-subtitle class="text-body-2" color="text">{{ name }}</v-card-subtitle>
@@ -12,7 +12,7 @@
 export default {
   props: {
     path: {
-      type: String,
+      // type: String,
       required: true,
     },
     maker: {
@@ -22,6 +22,11 @@ export default {
     name: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    isNullCheckImageURL() {
+      return this.path === null ? '/img/new/no-image.png' : this.path
     },
   },
 }

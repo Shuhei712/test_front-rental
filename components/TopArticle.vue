@@ -10,12 +10,17 @@
     </div>
     <v-container class="article__content d-flex flex-column px-1 px-lg-8">
       <div class="article__list order-1 order-lg-0">
-        <v-row no-gutters>
-          <v-col v-for="(list, index) in articleLists" :key="index" class="mt-3 mt-md-0 pa-md-2" cols="12" md="3">
-            <article-card :color="list.color" :path="list.path" :category="list.category" :title="list.title">
+        <hooper class="hooper" :settings="hooperSettings">
+          <slide v-for="(list, index) in matchedSpecialPageLists" :key="index">
+            <article-card
+              :color="toPageClassColorFrom(list.PageClassID)"
+              :path="list.SpecialPageImageURL"
+              :class-name="toPageClassNameFrom(list.PageClassID)"
+              :title="list.SpecialPageName"
+              :link="list.PageURL">
             </article-card>
-          </v-col>
-        </v-row>
+          </slide>
+        </hooper>
       </div>
       <div class="artcle__search mt-3 pa-md-2">
         <v-row align="center" no-gutters>
@@ -23,10 +28,13 @@
           <v-col cols="1"><v-divider></v-divider></v-col>
           <v-col cols="9">
             <div class="search__input d-flex flex-wrap ml-2">
-              <div v-for="(list, index) in categoryLists" :key="index">
-                <input :id="list.style" type="radio" name="tag" />
-                <label :for="list.style" :class="list.class" class="rounded-pill px-3 py-1 text-body-2">
-                  {{ list.name }}
+              <div v-for="(list, index) in pageClassLists" :key="index">
+                <input :id="list.PageClassName" v-model="tag" type="radio" :value="list.PageClassID" />
+                <label
+                  :id="list.PageClassColor"
+                  :for="list.PageClassName"
+                  class="tag--all rounded-pill px-3 py-1 text-body-2">
+                  {{ list.PageClassName }}
                 </label>
               </div>
             </div>
@@ -39,9 +47,19 @@
 
 <script>
 export default {
+  props: {
+    pageClassLists: {
+      type: Array,
+      required: true,
+    },
+    specialPageLists: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      tag: 'ALL',
+      tag: 6,
       articleLists: [
         {
           color: 'feature',
@@ -60,6 +78,42 @@ export default {
           path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
           category: '機材特集',
           title: '体表面温度測定 サーモグラフィカメラ',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
+        },
+        {
+          color: 'catalog',
+          path: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+          category: 'チラシ/カタログ',
+          title: '取扱機材チラシ/PDFダウンロード',
         },
         {
           color: 'catalog',
@@ -106,7 +160,35 @@ export default {
           class: 'tag--sales',
         },
       ],
+      hooperSettings: {
+        itemsToShow: 4,
+        vertical: true,
+        autoPlay: true,
+        playSpeed: 3000,
+        breakpoints: {
+          960: {
+            vertical: false,
+          },
+        },
+      },
     }
+  },
+  computed: {
+    matchedSpecialPageLists() {
+      return this.specialPageLists.filter((el) => {
+        return this.tag === 6 ? true : el.PageClassID === this.tag
+      }, this)
+    },
+  },
+  methods: {
+    toPageClassNameFrom(pageClassID) {
+      const result = this.pageClassLists.find((list) => list.PageClassID === pageClassID)
+      return result.PageClassName
+    },
+    toPageClassColorFrom(pageClassID) {
+      const result = this.pageClassLists.find((list) => list.PageClassID === pageClassID)
+      return result.PageClassColor
+    },
   },
 }
 </script>
@@ -134,59 +216,81 @@ export default {
       cursor: pointer;
     }
 
-    .tag--all {
+    #all {
       border: 1px solid $outline;
       color: $outline;
     }
 
-    input:checked + .tag--all {
+    input:checked + #all {
       background-color: $outline;
+      color: #ffffff;
     }
 
-    .tag--feature {
+    #feature {
       border: 1px solid $feature;
       color: $feature;
     }
 
-    input:checked + .tag--feature {
+    input:checked + #feature {
       background-color: $feature;
+      color: #ffffff;
     }
 
-    .tag--suggest {
+    #suggest {
       border: 1px solid $suggest;
       color: $suggest;
     }
 
-    input:checked + .tag--suggest {
+    input:checked + #suggest {
       background-color: $suggest;
+      color: #ffffff;
     }
 
-    .tag--catalog {
+    #catalog {
       border: 1px solid $catalog;
       color: $catalog;
     }
 
-    input:checked + .tag--catalog {
+    input:checked + #catalog {
       background-color: $catalog;
+      color: #ffffff;
     }
 
-    .tag--sns {
+    #sns {
       border: 1px solid $sns;
       color: $sns;
     }
 
-    input:checked + .tag--sns {
+    input:checked + #sns {
       background-color: $sns;
+      color: #ffffff;
     }
 
-    .tag--sales {
+    #sales {
       border: 1px solid $sales;
       color: $sales;
     }
 
-    input:checked + .tag--sales {
+    input:checked + #sales {
       background-color: $sales;
+      color: #ffffff;
     }
+  }
+}
+
+.hooper {
+  height: 220px;
+  @include mq(md) {
+    height: calc(70px * 4 + 10px * 4);
+  }
+}
+
+.hooper-slide {
+  // margin: 0 5px;
+  padding: 0 5px;
+  @include mq(md) {
+    max-height: 70px !important;
+    margin: 5px 0;
   }
 }
 </style>

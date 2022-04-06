@@ -8,8 +8,8 @@
     </div>
     <v-container class="new__content">
       <v-row class="ma-0 ma-lg-3">
-        <v-col v-for="(list, index) in newItemLists" :key="index" cols="6" md="3">
-          <item-card :path="list.path" :maker="list.maker" :name="list.name"></item-card>
+        <v-col v-for="(list, index) in newProductLists" :key="index" cols="6" md="3">
+          <item-card :path="list.ImageURL" :maker="list.MakerName" :name="list.ProductName"></item-card>
         </v-col>
       </v-row>
     </v-container>
@@ -18,6 +18,12 @@
 
 <script>
 export default {
+  props: {
+    newProductLists: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       newItemLists: [

@@ -2,7 +2,7 @@
   <section class="article">
     <top-bar title="特設ページ 一覧"></top-bar>
     <div class="article__inner d-lg-flex py-16 px-3 px-lg-0">
-      <category-lists></category-lists>
+      <category-lists :category-lists="categoryLists"></category-lists>
       <div class="content ml-lg-15">
         <div class="page-link mb-16">
           <div class="page-link__heading d-flex align-center justify-center text-caption text-md-body-2 pa-2 pa-lg-0">
@@ -11,7 +11,7 @@
           <div class="page-link__list pt-7 pb-2">
             <ul class="d-flex flex-wrap justify-center pl-7 text-body-2 text-md-body-1">
               <li v-for="article in articleLists" :key="article.category" class="mr-7 mb-5">
-                <a v-scroll-to="{ el: '#'+ article.anchor, offset: -130 }" class="d-flex align-center">
+                <a v-scroll-to="{ el: '#' + article.anchor, offset: -130 }" class="d-flex align-center">
                   <v-icon class="mr-2">{{ article.icon }}</v-icon>
                   {{ article.category }}
                   <v-icon color="#878787">mdi-chevron-down</v-icon>
@@ -21,15 +21,25 @@
           </div>
         </div>
         <div v-for="article in articleLists" :id="article.anchor" :key="article.category" class="group mb-16">
-          <h3 class="group__ttl d-flex flex-column text-center text-body-1 text-sm-h6 text-md-h5 bold letter-space-015em mb-4 mb-md-9">
-            <v-icon class="group__ttl-icon mb-2 mb-md-4">{{ article.icon }}</v-icon>{{ article.category }}
+          <h3
+            class="group__ttl d-flex flex-column text-center text-body-1 text-sm-h6 text-md-h5 bold letter-space-015em mb-4 mb-md-9">
+            <v-icon class="group__ttl-icon mb-2 mb-md-4">{{ article.icon }}</v-icon
+            >{{ article.category }}
           </h3>
           <v-container class="group__container">
             <v-row no-gutters class="group__row justify-center">
-              <v-col v-for="(articleItem, index) in article.items" :key="index" cols="6" sm="4" md="3" class="group__col d-flex">
+              <v-col
+                v-for="(articleItem, index) in article.items"
+                :key="index"
+                cols="6"
+                sm="4"
+                md="3"
+                class="group__col d-flex">
                 <v-card :color="article.color" class="article-card" :href="articleItem.anchor" target="_blank">
                   <v-img max-height="108" :src="articleItem.path" class="bg-white" />
-                  <v-card-subtitle class="article-card__subtitle bg-white text-caption text-center pa-1">{{ articleItem.subTitle }}</v-card-subtitle>
+                  <v-card-subtitle class="article-card__subtitle bg-white text-caption text-center pa-1">
+                    {{ articleItem.subTitle }}
+                  </v-card-subtitle>
                   <v-card-title class="article-card__title text-white text-body-2 text-md-body-1 px-2 px-sm-3">
                     <!-- eslint-disable-next-line vue/no-v-html -->
                     <h4 class="article-card__title-text" v-html="articleItem.title">{{ articleItem.title }}</h4>
@@ -208,7 +218,24 @@ export default {
           ],
         },
       ],
+      categoryLists: [],
     }
+  },
+  async fetch() {
+    this.$store.commit('loading/changeStatus', true)
+    const categoryLists = await this.getCategoryList()
+    this.categoryLists = categoryLists
+    this.$store.commit('loading/changeStatus', false)
+  },
+  methods: {
+    async getCategoryList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_category_list.php', param)
+      // console.log(res)
+      return res.CategoryRootList
+    },
   },
 }
 </script>

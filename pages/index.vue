@@ -1,5 +1,5 @@
 <template>
-  <div id="top" class="top">
+  <div v-if="!$fetchState.pending && !$fetchState.error" id="top" class="top">
     <div class="top__share top__share--fixed">
       <v-btn class="share__twitter text-white text-subtitle-2 mr-2" color="twitter">
         <div class="btn-shadow"></div>
@@ -16,12 +16,16 @@
     </div>
     <top-main class="hidden-md-and-down"></top-main>
     <top-main-rp class="hidden-lg-and-up"></top-main-rp>
+    <top-notice></top-notice>
     <div class="top__inner d-flex py-16">
-      <category-lists></category-lists>
+      <category-lists :category-lists="categoryLists"></category-lists>
       <div class="content">
-        <top-new></top-new>
-        <top-article></top-article>
-        <top-pickup></top-pickup>
+        <top-new :new-product-lists="newProductLists"></top-new>
+        <top-article
+          :page-class-lists="specialPageLists.PageClassList"
+          :special-page-lists="specialPageLists.SpecialPageList">
+        </top-article>
+        <top-pickup :pickup-lists="pickupTagLists.NewProductList"></top-pickup>
       </div>
     </div>
   </div>
@@ -35,7 +39,42 @@ if (process.client) {
 }
 
 export default {
-  mounted() {
+  loading: false,
+  data() {
+    return {
+      menuLists: [],
+      categoryLists: [],
+      newsLists: [],
+      pickupLists: [],
+      newProductLists: [],
+      specialPageLists: [],
+      pickupTagLists: [],
+    }
+  },
+  async fetch() {
+    this.$store.commit('loading/changeStatus', true)
+    const [menuLists, categoryLists, newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] =
+      await Promise.all([
+        this.getMenuList(),
+        this.getCategoryList(),
+        this.getNewsList(),
+        this.getPickupList(),
+        this.getNewProductList(),
+        this.getSpecialPageList(),
+        this.getPickUpTagList(),
+      ])
+
+    this.menuLists = menuLists
+    this.categoryLists = categoryLists
+    this.newsLists = newsLists
+    this.pickupLists = pickupLists
+    this.newProductLists = newProductLists
+    this.specialPageLists = specialPageLists
+    this.pickupTagLists = pickupTagLists
+    this.$store.commit('loading/changeStatus', false)
+  },
+  mounted() {},
+  updated() {
     this.scrollShareButton()
     this.scrollBackButton()
   },
@@ -80,6 +119,64 @@ export default {
           },
         },
       })
+    },
+    async getMenuList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_menu_list.php', param)
+      // console.log(res)
+      return res
+    },
+    async getCategoryList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_category_list.php', param)
+      // console.log(res)
+      return res.CategoryRootList
+    },
+    async getNewsList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_news_list_top.php', param)
+      // console.log(res)
+      return res
+    },
+    async getPickupList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_pickup_list_top.php', param)
+      // console.log(res)
+      return res
+    },
+    async getNewProductList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ListMaxCnt', 4)
+      const res = await this.$axios.$post('get_new_product_list_top.php', param)
+      // console.log(res)
+      return res.NewProductList
+    },
+    async getSpecialPageList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_special_page_list_top.php', param)
+      // console.log(res)
+      return res
+    },
+    async getPickUpTagList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ListMaxCnt', 4)
+      const res = await this.$axios.$post('get_pickup_tag_list_top.php', param)
+      // console.log(res)
+      return res
     },
   },
 }

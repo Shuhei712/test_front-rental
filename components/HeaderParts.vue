@@ -1,7 +1,7 @@
 <template>
   <header class="header d-flex align-center mt-6 mt-xl-10 px-4 px-xl-10 py-4 py-xl-8">
     <a class="header__logo d-flex align-center" href="/">
-      <img class="logo__img" src="@/assets/img/top/logo.png" alt="TAKENAKA the SOLID WATER" />
+      <img class="logo__img" src="/img/top/logo.png" alt="TAKENAKA the SOLID WATER" />
       <img class="logo__img--sp mr-2" src="/img/sp/top/logo.png" alt="TAKENAKA the SOLID WATER" />
       <span class="logo__service text-caption no-wrap">映像 / 音響機材の<br />レンタルサービス</span>
     </a>

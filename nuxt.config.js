@@ -44,7 +44,7 @@ export default {
   css: ['@/assets/css/common.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~plugins/vue-scrollto'],
+  plugins: ['~plugins/vue-scrollto', '~plugins/hooper'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -66,6 +66,14 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
+
+  publicRuntimeConfig: {
+    PROJECT_KEY: process.env.PROJECT_KEY,
+    LANG_JAPANESE: process.env.LANG_JAPANESE,
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+    },
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -96,6 +104,7 @@ export default {
           line: '#AFAFAF',
           cushion: '#F2F2F2',
           footer: '#4B5654',
+          all: '#4B5654',
           feature: '#c97061',
           suggest: '#579b8f',
           catalog: '#c19c49',
