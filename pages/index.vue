@@ -16,6 +16,7 @@
     </div>
     <top-main class="hidden-md-and-down"></top-main>
     <top-main-rp class="hidden-lg-and-up"></top-main-rp>
+    <top-notice></top-notice>
     <div class="top__inner d-flex py-16">
       <category-lists></category-lists>
       <div class="content">
