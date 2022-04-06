@@ -46,7 +46,7 @@
       <v-row class="main__menu width-50 mb-1">
         <v-col cols="6">
           <v-btn block>
-            <img class="icon mr-1" src="@/assets/img/top/beginner-icon.png" />はじめての方へ
+            <img class="icon mr-1" src="/img/top/beginner-icon.png" />はじめての方へ
             <v-icon color="primary">mdi-chevron-right </v-icon>
           </v-btn>
         </v-col>
@@ -68,7 +68,7 @@
   position: relative;
   width: 100%;
   height: calc(1035 / 1920 * 100vw);
-  background-image: url('~@/assets/img/top/main.png');
+  background-image: url('/img/top/main.png');
   background-position: right;
   background-size: cover;
   padding-top: calc(100px + 32px);

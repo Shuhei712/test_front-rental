@@ -22,7 +22,7 @@
       <v-row class="main__menu mt-5 mt-sm-15">
         <v-col cols="12">
           <v-btn block>
-            <img class="icon mr-1" src="@/assets/img/top/beginner-icon.png" />はじめての方へ
+            <img class="icon mr-1" src="/img/top/beginner-icon.png" />はじめての方へ
             <v-icon color="primary"> mdi-chevron-right </v-icon>
           </v-btn>
         </v-col>
