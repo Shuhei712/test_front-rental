@@ -11,7 +11,7 @@
     <v-container class="article__content d-flex flex-column px-1 px-lg-8">
       <div class="article__list order-1 order-lg-0">
         <hooper class="hooper" :settings="hooperSettings">
-          <slide v-for="(list, index) in specialPageLists" :key="index">
+          <slide v-for="(list, index) in matchedSpecialPageLists" :key="index">
             <article-card
               :color="toPageClassColorFrom(list.PageClassID)"
               :path="list.SpecialPageImageURL"
