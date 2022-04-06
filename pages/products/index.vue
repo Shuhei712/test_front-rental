@@ -3,7 +3,7 @@
     <search-refinement :dialog="dialog" @change-dialog="reseiveDialogFlg"></search-refinement>
     <top-bar title="スイッチャー 一覧"></top-bar>
     <div class="products__inner d-lg-flex py-16 px-2 px-lg-0">
-      <category-lists></category-lists>
+      <category-lists :category-lists="categoryLists"></category-lists>
       <div class="content ml-lg-15">
         <div class="product__search d-flex align-center">
           <div class="search__number text-center px-3 text-body-2 no-wrap">
@@ -266,11 +266,26 @@ export default {
           tagLists: [],
         },
       ],
+      categoryLists: [],
     }
+  },
+  async fetch() {
+    this.$store.commit('loading/changeStatus', true)
+    const categoryLists = await this.getCategoryList()
+    this.categoryLists = categoryLists
+    this.$store.commit('loading/changeStatus', false)
   },
   methods: {
     reseiveDialogFlg(value) {
       this.dialog = value
+    },
+    async getCategoryList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_category_list.php', param)
+      // console.log(res)
+      return res.CategoryRootList
     },
   },
 }
