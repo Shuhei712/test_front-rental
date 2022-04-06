@@ -1,11 +1,11 @@
 <template>
-  <v-card class="article rounded" :color="color" elevation="0" link>
+  <v-card class="article rounded" :color="color" :href="link" elevation="0" link>
     <div class="d-flex flex-md-column">
       <div class="article__img order-1 order-md-0"><img :src="path" /></div>
       <div class="article__title order-0 order-md-1 flex-grow-1">
         <div class="text-body-2 pa-3 mb-0 mb-md-2 text-white">
           <span class="tag rounded-pill px-5 text-body-2 mb-2 mb-md-3">
-            {{ category }}
+            {{ className }}
           </span>
           <p class="text-body-2">{{ title }}</p>
         </div>
@@ -25,11 +25,15 @@ export default {
       type: String,
       required: true,
     },
-    category: {
+    className: {
       type: String,
       required: true,
     },
     title: {
+      type: String,
+      required: true,
+    },
+    link: {
       type: String,
       required: true,
     },
@@ -56,12 +60,12 @@ export default {
       width: 100%;
       height: 110px;
       object-fit: cover;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
 
       @include mq(md) {
         border-top-left-radius: 0px;
-        border-bottom-right-radius: 10px;
+        border-bottom-right-radius: 5px;
         width: 70px;
         height: 70px;
       }
