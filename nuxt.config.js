@@ -104,6 +104,7 @@ export default {
           line: '#AFAFAF',
           cushion: '#F2F2F2',
           footer: '#4B5654',
+          all: '#4B5654',
           feature: '#c97061',
           suggest: '#579b8f',
           catalog: '#c19c49',
