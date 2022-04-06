@@ -23,8 +23,6 @@
     "dotenv": "^16.0.0",
     "gsap": "^3.9.1",
     "nuxt": "^2.15.7",
-    "swiper": "^5.2.0",
-    "vue-awesome-swiper": "^4.1.1",
     "vue-scrollto": "^2.20.0",
     "vuetify": "^2.5.5"
   },
