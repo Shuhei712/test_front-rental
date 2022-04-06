@@ -53,19 +53,6 @@ export default {
   },
   data() {
     return {
-      swiperOption: {
-        slidesPerView: 4,
-        spaceBetween: 0,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        loop: false,
-        autoplay: {
-          delay: 5000,
-          disableOnInteraction: false,
-        },
-      },
       tag: 'ALL',
       articleLists: [
         {
