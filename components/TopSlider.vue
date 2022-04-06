@@ -45,13 +45,7 @@
 </template>
 
 <script>
-import { Hooper, Slide } from 'hooper'
-import 'hooper/dist/hooper.css'
 export default {
-  components: {
-    Hooper,
-    Slide,
-  },
   data() {
     return {
       hooperSettings: {
