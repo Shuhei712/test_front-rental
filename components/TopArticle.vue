@@ -28,10 +28,13 @@
           <v-col cols="1"><v-divider></v-divider></v-col>
           <v-col cols="9">
             <div class="search__input d-flex flex-wrap ml-2">
-              <div v-for="(list, index) in categoryLists" :key="index">
-                <input :id="list.style" type="radio" name="tag" />
-                <label :for="list.style" :class="list.class" class="rounded-pill px-3 py-1 text-body-2">
-                  {{ list.name }}
+              <div v-for="(list, index) in pageClassLists" :key="index">
+                <input :id="list.PageClassName" v-model="tag" type="radio" :value="list.PageClassID" />
+                <label
+                  :id="list.PageClassColor"
+                  :for="list.PageClassName"
+                  class="tag--all rounded-pill px-3 py-1 text-body-2">
+                  {{ list.PageClassName }}
                 </label>
               </div>
             </div>
@@ -51,9 +54,19 @@ export default {
     Hooper,
     Slide,
   },
+  props: {
+    pageClassLists: {
+      type: Array,
+      required: true,
+    },
+    specialPageLists: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      tag: 'ALL',
+      tag: 6,
       articleLists: [
         {
           color: 'feature',
@@ -167,6 +180,23 @@ export default {
       },
     }
   },
+  computed: {
+    matchedSpecialPageLists() {
+      return this.specialPageLists.filter((el) => {
+        return this.tag === 6 ? true : el.PageClassID === this.tag
+      }, this)
+    },
+  },
+  methods: {
+    toPageClassNameFrom(pageClassID) {
+      const result = this.pageClassLists.find((list) => list.PageClassID === pageClassID)
+      return result.PageClassName
+    },
+    toPageClassColorFrom(pageClassID) {
+      const result = this.pageClassLists.find((list) => list.PageClassID === pageClassID)
+      return result.PageClassColor
+    },
+  },
 }
 </script>
 
@@ -193,58 +223,64 @@ export default {
       cursor: pointer;
     }
 
-    .tag--all {
+    #all {
       border: 1px solid $outline;
       color: $outline;
     }
 
-    input:checked + .tag--all {
+    input:checked + #all {
       background-color: $outline;
+      color: #ffffff;
     }
 
-    .tag--feature {
+    #feature {
       border: 1px solid $feature;
       color: $feature;
     }
 
-    input:checked + .tag--feature {
+    input:checked + #feature {
       background-color: $feature;
+      color: #ffffff;
     }
 
-    .tag--suggest {
+    #suggest {
       border: 1px solid $suggest;
       color: $suggest;
     }
 
-    input:checked + .tag--suggest {
+    input:checked + #suggest {
       background-color: $suggest;
+      color: #ffffff;
     }
 
-    .tag--catalog {
+    #catalog {
       border: 1px solid $catalog;
       color: $catalog;
     }
 
-    input:checked + .tag--catalog {
+    input:checked + #catalog {
       background-color: $catalog;
+      color: #ffffff;
     }
 
-    .tag--sns {
+    #sns {
       border: 1px solid $sns;
       color: $sns;
     }
 
-    input:checked + .tag--sns {
+    input:checked + #sns {
       background-color: $sns;
+      color: #ffffff;
     }
 
-    .tag--sales {
+    #sales {
       border: 1px solid $sales;
       color: $sales;
     }
 
-    input:checked + .tag--sales {
+    input:checked + #sales {
       background-color: $sales;
+      color: #ffffff;
     }
   }
 }
