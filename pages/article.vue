@@ -9,8 +9,8 @@
             クリックでページ内項目にジャンプします
           </div>
           <div class="page-link__list pt-7 pb-2">
-            <ul class="d-flex flex-wrap justify-center pl-7 text-body-2 text-md-body-1">
-              <li v-for="article in articleLists" :key="article.category" class="mr-7 mb-5">
+            <ul class="d-flex flex-wrap justify-space-between justify-sm-center pl-4 pl-sm-7 text-body-2 text-md-body-1">
+              <li v-for="article in articleLists" :key="article.category" class="mr-4 mr-sm-7 mb-5">
                 <a v-scroll-to="{ el: '#' + article.anchor, offset: -130 }" class="d-flex align-center">
                   <v-icon class="mr-2">{{ article.icon }}</v-icon>
                   {{ article.category }}
@@ -108,7 +108,7 @@ export default {
               path: '/img/article/feature-07.png',
             },
             {
-              title: '照明型プロジェクター<br>Speace Player',
+              title: '照明型プロジェクター<br>Space Player',
               subTitle: 'プロジェクターの新しいカタチ',
               anchor: 'https://www.takenaka-co.co.jp/09special/spaceplayer/space_player.html',
               path: '/img/article/feature-08.png',
@@ -275,6 +275,16 @@ export default {
     &__list {
       ul {
         list-style: none;
+      }
+
+      @include mq(sm) {
+        ul {
+          max-width: 375px;
+          margin: 0 auto;
+        }
+        li {
+          min-width: 130px;
+        }
       }
     }
   }
