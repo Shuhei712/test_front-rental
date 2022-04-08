@@ -11,18 +11,18 @@
             dense
             prepend-inner-icon="mdi-magnify"
             hide-details="auto"></v-text-field>
-          <v-btn color="primary" class="ml-5"> <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索 </v-btn>
+          <v-btn color="primary" class="ml-2 ml-md-5"> <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索 </v-btn>
         </v-form>
       </div>
       <div class="category__list mb-16">
-        <div class="category__heading text-h6 text-center letter-space-015em">
+        <div class="category__heading d-flex justify-center align-center text-body-1 text-md-h6 letter-space-015em pa-1 pa-md-0">
           <v-icon class="mr-2" color="accent">mdi-shape-outline</v-icon>CATEGORY
         </div>
         <div class="py-4">
-          <p class="text-center text-body-2 mb-7">クリックでページ内項目にジャンプします</p>
-          <ul class="d-flex flex-wrap justify-start justify-lg-center pl-7 text-body-2 text-lg-subtitle-1">
-            <li v-for="category in categoryLists" :key="category.name" class="mr-7 mb-5">
-              <a v-scroll-to="{ el: '#' + category.anchor, offset: 200 }" class="d-flex align-center">
+          <p class="text-center text-caption text-md-body-2 mb-7">クリックでページ内項目にジャンプします</p>
+          <ul class="d-flex flex-wrap justify-start justify-lg-center pl-4 pl-sm-5 pl-lg-7 text-body-2 text-lg-subtitle-1">
+            <li v-for="category in categoryLists" :key="category.name" class="mr-4 mr-sm-5 mr-lg-7 mb-5">
+              <a v-scroll-to="{ el: '#' + category.anchor, offset: -130 }" class="d-flex align-center">
                 <v-icon class="mr-2">{{ category.icon }}</v-icon>
                 {{ category.nameJp }}<v-icon color="#878787">mdi-chevron-down</v-icon>
               </a>
@@ -32,8 +32,8 @@
       </div>
       <div v-for="category in categoryLists" :id="category.anchor" :key="category.name" class="cat-group mb-16">
         <!-- 大カテゴリー -->
-        <h3 class="cat-group__ttl d-flex flex-column text-center text-h5 bold letter-space-015em mb-10">
-          <v-icon class="cat-group__ttl-icon mb-4">{{ category.icon }}</v-icon>
+        <h3 class="cat-group__ttl d-flex flex-column text-center text-body-1 text-sm-h6 text-md-h5 bold letter-space-015em mb-4 mb-md-9">
+          <v-icon class="cat-group__ttl-icon mb-2 mb-md-4">{{ category.icon }}</v-icon>
           {{ category.name }}
         </h3>
         <div
@@ -41,7 +41,7 @@
           :key="categoryChild.name"
           class="cat-group__child mb-8">
           <!-- 中カテゴリー -->
-          <h4 class="cat-group__child-ttl text-h6 mont-zenkaku bold pa-5">
+          <h4 class="cat-group__child-ttl text-body-1 text-md-h6 font-heading bold pa-5">
             {{ categoryChild.name }}
             <v-icon class="cat-group__child-icon">{{ category.icon }}</v-icon>
           </h4>
@@ -54,13 +54,13 @@
                 cols="6"
                 lg="4"
                 class="cat-group__col">
-                <a class="cat-group__btn text-body-1 mont-zenkaku bold px-3 py-2" :href="catItem.anchor">
+                <a class="cat-group__btn text-caption text-sm-body-2 text-md-body-1 font-heading bold px-2 px-sm-3 py-2" :href="catItem.anchor">
                   <span class="cat-group__btn-name">{{ catItem.name }}</span>
                 </a>
               </v-col>
             </v-row>
           </v-container>
-          <p v-if="categoryChild.note" class="cat-group__child-note bold pl-5">{{ categoryChild.note }}</p>
+          <p v-if="categoryChild.note" class="cat-group__child-note text-body-2 text-md-body-1 bold pl-5">{{ categoryChild.note }}</p>
         </div>
       </div>
     </div>
@@ -449,9 +449,6 @@ $network-bg: #3e3875;
 $other: #97745f;
 $other-bg: #563a2e;
 
-.mont-zenkaku {
-  font-family: 'Montserrat', 'Zen Kaku Gothic Antique', sans-serif !important;
-}
 .sec__inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -466,6 +463,33 @@ $other-bg: #563a2e;
     ul {
       list-style: none;
     }
+
+    @include mq(lg) {
+      ul {
+        margin: 0 auto;
+      }
+      li {
+        min-width: calc( (100% - 80px) / 4); // margin-right 20px*4
+      }
+    }
+
+    @include mq(md) {
+      ul {
+        max-width: 780px;
+      }
+      li {
+        min-width: calc( (100% - 60px) / 3); // margin-right 20px*3
+      }
+    }
+
+    @include mq(sm) {
+      ul {
+        max-width: 470px;
+      }
+      li {
+        min-width: calc( (100% - 36px ) / 2); // margin-right 16px*2
+      }
+    }
   }
 }
 .cat-group {
@@ -473,8 +497,12 @@ $other-bg: #563a2e;
   &__ttl {
     &-icon {
       display: inline-block;
-      font-size: 4rem;
+      font-size: 3rem;
       width: 100% !important;
+
+      @include mq(sm) {
+        font-size: 2rem;
+      }
     }
   }
   &__child {
@@ -483,6 +511,7 @@ $other-bg: #563a2e;
       border-width: 1px;
       overflow: hidden;
       position: relative;
+      z-index: 1;
     }
     &-icon {
       opacity: 0.5;
@@ -490,46 +519,91 @@ $other-bg: #563a2e;
       right: 7%;
       transform: translateY(-50%) rotate(20deg);
       position: absolute;
+      z-index: -1;
       #online & {
         font-size: 163px;
+
+        @include mq(md) {
+          font-size: 125px;
+        }
       }
       #led & {
         font-size: 156px;
+
+        @include mq(md) {
+          font-size: 110px;
+        }
       }
       #projector & {
         font-size: 159px;
         top: 60%;
+
+        @include mq(md) {
+          font-size: 110px;
+        }
       }
       #display & {
         font-size: 160px;
         top: 62%;
+
+        @include mq(md) {
+          font-size: 110px;
+        }
       }
       #media-player & {
         font-size: 169px;
         top: 40%;
+
+        @include mq(md) {
+          font-size: 110px;
+        }
       }
       #video-peripheral & {
         font-size: 163px;
         top: 75%;
+
+        @include mq(md) {
+          font-size: 110px;
+        }
       }
       #camera & {
         font-size: 165px;
         transform: translateY(-36%) rotate(14deg);
+
+        @include mq(md) {
+          font-size: 110px;
+        }
       }
       #sensor & {
         font-size: 174px;
         transform: translateY(-43%) rotate(0deg);
+
+        @include mq(md) {
+          font-size: 120px;
+        }
       }
       #sound & {
         font-size: 162px;
         top: 63%;
+
+        @include mq(md) {
+          font-size: 110px;
+        }
       }
       #network & {
         font-size: 163px;
         transform: translateY(-48%) rotate(-16deg);
+
+        @include mq(md) {
+          font-size: 110px;
+        }
       }
       #other & {
         font-size: 128px;
+
+        @include mq(md) {
+          font-size: 90px;
+        }
       }
     }
     &-note {
@@ -548,10 +622,18 @@ $other-bg: #563a2e;
   }
   &__row {
     margin: -7px -8px;
+
+    @include mq(sm) {
+      margin: -5px -6px;
+    }
   }
   &__col {
     height: 82px; // 82px-padding:14px =中身68px
     padding: 7px 8px !important;
+
+    @include mq(sm) {
+      padding: 5px 6px !important;
+    }
   }
   &__btn {
     background: {
