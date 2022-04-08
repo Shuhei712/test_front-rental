@@ -5,7 +5,7 @@
     </div>
     <div class="category__lists mt-5">
       <v-list v-for="root in categoryLists" :key="root.CategoryName">
-        <v-subheader class="text-h6 font-weight-medium">
+        <v-subheader class="category__name text-h6 bold">
           <img class="mr-2" :src="root.IconImageURL" /> {{ root.CategoryName }}
         </v-subheader>
         <v-list-group v-for="child in root.SubCategoryList" :key="child.name" :value="false">
@@ -39,6 +39,9 @@ export default {
   width: 270px;
   &__heading {
     background-color: $cushion;
+  }
+  &__name {
+    color: $headingText;
   }
 
   &__lists {
