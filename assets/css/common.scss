@@ -18,10 +18,10 @@ $facebook: #3b5998;
 
 // ブレイクポイント
 $breakpoints: (
-  'sm': 'screen and (max-width: 600px)',
-  'md': 'screen and (max-width: 960px)',
-  'lg': 'screen and (max-width: 1264px)',
-  'xl': 'screen and (max-width: 1904px)',
+  'sm': 'screen and (max-width: 599px)',
+  'md': 'screen and (max-width: 959px)',
+  'lg': 'screen and (max-width: 1263px)',
+  'xl': 'screen and (max-width: 1903px)',
 ) !default;
 
 @mixin mq($breakpoint) {
@@ -79,6 +79,9 @@ ul {
 .line-height-25em {
   line-height: 2.5em !important;
 }
+.line-height-normal {
+  line-height: normal !important;
+}
 
 .bold {
   font-weight: 600 !important;
@@ -92,6 +95,10 @@ ul {
   font-family: 'Montserrat', sans-serif !important;
 }
 
+.font-heading {
+  font-family: 'Montserrat', 'Zen Kaku Gothic Antique', sans-serif !important;
+}
+
 .bg-white {
   background-color: #ffffff !important;
 }
@@ -102,6 +109,10 @@ ul {
 
 .no-wrap {
   white-space: nowrap !important;
+}
+
+.word-keep {
+  display: inline-block;
 }
 
 .icon {
