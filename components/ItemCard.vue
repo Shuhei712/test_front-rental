@@ -1,5 +1,5 @@
 <template>
-  <v-card class="item-card" elevation="0" link to="/products/name">
+  <v-card class="item-card" elevation="0" link :to="link">
     <div class="text-center">
       <img class="pa-3" :src="isNullCheckImageURL" />
     </div>
@@ -22,6 +22,10 @@ export default {
     name: {
       type: String,
       required: true,
+    },
+    link: {
+      type: String,
+      require: true,
     },
   },
   computed: {
