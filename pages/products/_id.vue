@@ -22,17 +22,19 @@
           {{ productInfoList.ProductName }} {{ productInfoList.ProductTypeNumber }}
         </div>
         <div class="detail__top d-flex flex-column flex-sm-row">
-          <div class="top__image mr-0 mr-sm-5 d-flex d-sm-block">
+          <div class="top__image mr-0 mr-sm-5 d-flex justify-space-around d-sm-block">
             <div class="image__main mr-3 mr-md-0 mt-3 mt-md-0">
-              <img :src="productList.image" :alt="productList.name" />
+              <hooper ref="carousel" :settings="hooperSettings" @slide="updateCarousel">
+                <slide v-for="(list, index) in productInfoList.ProductImageList" :key="index">
+                  <img :src="list.ProductImageURL" :alt="list.ProductImageName" />
+                </slide>
+              </hooper>
             </div>
-            <div class="image__sub mt-3 mt-md-0 flex-grow-1">
-              <button id="sub--01"></button>
-              <button id="sub--02"></button>
-              <button id="sub--03"></button>
-              <button id="sub--04"></button>
-              <button id="sub--05"></button>
-              <button id="sub--06"></button>
+            <div class="image__sub mt-3 mt-md-1">
+              <div v-for="(list, index) in productInfoList.ProductImageList" :key="index" class="d-inline">
+                <input :id="index" v-model="carouselData" type="radio" :value="index" checked />
+                <label :for="index"><img :src="list.ProductImageURL" :alt="list.ProductImageName" /></label>
+              </div>
             </div>
           </div>
           <div class="top__info flex-grow-1">
@@ -293,6 +295,9 @@ export default {
       specLists: [],
       refferLists: [],
       docLists: [],
+      carouselData: 0,
+      hooperSettings: {
+        itemsToShow: 1,
       },
       tariffDialog: false,
       tariffHeaders: [
@@ -329,8 +334,16 @@ export default {
       return this.productDocLists.filter((object) => object.DocumentType === 1)
     },
   },
+  watch: {
+    carouselData() {
+      this.$refs.carousel.slideTo(this.carouselData)
+    },
+  },
 
   methods: {
+    updateCarousel(payload) {
+      this.carouselData = payload.currentSlide
+    },
     reseiveTariffDialogFlg(value) {
       this.tariffDialog = value
     },
