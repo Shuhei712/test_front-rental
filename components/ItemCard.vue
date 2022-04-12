@@ -1,5 +1,5 @@
 <template>
-  <v-card class="item-card" elevation="0" link to="/products/name">
+  <v-card class="item-card" elevation="0" link :to="link">
     <div class="text-center">
       <img class="pa-3" :src="isNullCheckImageURL" />
     </div>
@@ -23,6 +23,10 @@ export default {
       type: String,
       required: true,
     },
+    link: {
+      type: String,
+      require: true,
+    },
   },
   computed: {
     isNullCheckImageURL() {
@@ -36,9 +40,10 @@ export default {
 .item-card {
   img {
     max-width: 100%;
-    max-height: 115px;
+    height: 115px;
+    // max-height: 115px;
     display: inline-block;
-    object-fit: cover;
+    object-fit: contain;
   }
 }
 </style>

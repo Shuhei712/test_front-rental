@@ -28,7 +28,11 @@
         <v-container class="item__content pa-0 pa-lg-3">
           <v-row class="ma-3">
             <v-col v-for="(item, num) in list.PickupProductList" :key="num" class="pa-1 pa-lg-0" cols="6" md="3">
-              <item-card :path="item.ImageURL" :maker="item.MakerName" :name="item.ProductName"></item-card>
+              <item-card
+                :path="item.ImageURL"
+                :maker="item.MakerName"
+                :name="item.ProductName"
+                :link="'/products/' + item.ProductID + '?name=' + item.ProductName"></item-card>
             </v-col>
           </v-row>
         </v-container>
