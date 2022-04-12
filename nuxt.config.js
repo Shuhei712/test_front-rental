@@ -70,6 +70,11 @@ export default {
   publicRuntimeConfig: {
     PROJECT_KEY: process.env.PROJECT_KEY,
     LANG_JAPANESE: process.env.LANG_JAPANESE,
+    PRODUCT_INFO: process.env.PRODUCT_INFO,
+    PRODUCT_SPEC: process.env.PRODUCT_SPEC,
+    PRODUCT_REFFER: process.env.PRODUCT_REFFER,
+    PRODUCT_DOC: process.env.PRODUCT_DOC,
+
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
     },
