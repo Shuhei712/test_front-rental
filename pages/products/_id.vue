@@ -1,5 +1,11 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error" class="detail">
+    <tariff-card
+      :dialog="tariffDialog"
+      :headers="tariffHeaders"
+      :items="productTariffList.TariffList"
+      @change-tariff-dialog="reseiveTariffDialogFlg">
+    </tariff-card>
     <top-bar title="機材詳細"></top-bar>
     <div class="detail__inner py-5 py-lg-16">
       <div class="content px-2 px-lg-0">
@@ -288,6 +294,12 @@ export default {
       refferLists: [],
       docLists: [],
       },
+      tariffDialog: false,
+      tariffHeaders: [
+        { text: '日数', value: 'RateDay', align: 'start' },
+        { text: '掛け率', value: 'RateValue', align: 'start' },
+        { text: '料金(円)', value: 'Price', align: 'start', sortable: false },
+      ],
     }
   },
   async fetch() {
@@ -319,6 +331,9 @@ export default {
   },
 
   methods: {
+    reseiveTariffDialogFlg(value) {
+      this.tariffDialog = value
+    },
     async getProductInfoList() {
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
