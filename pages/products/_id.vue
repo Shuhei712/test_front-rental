@@ -1,16 +1,19 @@
 <template>
-  <section class="detail">
+  <section v-if="!$fetchState.pending && !$fetchState.error" class="detail">
     <top-bar title="機材詳細"></top-bar>
     <div class="detail__inner py-5 py-lg-16">
       <div class="content px-2 px-lg-0">
-        <div class="info__categories--sp d-flex px-3 py-1 mb-3">
-          <div v-for="(list, index) in productList.categoryLists" :key="index" class="search-tag text-body-2 mr-2">
-            <v-icon class="mr-2">mdi-check</v-icon>{{ list.name }}
+        <div class="info__categories--sp d-flex flex-wrap px-3 py-1 mb-3">
+          <div class="search-tag text-body-2 mr-2">
+            <v-icon class="mr-2">mdi-check</v-icon>{{ productInfoList.CategoryTagID01 }}
+          </div>
+          <div class="search-tag text-body-2 mr-2">
+            <v-icon class="mr-2">mdi-check</v-icon>{{ productInfoList.CategoryTagID02 }}
           </div>
         </div>
-        <div class="maker--sp text-body-2">{{ productList.maker }}</div>
+        <div class="maker--sp text-body-2">{{ productInfoList.MakerName }}</div>
         <div class="name--sp text-subtitle-1 letter-space-015em mt-2 font-weight-bold">
-          {{ productList.name }}
+          {{ productInfoList.ProductName }} {{ productInfoList.ProductTypeNumber }}
         </div>
         <div class="detail__top d-flex flex-column flex-sm-row">
           <div class="top__image mr-0 mr-sm-5 d-flex d-sm-block">
@@ -28,26 +31,31 @@
           </div>
           <div class="top__info flex-grow-1">
             <div class="info__categories d-flex flex-wrap px-3 py-1">
-              <div v-for="(list, index) in productList.categoryLists" :key="index" class="search-tag text-body-2 mr-2">
-                <v-icon class="mr-2">mdi-check</v-icon>{{ list.name }}
+              <div class="search-tag text-body-2 mr-2">
+                <v-icon class="mr-2">mdi-check</v-icon>{{ productInfoList.CategoryTagID01 }}
+              </div>
+              <div class="search-tag text-body-2 mr-2">
+                <v-icon class="mr-2">mdi-check</v-icon>{{ productInfoList.CategoryTagID02 }}
               </div>
             </div>
             <div class="info__main mt-5">
-              <div class="maker text-body-2">{{ productList.maker }}</div>
+              <div class="maker text-body-2">{{ productInfoList.MakerName }}</div>
               <div class="name text-h6 letter-space-015em mt-5">
-                {{ productList.name }}
+                {{ productInfoList.ProductName }} {{ productInfoList.ProductTypeNumber }}
               </div>
               <div class="price d-flex align-center mt-8 text-body-2">
                 <span class="price__head text-body-2 px-3 py-1">レンタル価格</span>
                 <span class="price__day text-body-2 letter-space-015em px-3 py-1">1日/税別</span>
-                <span class="price__product text-h5 letter-space-015em px-3 py-1">{{ productList.price }}</span
-                >円
-                <v-btn class="price__more text-body-2 ml-5" color="primary"
-                  ><span class="price__class text-body-1 mr-2 font-weight-bold text-center">{{
-                    productList.class
-                  }}</span
-                  >2日目以降の料金</v-btn
-                >
+                <span class="price__product text-h5 letter-space-015em px-3 py-1">{{
+                  productInfoList.PriceValue
+                }}</span>
+                {{ productInfoList.PriceUnit }}
+                <v-btn class="price__more text-body-2 ml-5" color="primary" @click="tariffDialog = true">
+                  <span class="price__class text-body-1 mr-2 font-weight-bold text-center">
+                    {{ productTariffList.TariffSectionName }}
+                  </span>
+                  2日目以降の料金
+                </v-btn>
               </div>
               <div class="price--md d-flex align-center flex-wrap mt-5 text-body-2">
                 <div class="mr-4">
@@ -56,12 +64,12 @@
                     1日/税別
                   </div>
                 </div>
-                <span class="price__product text-h5 letter-space-015em font-weight-medium">{{
-                  productList.price
-                }}</span>
-                円
-                <button class="price__more pa-2 ml-4">
-                  <span class="price__class text-caption mb-1">{{ productList.class }}</span>
+                <span class="price__product text-h5 letter-space-015em font-weight-medium">
+                  {{ productInfoList.PriceValue }}
+                </span>
+                {{ productInfoList.PriceUnit }}
+                <button class="price__more pa-2 ml-4" @click="tariffDialog = true">
+                  <span class="price__class text-caption mb-1"> {{ productTariffList.TariffSectionName }}</span>
                   2日目以降<br />の料金
                 </button>
               </div>
@@ -73,56 +81,64 @@
                   </div>
                 </div>
                 <span class="price__product text-h5 letter-space-015em font-weight-medium">{{
-                  productList.price
+                  productInfoList.PriceValue
                 }}</span>
                 円
-                <button class="price__more pa-2 ml-4">
-                  <span class="price__class text-caption mb-1">{{ productList.class }}</span>
+                <button class="price__more pa-2 ml-4" @click="tariffDialog = true">
+                  <span class="price__class text-caption mb-1">A</span>
                   2日目以降<br />の料金
                 </button>
               </div>
               <div class="tags mt-8">
                 <v-btn
-                  v-for="(list, index) in productList.tagLists"
+                  v-for="(list, index) in productInfoList.FeatureTagList"
                   :key="index"
                   class="product-tag px-3 py-1 mr-2 mb-2"
                   elevation="0"
                   tile
                   small
-                  >{{ list.name }}</v-btn
+                  >{{ list.TagName }}</v-btn
                 >
               </div>
-              <div class="descripsion line-height-25em mt-5 text-body-2">
-                {{ productList.description }}
-              </div>
+              <!-- eslint-disable vue/no-v-html -->
+              <div class="descripsion line-height-25em mt-5 text-body-2" v-html="productInfoList.Description"></div>
+              <!-- eslint-enable -->
               <div class="case-size mt-5">
-                <v-btn color="primary"><v-icon class="mr-2">mdi-archive-outline</v-icon>ケースサイズ</v-btn>
+                <v-btn color="primary" disabled><v-icon class="mr-2">mdi-archive-outline</v-icon>ケースサイズ</v-btn>
               </div>
             </div>
           </div>
         </div>
         <div class="detail__information mt-15">
           <div class="information__menu d-flex justify-center">
-            <v-btn v-scroll-to="{ el: '#product-info', offset: -200 }" class="mx-3" text
-              ><v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="outline"
-                >mdi-chevron-down</v-icon
-              ></v-btn
-            >
-            <v-btn v-scroll-to="{ el: '#product-specification', offset: -200 }" class="mx-3" text
-              ><v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="outline"
-                >mdi-chevron-down</v-icon
-              ></v-btn
-            >
-            <v-btn v-scroll-to="{ el: '#product-document', offset: -200 }" class="mx-3" text
-              ><v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon color="outline"
-                >mdi-chevron-down</v-icon
-              ></v-btn
-            >
-            <v-btn v-scroll-to="{ el: '#product-related', offset: -200 }" class="mx-3" text
-              ><v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="outline"
-                >mdi-chevron-down</v-icon
-              ></v-btn
-            >
+            <v-btn v-scroll-to="{ el: '#product-info', offset: -200 }" class="mx-3" text>
+              <v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="outline">
+                mdi-chevron-down
+              </v-icon>
+            </v-btn>
+            <v-btn v-scroll-to="{ el: '#product-specification', offset: -200 }" class="mx-3" text>
+              <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="outline">
+                mdi-chevron-down
+              </v-icon>
+            </v-btn>
+            <v-btn
+              v-if="productDocLists !== null"
+              v-scroll-to="{ el: '#product-document', offset: -200 }"
+              class="mx-3"
+              text>
+              <v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon color="outline">
+                mdi-chevron-down
+              </v-icon>
+            </v-btn>
+            <v-btn
+              v-if="productRefLists !== null"
+              v-scroll-to="{ el: '#product-related', offset: -200 }"
+              class="mx-3"
+              text>
+              <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="outline">
+                mdi-chevron-down
+              </v-icon>
+            </v-btn>
           </div>
           <div class="information__menu--sp pa-3">
             <p class="text-body-2 text-center">クリックでページ内項目にジャンプします</p>
@@ -135,26 +151,26 @@
                 >
               </v-col>
               <v-col cols="6">
-                <v-btn v-scroll-to="{ el: '#product-specification', offset: -200 }" class="mx-3" text
-                  ><v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="outline"
-                    >mdi-chevron-down</v-icon
-                  ></v-btn
-                >
+                <v-btn v-scroll-to="{ el: '#product-specification', offset: -200 }" class="mx-3" text>
+                  <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="outline">
+                    mdi-chevron-down
+                  </v-icon>
+                </v-btn>
               </v-col>
-              <v-col cols="6">
-                <v-btn v-scroll-to="{ el: '#product-document', offset: -200 }" class="mx-3" text
-                  ><v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon
-                    color="outline"
-                    >mdi-chevron-down</v-icon
-                  ></v-btn
-                >
+              <v-col v-if="productDocLists !== null" cols="6">
+                <v-btn v-scroll-to="{ el: '#product-document', offset: -200 }" class="mx-3" text>
+                  <v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon
+                    color="outline">
+                    mdi-chevron-down
+                  </v-icon>
+                </v-btn>
               </v-col>
-              <v-col cols="6">
-                <v-btn v-scroll-to="{ el: '#product-related', offset: -200 }" class="mx-3" text
-                  ><v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="outline"
-                    >mdi-chevron-down</v-icon
-                  ></v-btn
-                >
+              <v-col v-if="productRefLists !== null" cols="6">
+                <v-btn v-scroll-to="{ el: '#product-related', offset: -200 }" class="mx-3" text>
+                  <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="outline">
+                    mdi-chevron-down
+                  </v-icon>
+                </v-btn>
               </v-col>
             </v-row>
           </div>
@@ -163,199 +179,78 @@
               <div class="product-info__head text-h6 letter-space-02em text-center">
                 <v-icon class="mr-5" color="primary">mdi-information-outline</v-icon>製品情報
               </div>
-              <div class="product-info__content mt-10">
-                <table>
-                  <tbody>
-                    <tr>
-                      <th class="text-center">この商品の特徴</th>
-                      <td>
-                        <ul>
-                          <li>
-                            ATEM Mini Extremeの全機能に加え、9系統のH.264ビデオストリームをリアルタイムで収
-                            録でき、8系統のクリーンな入力とプログラムビデオを得ることが可能
-                          </li>
-                          <li>
-                            DaVinci Resolveプロジェクトファイルも保存されるので、後からプロジェクトの作り替えや編
-                            集に使用可能
-                          </li>
-                          <li>コントロールソフトウェアのダウンロード先はこちら</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="text-center">インターフェース</th>
-                      <td>
-                        <ul>
-                          <li><img src="/img/detail/info.png" alt="" /></li>
-                        </ul>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div v-for="(object, index) in infoLists" :key="index" class="product-info__content mt-10">
+                <div v-for="list in object.SectionList" :key="list.ProductSubjectID" v-html="list.HtmlCode"></div>
               </div>
             </section>
             <section id="product-specification" class="product-specification mt-15">
               <div class="product-specification__head text-h6 letter-space-02em text-center">
                 <v-icon class="mr-5" color="primary">mdi-database-outline</v-icon>仕様
               </div>
-              <div class="product-specification__content mt-10">
-                <table style="width: 100%; border-collapse: collapse">
-                  <thead>
-                    <tr>
-                      <th colspan="2" class="pa-2 bg-primary text-white text-subtitle-1 font-weight-bold">接続</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">ビデオ入力合計</td>
-                      <td>8</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">出力合計</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">Aux出力合計</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">オーディオ入力合計</td>
-                      <td>3.5mmステレオミニジャック x2</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">オーディオ出力合計</td>
-                      <td>3.5mmステレオミニジャック x1</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">タイムコード接続</td>
-                      <td>未対応</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">HDMIビデオ入力</td>
-                      <td>HDMIタイプA x8（10-bit HD切替可能）、 2chのエンベデッドオーディオ</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">ビデオ入力再同期</td>
-                      <td>全8入力のHDMI入力で対応</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">フレームレート / フォーマットコンバーター</td>
-                      <td>全8入力のHDMI入力で対応</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">HDMIプログラム出力</td>
-                      <td>2</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">イーサネット</td>
-                      <td>
-                        イーサネットは10/100/1000 BaseTをサポート（ライブ配信、ソフトウェアコントロール、
-                        ソフトウェアアップデート、直接/ネットワーク経由でのパネル接続用）
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">コンピューターインターフェース</td>
-                      <td>
-                        USBタイプC 3.1 Gen1 x2（外付けドライブ収録、ウェブカム出力、ソフトウェアコントロ
-                        ール、ソフトウェアアップデート、パネル接続用）
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table style="width: 100%; border-collapse: collapse">
-                  <thead>
-                    <tr>
-                      <th colspan="2" class="pa-2 bg-primary text-white text-subtitle-1 font-weight-bold">
-                        フォーマット
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">コンピューターインターフェース</td>
-                      <td>
-                        720p50、720p59.94、720p60 1080p23.98、1080p24、1080p25、1080p29.97、1080p30、1080p50、
-                        1080p59.94、1080p601080i50、1080i59.94、1080i60
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">HDビデオ出力フォーマット</td>
-                      <td>1080p23.98、1080p24、1080p25、1080p29.97、1080p30、1080p50、 1080p59.94、1080p60</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">ビデオ配信フォーマット</td>
-                      <td>1080p23.98、1080p24、1080p25、1080p29.97、1080p30、1080p50、 1080p59.94、1080p60</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">Ultra HDビデオフォーマット</td>
-                      <td>未対応</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">ビデオサンプリング</td>
-                      <td>4:2:2 YUV</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">色精度</td>
-                      <td>10-bit</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">カラースペース</td>
-                      <td>Rec. 709</td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">コンピューターからのHDMI入力解像度</td>
-                      <td>
-                        1280 x 720p 50Hz、59.94Hz および60Hz 1920 x 1080p 23.98、24、25、29.97、30、50, 59.94および60Hz
-                        1920 x 1080i 50、59.94Hz および60Hz
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="w-400 bg-cushion text-center">カラースペース変換</td>
-                      <td>ハードウェアベースのリアルタイム</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div v-for="(object, index) in specLists" :key="index" class="product-specification__content mt-10">
+                <div v-for="list in object.SectionList" :key="list.ProductSubjectID" v-html="list.HtmlCode"></div>
               </div>
             </section>
-            <section id="product-document" class="product-document mt-15">
+            <section v-if="productDocLists !== null" id="product-document" class="product-document mt-15">
               <div class="product-document__head text-h6 letter-space-02em text-center">
                 <v-icon class="mr-5" color="primary">mdi-text-box-outline</v-icon>この機材の資料
               </div>
               <div class="product-document__content d-flex justify-center align-start flex-wrap mt-10">
                 <v-card
-                  v-for="(list, index) in productList.documentLists"
+                  v-for="(list, index) in downloadDocLists"
                   :key="index"
                   width="300"
                   elevation="0"
                   class="document d-flex flex-column align-center pa-5 ma-5"
+                  :href="list.DocumentURL"
                   link>
                   <div class="document__img">
-                    <img :src="list.image" :alt="list.title" />
+                    <img src="/img/detail/pdf.png" :alt="list.DocumentName" />
                   </div>
                   <div class="document__title text-center mt-3">
-                    {{ list.title }}
+                    {{ list.DocumentName }}
+                  </div>
+                </v-card>
+                <v-card
+                  v-for="(list, index) in linkDocLists"
+                  :key="index"
+                  width="300"
+                  elevation="0"
+                  class="document d-flex flex-column align-center pa-5 ma-5"
+                  :href="list.DocumentURL"
+                  link>
+                  <div class="document__img">
+                    <img src="/img/detail/link.png" :alt="list.DocumentName" />
+                  </div>
+                  <div class="document__title text-center mt-3">
+                    {{ list.DocumentName }}
                   </div>
                 </v-card>
               </div>
             </section>
-            <section id="product-related" class="product-related mt-15">
+            <section v-if="productRefLists !== null" id="product-related" class="product-related mt-15">
               <div class="product-related__head text-h6 letter-space-02em text-center">
                 <v-icon class="mr-5" color="primary">mdi-link</v-icon>関連機材
               </div>
               <div class="product-related__content mt-10">
-                <div v-for="(list, index) in productList.relatedLists" :key="index" class="related__product mt-5">
+                <div v-for="(list, index) in productRefLists" :key="index" class="related__product mt-5">
                   <div class="product__categories d-flex px-3 py-1">
-                    <div
-                      v-for="category in list.categoryLists"
-                      :key="category.name"
-                      class="search-tag text-body-2 mr-2">
-                      <v-icon class="mr-2">mdi-check</v-icon>{{ category.name }}
+                    <div class="search-tag text-body-2 mr-2">
+                      <v-icon class="mr-2">mdi-check</v-icon>{{ list.CategoryTagID01 }}
+                    </div>
+                    <div class="search-tag text-body-2 mr-2">
+                      <v-icon class="mr-2">mdi-check</v-icon>{{ list.CategoryTagID02 }}
                     </div>
                   </div>
                   <div class="product__related mt-5">
                     <v-row>
-                      <v-col v-for="product in list.productLists" :key="product.name" cols="6" sm="3" md="2">
-                        <item-card :path="product.path" :maker="product.maker" :name="product.name"></item-card>
+                      <v-col v-for="product in list.ProductList" :key="product.ProductID" cols="6" sm="3" md="2">
+                        <item-card
+                          :path="product.ProductImageURL"
+                          :maker="product.MakerName"
+                          :name="product.ProductName"
+                          :link="'/products/' + product.ProductID + '?name=' + product.ProductName">
+                        </item-card>
                       </v-col>
                     </v-row>
                   </div>
@@ -366,104 +261,132 @@
         </div>
       </div>
       <div class="back-btn text-center mt-15">
-        <v-btn text
-          ><v-icon class="mr-2" color="primary">mdi-chevron-left</v-icon>オンラインイベント機器一覧に戻る</v-btn
-        >
-        <v-btn text><v-icon class="mr-2" color="primary">mdi-chevron-left</v-icon>スイッチャー一覧に戻る</v-btn>
+        <v-btn text>
+          <v-icon class="mr-2" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID01 }}に戻る
+        </v-btn>
+        <v-btn text>
+          <v-icon class="mr-2" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID02 }}に戻る
+        </v-btn>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import TariffCard from '~/components/TariffCard.vue'
 export default {
   data() {
     return {
-      productList: {
-        name: 'ライブプロダクションスイッチャー ATEM Mini Extreme ISO',
-        image: '/img/detail/main.png',
-        maker: 'Blackmagic Design',
-        price: '140,000',
-        class: 'A',
-        description:
-          '分かりやすい概要説明文※これはblackmagicdesignHPの文章コピペなので適当なものに変 えてください※4行で綺麗に収まりますが、これより多くても少なくてもOK プロフェッショナルな放送現場に必要な最先端の機能とテクノロジーを搭載した、プロ仕様のライ ブプロダクションスイッチャー。',
-        categoryLists: [{ name: 'オンラインイベント機器' }, { name: 'スイッチャー' }],
-        tagLists: [
-          { name: 'ハイビジョン' },
-          { name: 'スケーラー内蔵' },
-          { name: '音声対応' },
-          { name: 'エンベデッド' },
-          { name: 'PinP' },
-          { name: 'プレビュー' },
-          { name: 'キー抜き' },
-          { name: 'キャプチャ' },
-        ],
-        documentLists: [
-          {
-            title: '取扱説明書(メーカーHPリンク)',
-            link: '',
-            image: '/img/detail/link.png',
-          },
-          {
-            title: 'オリジナルフレーム図面',
-            link: '',
-            image: '/img/detail/pdf.png',
-          },
-          {
-            title: 'オリジナルフレーム取扱説明書',
-            link: '',
-            image: '/img/detail/pdf.png',
-          },
-        ],
-        relatedLists: [
-          {
-            categoryLists: [{ name: 'オンラインイベント機器' }, { name: 'スイッチャー' }],
-            productLists: [
-              {
-                path: '/img/detail/related_01.png',
-                maker: 'Panasonic',
-                name: 'ET-D75LE6ズームレンズ 1.0～1.2:1',
-              },
-              {
-                path: '/img/detail/related_02.png',
-                maker: 'Panasonic',
-                name: 'ET-D75LE10ズームレンズ 1.3～1.8:1',
-              },
-              {
-                path: '/img/detail/related_03.png',
-                maker: 'Panasonic',
-                name: 'ET-D75LE20ズームレンズ 1.8～2.6:1',
-              },
-              {
-                path: '/img/detail/related_04.png',
-                maker: 'Panasonic',
-                name: 'ET-D75LE30ズームレンズ 2.6〜5.0:1',
-              },
-              {
-                path: '/img/detail/related_05.png',
-                maker: 'Panasonic',
-                name: 'ET-D75LE30ズームレンズ 4.9〜7.9:1',
-              },
-              {
-                path: '/img/detail/related_06.png',
-                maker: 'Panasonic',
-                name: 'ET-D75LE6ズームレンズ 1.0～1.3:1',
-              },
-              {
-                path: '/img/detail/related_07.png',
-                maker: 'Panasonic',
-                name: 'ET-D75LE10ズームレンズ 1.3～1.7:1',
-              },
-              {
-                path: '/img/detail/related_08.png',
-                maker: 'Panasonic',
-                name: 'ET-D75LE20ズームレンズ 1.8～2.5:1',
-              },
-            ],
-          },
-        ],
+      productInfoList: [],
+      productItemLists: [],
+      productRefLists: [],
+      productDocLists: [],
+      productTariffList: [],
+      productCaseInfo: [],
+      infoLists: [],
+      specLists: [],
+      refferLists: [],
+      docLists: [],
       },
     }
+  },
+  async fetch() {
+    this.$store.commit('loading/changeStatus', true)
+    const [productInfoList, productItemLists, productRefLists, productDocLists, productCaseInfo] = await Promise.all([
+      this.getProductInfoList(),
+      this.getProductItemInfo(),
+      this.getProductRefList(),
+      this.getProductDocList(),
+      this.getProductCaseInfo(),
+    ])
+
+    const productTariffLists = await this.getProductTariff(this.productInfoList.TariffID)
+
+    this.getProductInfo()
+    this.getProductSpec()
+    this.getProductReffer()
+    this.getProductDocList()
+
+    this.$store.commit('loading/changeStatus', false)
+  },
+  computed: {
+    downloadDocLists() {
+      return this.productDocLists.filter((object) => object.DocumentType === 0)
+    },
+    linkDocLists() {
+      return this.productDocLists.filter((object) => object.DocumentType === 1)
+    },
+  },
+
+  methods: {
+    async getProductInfoList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ProductID', this.$route.params.id)
+      const res = await this.$axios.$post('get_product_info_master.php', param)
+      // console.log(res)
+      this.productInfoList = res.ProductInfo
+    },
+    async getProductItemInfo() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ProductID', this.$route.params.id)
+      const res = await this.$axios.$post('get_product_item_info.php', param)
+      // console.log(res)
+      this.productItemLists = res.SubjectList
+    },
+    async getProductRefList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ProductID', this.$route.params.id)
+      const res = await this.$axios.$post('get_ref_product_list.php', param)
+      // console.log(res)
+      this.productRefLists = res.CategoryGroupList
+    },
+    async getProductDocList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ProductID', this.$route.params.id)
+      const res = await this.$axios.$post('get_product_doc_list.php', param)
+      // console.log(res)
+      this.productDocLists = res.ProductDocumentList
+    },
+    async getProductTariff(tariffID) {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ProductID', this.$route.params.id)
+      param.append('TariffID', tariffID)
+      param.append('TariffType', 0)
+      const res = await this.$axios.$post('get_product_tariff.php', param)
+      // console.log(res)
+      this.productTariffList = res
+    },
+    async getProductCaseInfo() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ProductID', this.$route.params.id)
+      const res = await this.$axios.$post('get_product_case_info.php', param)
+      console.log(res)
+      this.productCaseInfo = res
+    },
+    getProductInfo() {
+      this.infoLists = this.productItemLists.filter((object) => object.SubjectKey === this.$config.PRODUCT_INFO)
+    },
+    getProductSpec() {
+      this.specLists = this.productItemLists.filter((object) => object.SubjectKey === this.$config.PRODUCT_SPEC)
+    },
+    getProductReffer() {
+      this.refferLists = this.productItemLists.filter((object) => object.SubjectKey === this.$config.PRODUCT_REFFER)
+    },
+    getProductDoc() {
+      this.docLists = this.productItemLists.filter((object) => object.SubjectKey === this.$config.PRODUCT_DOC)
+    },
   },
 }
 </script>
@@ -507,45 +430,79 @@ export default {
   .detail__top {
     .top__image {
       .image__main {
+        width: 400px;
+        height: 400px;
+        border: 1px solid $line;
+        overflow: hidden;
+
+        @include mq(md) {
+          width: 250px;
+          height: 250px;
+        }
+        @include mq(sm) {
+          width: 220px;
+          height: 220px;
+        }
+
+        .hooper {
+          width: 100%;
+          height: 100%;
+
+          .hooper-slide {
+          }
+        }
+
         img {
-          width: 400px;
-          height: 400px;
-          object-fit: cover;
+          width: calc(400px - 2px);
+          height: calc(400px - 2px);
+          object-fit: contain;
 
           @include mq(md) {
-            width: 250px;
-            height: 250px;
-            object-fit: cover;
+            width: calc(250px - 2px);
+            height: calc(250px - 2px);
           }
 
           @include mq(sm) {
-            width: 220px;
-            height: 220px;
-            object-fit: cover;
+            width: calc(220px - 2px);
+            height: calc(220px - 2px);
           }
         }
       }
       .image__sub {
+        @include mq(sm) {
+          max-width: 120px;
+        }
         button {
           width: 55px;
           height: 55px;
           border: 1px solid $line;
           border-radius: 50%;
+
+          img {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            object-fit: contain;
+          }
+        }
+        input[type='radio'] {
+          display: none;
         }
 
-        #sub--01 {
-          border: 0;
-          background-image: url('/img/detail/sub_01.png');
+        label {
+          img {
+            border: 1px solid $line;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            object-fit: contain;
+          }
         }
-
-        #sub--02 {
-          border: 0;
-          background-image: url('/img/detail/sub_02.png');
+        input[type='radio'] + label img {
+          opacity: 0.6;
         }
-
-        #sub--03 {
-          border: 0;
-          background-image: url('/img/detail/sub_03.png');
+        input[type='radio']:checked + label img {
+          opacity: 1;
         }
       }
     }
