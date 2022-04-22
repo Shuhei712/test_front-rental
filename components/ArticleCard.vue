@@ -1,13 +1,13 @@
 <template>
-  <v-card class="article rounded" :color="color" :href="link" elevation="0" link>
-    <div class="d-flex flex-md-column">
-      <div class="article__img order-1 order-md-0"><img :src="path" /></div>
-      <div class="article__title order-0 order-md-1 flex-grow-1">
-        <div class="text-body-2 pa-3 mb-0 mb-md-2 text-white">
-          <span class="tag rounded-pill px-5 text-body-2 mb-2 mb-md-3">
+  <v-card class="article rounded" :color="color" :href="link" link target="_blank">
+    <div class="d-flex flex-sm-column">
+      <div class="article__img order-1 order-sm-0"><img :src="path" /></div>
+      <div class="article__title order-0 order-sm-1 flex-grow-1">
+        <div class="text-body-2 pa-3 text-white">
+          <span class="tag rounded-pill px-5 text-caption text-md-body-2 mb-2 mb-sm-3">
             {{ className }}
           </span>
-          <p class="text-body-2">{{ title }}</p>
+          <p class="title text-body-2 text-md-body-1 bold mb-0">{{ title }}</p>
         </div>
       </div>
     </div>
@@ -50,24 +50,39 @@ export default {
 }
 
 .article {
-  max-height: 220px;
-  @include mq(md) {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  @include mq(sm) {
     max-height: 70px;
   }
 
   .article__img {
+    padding-top: 54%;
+    position: relative;
+
+    @include mq(sm) {
+      width: 20%;
+      min-width: 70px;
+      padding-top: 0;
+    }
     img {
       width: 100%;
-      height: 110px;
+      height: 100%;
       object-fit: cover;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+  .article__title {
+    @include mq(sm) {
+      width: 70%;
 
-      @include mq(md) {
-        border-top-left-radius: 0px;
-        border-bottom-right-radius: 5px;
-        width: 70px;
-        height: 70px;
+      .title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }
