@@ -9,17 +9,18 @@
         <v-icon class="mr-2 rotate-90">mdi-facebook</v-icon>Share
       </v-btn>
     </div>
-    <div class="top__back top__back--fix">
-      <v-btn v-scroll-to="'#top'" class="text-caption" color="cushion">
-        <v-icon color="accent">mdi-chevron-up</v-icon>トップにもどる
-      </v-btn>
+    <to-top-btn></to-top-btn>
+    <div class="top__hexagon hidden-md-and-down">
+      <div class="hexagon"></div>
+      <div class="hexagon"></div>
+      <div class="hexagon"></div>
     </div>
     <top-main class="hidden-md-and-down"></top-main>
     <top-main-rp class="hidden-lg-and-up"></top-main-rp>
     <top-notice></top-notice>
-    <div class="top__inner d-flex py-16">
+    <div class="top__inner d-flex pt-16">
       <category-lists :category-lists="categoryLists"></category-lists>
-      <div class="content">
+      <div class="content ml-lg-10">
         <top-new :new-product-lists="newProductLists"></top-new>
         <top-article
           :page-class-lists="specialPageLists.PageClassList"
@@ -186,6 +187,7 @@ export default {
 @import 'assets/css/common.scss';
 
 .top {
+  overflow: hidden;
   position: relative;
   height: auto;
 
@@ -193,6 +195,7 @@ export default {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    padding-bottom: 140px !important;
   }
 }
 
@@ -207,42 +210,20 @@ export default {
 
   .share__twitter {
     box-shadow: 5px -5px 0px -2px #ffffff;
-    border-radius: 10px;
+    border-radius: 5px;
   }
-}
-
-.top__back {
-  z-index: 100;
-  transform: translate(110%, 0);
-  transition: all 0.5s ease-in-out;
-}
-
-.top__back--active {
-  transform: translate(0, 0);
-}
-
-.top__back--fix {
-  position: fixed;
-  bottom: 4px;
-  right: 10px;
-}
-
-.top__back--absolute {
-  position: absolute;
-  bottom: 4px;
-  right: 10px;
 }
 
 .top__share--fixed {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
+  bottom: 24px;
+  right: calc(30 / 1920 * 100vw);
 }
 
 .top__share--absolute {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 24px;
+  right: calc(30 / 1920 * 100vw);
 }
 
 .content {
@@ -251,6 +232,36 @@ export default {
 
   @include mq(lg) {
     width: 100%;
+  }
+}
+
+.top__hexagon {
+  width: calc(103px * 2);
+	height: calc(103px * 1.732);
+  bottom: -35px;
+  right: calc(-50 / 1920 * 100vw);
+  transform: rotate(-10deg);
+	position: absolute;
+  z-index: 1;
+
+  .hexagon {
+    border-top: 1px solid $primary; // 辺の長さを調整
+	  border-bottom: 1px solid $primary; // 辺の長さを調整
+    box-sizing: border-box;
+    width: 103px; // 辺の長さを調整
+	  height: calc(103px * 1.732); // 辺の長さを調整
+	  left: calc(103px * 0.5); // 位置を調整
+    position: absolute;
+
+    &:nth-of-type(1) {
+      transform: rotate(0deg);
+    }
+    &:nth-of-type(2) {
+      transform: rotate(60deg);
+    }
+    &:nth-of-type(3) {
+      transform: rotate(120deg);
+    }
   }
 }
 </style>
