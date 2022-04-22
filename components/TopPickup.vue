@@ -1,42 +1,52 @@
 <template>
-  <section class="pickup mx-0 mx-sm-5 mb-5">
+  <section class="pickup px-3 px-lg-0 mt-10 mt-sm-14">
     <h3 class="pickup__heading text-center">
-      <span class="orange_line zen-kaku-gothic text-lg-h6 text-subtitle-1 letter-space-015em"
-        >おすすめレンタル機材ピックアップ</span
-      >
+      <span class="heading__text orange_line text-caption text-md-h6 zen-kaku-gothic letter-space-015em"
+        >おすすめレンタル機材<span class="word-keep">ピックアップ</span>
+      </span>
     </h3>
-    <div class="pickup__content mt-5 py-10">
-      <img class="monitan" src="/img/pickup/monitan.png" alt="モニタン" />
-      <img class="protan" src="/img/pickup/protan.png" alt="プロタン" />
-      <div v-for="(list, index) in pickupLists" :key="index" class="item">
-        <div class="item__heading px-10 d-flex align-center flex-column flex-lg-row mt-8 mt-lg-0">
+    <div class="pickup__content mt-5 pt-sm-5 pb-10">
+      <div class="pickup__character d-flex align-baseline justify-center justify-sm-space-between">
+        <img class="monitan" src="/img/pickup/monitan.png" alt="モニタン" />
+        <img class="protan" src="/img/pickup/protan.png" alt="プロタン" />
+      </div>
+      <div v-for="(list, index) in pickupLists" :key="index" class="item py-10">
+        <div class="item__heading d-flex align-center flex-column flex-lg-row mx-auto mb-4 mb-lg-5">
           <div class="d-flex align-center">
             <img class="icon mr-3" :src="list.IconImageURL" :alt="list.IconImageURL" />
-            <h4 class="zen-kaku-gothic text-h6 text-lg-h5 letter-space-02em">
+            <h4 class="heading__title font-heading text-h6 text-lg-h5 letter-space-02em mr-lg-10">
               {{ list.PageCategoryName }}
             </h4>
           </div>
-          <v-divider class="hidden-md-and-down" color="line" inset></v-divider>
+          <v-divider class="heading__line hidden-md-and-down" color="line"></v-divider>
           <v-btn
             :to="'/category/' + list.PageCategoryID + '?categoryName=' + list.PageCategoryName"
-            class="ml-5 mt-8 mt-lg-0"
-            outlined>
-            一覧へ
-            <v-icon color="primary">mdi-chevron-right</v-icon>
+            class="ml-lg-5 mt-4 mt-lg-0"
+            color="headingText"
+            elevation="2"
+            outlined
+            small>
+            <span class="lh-crop-12">一覧へ</span>
+            <v-icon color="primary" class="mr-n2">mdi-chevron-right</v-icon>
           </v-btn>
         </div>
-        <v-container class="item__content pa-0 pa-lg-3">
-          <v-row class="ma-3">
-            <v-col v-for="(item, num) in list.PickupProductList" :key="num" class="pa-1 pa-lg-0" cols="6" md="3">
-              <item-card :path="item.ImageURL" :maker="item.MakerName" :name="item.ProductName"></item-card>
+        <v-container class="item__content pa-0">
+          <v-row class="">
+            <v-col v-for="(item, num) in list.PickupProductList" :key="num" class="item__col d-flex" cols="6" md="3">
+              <item-card
+                :path="item.ImageURL"
+                :maker="item.MakerName"
+                :name="item.ProductName"
+                :model="item.ProductTypeNumber"></item-card>
             </v-col>
           </v-row>
         </v-container>
       </div>
     </div>
     <div class="pickup__btn text-center">
-      <v-btn to="/category" class="bg-white" outlined>
-        <v-icon class="mr-2" color="primary">mdi-shape-outline</v-icon>すべてのカテゴリから探す
+      <v-btn to="/category" class="bg-white text-caption text-sm-body-2" color="headingText" outlined>
+        <v-icon class="mr-2" color="primary">mdi-shape-outline</v-icon>
+        <span class="lh-crop-12">すべてのカテゴリから探す</span>
         <v-icon color="primary">mdi-chevron-right</v-icon>
       </v-btn>
     </div>
@@ -172,8 +182,8 @@ export default {
 @import 'assets/css/common.scss';
 
 .pickup {
-  margin-top: 100px;
   position: relative;
+  z-index: 10;
 
   @include mq(sm) {
     margin-top: 100px;
@@ -182,64 +192,76 @@ export default {
 
   &__heading {
     position: relative;
+  }
+
+  &__heading {
+    position: relative;
 
     @include mq(sm) {
-      margin-bottom: 150px;
+      top: -14px;
     }
-  }
 
-  &__heading::before,
-  &__heading::after {
-    position: relative;
-    display: inline-block;
-    content: '';
-    background: $accent;
-    width: 2px;
-    height: 2em;
-    margin: 0 1em;
-    margin-top: -0.2em;
-    vertical-align: middle;
-  }
+    .heading__text {
+      margin: 0 16px;
+    }
 
-  &__heading:before {
-    transform: rotate(-35deg);
-  }
-
-  &__heading:after {
-    transform: rotate(35deg);
+    &::before,
+    &::after {
+      content: '';
+      background: $accent;
+      width: 2px;
+      height: 1.5em;
+      bottom: -0.2em;
+      position: absolute;
+    }
+    &::before {
+      transform: rotate(-45deg);
+    }
+    &::after {
+      transform: rotate(45deg);
+    }
   }
 
   &__content {
     position: relative;
+    background-color: #fff;
     border: 1px solid $accent;
     border-radius: 10px;
 
     @include mq(sm) {
       border: none;
+      background-color: $cushion;
     }
 
-    .monitan {
-      height: 135px;
-      object-fit: contain;
-      position: absolute;
+    .pickup__character {
+      width: 95%;
       top: calc(-135px / 1.25);
-      left: 0;
-
-      @include mq(sm) {
-        height: 100px;
-        left: 100px;
-      }
-    }
-    .protan {
-      height: 90px;
-      object-fit: contain;
+      left: 50%;
+      transform: translateX(-50%);
       position: absolute;
-      top: calc(-90px / 1.25);
-      right: 0;
 
       @include mq(sm) {
-        height: 70px;
-        right: 100px;
+        width: 100%;
+        top: auto;
+        position: relative;
+      }
+
+      .monitan {
+        height: 135px;
+        object-fit: contain;
+
+        @include mq(sm) {
+          height: 100px;
+          margin-right: 20px;
+        }
+      }
+      .protan {
+        height: 90px;
+        object-fit: contain;
+
+        @include mq(sm) {
+          height: 70px;
+        }
       }
     }
   }
@@ -251,10 +273,39 @@ export default {
     transform: translate(-50%, 0);
   }
 
-  .item__heading {
-    .v-btn {
+  .item {
+    &__heading {
+      width: 95%;
+
       @include mq(sm) {
-        background-color: #ffffff !important;
+        width: 100%;
+      }
+
+      .heading__title{
+        @include mq(sm) {
+          letter-spacing: 0.1em !important;
+        }
+      }
+      .heading__line {
+        border: none;
+        border-top: 1px solid $line;
+      }
+      .v-btn {
+        @include mq(sm) {
+          background-color: #ffffff !important;
+        }
+      }
+    }
+    &__content {
+      @include mq(sm) {
+        width: 100% !important;
+      }
+
+      .row {
+        margin: -5px -6px !important;
+      }
+      .item__col {
+        padding: 5px 6px !important;
       }
     }
   }
