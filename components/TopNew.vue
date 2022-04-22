@@ -1,19 +1,22 @@
 <template>
-  <section class="new">
-    <div class="new__heading d-flex align-center px-3 px-md-10">
-      <v-icon class="mr-5" color="accent">mdi-creation</v-icon>
-      <h3 class="zen-kaku-gothic text-h6 text-md-h5 letter-space-02em mr-3 mr-md-10">新着機材</h3>
-      <v-divider color="line"></v-divider>
-      <v-btn class="ml-5" outlined>一覧へ<v-icon color="primary">mdi-chevron-right</v-icon></v-btn>
+  <section class="new px-3 px-lg-0">
+    <div class="new__heading d-flex align-center">
+      <v-icon class="mr-3 mr-md-5" color="accent">mdi-creation</v-icon>
+      <h3 class="font-heading text-h6 text-md-h5 letter-space-02em mr-4 mr-md-9">新着機材</h3>
+      <v-divider color="line" class="heading__line"></v-divider>
+      <v-btn class="ml-4 ml-md-5" outlined color="headingText" elevation="2" small>
+        <span class="lh-crop-12">一覧へ</span><v-icon color="primary" class="mr-n2">mdi-chevron-right</v-icon>
+      </v-btn>
     </div>
-    <v-container class="new__content">
-      <v-row class="ma-0 ma-lg-3">
-        <v-col v-for="(list, index) in newProductLists" :key="index" cols="6" md="3">
+    <v-container class="new__content pt-6 pb-16 px-0">
+      <v-row>
+        <v-col v-for="(list, index) in newProductLists" :key="index" cols="6" md="3" class="item__col d-flex">
           <item-card
             :path="list.ImageURL"
             :maker="list.MakerName"
             :name="list.ProductName"
-            :link="'/products/' + list.ProductID + '?name=' + list.ProductName"></item-card>
+            :link="'/products/' + list.ProductID + '?name=' + list.ProductName"
+            :model="list.ProductTypeNumber"></item-card>
         </v-col>
       </v-row>
     </v-container>
@@ -61,8 +64,31 @@ export default {
 @import 'assets/css/common.scss';
 
 .new {
+  &__heading {
+    width: 95%;
+    margin: 0 auto;
+
+    @include mq(sm) {
+      width: 100%;
+    }
+
+    .heading__line {
+      border: none;
+      border-top: 1px solid $line;
+    }
+  }
+
   &__content {
-    width: 100%;
+    @include mq(sm) {
+      width: 100% !important;
+    }
+
+    .row {
+      margin: -5px -6px !important;
+    }
+    .item__col {
+      padding: 5px 6px !important;
+    }
   }
 }
 </style>
