@@ -398,6 +398,7 @@ export default {
       this.keyword = keyword
       this.setCondisionJson()
       this.searchProductsUsingFilter()
+      this.dialog = false
     },
     reseiveTariffDialogFlg(value) {
       this.tariffDialog = value
