@@ -1,42 +1,23 @@
 <template>
-  <div class="terms__price text-body-1 d-flex flex-column pa-4 pa-lg-8" :class="{ active: priceFlg }">
+  <div class="terms__price d-flex flex-column text-body-1 pa-4 pa-lg-8" :class="{ active: priceFlg }">
     <div class="price__title">
-      価格を選択
-      <v-btn class="ml-5" elevation="0" color="cushion" small>
+      価格帯を選択
+      <v-btn class="ml-5" elevation="0" color="cushion" small @click="resetSelectedPriceLists()">
         <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除
       </v-btn>
     </div>
-    <div class="price__lists flex-grow-1 overflow-auto mt-8 pa-5">
-      <v-row>
-        <v-col cols="12">
-          <v-range-slider
-            v-model="range"
-            :max="max"
-            :min="min"
-            hide-details
-            prepend-icon="mdi-cash-check"></v-range-slider>
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-            :value="range[0]"
-            class="ml-0"
-            hide-details
-            type="number"
-            label="Min"
-            suffix="円"
-            @change="$set(range, 0, $event)"></v-text-field>
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-            :value="range[1]"
-            class="mr-0"
-            hide-details
-            type="number"
-            label="Max"
-            suffix="円"
-            @change="$set(range, 1, $event)"></v-text-field>
-        </v-col>
-      </v-row>
+    <div class="maker__lists flex-grow-1 overflow-auto mt-8">
+      <div v-for="(price, index) in searchPriceLists" :key="index" class="price-list py-1">
+        <label class="terms__label">
+          <input
+            v-model="selectedPriceLists"
+            class="terms__checkbox"
+            type="checkbox"
+            :value="{ id: price.PriceRangeID, name: price.PriceRangeName }"
+            @change="sendPriceLists()" />
+          <span class="checkbox__parts text-body-2">{{ price.PriceRangeName }} </span>
+        </label>
+      </div>
     </div>
   </div>
 </template>
@@ -48,13 +29,25 @@ export default {
       type: Boolean,
       required: true,
     },
+    searchPriceLists: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      min: 100,
-      max: 1500000,
-      range: [100, 1500000],
+      selectedPriceLists: [],
     }
+  },
+  methods: {
+    sendPriceLists() {
+      if (this.selectedPriceLists.length > 1) this.selectedPriceLists.shift()
+      this.$emit('received-price-lists', this.selectedPriceLists)
+    },
+    resetSelectedPriceLists() {
+      this.selectedPriceLists = []
+      this.sendPriceLists()
+    },
   },
 }
 </script>
@@ -76,6 +69,18 @@ export default {
   .price__title {
     color: $primary;
   }
+}
+
+.index-lable {
+  width: 100%;
+  background-color: $cushion;
+  padding: 2px 4px;
+}
+
+.terms__label {
+  display: inline-block;
+  width: 50%;
+  margin: 15px 0;
 }
 
 .terms__price.active {
