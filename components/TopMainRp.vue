@@ -3,9 +3,12 @@
     <v-container class="top__inner pa-0">
       <v-row class="main__catch" no-gutters>
         <v-col cols="12" class="mt-sm-5">
-          <h2 class="catch__font text-sm-h3 zen-kaku-gothic bold letter-space-015em line-height-normal text-white no-wrap">
+          <h2
+            class="catch__font text-sm-h3 zen-kaku-gothic bold letter-space-015em line-height-normal text-white no-wrap">
             <span class="d-block">
-              <span class="catch__bg px-2 px-sm-5">必要<span class="catch__font--small">な</span>機材<span class="catch__font--small">が</span></span>
+              <span class="catch__bg px-2 px-sm-5"
+                >必要<span class="catch__font--small">な</span>機材<span class="catch__font--small">が</span></span
+              >
             </span>
             <span class="d-block mt-1">
               <span class="catch__bg px-2 px-sm-5">レンタル<span class="catch__font--small">で</span></span>
@@ -27,7 +30,9 @@
         <v-col cols="12">
           <div class="btn-wrap">
             <v-btn color="#fff" block small>
-              <img class="icon mr-1" src="/img/top/beginner-icon.png" /><span class="btn-text lh-crop-12">はじめての方へ</span>
+              <img class="icon mr-1" src="/img/top/beginner-icon.png" /><span class="btn-text lh-crop-12"
+                >はじめての方へ</span
+              >
               <v-icon color="primary" class="mr-n2"> mdi-chevron-right </v-icon>
             </v-btn>
           </div>
@@ -35,7 +40,8 @@
         <v-col cols="12" class="mt-3">
           <div class="btn-wrap">
             <v-btn color="#fff" block small>
-              <v-icon class="mr-1" color="primary" small>mdi-help-circle-outline</v-icon><span class="btn-text lh-crop-12">よくある質問</span>
+              <v-icon class="mr-1" color="primary" small>mdi-help-circle-outline</v-icon
+              ><span class="btn-text lh-crop-12">よくある質問</span>
               <v-icon color="primary" class="mr-n2">mdi-chevron-right</v-icon>
             </v-btn>
           </div>
@@ -56,8 +62,9 @@
         </v-col>
         <v-col cols="12" class="mt-3">
           <div class="btn-wrap">
-            <v-btn class="text-white" color="primary" to="/products" block small>
-              <v-icon class="mr-1" color="#ffffff" small>mdi-text-search</v-icon><span class="lh-crop-12">詳細検索</span>
+            <v-btn class="text-white" color="primary" :href="'/products?type=3&keyword=' + keyword" block small>
+              <v-icon class="mr-1" color="#ffffff" small>mdi-text-search</v-icon
+              ><span class="lh-crop-12">詳細検索</span>
             </v-btn>
           </div>
         </v-col>
@@ -65,6 +72,16 @@
     </v-container>
   </section>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      keyword: '',
+    }
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
@@ -108,7 +125,7 @@
     }
   }
   .catch__bg {
-    background:linear-gradient(transparent 10%, $accent 10%);
+    background: linear-gradient(transparent 10%, $accent 10%);
   }
   .catch__intro {
     background-color: rgba(#fff, 0.86);

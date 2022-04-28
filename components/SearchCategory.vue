@@ -2,19 +2,45 @@
   <div class="terms__category d-flex flex-column text-body-1 pa-4 pa-lg-8" :class="{ active: categoryFlg }">
     <div class="category__title">
       カテゴリーを選択
-      <v-btn class="ml-5" elevation="0" color="cushion" small>
-        <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除
+      <v-btn class="ml-5" elevation="0" color="cushion" small @click="resetSelectedCategoryLists()">
+        <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>
+        選択解除
       </v-btn>
     </div>
     <div class="category__lists flex-grow-1 overflow-auto mt-8">
-      <v-row justify="center">
-        <v-col v-for="(list, index) in categoryLists" :key="index" cols="11" class="category-list py-4">
-          <label>
-            <input class="terms__checkbox" type="checkbox" :value="list.name" />
-            <span class="checkbox__parts text-body-2">{{ list.name }}</span>
+      <div v-for="root in searchCategoryLists" :key="root.CategoryID" class="category-list">
+        <label class="terms__label">
+          <input
+            v-model="selectedCategoryLists"
+            class="terms__checkbox"
+            type="checkbox"
+            :value="{ id: root.CategoryID, name: root.CategoryName }"
+            @change="sendCategoryLists()" />
+          <span class="checkbox__parts text-body-2">{{ root.CategoryName }}</span>
+        </label>
+        <div v-for="child in root.SubCategoryList" :key="child.CategoryID" cols="11" class="category-list">
+          <label class="terms__label">
+            <input
+              v-model="selectedCategoryLists"
+              class="terms__checkbox"
+              type="checkbox"
+              :value="{ id: child.CategoryID, name: child.CategoryName }"
+              @change="sendCategoryLists()" />
+            <span class="checkbox__parts text-body-2">{{ child.CategoryName }}</span>
           </label>
-        </v-col>
-      </v-row>
+          <div v-for="grandChild in child.SubCategoryList" :key="grandChild.CategoryID" cols="11" class="category-list">
+            <label class="terms__label">
+              <input
+                v-model="selectedCategoryLists"
+                class="terms__checkbox"
+                type="checkbox"
+                :value="{ id: grandChild.CategoryID, name: grandChild.CategoryName }"
+                @change="sendCategoryLists()" />
+              <span class="checkbox__parts text-body-2">{{ grandChild.CategoryName }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -26,23 +52,29 @@ export default {
       type: Boolean,
       required: true,
     },
+    searchCategoryLists: {
+      type: Array,
+      required: true,
+    },
+    queryCategoryLists: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      categoryLists: [
-        { name: 'オンラインイベント機器' },
-        { name: 'スイッチャー' },
-        { name: 'メディアサーバー' },
-        { name: 'カメラ周辺機器' },
-        { name: 'VRゴーグル' },
-        { name: 'モーションキャプチャ・センサ' },
-        { name: 'クロマキー合成' },
-        { name: '照明機器' },
-        { name: 'エンコーダ・デコーダ' },
-        { name: '音響機器' },
-        { name: '周辺機器' },
-      ],
+      selectedCategoryLists: this.queryCategoryLists,
     }
+  },
+  methods: {
+    resetSelectedCategoryLists() {
+      this.selectedCategoryLists = []
+      this.sendCategoryLists()
+    },
+    sendCategoryLists() {
+      if (this.selectedCategoryLists.length > 1) this.selectedCategoryLists.shift()
+      this.$emit('received-category-lists', this.selectedCategoryLists)
+    },
   },
 }
 </script>
@@ -68,6 +100,11 @@ export default {
 
 .terms__category.active {
   transform: translate(0, 0);
+}
+
+.terms__label {
+  display: inline-block;
+  margin: 15px 0;
 }
 
 .terms__checkbox {

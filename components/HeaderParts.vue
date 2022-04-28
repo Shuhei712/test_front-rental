@@ -42,13 +42,14 @@
     </nav>
     <v-form class="header__form d-flex align-center ml-2">
       <v-text-field
+        v-model="keyword"
         color="primary"
         placeholder="キーワード検索"
         outlined
         dense
         prepend-inner-icon="mdi-magnify"
         hide-details="auto"></v-text-field>
-      <v-btn color="primary" class="ml-2 text-body-2 text-white" to="/products">
+      <v-btn color="primary" class="ml-2 text-body-2 text-white" :href="'/products?type=3&keyword=' + keyword">
         <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
       </v-btn>
     </v-form>
@@ -97,6 +98,7 @@
       <v-row class="menu__search mt-8" justify="center" no-gutters>
         <v-col cols="8">
           <v-text-field
+            v-model="keyword"
             class="mr-3"
             color="primary"
             placeholder="キーワード検索"
@@ -106,7 +108,7 @@
             hide-details="auto"></v-text-field>
         </v-col>
         <v-col cols="4">
-          <v-btn color="primary" class="text-body-2 text-white" to="/products" block>
+          <v-btn color="primary" class="text-body-2 text-white" :href="'/products?type=3&keyword=' + keyword" block>
             <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
           </v-btn>
         </v-col>
@@ -129,6 +131,7 @@
 export default {
   data() {
     return {
+      keyword: '',
       menuFlg: false,
       guidanceLists: [
         { title: 'ご利用方法', link: '/' },

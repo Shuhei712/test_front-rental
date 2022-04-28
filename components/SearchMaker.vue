@@ -2,19 +2,23 @@
   <div class="terms__maker d-flex flex-column text-body-1 pa-4 pa-lg-8" :class="{ active: makerFlg }">
     <div class="maker__title">
       メーカーを選択
-      <v-btn class="ml-5" elevation="0" color="cushion" small>
+      <v-btn class="ml-5" elevation="0" color="cushion" small @click="resetSelectedMakerLists()">
         <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除
       </v-btn>
     </div>
     <div class="maker__lists flex-grow-1 overflow-auto mt-8">
-      <v-row>
-        <v-col v-for="(list, index) in makerLists" :key="index" cols="11" md="6" class="maker-list py-4">
-          <label>
-            <input class="terms__checkbox" type="checkbox" :value="list.name" />
-            <span class="checkbox__parts text-body-2">{{ list.name }} </span>
-          </label>
-        </v-col>
-      </v-row>
+      <div v-for="(list, index) in searchMakerLists" :key="index" class="maker-list py-4">
+        <div class="index-lable mb-6 text-subtitle-2"><v-icon class="mr-2">mdi-check</v-icon>{{ list.MakerIndex }}</div>
+        <label v-for="maker in list.MakerList" :key="maker.MakerID" class="terms__label">
+          <input
+            v-model="selectedMakerLists"
+            class="terms__checkbox"
+            type="checkbox"
+            :value="{ id: maker.MakerID, name: maker.MakerName }"
+            @change="sendMakerLists()" />
+          <span class="checkbox__parts text-body-2">{{ maker.MakerName }} </span>
+        </label>
+      </div>
     </div>
   </div>
 </template>
@@ -26,25 +30,24 @@ export default {
       type: Boolean,
       required: true,
     },
+    searchMakerLists: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      makerLists: [
-        { name: 'アイリスオーヤマ' },
-        { name: 'AOKA' },
-        { name: 'Insta360' },
-        { name: 'エルビーエル' },
-        { name: 'Oaxis-Japan' },
-        { name: 'オプキックス' },
-        { name: 'オリンパス' },
-        { name: 'キャノン' },
-        { name: 'K&F' },
-        { name: 'ケンコー・トキナー' },
-        { name: 'コダック' },
-        { name: 'GoPro' },
-        { name: 'Samsung' },
-      ],
+      selectedMakerLists: [],
     }
+  },
+  methods: {
+    sendMakerLists() {
+      this.$emit('received-maker-lists', this.selectedMakerLists)
+    },
+    resetSelectedMakerLists() {
+      this.selectedMakerLists = []
+      this.sendMakerLists()
+    },
   },
 }
 </script>
@@ -66,6 +69,18 @@ export default {
   .maker__title {
     color: $primary;
   }
+}
+
+.index-lable {
+  width: 100%;
+  background-color: $cushion;
+  padding: 2px 4px;
+}
+
+.terms__label {
+  display: inline-block;
+  width: 50%;
+  margin: 15px 0;
 }
 
 .terms__maker.active {

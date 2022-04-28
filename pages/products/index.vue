@@ -1,26 +1,45 @@
 <template>
-  <section class="products">
-    <search-refinement :dialog="dialog" @change-dialog="reseiveDialogFlg"></search-refinement>
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="products" class="products">
+    <tariff-card :dialog="tariffDialog" :items="tariffLists" @change-tariff-dialog="reseiveTariffDialogFlg">
+    </tariff-card>
+    <search-refinement
+      :dialog="dialog"
+      :search-category-lists="searchCategoryLists"
+      :search-maker-lists="searchMakerLists"
+      :search-tag-lists="searchTagLists"
+      :search-price-lists="searchPriceLists"
+      @change-dialog="reseiveDialogFlg"
+      @received-search-conditions="receivedSearchConditions">
+    </search-refinement>
     <top-bar title="スイッチャー 一覧"></top-bar>
     <div class="products__inner d-lg-flex py-16 px-2 px-lg-0">
       <category-lists :category-lists="categoryLists"></category-lists>
       <div class="content ml-lg-15">
         <div class="product__search d-flex align-center">
           <div class="search__number text-center px-3 text-body-2 no-wrap">
-            <span class="text-h5 mr-2">50</span>件<br />見つかりました
+            <span class="text-h5 mr-2"> {{ searchProductListCount }} </span>件<br />見つかりました
           </div>
           <div class="serach__condition flex-grow-1 pa-3">
             <div class="condition__head text-body-2 d-flex align-center flex-wrap text-no-wrap">
               現在の検索条件
               <v-icon>mdi-chevron-right</v-icon>
-              <v-btn class="px-0" text @click="dialog = true">
+              <v-btn class="px-0" text @click="getFilterCondition()">
                 <v-icon color="primary">mdi-text-search</v-icon>変更して絞り込む
               </v-btn>
             </div>
             <div class="condition__tags mt-1 d-flex align-center flex-wrap">
-              <div class="search-tag text-body-2 mr-2"><v-icon class="mr-2">mdi-check</v-icon>スイッチャー</div>
-              <div class="search-tag text-body-2 mr-2"><v-icon class="mr-2">mdi-check</v-icon>Blackmagic Design</div>
-              <div class="search-tag text-body-2 mr-2"><v-icon class="mr-2">mdi-check</v-icon>0-10,000円</div>
+              <div v-if="isCategoryName && !conditionalSearchFlg" class="search-tag text-body-2 mr-2">
+                <v-icon class="mr-2">mdi-check</v-icon>{{ $route.query.categoryName }}
+              </div>
+              <div v-if="isTagName && !conditionalSearchFlg" class="search-tag text-body-2 mr-2">
+                <v-icon class="mr-2">mdi-check</v-icon>{{ $route.query.tagName }}
+              </div>
+              <div v-if="isKeyword && !conditionalSearchFlg" class="search-tag text-body-2 mr-2">
+                <v-icon class="mr-2">mdi-check</v-icon>{{ $route.query.keyword }}
+              </div>
+              <div v-for="(condition, index) in presentConditions" :key="index" class="search-tag text-body-2 mr-2">
+                <v-icon class="mr-2">mdi-check</v-icon>{{ condition }}
+              </div>
             </div>
           </div>
         </div>
@@ -28,39 +47,56 @@
           <div class="d-flex align-center order-1 order-lg-0 mt-5 mt-lg-0">
             <div class="sort__release d-flex align-center flex-column flex-lg-row mr-8">
               <div class="release__head mr-2 px-5 py-1 text-body-2 text-white">発売日</div>
-              <v-btn-toggle mandatory dense tile group>
-                <v-btn text>新着順</v-btn>
-                <v-btn text>古い順</v-btn>
+              <v-btn-toggle v-model="orderRelease" dense tile group @change="changeOrderRelease()">
+                <v-btn text :value="$config.ORDER_NEW">新着順</v-btn>
+                <v-btn text :value="$config.ORDER_OLD">古い順</v-btn>
               </v-btn-toggle>
             </div>
             <div class="sort__price d-flex align-center flex-column flex-lg-row">
               <div class="price__head mr-2 px-5 py-1 text-body-2 text-white">価格</div>
-              <v-btn-toggle mandatory dense tile group>
-                <v-btn text>低い順</v-btn>
-                <v-btn text>高い順</v-btn>
+              <v-btn-toggle v-model="orderPrice" dense tile group @change="changeOrderPrice()">
+                <v-btn text :value="$config.ORDER_ASC">低い順</v-btn>
+                <v-btn text :value="$config.ORDER_DESC">高い順</v-btn>
               </v-btn-toggle>
             </div>
           </div>
           <v-spacer class="hidden-md-and-down"></v-spacer>
-          <v-btn class="condition__reset mt-3 mt-lg-0" color="line" outlined>カテゴリ以外の条件をリセット</v-btn>
+          <v-btn
+            class="condition__reset mt-3 mt-lg-0"
+            color="line"
+            outlined
+            :disabled="!presentCategoryID"
+            @click="resetConditions()">
+            カテゴリ以外の条件をリセット
+          </v-btn>
         </div>
         <div class="product__main">
           <div v-for="(list, index) in productLists" :key="index">
             <product-card
-              :name="list.name"
-              :image="list.image"
-              :maker="list.maker"
-              :category-lists="list.categoryLists"
-              :price="list.price"
-              :section="list.class"
-              :tag-lists="list.tagLists"
-              :description="list.description"
-              link="/products/name">
+              :id="list.ProductID"
+              :name="list.ProductName"
+              :type-number="list.ProductTypeNumber"
+              :image="list.ProductImageURL"
+              :maker="list.MakerName"
+              :category-name01="list.CategoryNmae01"
+              :category-name02="list.CategoryNmae02"
+              :price-value="list.PriceValue"
+              :price-type="list.PriceType"
+              :price-unit="list.PriceUnit"
+              :tariff-id="list.TariffID"
+              :tariff-name="list.TariffName"
+              :tag-lists="list.FeatureTagList"
+              :description="list.Description"
+              @send-tariff-data="receiveTariffLists">
             </product-card>
           </div>
         </div>
         <div class="product__pagination text-center mt-15">
-          <v-pagination v-model="page" :length="2"></v-pagination>
+          <v-pagination
+            v-model="pageNumber"
+            v-scroll-to="{ el: '#products', offset: -200 }"
+            :length="pageMaxLength"
+            @input="changePage"></v-pagination>
         </div>
       </div>
     </div>
@@ -73,219 +109,302 @@ export default {
     return {
       dialog: false,
       page: 1,
-      productLists: [
-        {
-          name: 'ストリーミングビデオスイッチャー V-160HD',
-          image: '/img/products/product_img_01.png',
-          maker: 'SAMSUNG',
-          price: '38,000',
-          class: 'A',
-          description:
-            'ハイブリッド・イベントをサポートする豊富な入出力と多彩な演出を実現するための機能を備えた可搬性の高いストリーミング・ビデオ・スイッチャー',
-          categoryLists: [{ name: 'オンラインイベント機器' }, { name: 'スイッチャー' }],
-          tagLists: [],
-        },
-        {
-          name: '3.9-7.8mm(W1000×H500) 屋内・屋外兼用 シースルー BlackModel ATL3.9-7.8-L',
-          image: '/img/products/product_img_02.png',
-          maker: 'ArkVentures',
-          price: '25,000',
-          class: 'A',
-          description:
-            '屋内でも使用可能。輝度1500-2000nitで、明るい環境でも使用可能な透過型LED簡単に取り付け・取り外しができ、15枚までスタックできるため、大画面を実現できます。',
-          categoryLists: [{ name: 'LEDディスプレイ' }, { name: '屋外・屋外兼用' }],
-          tagLists: [],
-        },
-        {
-          name: 'レーザープロジェクター 50000lm PT-RQ50KJ',
-          image: '/img/products/product_img_03.png',
-          maker: 'Panasonic',
-          price: '1,400,000',
-          class: 'A',
-          description: '50,000lmの明るさとネイティブ4K解像度が創り出す圧倒的な臨場感',
-          categoryLists: [{ name: 'プロジェクター本体/レンズ' }, { name: '10000ml以上' }],
-          tagLists: [{ name: '4k対応機器' }],
-        },
-        {
-          name: '4K対応 80in 液晶ディスプレイ PN-H801',
-          image: '/img/products/product_img_04.png',
-          maker: 'SHARP',
-          price: '140,000',
-          class: 'A',
-          description:
-            '縦置き設置可能な高精細4Kモニター。アップコンバートエンジン搭載で、フルHDなどの従来解像度の映像コンテンツでも、4K解像度で美しく再生可能。',
-          categoryLists: [{ name: 'ディスプレイ/モニター' }, { name: '液晶ディスプレイ(60インチ以上)' }],
-          tagLists: [{ name: '4k対応機器' }, { name: '16:9' }, { name: 'スピーカー内蔵' }, { name: 'D-sub端子' }],
-        },
-        {
-          name: 'disguise Render Stream Server rx Ⅱ',
-          image: '/img/products/product_img_05.png',
-          maker: 'disguise',
-          price: '200,000',
-          class: 'A',
-          description:
-            'rxよりも40%多くのグラフィックス処理能力を備えたrx II最新のNvidia A6000GPUを搭載rxレンジは、クラスターレンダリングのためのシンプルなターンキーソリューションであり、ワークフローを高速化します。',
-          categoryLists: [{ name: 'メディアサーバー ' }],
-          tagLists: [],
-        },
-        {
-          name: 'ブルーレイ&ハードディスクレコーダー DMR-MC500',
-          image: '/img/products/product_img_06.png',
-          maker: 'Panasonic',
-          price: '22,000',
-          class: 'A',
-          description:
-            'HD-SDI/HDMI入出力搭載、フルHD記録のレコーダー。BDダイレクト記録・HDD/BD同時記録機能あり、USB-HDD/USBメモリー転送対応RS232Cによる外部制御対応など、業務仕様',
-          categoryLists: [{ name: 'オンラインイベント機器' }, { name: 'スイッチャー' }],
-          tagLists: [{ name: 'HDMI' }, { name: 'SD-SDI' }, { name: 'HD-SDI' }, { name: 'コンポジット' }],
-        },
-        {
-          name: '4Kスクリーン管理システム S3-4K',
-          image: '/img/products/product_img_07.png',
-          maker: 'BARCO',
-          price: '300,000',
-          class: 'A',
-          description:
-            'S3-4K シャーシのインターリンクにより、入力、出力またはレイヤーの拡張が可能。クロスプラットフォーム Event Master ツールセットで簡単にセットアップでき、ステップを踏みながらシステム設定をすることができます。',
-          categoryLists: [{ name: '映像周辺機器' }, { name: 'シームレススイッチャー' }],
-          tagLists: [
-            { name: '4k対応機器' },
-            { name: 'HDCP対応' },
-            { name: 'スケーラー内蔵' },
-            { name: 'シームレス' },
-            { name: 'PinP' },
-            { name: 'プレビュー' },
-            { name: 'キー抜き' },
-          ],
-        },
-        {
-          name: '4K対応 HDMIファイバーケーブル 100m / 70m / 50m / 30m /10m APF100.70.50.30.10-HDM',
-          image: '/img/products/product_img_08.png',
-          maker: 'CANARE',
-          price: '1,000~7,000',
-          class: 'A',
-          description:
-            'プラスチックファイバで曲げやすく扱いやすいケーブルです。グラスファイバ仕様を超える強度。定電圧ICにより外部給電は不要です。※すべての機器での動作を保証するものではありません。',
-          categoryLists: [{ name: 'ケーブル' }, { name: 'HDMIケーブル / DVIケーブル' }],
-          tagLists: [{ name: '4k対応機器' }],
-        },
-        {
-          name: '4Kデジタルビデオカメラ ハンディタイプ HC-VX992M-W',
-          image: '/img/products/product_img_09.png',
-          maker: 'Panasonic',
-          price: '6,000',
-          class: 'A',
-          description: '持ち歩きに適した、軽量・コンパクトな4Kビデオカメラです。',
-          categoryLists: [{ name: 'カメラ' }, { name: 'ビデオカメラ（HD / 4K）' }],
-          tagLists: [{ name: '4k対応機器' }],
-        },
-        {
-          name: 'GearVR S6/S6 edge/S7 edge対応SM-R322NZWAXJP',
-          image: '/img/products/product_img_10.png',
-          maker: 'SAMSUNG',
-          price: '26,000',
-          class: 'A',
-          description:
-            'ヘッドマウントディスプレイを装着するだけで、その場にいるかのようなVR体験が可能。360°に拡がるVRの世界で、手に汗握る迫力あるゲームやお気に入りのアーティストが目の前にいるかのようなライブ映像など、膨大なコンテンツを楽しむことができます。',
-          categoryLists: [
-            {
-              name: 'メディアアプリケーション /センサー / インタラクティブ関連',
-            },
-            { name: 'VR機器' },
-          ],
-          tagLists: [],
-        },
-        {
-          name: 'ホワイトスペース帯 1.2GHz帯 ワイヤレスマイク',
-          image: '/img/products/product_img_11.png',
-          maker: 'SHURE',
-          price: 'ask',
-          class: 'A',
-          description:
-            '多チャンネルプランに対応したワイヤレスマイク。同一スペース内でのワイヤレスマイクの同時使用可能本数が格段に増え、またデジタルワイヤレスシステムを導入することで、さらに使用できる本数を増やしました。',
-          categoryLists: [{ name: '音響機器' }, { name: 'ワイヤレス機器' }],
-          tagLists: [],
-        },
-        {
-          name: 'ワイヤレスインカム 充電器 AC50',
-          image: '/img/products/product_img_12.png',
-          maker: 'HME',
-          price: 'included',
-          class: 'A',
-          description:
-            'DX410シリーズ用充電器・BP410用バッテリーチャージャー（BAT50専用）4つのバッテリーを同時に充電することができ、4つのバッテリーストックベイ（充電不可）を装備',
-          categoryLists: [{ name: 'インカム / トランシーバー' }],
-          tagLists: [],
-        },
-        {
-          name: 'ワイヤレスクリッカー DragonClicker KWDC-315',
-          image: '/img/products/product_img_13.png',
-          maker: 'KOWA',
-          price: '5,000',
-          class: 'A',
-          description:
-            'パワーポイントのスライドショー操作を無線制御で行えるワイヤレスPCコントローラーUSB出力を4ポート装備しているので4台のPCプレゼンテーションを同時に制御できます。技適証明取得、制御距離80m、簡単操作で誰でも使用可能',
-          categoryLists: [{ name: '会議用機器' }, { name: '会場設備用機器' }],
-          tagLists: [],
-        },
-        {
-          name: '4K小型カメラ BRIO C1000eR',
-          image: '/img/products/product_img_14.png',
-          maker: 'Logicool',
-          price: '2,000',
-          class: 'A',
-          description: '4K Ultra HD・1080pフルHD・720p HDでのテレビ電話が可能な小型カメラ。',
-          categoryLists: [{ name: 'PC / ICTネットワーク機器' }, { name: 'PC周辺機器' }],
-          tagLists: [],
-        },
-        {
-          name: 'SpacePlayer DLPプロジェクター 1000lm 黒 / 白NTN91000B / NTN91000W',
-          image: '/img/products/product_img_15.png',
-          maker: 'Panasonic',
-          price: '10,000',
-          class: 'A',
-          description:
-            'スポットライト型DLPプロジェクター。フレキシブルな可動構造で水平より下向きの全方向を照射可能。 SDカードの使用で、本体のみで静止画・動画再生も可能です。',
-          categoryLists: [{ name: '照明機器' }],
-          tagLists: [
-            { name: 'DLP' },
-            { name: 'レーザー光源' },
-            { name: 'WXGA' },
-            { name: 'HDMI端子' },
-            { name: 'HDCP対応' },
-          ],
-        },
-        {
-          name: 'ラージステージ LS1250',
-          image: '/img/products/product_img_16.png',
-          maker: 'TAKENAKA',
-          price: '140,000',
-          class: 'A',
-          description: '大型プロジェクターを設置するのに最適な多目的台です。',
-          categoryLists: [{ name: '多目的用品' }, { name: '多目的台・ステージ' }],
-          tagLists: [],
-        },
-      ],
+      pageMaxLength: '',
+      productLists: [],
+      productTariffList: [],
       categoryLists: [],
+      searchCategoryLists: [],
+      searchMakerLists: [],
+      searchTagLists: [],
+      searchPriceLists: [],
+      searchProductListCount: '',
+      categoryTagID: '',
+      keyword: '',
+      selectedCategoryLists: [],
+      selectedMakerLists: [],
+      selectedTagLists: [],
+      selectedPriceLists: [],
+      conditionJson: {
+        CategoryID: null,
+        MakerList: null,
+        PriceRangeID: null,
+        FeatureTagList: null,
+      },
+      orderRelease: this.$config.ORDER_NEW,
+      orderPrice: '',
+      tariffDialog: false,
+      tariffLists: [],
+      conditionalSearchFlg: false,
+      searchConditionInfo: [],
+      presentConditions: [],
+      presentCategoryID: '',
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    const categoryLists = await this.getCategoryList()
-    this.categoryLists = categoryLists
+    await Promise.all([this.getCategoryList(), this.searchProducts()])
     this.$store.commit('loading/changeStatus', false)
   },
-  methods: {
-    reseiveDialogFlg(value) {
-      this.dialog = value
+  computed: {
+    isCategoryName() {
+      return this.$route.query.categoryName ? 1 : 0
     },
+    isTagName() {
+      return this.$route.query.tagName ? 1 : 0
+    },
+    isKeyword() {
+      return this.$route.query.keyword ? 1 : 0
+    },
+    pageNumber: {
+      get() {
+        return Number(this.page)
+      },
+      set(value) {
+        this.page = value
+      },
+    },
+  },
+  methods: {
     async getCategoryList() {
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_category_list.php', param)
+      this.categoryLists = res.CategoryRootList
+    },
+    async getCategoryInfo(categoryID) {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('CategoryID', categoryID)
+      const res = await this.$axios.$post('get_category_info.php', param)
+      return res.CategoryInfo[0]
+    },
+    async getCategoryListforSearch() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_category_list_search.php', param)
       // console.log(res)
-      return res.CategoryRootList
+      this.searchCategoryLists = res.CategoryRootList
+    },
+    async getMakerListforSearch() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('CategoryID', this.presentCategoryID === undefined ? '' : this.presentCategoryID)
+      const res = await this.$axios.$post('get_maker_list_search.php', param)
+      // console.log(res)
+      this.searchMakerLists = res.MakerIndexList
+    },
+    async getTagListforSearch() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('CategoryID', this.presentCategoryID === undefined ? '' : this.presentCategoryID)
+      const res = await this.$axios.$post('get_tag_list_search.php', param)
+      // console.log(res)
+      this.searchTagLists = res.FeatureCategoryList
+    },
+    async getPriceListforSearch() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_price_range_list.php', param)
+      // console.log(res)
+      this.searchPriceLists = res.PriceRangeList
+    },
+    async getFilterCondition() {
+      await Promise.all([
+        this.getCategoryListforSearch(),
+        this.getMakerListforSearch(),
+        this.getTagListforSearch(),
+        this.getPriceListforSearch(),
+      ])
+      this.dialog = true
+    },
+    async searchProducts() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('SearchType', this.$route.query.type)
+      param.append('Keyword', this.$route.query.keyword)
+      param.append('CategoryTagID', this.$route.query.categoryID)
+      param.append('SearchTagID', this.$route.query.tagID)
+      param.append('ConditionJSON', this.conditionJson)
+      param.append('OrderRelase', this.orderRelease)
+      param.append('OrderPrice', this.orderPrice)
+      param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
+      param.append('PageNo', this.page)
+      const res = await this.$axios.$post('search_product.php', param)
+      // console.log(res)
+      this.productLists = res.SearchProductList
+      this.searchProductListCount = res.SearchAllCnt
+      this.setPresentCategoryID()
+      this.page = res.PageNo
+      this.pageMaxLength = res.PageNoMax
+    },
+    async searchProductsUsingFilter() {
+      const conditionJSON = JSON.stringify(this.conditionJson)
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('SearchType', '0')
+      param.append('Keyword', this.keyword)
+      // param.append('CategoryTagID', '')
+      // param.append('SearchTagID', '')
+      param.append('ConditionJSON', conditionJSON)
+      param.append('OrderRelease', this.orderRelease)
+      param.append('OrderPrice', this.orderPrice)
+      param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
+      param.append('PageNo', this.page)
+      const res = await this.$axios.$post('search_product.php', param)
+      // console.log(res)
+      this.conditionalSearchFlg = true
+      this.productLists = res.SearchProductList
+      this.searchProductListCount = res.SearchAllCnt
+      this.searchConditionInfo = res.SerchConditionInfo
+      this.page = res.PageNo
+      this.pageMaxLength = res.PageNoMax
+      this.extractPresentCondition(this.searchConditionInfo)
+      this.setPresentCategoryID()
+      await Promise.all([this.getMakerListforSearch(), this.getTagListforSearch()])
+    },
+    initializeCondisionJson() {
+      this.conditionJson.CategoryID = ''
+      this.conditionJson.MakerList = []
+      this.conditionJson.FeatureTagList = []
+      this.conditionJson.PriceRangeID = ''
+    },
+    initializePresentConditions() {
+      this.presentConditions = []
+    },
+    setCondisionJson() {
+      this.initializeCondisionJson()
+
+      if (this.keyword === undefined) {
+        this.keyword = ''
+      }
+
+      if (this.selectedCategoryLists.length) {
+        this.selectedCategoryLists.forEach((element) => {
+          this.conditionJson.CategoryID = element.id
+        })
+      } else {
+        this.conditionJson.CategoryID = null
+      }
+
+      if (this.selectedMakerLists.length) {
+        this.selectedMakerLists.forEach((element) => {
+          this.conditionJson.MakerList.push({ MakerID: element.id })
+        })
+      } else {
+        this.conditionJson.MakerList = null
+      }
+
+      if (this.selectedTagLists.length) {
+        this.selectedTagLists.forEach((element) => {
+          this.conditionJson.FeatureTagList.push({ TagID: element.id })
+        })
+      } else {
+        this.conditionJson.FeatureTagList = null
+      }
+
+      if (this.selectedPriceLists.length) {
+        this.selectedPriceLists.forEach((element) => {
+          this.conditionJson.PriceRangeID = element.id
+        })
+      } else {
+        this.conditionJson.PriceRangeID = null
+      }
+    },
+    setPresentCategoryID() {
+      if (this.conditionalSearchFlg) {
+        this.presentCategoryID = this.searchConditionInfo.CategoryID
+      } else {
+        switch (this.$route.query.type) {
+          case '1':
+            this.presentCategoryID = undefined
+            break
+          case '2':
+            this.presentCategoryID = this.$route.query.categoryID
+            break
+          case '3':
+            this.presentCategoryID = undefined
+            break
+          default:
+            this.presentCategoryID = undefined
+            break
+        }
+      }
+    },
+    changeOrderPrice() {
+      this.orderRelease = ''
+      this.searchProducts()
+    },
+    changeOrderRelease() {
+      this.orderPrice = ''
+      this.searchProducts()
+    },
+    changePage(page) {
+      this.page = Number(page)
+      if (this.conditionalSearchFlg) {
+        this.searchProductsUsingFilter()
+      } else {
+        this.searchProducts()
+      }
+    },
+    extractPresentCondition(searchConditionInfo) {
+      this.initializePresentConditions()
+
+      if (searchConditionInfo.KeyWordFlg) {
+        this.presentConditions.push(this.keyword)
+      }
+
+      if (searchConditionInfo.CategoryFlg) {
+        this.presentConditions.push(searchConditionInfo.CategoryNmae01)
+        this.presentConditions.push(searchConditionInfo.CategoryNmae02)
+      }
+
+      if (searchConditionInfo.MakerFlg) {
+        searchConditionInfo.MakerList.forEach((element) => {
+          this.presentConditions.push(element.MakerName)
+        })
+      }
+
+      if (searchConditionInfo.FeatureFlg) {
+        searchConditionInfo.FeatureList.forEach((element) => {
+          this.presentConditions.push(element.TagName)
+        })
+      }
+
+      if (searchConditionInfo.PriceFlg) {
+        this.presentConditions.push(searchConditionInfo.PriceRangeName)
+      }
+    },
+    async resetConditions() {
+      const categoryInfo = await this.getCategoryInfo(this.presentCategoryID)
+      window.location.href =
+        '/products?type=2&categoryID=' + categoryInfo.CategoryID + '&categoryName=' + categoryInfo.CategoryName
+    },
+    reseiveDialogFlg(value) {
+      this.dialog = value
+    },
+    receivedSearchConditions(categoryLists, makerLists, tagLists, priceLists, keyword) {
+      this.selectedCategoryLists = categoryLists
+      this.selectedMakerLists = makerLists
+      this.selectedTagLists = tagLists
+      this.selectedPriceLists = priceLists
+      this.keyword = keyword
+      this.setCondisionJson()
+      this.searchProductsUsingFilter()
+    },
+    reseiveTariffDialogFlg(value) {
+      this.tariffDialog = value
+    },
+    receiveTariffLists(value) {
+      this.tariffLists = value
+      this.tariffDialog = true
     },
   },
 }
@@ -365,6 +484,10 @@ export default {
         opacity: 1 !important;
       }
     }
+  }
+
+  .condition__reset:disabled {
+    opacity: 0.5;
   }
 }
 </style>

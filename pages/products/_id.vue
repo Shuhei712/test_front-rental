@@ -2,7 +2,6 @@
   <section v-if="!$fetchState.pending && !$fetchState.error" class="detail">
     <tariff-card
       :dialog="tariffDialog"
-      :headers="tariffHeaders"
       :items="productTariffList.TariffList"
       @change-tariff-dialog="reseiveTariffDialogFlg">
     </tariff-card>
@@ -102,6 +101,7 @@
                   v-for="(list, index) in productInfoList.FeatureTagList"
                   :key="index"
                   class="product-tag px-3 py-1 mr-2 mb-2"
+                  :href="'/products?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
                   elevation="0"
                   tile
                   small
@@ -269,10 +269,24 @@
         </div>
       </div>
       <div class="back-btn text-center mt-15">
-        <v-btn text>
+        <v-btn
+          :href="
+            '/products?type=2&categoryID=' +
+            productInfoList.CategoryNmae01 +
+            '&categoryName=' +
+            productInfoList.CategoryTagID01
+          "
+          text>
           <v-icon class="mr-2" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID01 }}に戻る
         </v-btn>
-        <v-btn text>
+        <v-btn
+          :href="
+            '/products?type=2&categoryID=' +
+            productInfoList.CategoryNmae02 +
+            '&categoryName=' +
+            productInfoList.CategoryTagID02
+          "
+          text>
           <v-icon class="mr-2" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID02 }}に戻る
         </v-btn>
       </div>
@@ -300,11 +314,6 @@ export default {
         itemsToShow: 1,
       },
       tariffDialog: false,
-      tariffHeaders: [
-        { text: '日数', value: 'RateDay', align: 'start' },
-        { text: '掛け率', value: 'RateValue', align: 'start' },
-        { text: '料金(円)', value: 'Price', align: 'start', sortable: false },
-      ],
     }
   },
   async fetch() {
@@ -400,7 +409,7 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_case_info.php', param)
-      console.log(res)
+      // console.log(res)
       this.productCaseInfo = res
     },
     getProductInfo() {
@@ -641,7 +650,7 @@ export default {
 
       .product-tag {
         background-color: $cushion;
-        color: $primary;
+        color: $primary !important;
       }
     }
   }

@@ -27,13 +27,13 @@ export default {
   width: 100%;
   height: auto;
   max-height: 280px;
-  background-image: url('/img/top_bar/top_bar.png');
+  background-image: url('@/assets/img/top_bar/main.png');
   background-position: center;
   background-size: cover;
   padding-top: calc(100px + 32px);
 
   @include mq(sm) {
-    background-image: url('/img/sp/top_bar/top_bar.png');
+    background-image: url('@/assets/img/sp/top_bar/main.png');
   }
 }
 </style>

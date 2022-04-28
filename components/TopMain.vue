@@ -30,6 +30,7 @@
       <v-row class="main__search width-50 align-center mt-0">
         <v-col cols="8">
           <v-text-field
+            v-model="keyword"
             class="bg-white"
             color="primary"
             placeholder="キーワード検索"
@@ -40,7 +41,7 @@
           </v-text-field>
         </v-col>
         <v-col cols="4">
-          <v-btn class="text-white" color="primary" to="/products" block>
+          <v-btn class="text-white" color="primary" :href="'/products?type=3&keyword=' + keyword" block>
             <v-icon class="mr-1" color="#ffffff">mdi-text-search</v-icon>詳細検索
           </v-btn>
         </v-col>
@@ -62,6 +63,16 @@
     </v-container>
   </section>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      keyword: '',
+    }
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
