@@ -102,6 +102,7 @@
                   v-for="(list, index) in productInfoList.FeatureTagList"
                   :key="index"
                   class="product-tag px-3 py-1 mr-2 mb-2"
+                  :href="'/products?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
                   elevation="0"
                   tile
                   small
