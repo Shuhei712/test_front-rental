@@ -74,6 +74,11 @@ export default {
     PRODUCT_SPEC: process.env.PRODUCT_SPEC,
     PRODUCT_REFFER: process.env.PRODUCT_REFFER,
     PRODUCT_DOC: process.env.PRODUCT_DOC,
+    ORDER_NEW: process.env.ORDER_NEW,
+    ORDER_OLD: process.env.ORDER_OLD,
+    ORDER_ASC: process.env.ORDER_ASC,
+    ORDER_DESC: process.env.ORDER_DESC,
+    PAGE_ROW_COUNT: process.env.PAGE_ROW_COUNT,
 
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
