@@ -173,11 +173,11 @@ export default {
       priceFlg: false,
       tagFlg: false,
       backBtnFlg: false,
-      selectedCategoryLists: [{ id: this.$route.query.categoryID, name: this.$route.query.categoryName }],
+      selectedCategoryLists: [],
       selectedMakerLists: [],
-      selectedTagLists: [{ id: this.$route.query.tagID, name: this.$route.query.tagName }],
+      selectedTagLists: [],
       selectedPriceLists: [],
-      keyword: this.$route.query.keyword,
+      keyword: '',
     }
   },
   computed: {
@@ -189,6 +189,17 @@ export default {
         this.$emit('change-dialog', value)
       },
     },
+  },
+  created() {
+    if (this.$route.query.keyword !== undefined) {
+      this.keyword = this.$route.query.keyword
+    }
+    if (this.$route.query.categoryID !== undefined) {
+      this.selectedCategoryLists = [{ id: this.$route.query.categoryID, name: this.$route.query.categoryName }]
+    }
+    if (this.$route.query.tagID !== undefined) {
+      this.selectedTagLists = [{ id: this.$route.query.tagID, name: this.$route.query.tagName }]
+    }
   },
   methods: {
     closeDialog() {
