@@ -12,7 +12,7 @@
 export default {
   props: {
     path: {
-      // type: String,
+      type: String,
       required: true,
     },
     maker: {
@@ -25,7 +25,7 @@ export default {
     },
     link: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   computed: {
