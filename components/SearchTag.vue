@@ -2,19 +2,25 @@
   <div class="terms__tag text-body-1 d-flex flex-column pa-4 pa-lg-8" :class="{ active: tagFlg }">
     <div class="tag__title">
       特徴を選択
-      <v-btn class="ml-5" elevation="0" color="cushion" small>
+      <v-btn class="ml-5" elevation="0" color="cushion" small @click="resetSelectedTagLists()">
         <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除
       </v-btn>
     </div>
     <div class="tag__lists flex-grow-1 overflow-auto mt-8">
-      <v-row>
-        <v-col v-for="(list, index) in tagLists" :key="index" cols="11" md="6" class="maker-list py-4">
-          <label>
-            <input class="terms__checkbox" type="checkbox" :value="list.name" />
-            <span class="checkbox__parts text-body-2">{{ list.name }}</span>
-          </label>
-        </v-col>
-      </v-row>
+      <div v-for="(list, index) in searchTagLists" :key="index" class="tag-list py-4">
+        <div class="index-lable mb-6 text-subtitle-2">
+          <v-icon class="mr-2">mdi-check</v-icon>{{ list.TagCategoryName }}
+        </div>
+        <label v-for="tag in list.FeatureList" :key="tag.TagID" class="terms__label">
+          <input
+            v-model="selectedTagLists"
+            class="terms__checkbox"
+            type="checkbox"
+            :value="{ id: tag.TagID, name: tag.TagName }"
+            @change="sendTagLists()" />
+          <span class="checkbox__parts text-body-2">{{ tag.TagName }}</span>
+        </label>
+      </div>
     </div>
   </div>
 </template>
@@ -26,23 +32,28 @@ export default {
       type: Boolean,
       required: true,
     },
+    searchTagLists: {
+      type: Array,
+      required: true,
+    },
+    queryTagLists: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      tagLists: [
-        { name: 'HDCP対応' },
-        { name: '4K対応' },
-        { name: 'スケーラー内蔵' },
-        { name: 'シームレス' },
-        { name: '音声対応' },
-        { name: 'エンベデッド' },
-        { name: 'デエンベデッド' },
-        { name: 'PinP' },
-        { name: 'プレビュー' },
-        { name: 'キー抜き' },
-        { name: 'キャプチャ' },
-      ],
+      selectedTagLists: this.queryTagLists,
     }
+  },
+  methods: {
+    sendTagLists() {
+      this.$emit('received-tag-lists', this.selectedTagLists)
+    },
+    resetSelectedTagLists() {
+      this.selectedTagLists = []
+      this.sendTagLists()
+    },
   },
 }
 </script>
@@ -64,6 +75,18 @@ export default {
   .tag__title {
     color: $primary;
   }
+}
+
+.index-lable {
+  width: 100%;
+  background-color: $cushion;
+  padding: 2px 4px;
+}
+
+.terms__label {
+  display: inline-block;
+  width: 50%;
+  margin: 15px 0;
 }
 
 .terms__tag.active {
