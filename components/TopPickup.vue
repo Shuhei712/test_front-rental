@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="pickup__btn text-center">
-      <v-btn to="/category" class="bg-white text-caption text-sm-body-2" color="headingText" outlined>
+      <v-btn to="/category" class="bg-white text-caption text-sm-body-2" color="headingText" elevation="2" outlined>
         <v-icon class="mr-2" color="primary">mdi-shape-outline</v-icon>
         <span class="lh-crop-12">すべてのカテゴリから探す</span>
         <v-icon color="primary">mdi-chevron-right</v-icon>

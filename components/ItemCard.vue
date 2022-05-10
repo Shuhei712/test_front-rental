@@ -48,27 +48,12 @@ export default {
   &__subtitle {
     color: $text !important;
     font-weight: 300;
-    height: calc(14px * 1.5 * 2); // 文字サイズ×行の高さ×行数
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
-    position: relative;
-
-    &::after {
-      content: '';
-      background: linear-gradient(to right, rgba(255, 255, 225, 0) 0%, #fff 50%, #fff 100%);
-      bottom: 0;
-      right: 0;
-      width: 25px;
-      height: calc(14px * 1.5); // 文字サイズ×行の高さ
-      position: absolute;
-    }
-
-    @include mq(sm) {
-      height: calc(12px * 1.7 * 2); // 文字サイズ×行の高さ×行数
-
-      &::after {
-        height: calc(12px * 1.7); // 文字サイズ×行の高さ
-      }
-    }
+    line-height: 1.5em; // IE対策
+    max-height: 3.0em; // IE対策
   }
 }
 .item-card {
