@@ -20,7 +20,7 @@
           </div>
           <v-divider class="heading__line hidden-md-and-down" color="line"></v-divider>
           <v-btn
-            :to="'/category/' + list.PageCategoryID + '?categoryName=' + list.PageCategoryName"
+            :to="'/products?type=2&categoryID=' + list.PageCategoryID + '&categoryName=' + list.PageCategoryName"
             class="ml-lg-5 mt-4 mt-lg-0"
             color="headingText"
             elevation="2"
@@ -63,118 +63,7 @@ export default {
     },
   },
   data() {
-    return {
-      // pickupLists: [
-      //   {
-      //     title: 'LEDディスプレイ',
-      //     icon: '/img/category/led-display.png',
-      //     link: '/catgory',
-      //     itemLists: [
-      //       {
-      //         path: '/img/pickup/pickup_01.png',
-      //         maker: 'ArkVentures',
-      //         name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_01.png',
-      //         maker: 'ArkVentures',
-      //         name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_01.png',
-      //         maker: 'ArkVentures',
-      //         name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_01.png',
-      //         maker: 'ArkVentures',
-      //         name: '屋内・屋外兼用 シースル ーLED BlackModel A…',
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     title: 'プロジェクター',
-      //     icon: '/img/category/projector.png',
-      //     link: '/catgory',
-      //     itemLists: [
-      //       {
-      //         path: '/img/pickup/pickup_02.png',
-      //         maker: 'Panasonic',
-      //         name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_02.png',
-      //         maker: 'Panasonic',
-      //         name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_02.png',
-      //         maker: 'Panasonic',
-      //         name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_02.png',
-      //         maker: 'Panasonic',
-      //         name: 'レーザープロジェクター 50000lm PT-RQ50KJ…',
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     title: 'ディスプレイ・モニター',
-      //     icon: '/img/category/display.png',
-      //     link: '/catgory',
-      //     itemLists: [
-      //       {
-      //         path: '/img/pickup/pickup_03.png',
-      //         maker: 'Panasonic',
-      //         name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_03.png',
-      //         maker: 'Panasonic',
-      //         name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_03.png',
-      //         maker: 'Panasonic',
-      //         name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_03.png',
-      //         maker: 'Panasonic',
-      //         name: '4K対応 86in液晶ディスプレイ TH-86SQ1HJ',
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     title: 'PC/ICTネットワーク機器',
-      //     icon: '/img/category/network.png',
-      //     link: '/catgory',
-      //     itemLists: [
-      //       {
-      //         path: '/img/pickup/pickup_04.png',
-      //         maker: 'Logicool',
-      //         name: '4K小型カメラ BRIO C1000eR',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_04.png',
-      //         maker: 'Logicool',
-      //         name: '4K小型カメラ BRIO C1000eR',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_04.png',
-      //         maker: 'Logicool',
-      //         name: '4K小型カメラ BRIO C1000eR',
-      //       },
-      //       {
-      //         path: '/img/pickup/pickup_04.png',
-      //         maker: 'Logicool',
-      //         name: '4K小型カメラ BRIO C1000eR',
-      //       },
-      //     ],
-      //   },
-      // ],
-    }
+    return {}
   },
 }
 </script>
@@ -282,7 +171,7 @@ export default {
         width: 100%;
       }
 
-      .heading__title{
+      .heading__title {
         @include mq(sm) {
           letter-spacing: 0.1em !important;
         }
