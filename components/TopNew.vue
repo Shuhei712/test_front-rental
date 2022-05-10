@@ -4,7 +4,13 @@
       <v-icon class="mr-3 mr-md-5" color="accent">mdi-creation</v-icon>
       <h3 class="font-heading text-h6 text-md-h5 letter-space-02em mr-4 mr-md-9">新着機材</h3>
       <v-divider color="line" class="heading__line"></v-divider>
-      <v-btn class="ml-4 ml-md-5" outlined color="headingText" elevation="2" small>
+      <v-btn
+        class="ml-4 ml-md-5"
+        href="/products?type=1&tagID=1116&tagName=新着機材"
+        outlined
+        color="headingText"
+        elevation="2"
+        small>
         <span class="lh-crop-12">一覧へ</span><v-icon color="primary" class="mr-n2">mdi-chevron-right</v-icon>
       </v-btn>
     </div>
