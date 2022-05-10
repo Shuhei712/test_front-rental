@@ -1187,7 +1187,7 @@ $other-bg: #563a2e;
     }
   }
 }
-#sensor {
+#category-id_8 {
   .cat-group__child {
     &:nth-of-type(1) {
       // メディアアプリケーション/ センサー/インタラクティブ関連
