@@ -237,20 +237,20 @@ export default {
 
 .top__hexagon {
   width: calc(103px * 2);
-  height: calc(103px * 1.732);
+	height: calc(103px * 1.732);
   bottom: -35px;
   right: calc(-50 / 1920 * 100vw);
   transform: rotate(-10deg);
-  position: absolute;
+	position: absolute;
   z-index: 1;
 
   .hexagon {
     border-top: 1px solid $primary; // 辺の長さを調整
-    border-bottom: 1px solid $primary; // 辺の長さを調整
+	  border-bottom: 1px solid $primary; // 辺の長さを調整
     box-sizing: border-box;
     width: 103px; // 辺の長さを調整
-    height: calc(103px * 1.732); // 辺の長さを調整
-    left: calc(103px * 0.5); // 位置を調整
+	  height: calc(103px * 1.732); // 辺の長さを調整
+	  left: calc(103px * 0.5); // 位置を調整
     position: absolute;
 
     &:nth-of-type(1) {
