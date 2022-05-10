@@ -6,31 +6,32 @@
       @change-tariff-dialog="reseiveTariffDialogFlg">
     </tariff-card>
     <top-bar title="機材詳細"></top-bar>
-    <div class="detail__inner py-5 py-lg-16">
+    <div class="detail__inner py-6 py-sm-10 py-lg-16">
       <div class="content px-2 px-lg-0">
         <div class="info__categories--sp d-flex flex-wrap px-3 py-1 mb-3">
-          <div class="search-tag text-body-2 mr-2">
-            <v-icon class="mr-2">mdi-check</v-icon>{{ productInfoList.CategoryTagID01 }}
+          <div class="search-tag d-flex text-body-2 mr-4">
+            <v-icon class="mr-2" small>mdi-check</v-icon>{{ productInfoList.CategoryTagID01 }}
           </div>
-          <div class="search-tag text-body-2 mr-2">
-            <v-icon class="mr-2">mdi-check</v-icon>{{ productInfoList.CategoryTagID02 }}
+          <div class="search-tag d-flex text-body-2">
+            <v-icon class="mr-2" small>mdi-check</v-icon>{{ productInfoList.CategoryTagID02 }}
           </div>
         </div>
+
         <div class="maker--sp text-body-2">{{ productInfoList.MakerName }}</div>
-        <div class="name--sp text-subtitle-1 letter-space-015em mt-2 font-weight-bold">
-          {{ productInfoList.ProductName }} {{ productInfoList.ProductTypeNumber }}
+        <div class="name--sp text-subtitle-1 letter-space-015em font-weight-medium mt-2">
+          {{ productInfoList.ProductName }} <span class="word-keep">{{ productInfoList.ProductTypeNumber }}</span>
         </div>
         <div class="detail__top d-flex flex-column flex-sm-row">
-          <div class="top__image mr-0 mr-sm-5 d-flex justify-space-around d-sm-block">
-            <div class="image__main mr-3 mr-md-0 mt-3 mt-md-0">
+          <div class="top__image mr-0 mr-sm-5 d-flex flex-wrap d-sm-block">
+            <div class="image__main mt-3 mt-md-0 mr-5 mr-sm-0">
               <hooper ref="carousel" :settings="hooperSettings" @slide="updateCarousel">
                 <slide v-for="(list, index) in productInfoList.ProductImageList" :key="index">
                   <img :src="list.ProductImageURL" :alt="list.ProductImageName" />
                 </slide>
               </hooper>
             </div>
-            <div class="image__sub mt-3 mt-md-1">
-              <div v-for="(list, index) in productInfoList.ProductImageList" :key="index" class="d-inline">
+            <div class="image__sub d-flex flex-wrap mt-3 mt-md-7 mr-n3">
+              <div v-for="(list, index) in productInfoList.ProductImageList" :key="index" class="image__thumb mr-3 mb-1">
                 <input :id="index" v-model="carouselData" type="radio" :value="index" checked />
                 <label :for="index"><img :src="list.ProductImageURL" :alt="list.ProductImageName" /></label>
               </div>
@@ -38,69 +39,43 @@
           </div>
           <div class="top__info flex-grow-1">
             <div class="info__categories d-flex flex-wrap px-3 py-1">
-              <div class="search-tag text-body-2 mr-2">
-                <v-icon class="mr-2">mdi-check</v-icon>{{ productInfoList.CategoryTagID01 }}
+              <div class="search-tag d-flex text-body-2 mr-5">
+                <v-icon class="mr-2" small>mdi-check</v-icon>{{ productInfoList.CategoryTagID01 }}
               </div>
-              <div class="search-tag text-body-2 mr-2">
-                <v-icon class="mr-2">mdi-check</v-icon>{{ productInfoList.CategoryTagID02 }}
+              <div class="search-tag d-flex text-body-2">
+                <v-icon class="mr-2" small>mdi-check</v-icon>{{ productInfoList.CategoryTagID02 }}
               </div>
             </div>
-            <div class="info__main mt-5">
+            <div class="info__main mt-sm-3 mt-md-5 mt-lg-8">
               <div class="maker text-body-2">{{ productInfoList.MakerName }}</div>
-              <div class="name text-h6 letter-space-015em mt-5">
-                {{ productInfoList.ProductName }} {{ productInfoList.ProductTypeNumber }}
+              <div class="name text-h6 text-md-h5 letter-space-015em font-weight-medium mt-3 mt-lg-5">
+                {{ productInfoList.ProductName }} <span class="word-keep">{{ productInfoList.ProductTypeNumber }}</span>
               </div>
-              <div class="price d-flex align-center mt-8 text-body-2">
-                <span class="price__head text-body-2 px-3 py-1">レンタル価格</span>
-                <span class="price__day text-body-2 letter-space-015em px-3 py-1">1日/税別</span>
-                <span class="price__product text-h5 letter-space-015em px-3 py-1">{{
-                  productInfoList.PriceValue
-                }}</span>
-                {{ productInfoList.PriceUnit }}
-                <v-btn class="price__more text-body-2 ml-5" color="primary" @click="tariffDialog = true">
-                  <span class="price__class text-body-1 mr-2 font-weight-bold text-center">
-                    {{ productTariffList.TariffSectionName }}
-                  </span>
-                  2日目以降の料金
-                </v-btn>
-              </div>
-              <div class="price--md d-flex align-center flex-wrap mt-5 text-body-2">
-                <div class="mr-4">
-                  <div class="price__head text-caption px-3 py-2 text-no-wrap text-center">レンタル価格</div>
-                  <div class="price__day text-caption letter-space-015em px-3 py-2 text-center text-no-wrap">
+              <div class="price d-flex justify-space-between justify-sm-start flex-wrap mt-5 mt-md-6 mt-lg-10">
+                <div class="d-md-flex align-center mr-2 mr-sm-4 mb-2 text-caption text-md-body-2">
+                  <div class="price__head pa-2 px-md-3 py-md-1 text-no-wrap text-center">レンタル価格</div>
+                  <div class="price__day letter-space-015em pa-2 px-md-3 py-md-1 text-center text-no-wrap">
                     1日/税別
                   </div>
                 </div>
-                <span class="price__product text-h5 letter-space-015em font-weight-medium">
-                  {{ productInfoList.PriceValue }}
-                </span>
-                {{ productInfoList.PriceUnit }}
-                <button class="price__more pa-2 ml-4" @click="tariffDialog = true">
-                  <span class="price__class text-caption mb-1"> {{ productTariffList.TariffSectionName }}</span>
-                  2日目以降<br />の料金
-                </button>
-              </div>
-              <div class="price--sp d-flex justify-space-between align-center flex-wrap mt-5 text-body-2">
-                <div>
-                  <div class="price__head text-caption px-3 py-2 text-no-wrap text-center">レンタル価格</div>
-                  <div class="price__day text-caption letter-space-015em px-3 py-2 text-center text-no-wrap">
-                    1日/税別
+                <div class="price__product d-flex align-center mr-3 mr-sm-5 mb-2">
+                  <div class="price__product-inner d-flex align-baseline">
+                    <span class="price__val letter-space-015em font-weight-medium">{{
+                      productInfoList.PriceValue
+                    }}</span>
+                    <span class="price__unit font-weight-light">{{ productInfoList.PriceUnit }}</span>
                   </div>
                 </div>
-                <span class="price__product text-h5 letter-space-015em font-weight-medium">{{
-                  productInfoList.PriceValue
-                }}</span>
-                円
-                <button class="price__more pa-2 ml-4" @click="tariffDialog = true">
-                  <span class="price__class text-caption mb-1">A</span>
-                  2日目以降<br />の料金
+                <button class="price__more d-flex align-center mb-2 px-md-3" @click="tariffDialog = true">
+                  <span class="price__class mb-1 mb-md-0 mr-md-2">{{ productTariffList.TariffSectionName }}</span>
+                  <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
                 </button>
               </div>
-              <div class="tags mt-8">
+              <div class="tags mt-4 mt-lg-8">
                 <v-btn
                   v-for="(list, index) in productInfoList.FeatureTagList"
                   :key="index"
-                  class="product-tag px-3 py-1 mr-2 mb-2"
+                  class="product-tag text-lg-body-1 px-3 py-1 mr-2 mb-2"
                   :href="'/products?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
                   elevation="0"
                   tile
@@ -118,136 +93,97 @@
           </div>
         </div>
         <div class="detail__information mt-15">
-          <div class="information__menu d-flex justify-center">
-            <v-btn v-scroll-to="{ el: '#product-info', offset: -200 }" class="mx-3" text>
-              <v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="outline">
-                mdi-chevron-down
-              </v-icon>
-            </v-btn>
-            <v-btn v-scroll-to="{ el: '#product-specification', offset: -200 }" class="mx-3" text>
-              <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="outline">
-                mdi-chevron-down
-              </v-icon>
-            </v-btn>
-            <v-btn
-              v-if="productDocLists !== null"
-              v-scroll-to="{ el: '#product-document', offset: -200 }"
-              class="mx-3"
-              text>
-              <v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon color="outline">
-                mdi-chevron-down
-              </v-icon>
-            </v-btn>
-            <v-btn
-              v-if="productRefLists !== null"
-              v-scroll-to="{ el: '#product-related', offset: -200 }"
-              class="mx-3"
-              text>
-              <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="outline">
-                mdi-chevron-down
-              </v-icon>
-            </v-btn>
-          </div>
-          <div class="information__menu--sp pa-3">
-            <p class="text-body-2 text-center">クリックでページ内項目にジャンプします</p>
-            <v-row align="center">
-              <v-col cols="6">
-                <v-btn v-scroll-to="{ el: '#product-info', offset: -200 }" class="mx-3" text
-                  ><v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="outline"
-                    >mdi-chevron-down</v-icon
-                  ></v-btn
-                >
-              </v-col>
-              <v-col cols="6">
-                <v-btn v-scroll-to="{ el: '#product-specification', offset: -200 }" class="mx-3" text>
-                  <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="outline">
-                    mdi-chevron-down
-                  </v-icon>
-                </v-btn>
-              </v-col>
-              <v-col v-if="productDocLists !== null" cols="6">
-                <v-btn v-scroll-to="{ el: '#product-document', offset: -200 }" class="mx-3" text>
-                  <v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon
-                    color="outline">
-                    mdi-chevron-down
-                  </v-icon>
-                </v-btn>
-              </v-col>
-              <v-col v-if="productRefLists !== null" cols="6">
-                <v-btn v-scroll-to="{ el: '#product-related', offset: -200 }" class="mx-3" text>
-                  <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="outline">
-                    mdi-chevron-down
-                  </v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
+          <div class="information__menu">
+            <p class="d-flex d-sm-none justify-center text-caption text-md-body-2 mb-0 pa-2 pa-lg-0">クリックでページ内項目にジャンプします</p>
+            <ul class="d-flex flex-wrap justify-space-between justify-sm-center pt-5 pt-sm-3 pl-4 pl-sm-5 pl-md-16 text-body-2 text-md-body-1">
+              <li class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
+                <a v-scroll-to="{ el: '#product-info', offset: -200 }" class="d-flex align-center hover-opacity">
+                  <v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="#878787">mdi-chevron-down</v-icon>
+                </a>
+              </li>
+              <li class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
+                <a v-scroll-to="{ el: '#product-specification', offset: -200 }" class="d-flex align-center hover-opacity">
+                  <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="#878787">mdi-chevron-down</v-icon>
+                </a>
+              </li>
+              <li v-if="productDocLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
+                <a v-scroll-to="{ el: '#product-document', offset: -200 }" class="d-flex align-center hover-opacity">
+                  <v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon color="#878787">mdi-chevron-down</v-icon>
+                </a>
+              </li>
+              <li v-if="productRefLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
+                <a v-scroll-to="{ el: '#product-related', offset: -200 }" class="d-flex align-center hover-opacity">
+                  <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="#878787">mdi-chevron-down</v-icon>
+                </a>
+              </li>
+            </ul>
           </div>
           <div class="information__content">
-            <section id="product-info" class="product-info mt-15">
-              <div class="product-info__head text-h6 letter-space-02em text-center">
-                <v-icon class="mr-5" color="primary">mdi-information-outline</v-icon>製品情報
+            <section id="product-info" class="product-info content__sec mt-15">
+              <div class="content__head product-info__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+                <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-information-outline</v-icon>製品情報
               </div>
               <div v-for="(object, index) in infoLists" :key="index" class="product-info__content mt-10">
                 <div v-for="list in object.SectionList" :key="list.ProductSubjectID" v-html="list.HtmlCode"></div>
               </div>
             </section>
-            <section id="product-specification" class="product-specification mt-15">
-              <div class="product-specification__head text-h6 letter-space-02em text-center">
-                <v-icon class="mr-5" color="primary">mdi-database-outline</v-icon>仕様
+            <section id="product-specification" class="product-specification content__sec mt-15">
+              <div class="content__head product-specification__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+                <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-database-outline</v-icon>仕様
               </div>
               <div v-for="(object, index) in specLists" :key="index" class="product-specification__content mt-10">
                 <div v-for="list in object.SectionList" :key="list.ProductSubjectID" v-html="list.HtmlCode"></div>
               </div>
             </section>
-            <section v-if="productDocLists !== null" id="product-document" class="product-document mt-15">
-              <div class="product-document__head text-h6 letter-space-02em text-center">
-                <v-icon class="mr-5" color="primary">mdi-text-box-outline</v-icon>この機材の資料
+            <section v-if="productDocLists !== null" id="product-document" class="product-document content__sec mt-15">
+              <div class="content__head product-document__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+                <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-text-box-outline</v-icon>この機材の資料
               </div>
-              <div class="product-document__content d-flex justify-center align-start flex-wrap mt-10">
+              <div class="product-document__content d-flex flex-wrap justify-center mt-10">
                 <v-card
                   v-for="(list, index) in downloadDocLists"
                   :key="index"
-                  width="300"
                   elevation="0"
-                  class="document d-flex flex-column align-center pa-5 ma-5"
+                  class="document document--pdf d-flex flex-column align-center px-2 py-3 ma-2 mb-3"
                   :href="list.DocumentURL"
+                  target="_blank"
                   link>
                   <div class="document__img">
                     <img src="/img/detail/pdf.png" :alt="list.DocumentName" />
                   </div>
-                  <div class="document__title text-center mt-3">
+                  <div class="document__title text-center text-caption text-sm-body-1 lh-crop-15 mt-3">
                     {{ list.DocumentName }}
                   </div>
                 </v-card>
                 <v-card
                   v-for="(list, index) in linkDocLists"
                   :key="index"
-                  width="300"
                   elevation="0"
-                  class="document d-flex flex-column align-center pa-5 ma-5"
+                  class="document document--link d-flex flex-column align-center px-2 py-3 ma-2 mb-3"
                   :href="list.DocumentURL"
+                  target="_blank"
                   link>
                   <div class="document__img">
                     <img src="/img/detail/link.png" :alt="list.DocumentName" />
                   </div>
-                  <div class="document__title text-center mt-3">
+                  <div class="document__title text-center text-caption text-sm-body-1 lh-crop-15 mt-3">
                     {{ list.DocumentName }}
                   </div>
                 </v-card>
               </div>
             </section>
-            <section v-if="productRefLists !== null" id="product-related" class="product-related mt-15">
-              <div class="product-related__head text-h6 letter-space-02em text-center">
-                <v-icon class="mr-5" color="primary">mdi-link</v-icon>関連機材
+            <section v-if="productRefLists !== null" id="product-related" class="product-related content__sec mt-15">
+              <div class="content__head product-related__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+                <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-link</v-icon>関連機材
               </div>
               <div class="product-related__content mt-10">
                 <div v-for="(list, index) in productRefLists" :key="index" class="related__product mt-5">
                   <div class="product__categories d-flex px-3 py-1">
-                    <div class="search-tag text-body-2 mr-2">
-                      <v-icon class="mr-2">mdi-check</v-icon>{{ list.CategoryTagID01 }}
+                    <div class="search-tag d-flex text-body-2 mr-4 mr-md-5">
+                      <v-icon class="mr-2" small>mdi-check</v-icon>{{ list.CategoryTagID01 }}
                     </div>
-                    <div class="search-tag text-body-2 mr-2">
-                      <v-icon class="mr-2">mdi-check</v-icon>{{ list.CategoryTagID02 }}
+                    <div class="search-tag d-flex text-body-2">
+                      <v-icon class="mr-2" small>mdi-check</v-icon>{{ list.CategoryTagID02 }}
                     </div>
                   </div>
                   <div class="product__related mt-5">
@@ -267,28 +203,32 @@
             </section>
           </div>
         </div>
-      </div>
-      <div class="back-btn text-center mt-15">
-        <v-btn
-          :href="
-            '/products?type=2&categoryID=' +
-            productInfoList.CategoryNmae01 +
-            '&categoryName=' +
-            productInfoList.CategoryTagID01
-          "
-          text>
-          <v-icon class="mr-2" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID01 }}に戻る
-        </v-btn>
-        <v-btn
-          :href="
-            '/products?type=2&categoryID=' +
-            productInfoList.CategoryNmae02 +
-            '&categoryName=' +
-            productInfoList.CategoryTagID02
-          "
-          text>
-          <v-icon class="mr-2" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID02 }}に戻る
-        </v-btn>
+        <div class="back-btn d-flex flex-column flex-sm-row flex-wrap align-start align-sm-center justify-center mt-15">
+          <v-btn
+            :href="
+              '/products?type=2&categoryID=' +
+              productInfoList.CategoryNmae01 +
+              '&categoryName=' +
+              productInfoList.CategoryTagID01
+            "
+            color="footer"
+            class="mr-4 px-2 mb-1"
+            text>
+            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID01 }}に戻る
+          </v-btn>
+          <v-btn
+            :href="
+              '/products?type=2&categoryID=' +
+              productInfoList.CategoryNmae02 +
+              '&categoryName=' +
+              productInfoList.CategoryTagID02
+            "
+            color="footer"
+            class="px-2 mb-1"
+            text>
+            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID02 }}に戻る
+          </v-btn>
+        </div>
       </div>
     </div>
   </section>
@@ -430,6 +370,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
+$bp_xs: 362px;
 
 .detail {
   position: relative;
@@ -440,6 +381,7 @@ export default {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    padding-bottom: 140px !important;
   }
 
   .content {
@@ -451,6 +393,12 @@ export default {
 
       @include mq(md) {
         display: flex !important;
+      }
+
+      .search-tag {
+        @include mq(sm) {
+          font-size: 10px !important;
+        }
       }
     }
 
@@ -466,80 +414,102 @@ export default {
 
   .detail__top {
     .top__image {
-      .image__main {
-        width: 400px;
-        height: 400px;
-        border: 1px solid $line;
-        overflow: hidden;
+      align-items: flex-start;
+      width: 40%;
+      max-width: 400px;
 
-        @include mq(md) {
-          width: 250px;
-          height: 250px;
-        }
+      @include mq(md) {
+        width: 45%;
+        max-width: 250px;
+      }
+
+      @include mq(sm) {
+        width: 100%;
+        max-width: none;
+      }
+
+      .image__main {
+        border: 1px solid $line;
+        width: 100%;
+        max-width: 400px;
+        min-width: 220px;
+        overflow: hidden;
+        position: relative;
+
         @include mq(sm) {
-          width: 220px;
-          height: 220px;
+          width: 50%;
+        }
+
+        &::before {
+          content: '';
+          display: block;
+          width: 100%;
+          padding-top: 100%;
         }
 
         .hooper {
           width: 100%;
           height: 100%;
-
-          .hooper-slide {
-          }
+          top: 0;
+          left: 0;
+          position: absolute;
         }
-
+        .hooper-slide {
+          padding: 2%;
+        }
         img {
-          width: calc(400px - 2px);
-          height: calc(400px - 2px);
+          width: 100%;
+          height: 100%;
           object-fit: contain;
-
-          @include mq(md) {
-            width: calc(250px - 2px);
-            height: calc(250px - 2px);
-          }
-
-          @include mq(sm) {
-            width: calc(220px - 2px);
-            height: calc(220px - 2px);
-          }
         }
       }
+
       .image__sub {
+        flex: 1;
+
         @include mq(sm) {
-          max-width: 120px;
+          max-width: 105px;
+          min-width: 105px;
+          flex-direction: column;
+          max-height: 300px;
         }
-        button {
+        @media screen and (max-width: $bp_xs) {
+          flex-direction: row;
+          width: 100%;
+          max-width: 100%;
+          min-width: 100%;
+        }
+
+        .image__thumb {
           width: 55px;
           height: 55px;
+
+          @include mq(md) {
+            width: 45px;
+            height: 45px;
+          }
+          @include mq(sm) {
+            width: 40px;
+            height: 40px;
+          }
+        }
+        label {
           border: 1px solid $line;
+          display: inline-block;
+          width: 100%;
+          height: 100%;
           border-radius: 50%;
+          overflow: hidden;
 
           img {
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
           }
         }
+
         input[type='radio'] {
           display: none;
-        }
-
-        label {
-          img {
-            border: 1px solid $line;
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            object-fit: contain;
-          }
-        }
-        input[type='radio'] + label img {
-          opacity: 0.6;
-        }
-        input[type='radio']:checked + label img {
-          opacity: 1;
         }
       }
     }
@@ -563,9 +533,6 @@ export default {
       }
 
       .price {
-        @include mq(md) {
-          display: none !important;
-        }
         .price__head {
           background-color: $accent;
           color: #ffffff;
@@ -573,78 +540,56 @@ export default {
         .price__day {
           background-color: $cushion;
         }
+        .price__product {
+          .price__product-inner {
+            font-size: 30px;
 
-        .price__class {
-          display: inline-block;
-          width: 25px;
-          height: 25px;
-          line-height: 25px;
-          border-radius: 50%;
-          background-color: #ffffff;
-          color: $primary;
-        }
-      }
-
-      .price--md,
-      .price--sp {
-        display: none !important;
-        .price__head {
-          background-color: $accent;
-          color: #ffffff;
-        }
-        .price__day {
-          background-color: $cushion;
-        }
-
-        .price__more {
-          min-width: 75px;
-          display: inline-block;
-          font-size: 11px;
-          line-height: 15px;
-          border-radius: 10px;
-          height: 100%;
-          background-color: $primary;
-          color: #ffffff;
-
-          span {
-            display: block;
-            margin: 0 auto;
-            font-size: 11px;
-            line-height: 11px;
-            font-weight: bold;
-            width: 25px;
-            height: 25px;
-            line-height: 25px;
-            border-radius: 50%;
-            background-color: #ffffff;
-            color: $primary;
+            @include mq(md) {
+              font-size: 23px;
+            }
+          }
+          .price__unit {
+            font-size: 55%;
           }
         }
+        .price__more {
+          background-color: $primary;
+          border-radius: 5px;
+          box-shadow: 2px 2px 3px rgba(#000, 10%);
+          color: #ffffff;
+          min-width: 75px;
+          padding: 5px;
 
+          @include mq(md) {
+            box-shadow: none;
+            font-size: 11px;
+            flex-direction: column;
+            justify-content: center;
+            width: 75px;
+          }
+          @media screen and (max-width: $bp_xs) {
+            flex-direction: row;
+            width: 100%;
+          }
+        }
         .price__class {
-          display: inline-block;
-          width: 25px;
-          height: 25px;
-          line-height: 25px;
-          border-radius: 50%;
           background-color: #ffffff;
+          border-radius: 50%;
           color: $primary;
-        }
-      }
+          display: inline-block;
+          font-weight: 700;
+          font-size: 15px;
+          line-height: 20px;
+          width: 20px;
+          height: 20px;
 
-      .price--md {
-        @include mq(md) {
-          display: flex !important;
-        }
-
-        @include mq(sm) {
-          display: none !important;
-        }
-      }
-
-      .price--sp {
-        @include mq(sm) {
-          display: flex !important;
+          @include mq(md) {
+            font-size: 11px;
+          }
+          @media screen and (max-width: $bp_xs) {
+            margin-right: 8px;
+            margin-bottom: 0 !important;
+          }
         }
       }
 
@@ -658,25 +603,47 @@ export default {
   .detail__information {
     position: relative;
     .information__menu {
-      top: 200px;
-      width: 100%;
       background-color: $cushion;
 
       @include mq(sm) {
-        display: none !important;
+        background-color: #fff;
+        border: 1px solid $line;
       }
-    }
 
-    .information__menu--sp {
-      border: 1px solid $line;
-      display: none;
+      p,
+      a {
+        color: $footer !important;
+      }
+      ul {
+        list-style: none;
 
-      @include mq(sm) {
-        display: block !important;
+        @include mq(sm) {
+          max-width: 375px;
+          margin: 0 auto;
+        }
+      }
+      li {
+        @include mq(sm) {
+          min-width: 130px;
+        }
       }
     }
 
     .information__content {
+      .content__sec {
+        margin-bottom: 10%;
+      }
+      .content__head {
+        color: $footer;
+
+        .v-icon {
+          font-size: 2.3rem;
+
+          @include mq(sm) {
+            font-size: 2.0rem;
+          }
+        }
+      }
       // 以下のCSSは読み込むHTMLに従属させる
       .w-400 {
         width: 400px;
@@ -778,14 +745,45 @@ export default {
       }
 
       .product-document__content {
-        .document__img {
-          img {
-            width: 150px;
-            object-fit: cover;
+        .document {
+          width: calc((100% - 32px) / 3);
+          max-width: 300px;
+          min-width: 250px;
 
-            @include mq(md) {
-              width: 100px;
-            }
+          @include mq(md) {
+            max-width: 220px;
+            min-width: 200px;
+          }
+          @include mq(sm) {
+            width: calc((100% - 32px) / 2);
+            max-width: 160px;
+            min-width: 136px;
+          }
+        }
+        .document__img {
+          height: 150px;
+
+          @include mq(md) {
+            height: 100px;
+          }
+          @include mq(sm) {
+            height: 66px;
+          }
+
+          img {
+            width: auto;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+        .document--pdf {
+          .document__title {
+            color: #bc4848;
+          }
+        }
+        .document--link {
+          .document__title {
+            color: #406ea0;
           }
         }
       }
@@ -793,6 +791,12 @@ export default {
       .product-related__content {
         .product__categories {
           background-color: $cushion;
+
+          .search-tag {
+            @include mq(sm) {
+              font-size: 10px !important;
+            }
+          }
         }
       }
     }

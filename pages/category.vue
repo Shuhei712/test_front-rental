@@ -460,6 +460,10 @@ $other-bg: #563a2e;
   }
   &__list {
     border: 1px solid $cushion;
+    p,
+    a {
+      color: $footer;
+    }
     ul {
       list-style: none;
     }
@@ -495,6 +499,8 @@ $other-bg: #563a2e;
 .cat-group {
   overflow-x: hidden;
   &__ttl {
+    color: $footer;
+
     &-icon {
       display: inline-block;
       font-size: 3rem;

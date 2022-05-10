@@ -272,6 +272,10 @@ export default {
         height: auto;
       }
     }
+    &__heading,
+    a {
+      color: $footer !important;
+    }
     &__list {
       ul {
         list-style: none;
@@ -291,6 +295,8 @@ export default {
   .group {
     overflow-x: hidden;
     &__ttl {
+      color: $footer;
+
       &-icon {
         display: inline-block;
         font-size: 3rem;

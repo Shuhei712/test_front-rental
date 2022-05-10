@@ -168,6 +168,7 @@ ul {
 
 .hover-opacity:hover {
   opacity: 0.75 !important;
+  transition: opacity 0.4s ease;
 }
 
 .rotate-90 {
