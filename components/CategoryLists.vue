@@ -6,7 +6,7 @@
     <div class="category__lists mt-5">
       <v-list v-for="root in categoryLists" :key="root.CategoryName">
         <v-subheader class="category__name text-h6 bold">
-          <img class="mr-2" :src="root.IconImageURL" /> {{ root.CategoryName }}
+          <v-icon class="category__icon mr-6">{{ root.IconImageURL }}</v-icon> {{ root.CategoryName }}
         </v-subheader>
         <v-list-group v-for="child in root.SubCategoryList" :key="child.name" :value="false">
           <template #activator>
@@ -37,6 +37,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
+@import 'assets/icomoon/style.css';
 
 .category {
   width: 270px;
@@ -47,12 +48,9 @@ export default {
     color: $headingText;
   }
 
-  &__lists {
-    img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-    }
+  &__icon {
+    display: inline-block;
+    font-size: 2.5rem;
   }
 
   @include mq(lg) {
