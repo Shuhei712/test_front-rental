@@ -171,7 +171,7 @@ export default {
         width: 100%;
       }
 
-      .heading__title{
+      .heading__title {
         @include mq(sm) {
           letter-spacing: 0.1em !important;
         }
