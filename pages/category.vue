@@ -5,13 +5,16 @@
       <div class="category__search mb-16">
         <v-form class="d-flex align-center">
           <v-text-field
+            v-model="keyword"
             color="primary"
             placeholder="キーワード検索"
             outlined
             dense
             prepend-inner-icon="mdi-magnify"
             hide-details="auto"></v-text-field>
-          <v-btn color="primary" class="ml-2 ml-md-5"> <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索 </v-btn>
+          <v-btn color="primary" class="ml-2 ml-md-5" :href="'/products?type=3&keyword=' + keyword">
+            <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索
+          </v-btn>
         </v-form>
       </div>
       <div class="category__list mb-16">
@@ -71,6 +74,7 @@
 export default {
   data: () => ({
     categoryLists: [
+    keyword: '',
       {
         // online
         name: 'Online',
