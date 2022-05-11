@@ -130,8 +130,7 @@ export default {
     },
     tagLists: {
       type: Array,
-      required: false,
-      deafault: [],
+      required: true,
     },
     description: {
       type: String,
