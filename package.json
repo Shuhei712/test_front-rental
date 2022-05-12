@@ -25,6 +25,7 @@
     "hooper": "^0.3.4",
     "nuxt": "^2.15.7",
     "vue-scrollto": "^2.20.0",
+    "vue-slide-up-down": "^2.0.1",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {
