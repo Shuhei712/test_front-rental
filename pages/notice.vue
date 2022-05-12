@@ -21,6 +21,7 @@
                   <p>{{ list.NewsTitle }}</p>
                 </div>
                 <slide-up-down :active="isOpen[index]" :duration="200">
+                  <!-- eslint-disable-next-line vue/no-v-html -->
                   <div class="news__content" v-html="list.NewsHTMLText"></div>
                 </slide-up-down>
               </div>
