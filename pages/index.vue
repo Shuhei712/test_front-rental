@@ -17,7 +17,7 @@
     </div>
     <top-main class="hidden-md-and-down"></top-main>
     <top-main-rp class="hidden-lg-and-up"></top-main-rp>
-    <top-notice></top-notice>
+    <top-notice :news-lists="newsLists"></top-notice>
     <div class="top__inner d-flex pt-16">
       <category-lists :category-lists="categoryLists"></category-lists>
       <div class="content ml-lg-10">
@@ -67,7 +67,6 @@ export default {
 
     this.menuLists = menuLists
     this.categoryLists = categoryLists
-    this.newsLists = newsLists
     this.pickupLists = pickupLists
     this.newProductLists = newProductLists
     this.specialPageLists = specialPageLists
@@ -143,7 +142,7 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_news_list_top.php', param)
       // console.log(res)
-      return res
+      this.newsLists = res.NewsReleaseList
     },
     async getPickupList() {
       const param = new URLSearchParams()
