@@ -1,23 +1,26 @@
 <template>
   <div class="search-refinement text-center">
-    <v-dialog v-model="dialogFlg" width="700">
+    <v-dialog v-model="dialogFlg" width="700" scrollable>
       <v-card class="dialog-card">
-        <v-btn class="dialog-close" fab color="#ffffff" elevation="0" @click="closeDialog()">
-          <v-icon color="primary">mdi-close</v-icon>
-        </v-btn>
-        <v-btn
-          class="dialog-back"
-          :class="{ active: backBtnFlg }"
-          fab
-          color="#ffffff"
-          elevation="0"
-          @click="toggleFlg()">
-          <v-icon color="primary"> mdi-chevron-left </v-icon>
-        </v-btn>
-        <v-card-title class="refinement__title zen-kaku-gothic d-flex justify-center text-subtitle-1 text-lg-h6">
-          検索条件を変更して検索する
-        </v-card-title>
-        <v-card-text class="refinement__terms mt-5">
+        <div class="dialog-card__head px-3 pt-4 pt-md-7">
+          <v-btn
+            class="dialog-back"
+            :class="{ active: backBtnFlg }"
+            fab
+            small
+            color="#ffffff"
+            elevation="0"
+            @click="toggleFlg()">
+            <v-icon color="primary" large>mdi-chevron-left</v-icon>
+          </v-btn>
+          <v-card-title class="refinement__title zen-kaku-gothic d-flex justify-center text-body-2 text-sm-subtitle-1 text-lg-h6 font-weight-medium text-gray px-2 py-0">
+            検索条件を変更して<span class="word-keep">絞り込む</span>
+          </v-card-title>
+          <v-btn class="dialog-close" fab small color="#ffffff" elevation="0" @click="closeDialog()">
+            <v-icon color="primary" large>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <v-card-text class="refinement__terms mt-5 pb-0 px-4 px-sm-6 px-lg-8">
           <search-category
             ref="category"
             :search-category-lists="searchCategoryLists"
@@ -41,8 +44,8 @@
             :tag-flg="tagFlg"
             :query-tag-lists="selectedTagLists"
             @received-tag-lists="updateTagLists"></search-tag>
-          <v-row>
-            <v-col cols="12">
+          <v-row no-gutters>
+            <v-col cols="12" class="pb-5">
               <div class="terms__title">キーワード</div>
               <v-text-field
                 v-model="keyword"
@@ -52,61 +55,66 @@
                 outlined
                 hide-details="auto"></v-text-field>
             </v-col>
-            <v-col cols="12">
-              <div class="terms__title d-flex">
+            <v-col cols="12" class="pb-5">
+              <div class="terms__title d-flex align-center">
                 カテゴリー
                 <v-spacer></v-spacer>
-                <v-btn elevation="0" color="cushion" small @click="resetCategoryLists()">
-                  <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除
+                <v-btn class="text-light-gray" elevation="0" color="cushion" small @click="resetCategoryLists()">
+                  <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>選択解除
                 </v-btn>
               </div>
               <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openCategory()">
-                <v-col cols="11">
+                <v-col cols="11" class="terms__text">
                   <span v-for="category in selectedCategoryLists" :key="category.id"> {{ category.name }} </span>
                 </v-col>
                 <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
               </v-row>
             </v-col>
-            <v-col cols="12">
-              <div class="terms__title d-flex">
+            <v-col cols="12" class="pb-5">
+              <div class="terms__title d-flex align-center">
                 メーカー
                 <v-spacer></v-spacer>
-                <v-btn elevation="0" color="cushion" small @click="resetMakerLists()">
-                  <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除
+                <v-btn class="text-light-gray" elevation="0" color="cushion" small @click="resetMakerLists()">
+                  <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>選択解除
                 </v-btn>
               </div>
               <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openMaker()">
-                <v-col cols="11">
+                <v-col cols="11" class="terms__text">
                   <span v-for="maker in selectedMakerLists" :key="maker.id"> {{ maker.name }} / </span>
                 </v-col>
                 <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
               </v-row>
             </v-col>
-            <v-col cols="12">
-              <div class="terms__title d-flex">
+            <v-col cols="12" class="pb-5">
+              <div class="terms__title d-flex align-center">
                 価格
                 <v-spacer></v-spacer>
-                <v-btn elevation="0" color="cushion" small @click="resetPriceLists()">
-                  <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除
+                <v-btn class="text-light-gray" elevation="0" color="cushion" small @click="resetPriceLists()">
+                  <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>選択解除
                 </v-btn>
               </div>
               <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openPrice()">
-                <v-col cols="11"
-                  ><span v-for="price in selectedPriceLists" :key="price.id"> {{ price.name }} </span></v-col
-                >
+                <v-col cols="11" class="terms__text">
+                  <span v-for="price in selectedPriceLists" :key="price.id"> {{ price.name }} </span>
+                </v-col>
                 <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
               </v-row>
             </v-col>
-            <v-col cols="12">
-              <div class="terms__title d-flex">
+            <v-col cols="12" class="pb-1">
+              <div class="terms__title d-flex align-center">
                 特徴
                 <v-spacer></v-spacer>
-                <v-btn elevation="0" color="cushion" small @click="resetTagLists()">
-                  <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除
+                <v-btn class="text-light-gray" elevation="0" color="cushion" small @click="resetTagLists()">
+                  <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>選択解除
                 </v-btn>
               </div>
+              <!-- <v-row v-if="searchTagLists[0].FeatureList.length == 0" no-gutters align="center" class="terms__box--disabled mt-2 px-3">
+                <v-col cols="12" class="terms__text">
+                  <span>特徴はありません</span>
+                </v-col>
+              </v-row> -->
               <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openTag()">
-                <v-col cols="11">
+                <v-col cols="11" class="terms__text">
                   <span v-for="tag in selectedTagLists" :key="tag.id"> {{ tag.name }} / </span>
                 </v-col>
                 <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
@@ -114,24 +122,24 @@
             </v-col>
           </v-row>
         </v-card-text>
-        <v-card-actions>
-          <v-row justify="center">
-            <v-col cols="10" lg="5">
-              <v-btn color="primary" elevation="0" block @click="sendSearchConditions()">
-                <v-icon class="mr-2">mdi-text-search</v-icon>この条件で検索
+        <v-card-actions class="pt-4 pt-md-6 pb-4 pb-md-7 px-4 px-sm-6 px-lg-8">
+          <v-row justify="center" no-gutters>
+            <v-col cols="10" sm="5" class="mb-3 mb-md-5">
+              <v-btn color="primary" elevation="0" block small @click="sendSearchConditions()">
+                <v-icon class="mr-2" small>mdi-text-search</v-icon>この条件で検索
               </v-btn>
             </v-col>
-            <v-col cols="10" lg="5">
-              <v-btn v-if="!backBtnFlg" color="cushion" elevation="0" block @click="resetAll()">
-                <v-icon class="mr-2">mdi-selection-ellipse</v-icon>すべての条件をリセット
+            <v-col cols="10" sm="5" class="mb-3 mb-md-5 mx-sm-5">
+              <v-btn v-if="!backBtnFlg" class="text-light-gray" color="cushion" elevation="0" block small @click="resetAll()">
+                <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>すべての条件をリセット
               </v-btn>
-              <v-btn v-else color="primary" elevation="0" block @click="toggleFlg()">
-                <v-icon class="mr-2">mdi-chevron-left</v-icon>選択状態で戻る
+              <v-btn v-else color="primary" elevation="0" block small @click="toggleFlg()">
+                <v-icon class="mr-2" small>mdi-chevron-left</v-icon>選択状態で戻る
               </v-btn>
             </v-col>
-            <v-col cols="10" lg="5">
-              <v-btn color="outline" block outlined @click="closeDialog()">
-                <v-icon class="mr-2" color="primary">mdi-close</v-icon>変更せずに閉じる
+            <v-col cols="10" sm="5">
+              <v-btn color="line" block outlined small @click="closeDialog()">
+                <v-icon class="mr-2" color="primary" small>mdi-close</v-icon><span class="text-gray">変更せずに閉じる</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -280,27 +288,32 @@ export default {
   position: relative;
   overflow: hidden;
 
-  .dialog-close {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
   }
 
   .dialog-back {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    transform: translate(-120%, 0);
+    transform: translateX(-60px);
     transition: all 0.25s ease-in-out;
   }
 
   .dialog-back.active {
-    transform: translate(0, 0);
+    transform: translateX(0);
   }
 }
 
 .refinement__terms {
+  height: 460px;
+  overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
+  @include scrollbar();
+}
+
+.terms__title {
+  color: $primary;
 }
 
 .terms__box {
@@ -312,5 +325,24 @@ export default {
 
 .terms__box:hover {
   background-color: $cushion;
+}
+
+.terms__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 絞り込む項目情報がない場合
+.terms__box--disabled {
+  background-color: $cushion;
+  border: 1px solid $lightGray;
+  border-radius: 5px;
+  height: 40px;
+  cursor: default;
+
+  .terms__text {
+    color: $lightGray;
+  }
 }
 </style>
