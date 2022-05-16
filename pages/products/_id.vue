@@ -97,13 +97,15 @@
         </div>
         <div class="detail__information mt-15">
           <div class="information__menu">
-            <p class="d-flex d-sm-none justify-center text-caption text-md-body-2 mb-0 pa-2 pa-lg-0">
+            <p class="d-flex d-sm-none justify-center text-caption text-md-body-2 text-gray mb-0 pa-2 pa-lg-0">
               クリックでページ内項目にジャンプします
             </p>
             <ul
               class="d-flex flex-wrap justify-space-between justify-sm-center pt-5 pt-sm-3 pl-4 pl-sm-5 pl-md-16 text-body-2 text-md-body-1">
               <li class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
-                <a v-scroll-to="{ el: '#product-info', offset: -200 }" class="d-flex align-center hover-opacity">
+                <a
+                  v-scroll-to="{ el: '#product-info', offset: -200 }"
+                  class="d-flex align-center text-gray hover-opacity">
                   <v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="#878787"
                     >mdi-chevron-down</v-icon
                   >
@@ -112,14 +114,14 @@
               <li class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
                 <a
                   v-scroll-to="{ el: '#product-specification', offset: -200 }"
-                  class="d-flex align-center hover-opacity">
+                  class="d-flex align-center text-gray hover-opacity">
                   <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="#878787"
                     >mdi-chevron-down</v-icon
                   >
                 </a>
               </li>
               <li v-if="productDocLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
-                <a v-scroll-to="{ el: '#product-document', offset: -200 }" class="d-flex align-center hover-opacity">
+                <a v-scroll-to="{ el: '#product-document', offset: -200 }" class="d-flex align-center text-gray hover-opacity">
                   <v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon
                     color="#878787"
                     >mdi-chevron-down</v-icon
@@ -127,7 +129,7 @@
                 </a>
               </li>
               <li v-if="productRefLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
-                <a v-scroll-to="{ el: '#product-related', offset: -200 }" class="d-flex align-center hover-opacity">
+                <a v-scroll-to="{ el: '#product-related', offset: -200 }" class="d-flex align-center text-gray hover-opacity">
                   <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="#878787"
                     >mdi-chevron-down</v-icon
                   >
@@ -138,7 +140,7 @@
           <div class="information__content">
             <section id="product-info" class="product-info content__sec mt-15">
               <div
-                class="content__head product-info__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+                class="content__head product-info__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 font-weight-medium letter-space-02em text-gray">
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-information-outline</v-icon>製品情報
               </div>
               <div v-for="(object, index) in infoLists" :key="index" class="product-info__content mt-10">
@@ -147,7 +149,7 @@
             </section>
             <section id="product-specification" class="product-specification content__sec mt-15">
               <div
-                class="content__head product-specification__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+                class="content__head product-specification__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 font-weight-medium letter-space-02em text-gray">
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-database-outline</v-icon>仕様
               </div>
               <div v-for="(object, index) in specLists" :key="index" class="product-specification__content mt-10">
@@ -156,7 +158,7 @@
             </section>
             <section v-if="productDocLists !== null" id="product-document" class="product-document content__sec mt-15">
               <div
-                class="content__head product-document__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+                class="content__head product-document__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 font-weight-medium letter-space-02em text-gray">
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-text-box-outline</v-icon>この機材の資料
               </div>
               <div class="product-document__content d-flex flex-wrap justify-center mt-10">
@@ -194,7 +196,7 @@
             </section>
             <section v-if="productRefLists !== null" id="product-related" class="product-related content__sec mt-15">
               <div
-                class="content__head product-related__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+                class="content__head product-related__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 font-weight-medium letter-space-02em text-gray">
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-link</v-icon>関連機材
               </div>
               <div class="product-related__content mt-10">
@@ -660,10 +662,6 @@ $bp_xs: 362px;
         border: 1px solid $line;
       }
 
-      p,
-      a {
-        color: $footer !important;
-      }
       ul {
         list-style: none;
 
@@ -684,8 +682,6 @@ $bp_xs: 362px;
         margin-bottom: 10%;
       }
       .content__head {
-        color: $footer;
-
         .v-icon {
           font-size: 2.3rem;
 

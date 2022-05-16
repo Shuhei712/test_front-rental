@@ -1,13 +1,13 @@
 <template>
-  <div class="terms__price d-flex flex-column text-body-1 pa-4 pa-lg-8" :class="{ active: priceFlg }">
-    <div class="price__title">
-      価格帯を選択
-      <v-btn class="ml-5" elevation="0" color="cushion" small @click="resetSelectedPriceLists()">
-        <v-icon class="mr-2" color="outline" small>mdi-selection-ellipse</v-icon>選択解除
+  <div class="terms__price d-flex flex-column text-body-1" :class="{ active: priceFlg }">
+    <div class="price__title d-flex align-center text-body-2 text-md-body-1 px-4 px-sm-6 px-lg-8 py-3">
+      <span>価格帯を<span class="word-keep">選択</span></span>
+      <v-btn class="text-light-gray ml-5" elevation="0" color="cushion" small @click="resetSelectedPriceLists()">
+        <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>選択解除
       </v-btn>
     </div>
-    <div class="maker__lists flex-grow-1 overflow-auto mt-8">
-      <div v-for="(price, index) in searchPriceLists" :key="index" class="price-list py-1">
+    <div class="price__lists flex-grow-1 px-4 px-sm-6 px-lg-8">
+      <div v-for="(price, index) in searchPriceLists" :key="index" class="price-list">
         <label class="terms__label">
           <input
             v-model="selectedPriceLists"
@@ -15,7 +15,10 @@
             type="checkbox"
             :value="{ id: price.PriceRangeID, name: price.PriceRangeName }"
             @change="sendPriceLists()" />
-          <span class="checkbox__parts text-body-2">{{ price.PriceRangeName }} </span>
+            <div class="checkbox d-flex align-flex-start">
+              <span class="checkbox__parts"></span>
+              <span class="text-body-2 text-gray pt-1 px-3">{{ price.PriceRangeName }}</span>
+            </div>
         </label>
       </div>
     </div>
@@ -61,10 +64,12 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+  min-height: 460px;
   z-index: 10;
   transform: translate(100%, 0);
   background-color: #ffffff;
   transition: all 0.25s ease-in-out;
+  overflow: hidden;
 
   .price__title {
     color: $primary;
@@ -77,70 +82,54 @@ export default {
   padding: 2px 4px;
 }
 
-.terms__label {
-  display: inline-block;
-  width: 50%;
-  margin: 15px 0;
-}
-
 .terms__price.active {
   transform: translate(0, 0);
+  overflow: visible;
 }
 
-.terms__checkbox {
-  display: none;
-}
+.terms__label {
+  display: inline-block;
+  margin-bottom: 20px;
 
-.checkbox__parts {
-  padding-left: 40px;
-  position: relative;
-  margin-right: 40px;
-  cursor: pointer;
-}
+  .terms__checkbox {
+    display: none;
+  }
 
-.checkbox__parts::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: -5px;
-  left: 0;
-  width: 30px;
-  height: 30px;
-  border: 1px solid $outline;
-  border-radius: 5px;
-  background-color: $cushion;
-}
+  .checkbox {
+    cursor: pointer;
+  }
 
-.terms__checkbox:checked + .checkbox__parts::before {
-  background-color: #ffffff;
-}
+  .checkbox__parts {
+    display: block;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border: 1px solid $outline;
+    border-radius: 5px;
+    background-color: $cushion;
+    position: relative;
+  }
 
-.checkbox__parts::after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: -2px;
-  left: 10px;
-  width: 10px;
-  height: 18px;
-  transform: rotate(40deg);
-  border-bottom: 3px solid $line;
-  border-right: 3px solid $line;
-}
+  .checkbox__parts::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 9px;
+    width: 10px;
+    height: 18px;
+    transform: rotate(40deg);
+    border-bottom: 3px solid $line;
+    border-right: 3px solid $line;
+  }
 
-.terms__checkbox:checked + .checkbox__parts::after {
-  border-bottom: 3px solid $primary;
-  border-right: 3px solid $primary;
-}
+  .terms__checkbox:checked + .checkbox .checkbox__parts {
+    background-color: #ffffff;
+  }
 
-.terms__title {
-  color: $primary !important;
-}
-
-.terms__box {
-  border: 1px solid $outline;
-  border-radius: 5px;
-  height: 40px;
-  cursor: pointer;
+  .terms__checkbox:checked + .checkbox .checkbox__parts::after {
+    border-bottom: 3px solid $primary;
+    border-right: 3px solid $primary;
+  }
 }
 </style>

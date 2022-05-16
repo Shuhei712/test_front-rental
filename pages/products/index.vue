@@ -15,56 +15,66 @@
     <div class="products__inner d-lg-flex py-16 px-2 px-lg-0">
       <category-lists :category-lists="categoryLists"></category-lists>
       <div class="content ml-lg-15">
-        <div class="product__search d-flex align-center">
-          <div class="search__number text-center px-3 text-body-2 no-wrap">
-            <span class="text-h5 mr-2"> {{ searchProductListCount }} </span>件<br />見つかりました
+        <div class="product__search d-flex">
+          <div class="search__number d-flex flex-column align-center justify-center text-center px-2 px-sm-5 py-3">
+            <div class="d-flex align-baseline justify-center">
+              <span class="number__val letter-space-015em mr-1">{{ searchProductListCount }}</span>
+              <span class="text-body-2">件</span>
+            </div>
+            <div class="text-caption text-sm-body-2 mt-md-1">見つかりました</div>
           </div>
-          <div class="serach__condition flex-grow-1 pa-3">
-            <div class="condition__head text-body-2 d-flex align-center flex-wrap text-no-wrap">
-              現在の検索条件
-              <v-icon>mdi-chevron-right</v-icon>
-              <v-btn class="px-0" text @click="getFilterCondition()">
-                <v-icon color="primary">mdi-text-search</v-icon>変更して絞り込む
+          <div class="search__condition flex-grow-1 pa-3">
+            <div class="condition__head text-caption text-md-body-2 d-flex align-center flex-wrap text-no-wrap">
+              <span class="text-gray">現在の検索条件</span>
+              <v-icon color="#8e8e8e">mdi-chevron-right</v-icon>
+              <v-btn class="text-caption text-md-body-2 px-0" color="primary" text @click="getFilterCondition()">
+                <v-icon color="primary" class="mr-1">mdi-text-search</v-icon>変更して絞り込む
               </v-btn>
             </div>
-            <div class="condition__tags mt-1 d-flex align-center flex-wrap">
-              <div v-if="isCategoryName && !conditionalSearchFlg" class="search-tag text-body-2 mr-2">
-                <v-icon class="mr-2">mdi-check</v-icon>{{ $route.query.categoryName }}
-              </div>
-              <div v-if="isTagName && !conditionalSearchFlg" class="search-tag text-body-2 mr-2">
-                <v-icon class="mr-2">mdi-check</v-icon>{{ $route.query.tagName }}
-              </div>
-              <div v-if="isKeyword && !conditionalSearchFlg" class="search-tag text-body-2 mr-2">
-                <v-icon class="mr-2">mdi-check</v-icon>{{ $route.query.keyword }}
-              </div>
-              <div v-for="(condition, index) in presentConditions" :key="index" class="search-tag text-body-2 mr-2">
-                <v-icon class="mr-2">mdi-check</v-icon>{{ condition }}
-              </div>
+            <div class="condition__foot mt-1">
+              <ul class="condition__tags d-flex">
+                <li v-if="isCategoryName && !conditionalSearchFlg" class="a search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
+                  <v-icon class="mr-2" small>mdi-check</v-icon>{{ $route.query.categoryName }}
+                </li>
+                <li v-if="isTagName && !conditionalSearchFlg" class="b search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
+                  <v-icon class="mr-2" small>mdi-check</v-icon>{{ $route.query.tagName }}
+                </li>
+                <li v-if="isKeyword && !conditionalSearchFlg" class="search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
+                  <v-icon class="mr-2" small>mdi-check</v-icon>{{ $route.query.keyword }}
+                </li>
+                <li v-for="(condition, index) in presentConditions" :key="index" class="search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
+                  <v-icon class="mr-2" small>mdi-check</v-icon>{{ condition }}
+                </li>
+              </ul>
+              <div class="fade-out mr-n3"></div>
             </div>
           </div>
         </div>
-        <div class="product__sort mt-3 d-flex align-center flex-column flex-lg-row">
-          <div class="d-flex align-center order-1 order-lg-0 mt-5 mt-lg-0">
-            <div class="sort__release d-flex align-center flex-column flex-lg-row mr-8">
-              <div class="release__head mr-2 px-5 py-1 text-body-2 text-white">発売日</div>
-              <v-btn-toggle v-model="orderRelease" dense tile group @change="changeOrderRelease()">
-                <v-btn text :value="$config.ORDER_NEW">新着順</v-btn>
-                <v-btn text :value="$config.ORDER_OLD">古い順</v-btn>
+        <div class="product__sort d-flex align-center flex-column-reverse flex-lg-row mt-5 mt-lg-4">
+          <div class="sort__inner d-flex justify-space-between">
+            <div class="sort__release d-flex flex-column flex-lg-row">
+              <div class="sort__head d-flex align-center justify-center text-white text-caption text-sm-body-2 text-lg-body-1 px-5 py-1">発売日</div>
+              <v-btn-toggle v-model="orderRelease" class="d-flex align-center justify-center pa-2 py-lg-0 px-lg-5" dense tile group @change="changeOrderRelease()">
+                <v-btn text small :value="$config.ORDER_NEW" class="text-md-body-2 ma-0" color="headingText">新着順</v-btn>
+                <v-divider class="sort__line mx-2" vertical></v-divider>
+                <v-btn text small :value="$config.ORDER_OLD" class="text-md-body-2 ma-0" color="headingText">古い順</v-btn>
               </v-btn-toggle>
             </div>
-            <div class="sort__price d-flex align-center flex-column flex-lg-row">
-              <div class="price__head mr-2 px-5 py-1 text-body-2 text-white">価格</div>
-              <v-btn-toggle v-model="orderPrice" dense tile group @change="changeOrderPrice()">
-                <v-btn text :value="$config.ORDER_ASC">低い順</v-btn>
-                <v-btn text :value="$config.ORDER_DESC">高い順</v-btn>
+            <div class="sort__price d-flex flex-column flex-lg-row ml-lg-3">
+              <div class="sort__head d-flex align-center justify-center text-white text-caption text-sm-body-2 text-lg-body-1 px-5 py-1">価格</div>
+              <v-btn-toggle v-model="orderPrice" class="d-flex align-center justify-center pa-2 py-lg-0 px-lg-5" dense tile group @change="changeOrderPrice()">
+                <v-btn text small :value="$config.ORDER_ASC" class="text-md-body-2 ma-0" color="headingText">低い順</v-btn>
+                <v-divider class="sort__line mx-2" vertical></v-divider>
+                <v-btn text small :value="$config.ORDER_DESC" class="text-md-body-2 ma-0" color="headingText">高い順</v-btn>
               </v-btn-toggle>
             </div>
           </div>
           <v-spacer class="hidden-md-and-down"></v-spacer>
           <v-btn
-            class="condition__reset mt-3 mt-lg-0"
-            color="line"
+            class="condition__reset mb-8 mb-lg-0"
+            color="lightGray"
             outlined
+            small
             :disabled="!presentCategoryID"
             @click="resetConditions()">
             カテゴリ以外の条件をリセット
@@ -464,27 +474,56 @@ export default {
   .product__search {
     width: 100%;
     border: 1px solid $outline;
-    background-color: $cushion;
     border-radius: 5px;
+    overflow: hidden;
 
     .search__number {
       max-width: 185px;
-      border-radius: 5px;
+      min-width: 103px;
+      background-color: $cushion;
+
+      .number__val {
+        font-size: 30px !important;
+        @include mq(md) {
+          font-size: 23px !important;
+        }
+      }
     }
 
-    .serach__condition {
+    .search__condition {
       background-color: #ffffff;
       border-radius: 5px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
+      overflow: hidden;
+    }
+
+    .condition__foot {
+      position: relative;
+
+      ul {
+        list-style: none;
+        display: flex;
+      }
+
+      .search-tag {
+        white-space: nowrap;
+      }
+
+      .fade-out {
+        background: linear-gradient(to right, rgba(255, 255, 225, 0) 0%, #fff 50%, #fff 100%);
+        width: 24px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        position: absolute;
+      }
     }
   }
 
   .product__sort {
     .sort__release,
     .sort__price {
-      @include mq(md) {
-      }
 
       .release__head,
       .price__head {
@@ -510,6 +549,32 @@ export default {
         border-bottom: 2px solid $primary !important;
         opacity: 1 !important;
       }
+    }
+
+    .sort__inner {
+      @include mq(lg) {
+        width: 80%;
+        max-width: 450px;
+      }
+      @include mq(sm) {
+        width: 100%;
+      }
+    }
+
+    .sort__head {
+      background-color: $primary;
+      min-width: 95px;
+    }
+
+    .sort__release,
+    .sort__price {
+      @include mq(lg) {
+        width: 46%;
+      }
+    }
+
+    .sort__line {
+      border-color: #8e8e8e;
     }
   }
 

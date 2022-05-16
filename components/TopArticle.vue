@@ -2,8 +2,8 @@
   <section class="article px-3 px-lg-0">
     <div class="article__heading d-flex align-center">
       <v-icon class="mr-3 mr-md-5" color="accent">mdi-creation</v-icon>
-      <h3 class="font-heading text-h6 text-md-h5 letter-space-02em mr-4 mr-md-9">
-        特設ページ<span class="font-heading text-body-2 text-md-h6 letter-space-02em word-keep">ほか</span>
+      <h3 class="font-heading text-h6 text-md-h5 text-gray font-weight-regular letter-space-02em mr-4 mr-md-9">
+        特設ページ<span class="font-heading text-body-2 text-md-h6 font-weight-regular letter-space-02em word-keep">ほか</span>
       </h3>
       <v-divider color="line" class="heading__line"></v-divider>
       <v-btn class="ml-4 ml-md-5" to="/article" color="headingText" outlined elevation="2" small>

@@ -1,7 +1,7 @@
 <template>
   <section class="pickup px-3 px-lg-0 mt-10 mt-sm-14">
     <h3 class="pickup__heading text-center">
-      <span class="heading__text orange_line text-caption text-md-h6 zen-kaku-gothic letter-space-015em"
+      <span class="heading__text orange_line text-caption text-md-h6 text-gray font-weight-medium zen-kaku-gothic letter-space-015em"
         >おすすめレンタル機材<span class="word-keep">ピックアップ</span>
       </span>
     </h3>
@@ -14,7 +14,7 @@
         <div class="item__heading d-flex align-center flex-column flex-lg-row mx-auto mb-4 mb-lg-5">
           <div class="d-flex align-center">
             <img class="icon mr-3" :src="list.IconImageURL" :alt="list.IconImageURL" />
-            <h4 class="heading__title font-heading text-h6 text-lg-h5 letter-space-02em mr-lg-10">
+            <h4 class="heading__title font-heading text-h6 text-lg-h5 text-gray font-weight-regular letter-space-02em mr-lg-10">
               {{ list.PageCategoryName }}
             </h4>
           </div>
@@ -78,10 +78,6 @@ export default {
   @include mq(sm) {
     margin-top: 100px;
     background-color: $cushion;
-  }
-
-  &__heading {
-    position: relative;
   }
 
   &__heading {
