@@ -1,6 +1,6 @@
 <template>
   <section class="article">
-    <top-bar title="特設ページ 一覧"></top-bar>
+    <top-bar title="特設ページ 一覧" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="article__inner d-lg-flex py-16 px-3 px-lg-0">
       <category-lists :category-lists="categoryLists"></category-lists>
       <div class="content ml-lg-15">
@@ -228,10 +228,12 @@ export default {
       // ],
       categoryLists: [],
       pageClassLists: [],
+      breadCrumbs: [],
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
+    this.setBreadCrumbs()
     await Promise.all([this.getCategoryList(), this.getSpecialPageList()])
     this.$store.commit('loading/changeStatus', false)
   },
@@ -251,6 +253,11 @@ export default {
       const res = await this.$axios.$post('get_spacial_page_list.php', param)
       // console.log(res)
       this.pageClassLists = res.PageClassList
+    },
+    setBreadCrumbs() {
+      this.$store.commit('breadCrumbs/deleteList')
+      this.$store.commit('breadCrumbs/addList', { name: '特設ページ一覧', path: '/article' })
+      this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
   },
 }

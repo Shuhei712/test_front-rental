@@ -1,6 +1,6 @@
 <template>
   <div>
-    <top-bar title="お知らせ一覧"></top-bar>
+    <top-bar title="お知らせ一覧" :bread-crumbs="breadCrumbs"></top-bar>
     <section class="news">
       <div class="news__inner px-3 py-16">
         <div class="content">
@@ -170,11 +170,13 @@ export default {
   data() {
     return {
       newsLists: [],
+      breadCrumbs: [],
       isOpen: [],
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
+    this.setBreadCrumbs()
     await this.getNewsList()
     this.isOpen = Array(this.newsLists.length).fill(false)
     this.$store.commit('loading/changeStatus', false)
@@ -197,6 +199,11 @@ export default {
       const month = dateString.slice(4, 6)
       const day = dateString.slice(6, 8)
       return year + '.' + month + '.' + day
+    },
+    setBreadCrumbs() {
+      this.$store.commit('breadCrumbs/deleteList')
+      this.$store.commit('breadCrumbs/addList', { name: 'お知らせ一覧', path: '/notice' })
+      this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
   },
 }

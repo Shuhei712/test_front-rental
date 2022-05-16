@@ -54,6 +54,7 @@ export default {
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
+    this.resetBreadCrumbs()
     const [menuLists, categoryLists, newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] =
       await Promise.all([
         this.getMenuList(),
@@ -106,7 +107,6 @@ export default {
           },
         },
       })
-
       gsap.to('.top', {
         scrollTrigger: {
           trigger: '.footer',
@@ -177,6 +177,9 @@ export default {
       const res = await this.$axios.$post('get_pickup_tag_list_top.php', param)
       // console.log(res)
       return res
+    },
+    resetBreadCrumbs() {
+      this.$store.commit('breadCrumbs/deleteList')
     },
   },
 }

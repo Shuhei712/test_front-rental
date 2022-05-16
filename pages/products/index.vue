@@ -11,7 +11,7 @@
       @change-dialog="reseiveDialogFlg"
       @received-search-conditions="receivedSearchConditions">
     </search-refinement>
-    <top-bar title="スイッチャー 一覧"></top-bar>
+    <top-bar title="検索結果一覧" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="products__inner d-lg-flex py-16 px-2 px-lg-0">
       <category-lists :category-lists="categoryLists"></category-lists>
       <div class="content ml-lg-15">
@@ -138,11 +138,14 @@ export default {
       searchConditionInfo: [],
       presentConditions: [],
       presentCategoryID: '',
+      breadCrumbs: [],
+      title: '',
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     await Promise.all([this.getCategoryList(), this.searchProducts()])
+    this.setBreadCrumbs(this.$route.query.type)
     this.$store.commit('loading/changeStatus', false)
   },
   computed: {
@@ -278,6 +281,29 @@ export default {
     },
     initializePresentConditions() {
       this.presentConditions = []
+    },
+    setBreadCrumbs(type) {
+      const breadCrumbsLists = this.$store.getters['breadCrumbs/getLists']
+      const isCategoryPage = breadCrumbsLists.some((list) => list.path === '/category')
+      if (!isCategoryPage) this.$store.commit('breadCrumbs/deleteList')
+
+      switch (type) {
+        case '1':
+          this.$store.commit('breadCrumbs/addList', { name: this.$route.query.tagName, path: '' })
+          this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
+          break
+        case '2':
+          this.$store.commit('breadCrumbs/addList', { name: this.$route.query.categoryName, path: '' })
+          this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
+          break
+        case '3':
+          this.$store.commit('breadCrumbs/addList', { name: 'キーワード検索結果', path: '' })
+          this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
+          break
+
+        default:
+          break
+      }
     },
     setCondisionJson() {
       this.initializeCondisionJson()

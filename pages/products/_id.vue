@@ -5,7 +5,7 @@
       :items="productTariffList.TariffList"
       @change-tariff-dialog="reseiveTariffDialogFlg">
     </tariff-card>
-    <top-bar title="機材詳細"></top-bar>
+    <top-bar title="機材詳細" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="detail__inner py-6 py-sm-10 py-lg-16">
       <div class="content px-2 px-lg-0">
         <div class="info__categories--sp d-flex flex-wrap px-3 py-1 mb-3">
@@ -31,7 +31,10 @@
               </hooper>
             </div>
             <div class="image__sub d-flex flex-wrap mt-3 mt-md-7 mr-n3">
-              <div v-for="(list, index) in productInfoList.ProductImageList" :key="index" class="image__thumb mr-3 mb-1">
+              <div
+                v-for="(list, index) in productInfoList.ProductImageList"
+                :key="index"
+                class="image__thumb mr-3 mb-1">
                 <input :id="index" v-model="carouselData" type="radio" :value="index" checked />
                 <label :for="index"><img :src="list.ProductImageURL" :alt="list.ProductImageName" /></label>
               </div>
@@ -94,33 +97,48 @@
         </div>
         <div class="detail__information mt-15">
           <div class="information__menu">
-            <p class="d-flex d-sm-none justify-center text-caption text-md-body-2 mb-0 pa-2 pa-lg-0">クリックでページ内項目にジャンプします</p>
-            <ul class="d-flex flex-wrap justify-space-between justify-sm-center pt-5 pt-sm-3 pl-4 pl-sm-5 pl-md-16 text-body-2 text-md-body-1">
+            <p class="d-flex d-sm-none justify-center text-caption text-md-body-2 mb-0 pa-2 pa-lg-0">
+              クリックでページ内項目にジャンプします
+            </p>
+            <ul
+              class="d-flex flex-wrap justify-space-between justify-sm-center pt-5 pt-sm-3 pl-4 pl-sm-5 pl-md-16 text-body-2 text-md-body-1">
               <li class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
                 <a v-scroll-to="{ el: '#product-info', offset: -200 }" class="d-flex align-center hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="#878787">mdi-chevron-down</v-icon>
+                  <v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="#878787"
+                    >mdi-chevron-down</v-icon
+                  >
                 </a>
               </li>
               <li class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
-                <a v-scroll-to="{ el: '#product-specification', offset: -200 }" class="d-flex align-center hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="#878787">mdi-chevron-down</v-icon>
+                <a
+                  v-scroll-to="{ el: '#product-specification', offset: -200 }"
+                  class="d-flex align-center hover-opacity">
+                  <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="#878787"
+                    >mdi-chevron-down</v-icon
+                  >
                 </a>
               </li>
               <li v-if="productDocLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
                 <a v-scroll-to="{ el: '#product-document', offset: -200 }" class="d-flex align-center hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon color="#878787">mdi-chevron-down</v-icon>
+                  <v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon
+                    color="#878787"
+                    >mdi-chevron-down</v-icon
+                  >
                 </a>
               </li>
               <li v-if="productRefLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
                 <a v-scroll-to="{ el: '#product-related', offset: -200 }" class="d-flex align-center hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="#878787">mdi-chevron-down</v-icon>
+                  <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="#878787"
+                    >mdi-chevron-down</v-icon
+                  >
                 </a>
               </li>
             </ul>
           </div>
           <div class="information__content">
             <section id="product-info" class="product-info content__sec mt-15">
-              <div class="content__head product-info__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+              <div
+                class="content__head product-info__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-information-outline</v-icon>製品情報
               </div>
               <div v-for="(object, index) in infoLists" :key="index" class="product-info__content mt-10">
@@ -128,7 +146,8 @@
               </div>
             </section>
             <section id="product-specification" class="product-specification content__sec mt-15">
-              <div class="content__head product-specification__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+              <div
+                class="content__head product-specification__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-database-outline</v-icon>仕様
               </div>
               <div v-for="(object, index) in specLists" :key="index" class="product-specification__content mt-10">
@@ -136,7 +155,8 @@
               </div>
             </section>
             <section v-if="productDocLists !== null" id="product-document" class="product-document content__sec mt-15">
-              <div class="content__head product-document__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+              <div
+                class="content__head product-document__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-text-box-outline</v-icon>この機材の資料
               </div>
               <div class="product-document__content d-flex flex-wrap justify-center mt-10">
@@ -173,7 +193,8 @@
               </div>
             </section>
             <section v-if="productRefLists !== null" id="product-related" class="product-related content__sec mt-15">
-              <div class="content__head product-related__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
+              <div
+                class="content__head product-related__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 letter-space-02em">
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-link</v-icon>関連機材
               </div>
               <div class="product-related__content mt-10">
@@ -214,7 +235,8 @@
             color="footer"
             class="mr-4 px-2 mb-1"
             text>
-            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID01 }}に戻る
+            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon
+            >{{ productInfoList.CategoryTagID01 }}に戻る
           </v-btn>
           <v-btn
             :href="
@@ -226,7 +248,8 @@
             color="footer"
             class="px-2 mb-1"
             text>
-            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon>{{ productInfoList.CategoryTagID02 }}に戻る
+            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon
+            >{{ productInfoList.CategoryTagID02 }}に戻る
           </v-btn>
         </div>
       </div>
@@ -254,6 +277,7 @@ export default {
         itemsToShow: 1,
       },
       tariffDialog: false,
+      breadCrumbs: [],
     }
   },
   async fetch() {
@@ -272,6 +296,8 @@ export default {
     this.getProductSpec()
     this.getProductReffer()
     this.getProductDocList()
+
+    this.setBreadCrumbs()
 
     this.$store.commit('loading/changeStatus', false)
   },
@@ -295,6 +321,30 @@ export default {
     },
     reseiveTariffDialogFlg(value) {
       this.tariffDialog = value
+    },
+    setBreadCrumbs() {
+      this.$store.commit('breadCrumbs/deleteList')
+      this.$store.commit('breadCrumbs/addList', {
+        name: this.productInfoList.CategoryTagID01,
+        path:
+          '/products?type=2&categoryID=' +
+          this.productInfoList.CategoryNmae01 +
+          '&categoryName=' +
+          this.productInfoList.CategoryTagID01,
+      })
+      this.$store.commit('breadCrumbs/addList', {
+        name: this.productInfoList.CategoryTagID02,
+        path:
+          '/products?type=2&categoryID=' +
+          this.productInfoList.CategoryNmae02 +
+          '&categoryName=' +
+          this.productInfoList.CategoryTagID02,
+      })
+      this.$store.commit('breadCrumbs/addList', {
+        name: this.productInfoList.ProductName + this.productInfoList.ProductTypeNumber,
+        path: '',
+      })
+      this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async getProductInfoList() {
       const param = new URLSearchParams()
@@ -640,7 +690,7 @@ $bp_xs: 362px;
           font-size: 2.3rem;
 
           @include mq(sm) {
-            font-size: 2.0rem;
+            font-size: 2rem;
           }
         }
       }
