@@ -38,7 +38,7 @@
           class="footer__info-inner mt-10 mt-md-16">
           <div class="information">
             <div class="information__head d-flex align-center">
-              <h5 class="text-body-1 text-sm-h6 letter-space-02em">{{ list.branchName }}</h5>
+              <h5 class="text-body-1 text-sm-h6 font-weight-medium letter-space-02em">{{ list.branchName }}</h5>
               <v-divider inset color="#ffffff" class="information__line ml-5"></v-divider>
             </div>
             <div class="information__content mt-5">

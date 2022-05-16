@@ -19,15 +19,15 @@
       </div>
       <div class="category__list mb-16">
         <div
-          class="category__heading d-flex justify-center align-center text-body-1 text-md-h6 letter-space-015em pa-1 pa-md-0">
+          class="category__heading d-flex justify-center align-center text-body-1 text-md-h6 font-weight-regular letter-space-015em pa-1 pa-md-0">
           <v-icon class="mr-2" color="accent">mdi-shape-outline</v-icon>CATEGORY
         </div>
         <div class="py-4">
-          <p class="text-center text-caption text-md-body-2 mb-7">クリックでページ内項目にジャンプします</p>
+          <p class="text-center text-caption text-md-body-2 text-gray mb-7">クリックでページ内項目にジャンプします</p>
           <ul
             class="d-flex flex-wrap justify-start justify-lg-center pl-4 pl-sm-5 pl-lg-7 text-body-2 text-lg-subtitle-1">
             <li v-for="root in categoryLists" :key="root.CategoryName" class="mr-4 mr-sm-5 mr-lg-7 mb-5">
-              <a v-scroll-to="{ el: '#category-id_' + root.CategoryID, offset: -130 }" class="d-flex align-center">
+              <a v-scroll-to="{ el: '#category-id_' + root.CategoryID, offset: -130 }" class="d-flex align-center text-gray">
                 <v-icon class="mr-2">{{ root.IconImageURL }}</v-icon>
                 {{ root.CategoryName }}<v-icon color="#878787">mdi-chevron-down</v-icon>
               </a>
@@ -42,7 +42,7 @@
         class="cat-group mb-16">
         <!-- 大カテゴリー -->
         <h3
-          class="cat-group__ttl d-flex flex-column text-center text-body-1 text-sm-h6 text-md-h5 bold letter-space-015em mb-4 mb-md-9">
+          class="cat-group__ttl d-flex flex-column text-center text-body-1 text-sm-h6 text-md-h5 text-gray bold letter-space-015em mb-4 mb-md-9">
           <v-icon class="cat-group__ttl-icon mb-2 mb-md-4">{{ root.IconImageURL }}</v-icon>
           {{ root.CategoryName }}
         </h3>
@@ -497,10 +497,7 @@ $other-bg: #563a2e;
   }
   &__list {
     border: 1px solid $cushion;
-    p,
-    a {
-      color: $footer;
-    }
+
     ul {
       list-style: none;
     }
@@ -536,7 +533,6 @@ $other-bg: #563a2e;
 .cat-group {
   overflow-x: hidden;
   &__ttl {
-    color: $footer;
 
     &-icon {
       display: inline-block;
