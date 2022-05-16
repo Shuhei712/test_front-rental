@@ -26,7 +26,8 @@
     "nuxt": "^2.15.7",
     "vue-scrollto": "^2.20.0",
     "vue-slide-up-down": "^2.0.1",
-    "vuetify": "^2.5.5"
+    "vuetify": "^2.5.5",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.1",

@@ -47,7 +47,7 @@ export default {
   css: ['@/assets/css/common.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~plugins/vue-scrollto', '~plugins/hooper'],
+  plugins: ['~plugins/vue-scrollto', '~plugins/hooper', '~/plugins/persistedState.client.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
