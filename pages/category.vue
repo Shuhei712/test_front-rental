@@ -1,6 +1,6 @@
 <template>
   <section class="category">
-    <top-bar title="カテゴリから探す"></top-bar>
+    <top-bar title="カテゴリから探す" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner category__inner py-16">
       <div class="category__search mb-16">
         <v-form class="d-flex align-center">
@@ -84,6 +84,7 @@
 export default {
   data: () => ({
     keyword: '',
+    breadCrumbs: [],
     // categoryList: [
     //   {
     //     // online
@@ -436,9 +437,11 @@ export default {
   }),
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
+    this.setBreadCrumbs()
     await this.getCategoryList()
     this.$store.commit('loading/changeStatus', false)
   },
+  beforeDestroy() {},
   methods: {
     async getCategoryList() {
       const param = new URLSearchParams()
@@ -447,6 +450,11 @@ export default {
       const res = await this.$axios.$post('get_category_list_page.php', param)
       this.categoryLists = res.CategoryRootList
       // console.log(res)
+    },
+    setBreadCrumbs() {
+      this.$store.commit('breadCrumbs/deleteList')
+      this.$store.commit('breadCrumbs/addList', { name: 'カテゴリーから探す', path: '/category' })
+      this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
   },
 }

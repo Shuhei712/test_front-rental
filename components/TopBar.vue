@@ -1,7 +1,7 @@
 <template>
   <div class="top-bar">
     <div class="bar__inner container">
-      <bread-crumbs></bread-crumbs>
+      <bread-crumbs :bread-crumbs="breadCrumbs"></bread-crumbs>
       <h2 class="text-white letter-space-03em text-h5 bold my-5">
         {{ title }}
       </h2>
@@ -14,6 +14,10 @@ export default {
   props: {
     title: {
       type: String,
+      required: true,
+    },
+    breadCrumbs: {
+      type: Array,
       required: true,
     },
   },
