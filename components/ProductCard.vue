@@ -1,66 +1,67 @@
 <template>
-  <v-card class="product mt-8" elevation="0" :to="'/products/' + id + '?name=' + name">
-    <div class="categories--sp d-flex flex-wrap px-3 py-1 mb-4">
-      <div class="search-tag text-caption mr-2"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}</div>
-      <div class="search-tag text-caption mr-2"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}</div>
+  <v-card class="product mt-8 mt-sm-10 mt-lg-13" elevation="0" :to="'/products/' + id + '?name=' + name">
+    <div class="categories categories--sp d-flex flex-wrap px-3 py-1 mb-3">
+      <div class="search-tag d-flex text-caption mr-4"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}</div>
+      <div class="search-tag d-flex text-caption"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}</div>
     </div>
     <div class="product__info d-flex">
       <div class="info__img mr-3">
-        <img :src="image" :alt="name" />
+        <div class="img__inner">
+          <img :src="image" :alt="name" class="pa-1" />
+        </div>
       </div>
       <div class="info__details flex-grow-1 d-flex flex-column">
-        <div class="categories d-flex px-3 py-1">
-          <div class="search-tag text-body-2 mr-2"><v-icon class="mr-2">mdi-check</v-icon>{{ categoryName01 }}</div>
-          <div class="search-tag text-body-2 mr-2"><v-icon class="mr-2">mdi-check</v-icon>{{ categoryName02 }}</div>
+        <div class="categories categories--pc d-flex px-3 py-1">
+          <div class="search-tag d-flex text-body-2 mr-5"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}</div>
+          <div class="search-tag d-flex text-body-2"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}</div>
         </div>
-        <div class="name mt-2">
+        <div class="name mt-2 mt-md-5">
           <div class="name__maker text-caption text-sm-body-2">{{ maker }}</div>
-          <div class="name__product text-body-2 font-weight-medium text-sm-h6 letter-space-015em mt-2">
-            {{ name }} {{ typeNumber }}
+          <div class="name__product text-body-2 font-weight-medium text-sm-h6 letter-space-015em mt-1">
+            {{ name }} <span class="word-keep">{{ typeNumber }}</span>
           </div>
         </div>
         <v-spacer></v-spacer>
-        <div class="price d-flex align-center mb-2 text-body-2">
-          <span class="price__head text-body-2 px-3 py-1 text-no-wrap">レンタル価格</span>
-          <span class="price__day text-body-2 letter-space-015em px-3 py-1 text-no-wrap">1日/税別</span>
-          <span class="price__product text-h5 letter-space-015em px-3 py-1">{{ priceValue }}</span
-          >円
-          <v-btn class="price__more text-body-2 ml-5" color="primary" @click="openTariffModal(id, 1)">
-            <span class="price__class text-body-1 mr-2 font-weight-bold text-center">{{ tariffName }}</span>
-            2日目以降の料金
-          </v-btn>
-        </div>
-        <div class="price--md d-flex align-center flex-wrap mt-5 text-body-2">
-          <div class="mr-4">
-            <div class="price__head text-caption px-3 py-2 text-no-wrap text-center">レンタル価格</div>
-            <div class="price__day text-caption letter-space-015em px-3 py-2 text-center text-no-wrap">1日/税別</div>
+        <div class="price price--pc d-flex justify-space-between justify-sm-start flex-wrap mt-3">
+          <div class="d-md-flex align-center mr-2 mr-sm-4 text-caption text-md-body-2">
+            <div class="price__head pa-2 px-md-3 py-md-1 text-no-wrap text-center">レンタル価格</div>
+            <div class="price__day letter-space-015em pa-2 px-md-3 py-md-1 text-center text-no-wrap">1日/税別</div>
           </div>
-          <span class="price__product text-h5 letter-space-015em font-weight-medium">{{ priceValue }}</span>
-          円
-          <button class="price__more pa-2 ml-4" @click="openTariffModal(id, 1)">
-            <span class="price__class text-caption mb-1">{{ tariffName }}</span>
-            2日目以降<br />の料金
-          </button>
+            <div class="price__product d-flex align-center mr-3 mr-sm-5">
+              <div class="price__product-inner d-flex align-baseline">
+                <span class="price__val letter-space-015em font-weight-medium">{{ priceValue }}</span>
+                <span class="price__unit font-weight-light">{{ priceUnit }}</span>
+              </div>
+            </div>
+            <button class="price__more d-flex align-center px-md-3" @click="openTariffModal(id, 1)">
+              <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
+              <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
+            </button>
         </div>
       </div>
     </div>
-    <div class="price--sp d-flex justify-space-between align-center flex-wrap mt-5 text-body-2">
-      <div>
-        <div class="price__head text-caption px-3 py-2 text-no-wrap text-center">レンタル価格</div>
-        <div class="price__day text-caption letter-space-015em px-3 py-2 text-center text-no-wrap">1日/税別</div>
+    <div class="price price--sp d-flex justify-space-between justify-sm-start flex-wrap mt-5 mt-md-6 mt-lg-10">
+      <div class="d-md-flex align-center mr-2 mr-sm-4 mb-2 text-caption text-md-body-2">
+        <div class="price__head pa-2 px-md-3 py-md-1 text-no-wrap text-center">レンタル価格</div>
+        <div class="price__day letter-space-015em pa-2 px-md-3 py-md-1 text-center text-no-wrap">1日/税別</div>
       </div>
-      <span class="price__product text-h5 letter-space-015em font-weight-medium">{{ priceValue }}</span>
-      円
-      <button class="price__more pa-2 ml-4" @click="openTariffModal(id, 1)">
-        <span class="price__class text-caption mb-1">{{ tariffName }}</span>
-        2日目以降<br />の料金
-      </button>
+        <div class="price__product d-flex align-center mr-3 mr-sm-5 mb-2">
+          <div class="price__product-inner d-flex align-baseline">
+            <span class="price__val letter-space-015em font-weight-medium">{{ priceValue }}</span>
+            <span class="price__unit font-weight-light">{{ priceUnit }}</span>
+          </div>
+        </div>
+        <button class="price__more d-flex align-center mb-2 px-md-3" @click="openTariffModal(id, 1)">
+          <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
+          <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
+        </button>
     </div>
-    <div class="product__tags mt-2">
+    <div class="product__tags mt-3 mt-sm-6">
       <v-btn
         v-for="tag in tagLists"
         :key="tag.TagName"
-        class="product-tag px-3 py-1 mr-2 mt-2"
+        class="product-tag px-3 py-1 mr-2 mb-2"
+        color="cushion"
         elevation="0"
         tile
         small
@@ -68,7 +69,7 @@
         {{ tag.TagName }}
       </v-btn>
     </div>
-    <div class="product__descriptions text-caption text-sm-body-1 mt-4">
+    <div class="product__descriptions text-caption text-sm-body-1 mt-3 mt-md-2">
       {{ description }}
     </div>
   </v-card>
@@ -169,135 +170,146 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
+$bp_xs: 362px;
 
 .product {
   z-index: 10;
-}
 
-.product__main {
-  .info__img img {
-    border: 1px solid $line;
-    width: 185px;
-    height: 185px;
-    object-fit: contain;
+  .categories {
+    background-color: $cushion;
+  }
 
+  .search-tag {
     @include mq(sm) {
-      width: 100px;
-      height: 100px;
+      font-size: 10px !important;
     }
   }
 
-  .info__details {
-    .categories {
-      background-color: $cushion;
+  .info__img {
+    flex-shrink: 0;
+    width: 30%;
+    max-width: 185px;
+    min-width: 150px;
 
-      @include mq(md) {
-        display: none !important;
+    @include mq(sm) {
+      min-width: 100px;
+    }
+
+    .img__inner {
+      border: 1px solid $line;
+      width: 100%;
+      position: relative;
+      &::before {
+        content: '';
+        display: block;
+        width: 100%;
+        padding-top: 100%;
       }
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      top: 0;
+      left: 0;
+      position: absolute;
     }
   }
 
   .price {
-    @include mq(md) {
-      display: none !important;
-    }
-
     .price__head {
       background-color: $accent;
       color: #ffffff;
     }
+
     .price__day {
       background-color: $cushion;
     }
 
-    .price__more {
-      z-index: 100;
-    }
+    .price__product {
+      .price__product-inner {
+        font-size: 30px;
 
-    .price__class {
-      display: inline-block;
-      width: 25px;
-      height: 25px;
-      line-height: 25px;
-      border-radius: 50%;
-      background-color: #ffffff;
-      color: $primary;
-    }
-  }
+        @include mq(md) {
+          font-size: 23px;
+        }
+      }
 
-  .product-tag {
-    background-color: $cushion;
-    color: $primary !important;
-  }
-
-  // レスポンシブ用のクラス
-  .categories--sp {
-    background-color: $cushion;
-    display: none !important;
-
-    @include mq(md) {
-      display: flex !important;
-    }
-  }
-
-  .price--md,
-  .price--sp {
-    display: none !important;
-    .price__head {
-      background-color: $accent;
-      color: #ffffff;
-    }
-    .price__day {
-      background-color: $cushion;
+      .price__unit {
+        font-size: 55%;
+      }
     }
 
     .price__more {
-      min-width: 75px;
-      display: inline-block;
-      font-size: 11px;
-      line-height: 15px;
-      border-radius: 10px;
-      height: 100%;
       background-color: $primary;
+      border-radius: 5px;
+      box-shadow: 2px 2px 3px rgba(#000, 10%);
       color: #ffffff;
+      min-width: 75px;
+      padding: 5px;
 
-      span {
-        display: block;
-        margin: 0 auto;
+      @include mq(md) {
+        box-shadow: none;
         font-size: 11px;
-        line-height: 11px;
-        font-weight: bold;
-        width: 25px;
-        height: 25px;
-        line-height: 25px;
-        border-radius: 50%;
-        background-color: #ffffff;
-        color: $primary;
+        flex-direction: column;
+        justify-content: center;
+        width: 75px;
+      }
+      @media screen and (max-width: $bp_xs) {
+        flex-direction: row;
+        width: 100%;
       }
     }
 
     .price__class {
-      display: inline-block;
-      width: 25px;
-      height: 25px;
-      line-height: 25px;
-      border-radius: 50%;
       background-color: #ffffff;
+      border-radius: 50%;
       color: $primary;
+      display: inline-block;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 20px;
+      width: 20px;
+      height: 20px;
+
+      @include mq(md) {
+        font-size: 11px;
+      }
+      @media screen and (max-width: $bp_xs) {
+        margin-right: 8px;
+        margin-bottom: 0 !important;
+      }
     }
   }
 
-  .price--md {
+  .product-tag {
+    color: $primary !important;
+  }
+
+  // レスポンシブ用のクラス
+  .categories--pc {
+    @include mq(md) {
+      display: none !important;
+    }
+  }
+
+  .categories--sp {
+    display: none !important;
+
     @include mq(md) {
       display: flex !important;
     }
+  }
 
+  .price--pc {
     @include mq(sm) {
       display: none !important;
     }
   }
 
   .price--sp {
+    display: none !important;
+
     @include mq(sm) {
       display: flex !important;
     }
