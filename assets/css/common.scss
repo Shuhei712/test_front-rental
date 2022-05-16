@@ -15,6 +15,7 @@ $sns: #638bba;
 $sales: #af69aa;
 $twitter: #3b5998;
 $facebook: #3b5998;
+$lightGray: #9da5a4;
 
 // ブレイクポイント
 $breakpoints: (
@@ -56,6 +57,24 @@ $leading-loose: 2 !default;
   }
 }
 
+// スクロールバー設定
+@mixin scrollbar($width: 15px, $bg: $cushion, $thumb: $primary) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+  &::-webkit-scrollbar-track {
+    background: $bg;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $thumb;
+  }
+  // Firefoxのスクロールバー設定
+  @-moz-document url-prefix(){
+    scrollbar-width: thin; // 細さ(幅・高さ両方に適用)
+    scrollbar-color: $primary $bg; // つまみの色 軌道の色
+  }
+}
+
 body,
 html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique', sans-serif !important;
@@ -86,6 +105,12 @@ ul {
 
 .text-white {
   color: #ffffff !important;
+}
+.text-gray {
+  color: $headingText !important;
+}
+.text-light-gray {
+  color: $lightGray !important;
 }
 
 .bg-white {

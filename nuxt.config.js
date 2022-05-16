@@ -31,7 +31,7 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;700&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;500;700&display=swap',
       },
       {
         rel: 'stylesheet',
@@ -126,6 +126,7 @@ export default {
           sales: '#af69aa',
           twitter: '#00ACED',
           facebook: '#3B5998',
+          lightGray: '#9da5a4',
         },
       },
     },
