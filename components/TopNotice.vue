@@ -1,5 +1,5 @@
 <template>
-  <div class="top__notice text-body-1 mt-n1">
+  <div class="top__notice text-body-1">
     <div class="notice__inner d-flex">
       <div class="notice__pickup d-flex text-body-2 text-sm-body-1 pr-md-3 py-2">
         <div>

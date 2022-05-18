@@ -7,15 +7,14 @@
       rel="noopener noreferrer">
       <v-icon class="mb-2" color="#1A264B" small>mdi-login-variant</v-icon>株式会社タケナカ
     </a>
+    <top-hexagon></top-hexagon>
     <!-- <top-slider></top-slider> -->
     <v-container class="top__inner py-16">
       <v-row class="main__catch" no-gutters>
         <v-col cols="12">
           <h1 class="text-h5 letter-space-03em text-white no-wrap">映像/音響機材のレンタルサービス</h1>
           <h2 class="catch__font text-h2 zen-kaku-gothic bold letter-space-015em text-white lh-crop-15 py-14">
-            <span class="d-block">
-              必要<span class="catch__font--small">な</span>機材、
-            </span>
+            <span class="d-block"> 必要<span class="catch__font--small">な</span>機材、 </span>
             <span class="d-block">
               レンタル<span class="catch__font--small">で</span><span class="word-keep">揃います!</span>
             </span>
@@ -49,13 +48,16 @@
       <v-row class="main__menu width-50">
         <v-col cols="6">
           <v-btn color="#fff" block>
-            <img class="icon mr-1" src="/img/top/beginner-icon.png" /><span class="btn-text lh-crop-12">はじめての方へ</span>
+            <img class="icon mr-1" src="/img/top/beginner-icon.png" /><span class="btn-text lh-crop-12"
+              >はじめての方へ</span
+            >
             <v-icon color="primary">mdi-chevron-right </v-icon>
           </v-btn>
         </v-col>
         <v-col cols="6">
           <v-btn color="#fff" block>
-            <v-icon class="mr-1" color="primary">mdi-help-circle-outline</v-icon><span class="btn-text lh-crop-12">よくある質問</span>
+            <v-icon class="mr-1" color="primary">mdi-help-circle-outline</v-icon
+            ><span class="btn-text lh-crop-12">よくある質問</span>
             <v-icon color="primary">mdi-chevron-right </v-icon>
           </v-btn>
         </v-col>
@@ -79,9 +81,10 @@ export default {
 
 .top__main {
   position: relative;
+  z-index: 1;
   width: 100%;
   min-height: calc(920 / 1920 * 100vw);
-  background-image: url('/img/top/main.png');
+  background-image: url('/img/top/top.png');
   background-position: right;
   background-size: cover;
   padding-top: calc(100px + 32px);
