@@ -16,7 +16,6 @@
             <v-icon class="mr-2" small>mdi-check</v-icon>{{ productInfoList.CategoryTagID02 }}
           </div>
         </div>
-
         <div class="maker--sp text-body-2">{{ productInfoList.MakerName }}</div>
         <div class="name--sp text-subtitle-1 letter-space-015em font-weight-medium mt-2">
           {{ productInfoList.ProductName }} <span class="word-keep">{{ productInfoList.ProductTypeNumber }}</span>
@@ -82,9 +81,9 @@
                   :href="'/products?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
                   elevation="0"
                   tile
-                  small
-                  >{{ list.TagName }}</v-btn
-                >
+                  small>
+                  {{ list.TagName }}
+                </v-btn>
               </div>
               <!-- eslint-disable vue/no-v-html -->
               <div class="descripsion line-height-25em mt-5 text-body-2" v-html="productInfoList.Description"></div>
@@ -106,33 +105,37 @@
                 <a
                   v-scroll-to="{ el: '#product-info', offset: -200 }"
                   class="d-flex align-center text-gray hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="#878787"
-                    >mdi-chevron-down</v-icon
-                  >
+                  <v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="#878787">
+                    mdi-chevron-down
+                  </v-icon>
                 </a>
               </li>
               <li class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
                 <a
                   v-scroll-to="{ el: '#product-specification', offset: -200 }"
                   class="d-flex align-center text-gray hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="#878787"
-                    >mdi-chevron-down</v-icon
-                  >
+                  <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="#878787">
+                    mdi-chevron-down
+                  </v-icon>
                 </a>
               </li>
               <li v-if="productDocLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
-                <a v-scroll-to="{ el: '#product-document', offset: -200 }" class="d-flex align-center text-gray hover-opacity">
+                <a
+                  v-scroll-to="{ el: '#product-document', offset: -200 }"
+                  class="d-flex align-center text-gray hover-opacity">
                   <v-icon class="mr-2" color="primary">mdi-text-box-outline</v-icon>この機材の資料<v-icon
-                    color="#878787"
-                    >mdi-chevron-down</v-icon
-                  >
+                    color="#878787">
+                    mdi-chevron-down
+                  </v-icon>
                 </a>
               </li>
               <li v-if="productRefLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
-                <a v-scroll-to="{ el: '#product-related', offset: -200 }" class="d-flex align-center text-gray hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="#878787"
-                    >mdi-chevron-down</v-icon
-                  >
+                <a
+                  v-scroll-to="{ el: '#product-related', offset: -200 }"
+                  class="d-flex align-center text-gray hover-opacity">
+                  <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="#878787">
+                    mdi-chevron-down
+                  </v-icon>
                 </a>
               </li>
             </ul>
@@ -238,8 +241,8 @@
             color="footer"
             class="mr-4 px-2 mb-1"
             text>
-            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon
-            >{{ productInfoList.CategoryTagID01 }}に戻る
+            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon>
+            {{ productInfoList.CategoryTagID01 }}に戻る
           </v-btn>
           <v-btn
             :href="
@@ -251,8 +254,8 @@
             color="footer"
             class="px-2 mb-1"
             text>
-            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon
-            >{{ productInfoList.CategoryTagID02 }}に戻る
+            <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon>
+            {{ productInfoList.CategoryTagID02 }}に戻る
           </v-btn>
         </div>
       </div>
