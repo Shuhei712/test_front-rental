@@ -56,6 +56,7 @@
               <div class="sort__head d-flex align-center justify-center text-white text-caption text-sm-body-2 text-lg-body-1 px-5 py-1">発売日</div>
               <v-btn-toggle v-model="orderRelease" class="d-flex align-center justify-center pa-2 py-lg-0 px-lg-5" dense tile group @change="changeOrderRelease()">
                 <v-btn text small :value="$config.ORDER_NEW" class="text-md-body-2 ma-0" color="headingText">新着順</v-btn>
+                リリース日
                 <v-divider class="sort__line mx-2" vertical></v-divider>
                 <v-btn text small :value="$config.ORDER_OLD" class="text-md-body-2 ma-0" color="headingText">古い順</v-btn>
               </v-btn-toggle>
