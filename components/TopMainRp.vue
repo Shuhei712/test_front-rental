@@ -1,5 +1,6 @@
 <template>
   <section class="top__main pb-15">
+    <top-hexagon-rp></top-hexagon-rp>
     <v-container class="top__inner pa-0">
       <v-row class="main__catch" no-gutters>
         <v-col cols="12" class="mt-sm-5">
