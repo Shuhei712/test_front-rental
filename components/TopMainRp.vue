@@ -95,7 +95,7 @@ export default {
   background-position: 25% center;
   background-size: cover;
   padding-top: calc(100px + 32px);
-  overflow-x: hidden;
+  overflow: hidden;
   &::before {
     content: '';
     display: block;
