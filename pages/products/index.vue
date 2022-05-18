@@ -33,16 +33,25 @@
             </div>
             <div class="condition__foot mt-1">
               <ul class="condition__tags d-flex">
-                <li v-if="isCategoryName && !conditionalSearchFlg" class="a search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
+                <li
+                  v-if="isCategoryName && !conditionalSearchFlg"
+                  class="a search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
                   <v-icon class="mr-2" small>mdi-check</v-icon>{{ $route.query.categoryName }}
                 </li>
-                <li v-if="isTagName && !conditionalSearchFlg" class="b search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
+                <li
+                  v-if="isTagName && !conditionalSearchFlg"
+                  class="b search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
                   <v-icon class="mr-2" small>mdi-check</v-icon>{{ $route.query.tagName }}
                 </li>
-                <li v-if="isKeyword && !conditionalSearchFlg" class="search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
+                <li
+                  v-if="isKeyword && !conditionalSearchFlg"
+                  class="search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
                   <v-icon class="mr-2" small>mdi-check</v-icon>{{ $route.query.keyword }}
                 </li>
-                <li v-for="(condition, index) in presentConditions" :key="index" class="search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
+                <li
+                  v-for="(condition, index) in presentConditions"
+                  :key="index"
+                  class="search-tag d-flex text-caption text-md-body-2 mr-4 mr-lg-5">
                   <v-icon class="mr-2" small>mdi-check</v-icon>{{ condition }}
                 </li>
               </ul>
@@ -53,20 +62,45 @@
         <div class="product__sort d-flex align-center flex-column-reverse flex-lg-row mt-5 mt-lg-4">
           <div class="sort__inner d-flex justify-space-between">
             <div class="sort__release d-flex flex-column flex-lg-row">
-              <div class="sort__head d-flex align-center justify-center text-white text-caption text-sm-body-2 text-lg-body-1 px-5 py-1">発売日</div>
-              <v-btn-toggle v-model="orderRelease" class="d-flex align-center justify-center pa-2 py-lg-0 px-lg-5" dense tile group @change="changeOrderRelease()">
-                <v-btn text small :value="$config.ORDER_NEW" class="text-md-body-2 ma-0" color="headingText">新着順</v-btn>
+              <div
+                class="sort__head d-flex align-center justify-center text-white text-caption text-sm-body-2 text-lg-body-1 px-5 py-1">
                 リリース日
+              </div>
+              <v-btn-toggle
+                v-model="orderRelease"
+                class="d-flex align-center justify-center pa-2 py-lg-0 px-lg-5"
+                dense
+                tile
+                group
+                @change="changeOrderRelease()">
+                <v-btn text small :value="$config.ORDER_NEW" class="text-md-body-2 ma-0" color="headingText">
+                  新着順
+                </v-btn>
                 <v-divider class="sort__line mx-2" vertical></v-divider>
-                <v-btn text small :value="$config.ORDER_OLD" class="text-md-body-2 ma-0" color="headingText">古い順</v-btn>
+                <v-btn text small :value="$config.ORDER_OLD" class="text-md-body-2 ma-0" color="headingText">
+                  古い順
+                </v-btn>
               </v-btn-toggle>
             </div>
             <div class="sort__price d-flex flex-column flex-lg-row ml-lg-3">
-              <div class="sort__head d-flex align-center justify-center text-white text-caption text-sm-body-2 text-lg-body-1 px-5 py-1">価格</div>
-              <v-btn-toggle v-model="orderPrice" class="d-flex align-center justify-center pa-2 py-lg-0 px-lg-5" dense tile group @change="changeOrderPrice()">
-                <v-btn text small :value="$config.ORDER_ASC" class="text-md-body-2 ma-0" color="headingText">低い順</v-btn>
+              <div
+                class="sort__head d-flex align-center justify-center text-white text-caption text-sm-body-2 text-lg-body-1 px-5 py-1">
+                価格
+              </div>
+              <v-btn-toggle
+                v-model="orderPrice"
+                class="d-flex align-center justify-center pa-2 py-lg-0 px-lg-5"
+                dense
+                tile
+                group
+                @change="changeOrderPrice()">
+                <v-btn text small :value="$config.ORDER_ASC" class="text-md-body-2 ma-0" color="headingText">
+                  低い順
+                </v-btn>
                 <v-divider class="sort__line mx-2" vertical></v-divider>
-                <v-btn text small :value="$config.ORDER_DESC" class="text-md-body-2 ma-0" color="headingText">高い順</v-btn>
+                <v-btn text small :value="$config.ORDER_DESC" class="text-md-body-2 ma-0" color="headingText">
+                  高い順
+                </v-btn>
               </v-btn-toggle>
             </div>
           </div>
@@ -525,7 +559,6 @@ export default {
   .product__sort {
     .sort__release,
     .sort__price {
-
       .release__head,
       .price__head {
         background-color: $primary;
