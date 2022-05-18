@@ -216,6 +216,7 @@
                           :path="product.ProductImageURL"
                           :maker="product.MakerName"
                           :name="product.ProductName"
+                          :model="product.ProductTypeNumber"
                           :link="'/products/' + product.ProductID + '?name=' + product.ProductName">
                         </item-card>
                       </v-col>
