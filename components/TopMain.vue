@@ -7,6 +7,7 @@
       rel="noopener noreferrer">
       <v-icon class="mb-2" color="#1A264B" small>mdi-login-variant</v-icon>株式会社タケナカ
     </a>
+    <top-hexagon></top-hexagon>
     <!-- <top-slider></top-slider> -->
     <v-container class="top__inner py-16">
       <v-row class="main__catch" no-gutters>
