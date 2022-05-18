@@ -19,7 +19,7 @@
         </template>
         <v-list>
           <v-list-item-group>
-            <v-list-item v-for="(list, index) in guidanceLists" :key="index">
+            <v-list-item v-for="(list, index) in guidanceLists" :key="index" :href="list.link" target="_blank">
               <v-list-item-content>
                 <v-list-item-title class="text-body-2 text-xl-body-1">{{ list.title }}</v-list-item-title>
               </v-list-item-content>
@@ -27,17 +27,23 @@
           </v-list-item-group>
         </v-list>
       </v-menu>
-      <v-list flat>
-        <v-list-item-group class="d-flex align-center">
-          <v-list-item v-for="(list, index) in menuLists" :key="index" :to="list.link">
-            <v-list-item-icon class="mr-1">
-              <v-icon color="primary">{{ list.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title class="text-body-2 text-xl-body-1">{{ list.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
+      <v-list class="d-flex align-center" flat>
+        <v-list-item to="/category">
+          <v-list-item-icon class="mr-1">
+            <v-icon color="primary">mdi-shape-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="text-body-2 text-xl-body-1">カテゴリからさがす</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item href="https://www.takenaka-co.co.jp/contact/" target="_blank">
+          <v-list-item-icon class="mr-1">
+            <v-icon color="primary">mdi-email-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="text-body-2 text-xl-body-1">お問い合わせ</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </nav>
     <v-form class="header__form d-flex align-center ml-2">
@@ -74,25 +80,26 @@
             </v-list-item-icon>
             <v-list-item-title class="text-body-2">レンタルご利用案内</v-list-item-title>
           </template>
-          <v-list-item v-for="(list, index) in guidanceLists" :key="index" link>
+          <v-list-item v-for="(list, index) in guidanceLists" :key="index" :href="list.link" target="_blank">
             <v-list-item-title class="text-body-2">{{ list.title }}</v-list-item-title>
             <v-list-item-icon>
               <v-icon>mdi-chevron-right</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list-group>
-        <v-list-item v-for="(list, index) in menuLists" :key="index" :to="list.link" class="px-0" link>
-          <v-list-item>
-            <v-list-item-icon
-              ><v-icon>{{ list.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title class="text-body-2">
-              {{ list.title }}
-            </v-list-item-title>
-            <v-list-item-icon>
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-list-item-icon>
-          </v-list-item>
+        <v-list-item class="px-0" to="/category">
+          <v-list-item-icon><v-icon>mdi-shape-outline</v-icon> </v-list-item-icon>
+          <v-list-item-title class="text-body-2">カテゴリーからさがす </v-list-item-title>
+          <v-list-item-icon>
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+        <v-list-item class="px-0" href="https://www.takenaka-co.co.jp/contact/" target="_blank">
+          <v-list-item-icon><v-icon>mdi-email-outline</v-icon> </v-list-item-icon>
+          <v-list-item-title class="text-body-2">お問い合わせ </v-list-item-title>
+          <v-list-item-icon>
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-list-item-icon>
         </v-list-item>
       </v-list>
       <v-row class="menu__search mt-8" justify="center" no-gutters>
@@ -134,13 +141,16 @@ export default {
       keyword: '',
       menuFlg: false,
       guidanceLists: [
-        { title: 'ご利用方法', link: '/' },
-        { title: 'はじめての方へ', link: '/' },
-        { title: 'よくある質問', link: '/' },
-        { title: '用語集', link: '/' },
-        { title: 'スクリーンサイズ表', link: '/' },
-        { title: 'レンタル申込書', link: '/' },
-        { title: '会社概要', link: '/' },
+        { title: 'ご利用方法', link: 'https://takenaka-rental.com/SpecialPage/PageView/14#rental-flow' },
+        { title: 'はじめての方へ', link: 'https://takenaka-rental.com/SpecialPage/PageView/14#entry' },
+        { title: 'よくある質問', link: 'https://takenaka-rental.com/SpecialPage/PageView/11' },
+        { title: '用語集', link: 'https://www.takenaka-co.co.jp/01rental/rental_term/rental_term.html' },
+        { title: 'スクリーンサイズ表', link: 'https://takenaka-rental.com/screen/index' },
+        {
+          title: 'レンタル申込書',
+          link: 'https://takenaka-rental.com/Resources/Top%20menu/rental%20order%20sheet_20181217.pdf',
+        },
+        { title: '会社概要', link: 'https://www.takenaka-co.co.jp/company/profile.html' },
       ],
       menuLists: [
         {
@@ -148,8 +158,8 @@ export default {
           link: '/category',
           icon: 'mdi-shape-outline',
         },
-        { title: '閲覧履歴', link: '/history', icon: 'mdi-history' },
-        { title: 'お問い合わせ', link: '/inquiry', icon: 'mdi-email-outline' },
+        // { title: '閲覧履歴', link: '/history', icon: 'mdi-history' },
+        { title: 'お問い合わせ', link: 'https://www.takenaka-co.co.jp/contact/', icon: 'mdi-email-outline' },
       ],
     }
   },
