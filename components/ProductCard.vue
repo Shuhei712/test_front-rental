@@ -32,6 +32,7 @@
                 <span class="price__val letter-space-015em font-weight-medium">{{ priceValue }}</span>
                 <span class="price__unit font-weight-light">{{ priceUnit }}</span>
               </div>
+              <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
             </div>
             <button class="price__more d-flex align-center px-md-3" @click="openTariffModal(id, 1)">
               <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
@@ -50,6 +51,7 @@
             <span class="price__val letter-space-015em font-weight-medium">{{ priceValue }}</span>
             <span class="price__unit font-weight-light">{{ priceUnit }}</span>
           </div>
+          <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
         </div>
         <button class="price__more d-flex align-center mb-2 px-md-3" @click="openTariffModal(id, 1)">
           <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
@@ -145,6 +147,20 @@ export default {
     return {
       productTariffList: [],
     }
+  },
+  computed: {
+    getPrice() {
+      switch (this.priceType) {
+        case 0:
+          return this.priceValue
+        case 1:
+          return this.priceValue
+        case 9:
+          return 'ASK'
+        default:
+          return 'ASK'
+      }
+    },
   },
   methods: {
     async getProductTariff(productID, tariffID) {
