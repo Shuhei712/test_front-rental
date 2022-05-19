@@ -104,11 +104,9 @@ export default {
   computed: {
     pickUpItem() {
       const itemLists = this.pickUpLists.filter((ele) => ele.PickupType === 0)
-      console.log(itemLists)
       const max = itemLists.length
       const min = 0
       const pickUpNum = Math.floor(Math.random() * (max - min)) + min
-      console.log(pickUpNum)
       return itemLists[pickUpNum]
     },
   },
