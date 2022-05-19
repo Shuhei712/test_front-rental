@@ -1,8 +1,12 @@
 <template>
   <v-card class="product mt-8 mt-sm-10 mt-lg-13" elevation="0" :to="'/products/' + id + '?name=' + name">
     <div class="categories categories--sp d-flex flex-wrap px-3 py-1 mb-3">
-      <div class="search-tag d-flex text-caption mr-4"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}</div>
-      <div class="search-tag d-flex text-caption"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}</div>
+      <div class="search-tag d-flex text-caption mr-4">
+        <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}
+      </div>
+      <div class="search-tag d-flex text-caption">
+        <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}
+      </div>
     </div>
     <div class="product__info d-flex">
       <div class="info__img mr-3">
@@ -12,8 +16,12 @@
       </div>
       <div class="info__details flex-grow-1 d-flex flex-column">
         <div class="categories categories--pc d-flex px-3 py-1">
-          <div class="search-tag d-flex text-body-2 mr-5"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}</div>
-          <div class="search-tag d-flex text-body-2"><v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}</div>
+          <div class="search-tag d-flex text-body-2 mr-5">
+            <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}
+          </div>
+          <div class="search-tag d-flex text-body-2">
+            <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}
+          </div>
         </div>
         <div class="name mt-2 mt-md-5">
           <div class="name__maker text-caption text-sm-body-2">{{ maker }}</div>
@@ -27,17 +35,16 @@
             <div class="price__head pa-2 px-md-3 py-md-1 text-no-wrap text-center">レンタル価格</div>
             <div class="price__day letter-space-015em pa-2 px-md-3 py-md-1 text-center text-no-wrap">1日/税別</div>
           </div>
-            <div class="price__product d-flex align-center mr-3 mr-sm-5">
-              <div class="price__product-inner d-flex align-baseline">
-                <span class="price__val letter-space-015em font-weight-medium">{{ priceValue }}</span>
-                <span class="price__unit font-weight-light">{{ priceUnit }}</span>
-              </div>
+          <div class="price__product d-flex align-center mr-3 mr-sm-5">
+            <div class="price__product-inner d-flex align-baseline">
               <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
+              <span class="price__unit font-weight-light">{{ priceUnit }}</span>
             </div>
-            <button class="price__more d-flex align-center px-md-3" @click="openTariffModal(id, 1)">
-              <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
-              <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
-            </button>
+          </div>
+          <button class="price__more d-flex align-center px-md-3" @click="openTariffModal(id, 1)">
+            <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
+            <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
+          </button>
         </div>
       </div>
     </div>
@@ -46,17 +53,16 @@
         <div class="price__head pa-2 px-md-3 py-md-1 text-no-wrap text-center">レンタル価格</div>
         <div class="price__day letter-space-015em pa-2 px-md-3 py-md-1 text-center text-no-wrap">1日/税別</div>
       </div>
-        <div class="price__product d-flex align-center mr-3 mr-sm-5 mb-2">
-          <div class="price__product-inner d-flex align-baseline">
-            <span class="price__val letter-space-015em font-weight-medium">{{ priceValue }}</span>
-            <span class="price__unit font-weight-light">{{ priceUnit }}</span>
-          </div>
+      <div class="price__product d-flex align-center mr-3 mr-sm-5 mb-2">
+        <div class="price__product-inner d-flex align-baseline">
           <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
+          <span class="price__unit font-weight-light">{{ priceUnit }}</span>
         </div>
-        <button class="price__more d-flex align-center mb-2 px-md-3" @click="openTariffModal(id, 1)">
-          <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
-          <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
-        </button>
+      </div>
+      <button class="price__more d-flex align-center mb-2 px-md-3" @click="openTariffModal(id, 1)">
+        <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
+        <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
+      </button>
     </div>
     <div class="product__tags mt-3 mt-sm-6">
       <v-btn
