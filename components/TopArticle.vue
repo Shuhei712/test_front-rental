@@ -3,7 +3,8 @@
     <div class="article__heading d-flex align-center">
       <v-icon class="mr-3 mr-md-5" color="accent">mdi-creation</v-icon>
       <h3 class="font-heading text-h6 text-md-h5 text-gray font-weight-regular letter-space-02em mr-4 mr-md-9">
-        特設ページ<span class="font-heading text-body-2 text-md-h6 font-weight-regular letter-space-02em word-keep">ほか</span>
+        特設ページ
+        <span class="font-heading text-body-2 text-md-h6 font-weight-regular letter-space-02em word-keep"> ほか </span>
       </h3>
       <v-divider color="line" class="heading__line"></v-divider>
       <v-btn class="ml-4 ml-md-5" to="/article" color="headingText" outlined elevation="2" small>
@@ -12,7 +13,9 @@
     </div>
     <v-container class="article__content d-flex flex-column pt-6 pb-16 px-0">
       <div class="article__list order-1 order-sm-0">
-        <hooper class="hooper" :settings="hooperSettings">
+        <div class="slide__prev" @click="slidePrev()"></div>
+        <div class="slide__next" @click="slideNext()"></div>
+        <hooper ref="article" class="hooper" :settings="hooperSettings">
           <slide v-for="(list, index) in matchedSpecialPageLists" :key="index">
             <article-card
               :color="toPageClassColorFrom(list.PageClassID)"
@@ -63,6 +66,7 @@ export default {
         vertical: true,
         autoPlay: true,
         playSpeed: 3000,
+        infiniteScroll: true,
         breakpoints: {
           600: {
             itemsToShow: 3,
@@ -92,6 +96,12 @@ export default {
       const result = this.pageClassLists.find((list) => list.PageClassID === pageClassID)
       return result.PageClassColor
     },
+    slidePrev() {
+      this.$refs.article.slidePrev()
+    },
+    slideNext() {
+      this.$refs.article.slideNext()
+    },
   },
 }
 </script>
@@ -117,6 +127,50 @@ export default {
     @include mq(sm) {
       width: 100% !important;
     }
+
+    .article__list {
+      position: relative;
+    }
+  }
+
+  .slide__prev {
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    transform: translate(-50%, 0) rotate(-45deg);
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid $primary;
+    border-left: 2px solid $primary;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    @include mq(sm) {
+      display: none;
+    }
+  }
+
+  .slide__next {
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    transform: translate(-50%, 0) rotate(45deg);
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid $primary;
+    border-right: 2px solid $primary;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    @include mq(sm) {
+      display: none;
+    }
+  }
+
+  .slide__prev:hover {
+    transform: scale(1.1) translate(-50%, 0) rotate(-45deg);
+  }
+
+  .slide__next:hover {
+    transform: scale(1.1) translate(-50%, 0) rotate(45deg);
   }
 
   .search {
@@ -216,11 +270,15 @@ export default {
 }
 
 .hooper-slide {
-  height: auto;
-  padding: 0 5px;
+  height: auto !important;
+  padding: 0 5px !important;
   @include mq(sm) {
     max-height: 70px !important;
-    margin: 5px 0;
+    margin: 5px 0 !important;
   }
+}
+
+.is-clone {
+  height: auto !important;
 }
 </style>
