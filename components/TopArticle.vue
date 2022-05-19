@@ -12,7 +12,9 @@
     </div>
     <v-container class="article__content d-flex flex-column pt-6 pb-16 px-0">
       <div class="article__list order-1 order-sm-0">
-        <hooper class="hooper" :settings="hooperSettings">
+        <div class="slide__prev" @click="slidePrev()"></div>
+        <div class="slide__next" @click="slideNext()"></div>
+        <hooper ref="article" class="hooper" :settings="hooperSettings">
           <slide v-for="(list, index) in matchedSpecialPageLists" :key="index">
             <article-card
               :color="toPageClassColorFrom(list.PageClassID)"
@@ -93,6 +95,12 @@ export default {
       const result = this.pageClassLists.find((list) => list.PageClassID === pageClassID)
       return result.PageClassColor
     },
+    slidePrev() {
+      this.$refs.article.slidePrev()
+    },
+    slideNext() {
+      this.$refs.article.slideNext()
+    },
   },
 }
 </script>
@@ -118,6 +126,50 @@ export default {
     @include mq(sm) {
       width: 100% !important;
     }
+
+    .article__list {
+      position: relative;
+    }
+  }
+
+  .slide__prev {
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    transform: translate(-50%, 0) rotate(-45deg);
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid $primary;
+    border-left: 2px solid $primary;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    @include mq(sm) {
+      display: none;
+    }
+  }
+
+  .slide__next {
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    transform: translate(-50%, 0) rotate(45deg);
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid $primary;
+    border-right: 2px solid $primary;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    @include mq(sm) {
+      display: none;
+    }
+  }
+
+  .slide__prev:hover {
+    transform: scale(1.1) translate(-50%, 0) rotate(-45deg);
+  }
+
+  .slide__next:hover {
+    transform: scale(1.1) translate(-50%, 0) rotate(45deg);
   }
 
   .search {
