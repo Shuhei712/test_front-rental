@@ -252,3 +252,17 @@ ul {
     }
   }
 }
+
+// hooper.cssのカスタマイズ
+.hooper-slide.is-clone {
+  padding: 0 5px;
+  height: auto;
+}
+
+.hooper {
+  height: 100% ;
+}
+
+.hooper.is-vertical .hooper-track {
+  height: 100%;
+}

@@ -217,11 +217,15 @@ export default {
 }
 
 .hooper-slide {
-  height: auto;
-  padding: 0 5px;
+  height: auto !important;
+  padding: 0 5px !important;
   @include mq(sm) {
     max-height: 70px !important;
-    margin: 5px 0;
+    margin: 5px 0 !important;
   }
+}
+
+.is-clone {
+  height: auto !important;
 }
 </style>
