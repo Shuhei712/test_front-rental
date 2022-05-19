@@ -132,7 +132,8 @@ export default {
     },
     tagLists: {
       type: Array,
-      required: true,
+      default: () => [],
+      required: false,
     },
     description: {
       type: String,
