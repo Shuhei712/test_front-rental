@@ -1,7 +1,7 @@
 <template>
   <v-card class="article rounded" :color="color" :href="link" link target="_blank">
     <div class="d-flex flex-sm-column">
-      <div class="article__img order-1 order-sm-0"><img :src="path" /></div>
+      <div class="article__img order-1 order-sm-0"><img :src="path" :alt="title" /></div>
       <div class="article__title order-0 order-sm-1 flex-grow-1">
         <div class="text-body-2 pa-3 text-white">
           <span class="tag rounded-pill px-5 text-caption text-md-body-2 mb-2 mb-sm-3">
