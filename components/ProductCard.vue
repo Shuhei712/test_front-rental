@@ -127,7 +127,8 @@ export default {
     },
     tariffName: {
       type: String,
-      required: true,
+      default: '',
+      required: false,
     },
     tagLists: {
       type: Array,
