@@ -63,6 +63,7 @@ export default {
         vertical: true,
         autoPlay: true,
         playSpeed: 3000,
+        infiniteScroll: true,
         breakpoints: {
           600: {
             itemsToShow: 3,
