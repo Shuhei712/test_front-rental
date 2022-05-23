@@ -38,6 +38,12 @@ export default {
 
   @include mq(sm) {
     background-image: url('https://rental-resource.takenaka-co.co.jp/catalog-img/top_bar/sp/main.png');
+  .bar__inner {
+    width: 100%;
+    max-width: 1200px !important;
+    @include mq(sm) {
+      width: 100% !important;
+    }
   }
 }
 </style>
