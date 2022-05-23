@@ -28,7 +28,9 @@
           <ul
             class="d-flex flex-wrap justify-start justify-lg-center pl-4 pl-sm-5 pl-lg-7 text-body-2 text-lg-subtitle-1">
             <li v-for="root in categoryLists" :key="root.CategoryName" class="mr-4 mr-sm-5 mr-lg-7 mb-5">
-              <a v-scroll-to="{ el: '#category-id_' + root.CategoryID, offset: -130 }" class="d-flex align-center text-gray">
+              <a
+                v-scroll-to="{ el: '#category-id_' + root.CategoryID, offset: -130 }"
+                class="d-flex align-center text-gray">
                 <v-icon class="mr-2">{{ root.IconImageURL }}</v-icon>
                 {{ root.CategoryName }}<v-icon color="#878787">mdi-chevron-down</v-icon>
               </a>
@@ -545,7 +547,6 @@ $other-bg: #563a2e;
 .cat-group {
   overflow-x: hidden;
   &__ttl {
-
     &-icon {
       display: inline-block;
       font-size: 3rem;
