@@ -1,12 +1,5 @@
 <template>
   <section class="top__main">
-    <a
-      class="top__corporate-link d-flex align-center letter-space-03em text-caption hover-opacity mt-6 mt-xl-10 mr-2 mr-xl-5"
-      href="https://www.takenaka-co.co.jp/"
-      target="_blank"
-      rel="noopener noreferrer">
-      <v-icon class="mb-2" color="#1A264B" small>mdi-login-variant</v-icon>株式会社タケナカ
-    </a>
     <top-hexagon></top-hexagon>
     <!-- <top-slider></top-slider> -->
     <v-container class="top__inner py-16">
@@ -103,18 +96,6 @@ export default {
 .main__menu {
   .btn-text {
     color: $headingText;
-  }
-}
-
-.top__corporate-link {
-  position: absolute;
-  top: 0;
-  right: 0rem;
-  writing-mode: vertical-rl;
-  text-orientation: sideways;
-  color: #1a264b !important;
-  .v-icon {
-    writing-mode: horizontal-tb;
   }
 }
 </style>
