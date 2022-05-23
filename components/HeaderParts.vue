@@ -46,7 +46,7 @@
         </v-list-item>
       </v-list>
     </nav>
-    <v-form class="header__form d-flex align-center ml-2">
+    <v-form class="header__form d-flex align-center ml-2" @submit.prevent>
       <v-text-field
         v-model="keyword"
         color="primary"

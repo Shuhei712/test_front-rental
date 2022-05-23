@@ -3,7 +3,7 @@
     <top-bar title="カテゴリから探す" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner category__inner py-16">
       <div class="category__search mb-16">
-        <v-form class="d-flex align-center">
+        <v-form class="d-flex align-center" @submit.prevent>
           <v-text-field
             v-model="keyword"
             color="primary"
