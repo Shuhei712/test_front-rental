@@ -1,6 +1,6 @@
 <template>
   <div class="bread-crumbs my-1">
-    <ul class="bread-crumbs__items d-flex align-center">
+    <ul class="bread-crumbs__items d-flex align-center flex-wrap">
       <li class="bread-crumbs__item">
         <a href="/"><v-icon color="#ffffff" dense>mdi-home</v-icon></a>
         <v-icon color="#FCB251">mdi-chevron-right</v-icon>
