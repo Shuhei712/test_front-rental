@@ -20,7 +20,8 @@
                     class="main-menu__text d-flex justify-space-between text-body-2 text-gray py-4 py-lg-2 px-2"
                     :class="{ active: subMenuFlg }"
                     :href="root.ActionURL"
-                    @click="toggleSubMenu()">
+                    v-on:mouseover="toggleSubMenu()"
+                    v-on:mouseleave="onClickOutside">
                     <span class="d-flex align-center">
                       <v-icon class="mr-1">{{ root.IconImageURL }}</v-icon>
                       {{ root.MenuTitle }}
@@ -41,7 +42,12 @@
                       <v-icon>mdi-chevron-right</v-icon>
                     </span>
                   </a>
-                  <ul v-if="root.SubMenuCnt != 0" class="sub-menu mt-lg-3 mt-xl-5" :class="{ show: subMenuFlg }">
+                  <ul
+                    v-if="root.SubMenuCnt != 0"
+                    class="sub-menu mt-lg-3 mt-xl-5"
+                    :class="{ show: subMenuFlg }"
+                    v-on:mouseover="toggleSubMenu()"
+                    v-on:mouseleave="onClickOutside">
                     <li v-for="child in root.SubMenuList" :key="child.MenuTitle" class="px-7 my-2">
                       <a class="sub-menu__text d-flex align-center text-body-2 text-gray pa-2" :href="root.ActionURL">
                         {{ child.MenuTitle }}
@@ -217,7 +223,7 @@ export default {
       this.menuFlg = !this.menuFlg
     },
     toggleSubMenu() {
-      this.subMenuFlg = !this.subMenuFlg
+      this.subMenuFlg = true
     },
     toggleSearchWindow() {
       this.searchWindowFlg = !this.searchWindowFlg
