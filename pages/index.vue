@@ -1,11 +1,19 @@
 <template>
   <div v-if="!$fetchState.pending && !$fetchState.error" id="top" class="top">
     <div class="top__share top__share--fixed">
-      <v-btn class="share__twitter text-white text-subtitle-2 mr-2" color="twitter">
+      <v-btn
+        class="share__twitter text-white text-subtitle-2 mr-2"
+        color="twitter"
+        href="https://twitter.com/TakenakaCoLtd"
+        target="_blank">
         <div class="btn-shadow"></div>
         <v-icon class="mr-2 rotate-90">mdi-twitter</v-icon>Tweet
       </v-btn>
-      <v-btn class="share__twitter text-white text-subtitle-2 mr-2" color="facebook">
+      <v-btn
+        class="share__twitter text-white text-subtitle-2 mr-2"
+        color="facebook"
+        href="https://www.facebook.com/TAKENAKACoLtd"
+        target="_blank">
         <v-icon class="mr-2 rotate-90">mdi-facebook</v-icon>Share
       </v-btn>
     </div>
@@ -126,7 +134,7 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_menu_list.php', param)
       // console.log(res)
-      return res
+      return res.MenuRootList
     },
     async getCategoryList() {
       const param = new URLSearchParams()

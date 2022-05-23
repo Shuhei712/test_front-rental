@@ -191,9 +191,12 @@ ul {
   background: rgba(0, 0, 0, 0) linear-gradient(transparent 60%, rgba($accent, 0.3) 0%) repeat scroll 0 0 !important;
 }
 
-.hover-opacity:hover {
-  opacity: 0.75 !important;
+.hover-opacity {
   transition: opacity 0.4s ease;
+
+  &:hover {
+    opacity: 0.75 !important;
+  }
 }
 
 .rotate-90 {

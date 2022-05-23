@@ -94,7 +94,7 @@ export default {
   background-image: url('/img/sp/top/main.jpg');
   background-position: 25% center;
   background-size: cover;
-  padding-top: calc(100px + 32px);
+  padding-top: calc(5px + 60px + 32px);
   overflow: hidden;
   &::before {
     content: '';
