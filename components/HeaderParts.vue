@@ -54,7 +54,8 @@
         outlined
         dense
         prepend-inner-icon="mdi-magnify"
-        hide-details="auto"></v-text-field>
+        hide-details="auto"
+        @keyup.enter="searchKeyword"></v-text-field>
       <v-btn color="primary" class="ml-2 text-body-2 text-white" :href="'/products?type=3&keyword=' + keyword">
         <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
       </v-btn>
@@ -112,7 +113,8 @@
             outlined
             dense
             prepend-inner-icon="mdi-magnify"
-            hide-details="auto"></v-text-field>
+            hide-details="auto"
+            @keyup.enter="searchKeyword"></v-text-field>
         </v-col>
         <v-col cols="4">
           <v-btn color="primary" class="text-body-2 text-white" :href="'/products?type=3&keyword=' + keyword" block>
@@ -166,6 +168,9 @@ export default {
   methods: {
     toggleMenu() {
       this.menuFlg = !this.menuFlg
+    },
+    searchKeyword() {
+      window.location.href = '/products?type=3&keyword=' + this.keyword
     },
   },
 }

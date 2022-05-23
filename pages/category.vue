@@ -11,7 +11,8 @@
             outlined
             dense
             prepend-inner-icon="mdi-magnify"
-            hide-details="auto"></v-text-field>
+            hide-details="auto"
+            @keyup.enter="searchKeyword"></v-text-field>
           <v-btn color="primary" class="ml-2 ml-md-5" :href="'/products?type=3&keyword=' + keyword">
             <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索
           </v-btn>
@@ -455,6 +456,9 @@ export default {
       this.$store.commit('breadCrumbs/deleteList')
       this.$store.commit('breadCrumbs/addList', { name: 'カテゴリーから探す', path: '/category' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
+    },
+    searchKeyword() {
+      window.location.href = '/products?type=3&keyword=' + this.keyword
     },
   },
 }
