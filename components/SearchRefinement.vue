@@ -13,7 +13,8 @@
             @click="toggleFlg()">
             <v-icon color="primary" large>mdi-chevron-left</v-icon>
           </v-btn>
-          <v-card-title class="refinement__title zen-kaku-gothic d-flex justify-center text-body-2 text-sm-subtitle-1 text-lg-h6 font-weight-medium text-gray px-2 py-0">
+          <v-card-title
+            class="refinement__title zen-kaku-gothic d-flex justify-center text-body-2 text-sm-subtitle-1 text-lg-h6 font-weight-medium text-gray px-2 py-0">
             検索条件を変更して<span class="word-keep">絞り込む</span>
           </v-card-title>
           <v-btn class="dialog-close" fab small color="#ffffff" elevation="0" @click="closeDialog()">
@@ -130,7 +131,14 @@
               </v-btn>
             </v-col>
             <v-col cols="10" sm="5" class="mb-3 mb-md-5 mx-sm-5">
-              <v-btn v-if="!backBtnFlg" class="text-light-gray" color="cushion" elevation="0" block small @click="resetAll()">
+              <v-btn
+                v-if="!backBtnFlg"
+                class="text-light-gray"
+                color="cushion"
+                elevation="0"
+                block
+                small
+                @click="resetAll()">
                 <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>すべての条件をリセット
               </v-btn>
               <v-btn v-else color="primary" elevation="0" block small @click="toggleFlg()">
@@ -139,7 +147,8 @@
             </v-col>
             <v-col cols="10" sm="5">
               <v-btn color="line" block outlined small @click="closeDialog()">
-                <v-icon class="mr-2" color="primary" small>mdi-close</v-icon><span class="text-gray">変更せずに閉じる</span>
+                <v-icon class="mr-2" color="primary" small>mdi-close</v-icon>
+                <span class="text-gray">変更せずに閉じる</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -199,7 +208,7 @@ export default {
     },
   },
   created() {
-    if (this.$route.query.keyword !== undefined) {
+    if (this.$route.query.keyword !== undefined && this.$route.query.keyword !== 'undefined') {
       this.keyword = this.$route.query.keyword
     }
     if (this.$route.query.categoryID !== undefined) {

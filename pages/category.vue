@@ -3,7 +3,7 @@
     <top-bar title="カテゴリから探す" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner category__inner py-16">
       <div class="category__search mb-16">
-        <v-form class="d-flex align-center">
+        <v-form class="d-flex align-center" @submit.prevent>
           <v-text-field
             v-model="keyword"
             color="primary"
@@ -11,7 +11,8 @@
             outlined
             dense
             prepend-inner-icon="mdi-magnify"
-            hide-details="auto"></v-text-field>
+            hide-details="auto"
+            @keyup.enter="searchKeyword"></v-text-field>
           <v-btn color="primary" class="ml-2 ml-md-5" :href="'/products?type=3&keyword=' + keyword">
             <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索
           </v-btn>
@@ -27,7 +28,9 @@
           <ul
             class="d-flex flex-wrap justify-start justify-lg-center pl-4 pl-sm-5 pl-lg-7 text-body-2 text-lg-subtitle-1">
             <li v-for="root in categoryLists" :key="root.CategoryName" class="mr-4 mr-sm-5 mr-lg-7 mb-5">
-              <a v-scroll-to="{ el: '#category-id_' + root.CategoryID, offset: -130 }" class="d-flex align-center text-gray">
+              <a
+                v-scroll-to="{ el: '#category-id_' + root.CategoryID, offset: -130 }"
+                class="d-flex align-center text-gray">
                 <v-icon class="mr-2">{{ root.IconImageURL }}</v-icon>
                 {{ root.CategoryName }}<v-icon color="#878787">mdi-chevron-down</v-icon>
               </a>
@@ -83,7 +86,7 @@
 <script>
 export default {
   data: () => ({
-    keyword: '',
+    keyword: undefined,
     breadCrumbs: [],
     // categoryList: [
     //   {
@@ -456,6 +459,9 @@ export default {
       this.$store.commit('breadCrumbs/addList', { name: 'カテゴリーから探す', path: '/category' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
+    searchKeyword() {
+      window.location.href = '/products?type=3&keyword=' + this.keyword
+    },
   },
 }
 </script>
@@ -541,7 +547,6 @@ $other-bg: #563a2e;
 .cat-group {
   overflow-x: hidden;
   &__ttl {
-
     &-icon {
       display: inline-block;
       font-size: 3rem;

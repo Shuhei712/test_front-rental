@@ -29,7 +29,8 @@
             outlined
             dense
             prepend-inner-icon="mdi-magnify"
-            hide-details="auto">
+            hide-details="auto"
+            @keyup.enter="searchKeyword">
           </v-text-field>
         </v-col>
         <v-col cols="4">
@@ -63,8 +64,13 @@
 export default {
   data() {
     return {
-      keyword: '',
+      keyword: undefined,
     }
+  },
+  methods: {
+    searchKeyword() {
+      window.location.href = '/products?type=3&keyword=' + this.keyword
+    },
   },
 }
 </script>
