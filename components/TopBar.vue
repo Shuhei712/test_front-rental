@@ -34,10 +34,13 @@ export default {
   background-image: url('https://rental-resource.takenaka-co.co.jp/catalog-img/top_bar/main.png');
   background-position: center;
   background-size: cover;
-  padding-top: calc(100px + 32px);
+  padding-top: calc(80px + 32px);
 
   @include mq(sm) {
     background-image: url('https://rental-resource.takenaka-co.co.jp/catalog-img/top_bar/sp/main.png');
+    padding-top: calc(60px + 16px);
+  }
+
   .bar__inner {
     width: 100%;
     max-width: 1200px !important;
