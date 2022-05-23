@@ -84,7 +84,7 @@
 <script>
 export default {
   data: () => ({
-    keyword: '',
+    keyword: undefined,
     breadCrumbs: [],
     // categoryList: [
     //   {

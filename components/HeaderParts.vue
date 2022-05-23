@@ -140,7 +140,7 @@
 export default {
   data() {
     return {
-      keyword: '',
+      keyword: undefined,
       menuFlg: false,
       guidanceLists: [
         { title: 'ご利用方法', link: 'https://takenaka-rental.com/SpecialPage/PageView/14#rental-flow' },
