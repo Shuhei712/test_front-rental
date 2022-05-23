@@ -23,7 +23,7 @@
                     v-on:mouseover="toggleSubMenu()"
                     v-on:mouseleave="onClickOutside">
                     <span class="d-flex align-center">
-                      <v-icon class="mr-1">{{ root.IconImageURL }}</v-icon>
+                      <v-icon class="mr-1" color="primary">{{ root.IconImageURL }}</v-icon>
                       {{ root.MenuTitle }}
                     </span>
                     <span class="main-menu__trigger">
@@ -35,7 +35,7 @@
                     class="main-menu__text d-flex justify-space-between text-body-2 text-gray py-4 py-lg-2 px-2"
                     :href="root.ActionURL">
                     <span class="d-flex align-center">
-                      <v-icon class="mr-1">{{ root.IconImageURL }}</v-icon>
+                      <v-icon class="mr-1" color="primary">{{ root.IconImageURL }}</v-icon>
                       {{ root.MenuTitle }}
                     </span>
                     <span class="main-menu__trigger">
@@ -51,7 +51,7 @@
                     <li v-for="child in root.SubMenuList" :key="child.MenuTitle" class="px-7 my-2">
                       <a class="sub-menu__text d-flex align-center text-body-2 text-gray pa-2" :href="root.ActionURL">
                         {{ child.MenuTitle }}
-                        <v-icon class="d-lg-none ml-2" small>mdi-chevron-right</v-icon>
+                        <v-icon class="d-lg-none ml-2" color="primary" small>mdi-chevron-right</v-icon>
                       </a>
                     </li>
                   </ul>
