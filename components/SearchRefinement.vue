@@ -199,7 +199,7 @@ export default {
     },
   },
   created() {
-    if (this.$route.query.keyword !== undefined) {
+    if (this.$route.query.keyword !== undefined && this.$route.query.keyword !== 'undefined') {
       this.keyword = this.$route.query.keyword
     }
     if (this.$route.query.categoryID !== undefined) {

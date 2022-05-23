@@ -201,7 +201,7 @@ export default {
       return this.$route.query.tagName ? 1 : 0
     },
     isKeyword() {
-      return this.$route.query.keyword ? 1 : 0
+      return this.$route.query.keyword ? (this.$route.query.keyword !== 'undefined' ? 1 : 0) : 0
     },
     pageNumber: {
       get() {
