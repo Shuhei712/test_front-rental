@@ -5,7 +5,7 @@
         <a class="header__logo d-flex align-center hover-opacity" href="/">
           <span class="logo__img mr-3">
             <img class="logo--pc" src="/img/top/logo.svg" alt="TAKENAKA the SOLID WATER" />
-            <img class="logo--sp" src="/img/sp/top/logo.png" alt="TAKENAKA the SOLID WATER" />
+            <img class="logo--sp" src="/img/sp/top/logo.svg" alt="TAKENAKA the SOLID WATER" />
           </span>
           <span class="logo__service text-caption text-gray">映像 / 音響機材の<br />レンタルサービス</span>
         </a>

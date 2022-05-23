@@ -83,7 +83,7 @@ export default {
   z-index: 1;
   width: 100%;
   min-height: calc(920 / 1920 * 100vw);
-  background-image: url('/img/top/top.png');
+  background-image: url('https://rental-resource.takenaka-co.co.jp/catalog-img/top/first-view.png');
   background-position: right;
   background-size: cover;
   padding-top: calc(100px + 32px);
