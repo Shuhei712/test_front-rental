@@ -513,9 +513,10 @@ export default {
     overflow: hidden;
 
     .search__number {
+      background-color: $cushion;
+      flex-shrink: 0;
       max-width: 185px;
       min-width: 103px;
-      background-color: $cushion;
 
       .number__val {
         font-size: 30px !important;
