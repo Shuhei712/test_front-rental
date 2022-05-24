@@ -391,7 +391,8 @@ export default {
     },
     setPresentCategoryID() {
       if (this.conditionalSearchFlg) {
-        this.presentCategoryID = this.searchConditionInfo.CategoryID
+        this.presentCategoryID =
+          this.searchConditionInfo.CategoryID === null ? undefined : this.searchConditionInfo.CategoryID
       } else {
         switch (this.$route.query.type) {
           case '1':
