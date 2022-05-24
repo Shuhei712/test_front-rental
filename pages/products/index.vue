@@ -305,7 +305,7 @@ export default {
       // param.append('CategoryTagID', '')
       // param.append('SearchTagID', '')
       param.append('ConditionJSON', conditionJSON)
-      param.append('OrderRelease', this.orderRelease)
+      param.append('OrderRelase', this.orderRelease)
       param.append('OrderPrice', this.orderPrice)
       param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
       param.append('PageNo', this.page)
