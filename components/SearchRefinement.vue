@@ -269,6 +269,7 @@ export default {
     },
     resetCategoryLists() {
       this.$refs.category.resetSelectedCategoryLists()
+      this.$emit('received-category-reset')
     },
     resetMakerLists() {
       this.$refs.maker.resetSelectedMakerLists()
@@ -285,6 +286,7 @@ export default {
       this.$refs.tag.resetSelectedTagLists()
       this.$refs.price.resetSelectedPriceLists()
       this.keyword = ''
+      this.$emit('received-all-reset')
     },
   },
 }

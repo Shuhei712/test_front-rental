@@ -491,6 +491,14 @@ export default {
       this.tariffLists = value
       this.tariffDialog = true
     },
+    async receivedCategoryReset() {
+      this.presentCategoryID = undefined
+      await this.getFilterCondition()
+    },
+    async receivedAllReset() {
+      this.presentCategoryID = undefined
+      await this.getFilterCondition()
+    },
   },
 }
 </script>
