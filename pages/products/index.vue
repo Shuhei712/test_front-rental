@@ -9,7 +9,10 @@
       :search-tag-lists="searchTagLists"
       :search-price-lists="searchPriceLists"
       @change-dialog="reseiveDialogFlg"
-      @received-search-conditions="receivedSearchConditions">
+      @received-search-conditions="receivedSearchConditions"
+      @update-category-list="updateCategoryLists"
+      @received-category-reset="receivedCategoryReset"
+      @received-all-reset="receivedAllReset">
     </search-refinement>
     <top-bar title="検索結果一覧" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="products__inner d-lg-flex py-16 px-2 px-lg-0">
@@ -391,7 +394,8 @@ export default {
     },
     setPresentCategoryID() {
       if (this.conditionalSearchFlg) {
-        this.presentCategoryID = this.searchConditionInfo.CategoryID
+        this.presentCategoryID =
+          this.searchConditionInfo.CategoryID === null ? undefined : this.searchConditionInfo.CategoryID
       } else {
         switch (this.$route.query.type) {
           case '1':
@@ -411,11 +415,19 @@ export default {
     },
     changeOrderPrice() {
       this.orderRelease = ''
-      this.searchProducts()
+      if (this.conditionalSearchFlg) {
+        this.searchProductsUsingFilter()
+      } else {
+        this.searchProducts()
+      }
     },
     changeOrderRelease() {
       this.orderPrice = ''
-      this.searchProducts()
+      if (this.conditionalSearchFlg) {
+        this.searchProductsUsingFilter()
+      } else {
+        this.searchProducts()
+      }
     },
     changePage(page) {
       this.page = Number(page)
@@ -433,8 +445,12 @@ export default {
       }
 
       if (searchConditionInfo.CategoryFlg) {
-        this.presentConditions.push(searchConditionInfo.CategoryNmae01)
-        this.presentConditions.push(searchConditionInfo.CategoryNmae02)
+        if (searchConditionInfo.CategoryNmae01 !== null) {
+          this.presentConditions.push(searchConditionInfo.CategoryNmae01)
+        }
+        if (searchConditionInfo.CategoryNmae02 !== null) {
+          this.presentConditions.push(searchConditionInfo.CategoryNmae02)
+        }
       }
 
       if (searchConditionInfo.MakerFlg) {
@@ -477,6 +493,22 @@ export default {
     receiveTariffLists(value) {
       this.tariffLists = value
       this.tariffDialog = true
+    },
+    async updateCategoryLists(lists) {
+      if (lists.length === 0) {
+        this.presentCategoryID = undefined
+      } else {
+        this.presentCategoryID = lists[0].id
+      }
+      await this.getFilterCondition()
+    },
+    async receivedCategoryReset() {
+      this.presentCategoryID = undefined
+      await this.getFilterCondition()
+    },
+    async receivedAllReset() {
+      this.presentCategoryID = undefined
+      await this.getFilterCondition()
     },
   },
 }

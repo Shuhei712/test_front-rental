@@ -109,12 +109,12 @@
                   <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>選択解除
                 </v-btn>
               </div>
-              <!-- <v-row v-if="searchTagLists[0].FeatureList.length == 0" no-gutters align="center" class="terms__box--disabled mt-2 px-3">
+              <v-row v-if="isSearchTagLists()" no-gutters align="center" class="terms__box--disabled mt-2 px-3">
                 <v-col cols="12" class="terms__text">
                   <span>特徴はありません</span>
                 </v-col>
-              </v-row> -->
-              <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openTag()">
+              </v-row>
+              <v-row v-else class="terms__box mt-2 px-3" no-gutters align="center" @click="openTag()">
                 <v-col cols="11" class="terms__text">
                   <span v-for="tag in selectedTagLists" :key="tag.id"> {{ tag.name }} / </span>
                 </v-col>
@@ -219,6 +219,13 @@ export default {
     }
   },
   methods: {
+    isSearchTagLists() {
+      if (this.searchTagLists.length !== 0) {
+        return this.searchTagLists[0].FeatureList.length === 0
+      } else {
+        return false
+      }
+    },
     closeDialog() {
       this.dialogFlg = false
     },
@@ -247,6 +254,7 @@ export default {
     },
     updateCategoryLists(lists) {
       this.selectedCategoryLists = lists
+      this.$emit('update-category-list', lists)
     },
     updateMakerLists(lists) {
       this.selectedMakerLists = lists
@@ -269,6 +277,7 @@ export default {
     },
     resetCategoryLists() {
       this.$refs.category.resetSelectedCategoryLists()
+      this.$emit('received-category-reset')
     },
     resetMakerLists() {
       this.$refs.maker.resetSelectedMakerLists()
@@ -285,6 +294,7 @@ export default {
       this.$refs.tag.resetSelectedTagLists()
       this.$refs.price.resetSelectedPriceLists()
       this.keyword = ''
+      this.$emit('received-all-reset')
     },
   },
 }
