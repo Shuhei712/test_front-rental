@@ -412,11 +412,19 @@ export default {
     },
     changeOrderPrice() {
       this.orderRelease = ''
-      this.searchProducts()
+      if (this.conditionalSearchFlg) {
+        this.searchProductsUsingFilter()
+      } else {
+        this.searchProducts()
+      }
     },
     changeOrderRelease() {
       this.orderPrice = ''
-      this.searchProducts()
+      if (this.conditionalSearchFlg) {
+        this.searchProductsUsingFilter()
+      } else {
+        this.searchProducts()
+      }
     },
     changePage(page) {
       this.page = Number(page)
