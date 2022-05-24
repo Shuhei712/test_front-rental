@@ -247,6 +247,7 @@ export default {
     },
     updateCategoryLists(lists) {
       this.selectedCategoryLists = lists
+      this.$emit('update-category-list', lists)
     },
     updateMakerLists(lists) {
       this.selectedMakerLists = lists

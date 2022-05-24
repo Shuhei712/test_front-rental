@@ -9,7 +9,10 @@
       :search-tag-lists="searchTagLists"
       :search-price-lists="searchPriceLists"
       @change-dialog="reseiveDialogFlg"
-      @received-search-conditions="receivedSearchConditions">
+      @received-search-conditions="receivedSearchConditions"
+      @update-category-list="updateCategoryLists"
+      @received-category-reset="receivedCategoryReset"
+      @received-all-reset="receivedAllReset">
     </search-refinement>
     <top-bar title="検索結果一覧" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="products__inner d-lg-flex py-16 px-2 px-lg-0">
@@ -490,6 +493,14 @@ export default {
     receiveTariffLists(value) {
       this.tariffLists = value
       this.tariffDialog = true
+    },
+    async updateCategoryLists(lists) {
+      if (lists.length === 0) {
+        this.presentCategoryID = undefined
+      } else {
+        this.presentCategoryID = lists[0].id
+      }
+      await this.getFilterCondition()
     },
     async receivedCategoryReset() {
       this.presentCategoryID = undefined
