@@ -434,8 +434,12 @@ export default {
       }
 
       if (searchConditionInfo.CategoryFlg) {
-        this.presentConditions.push(searchConditionInfo.CategoryNmae01)
-        this.presentConditions.push(searchConditionInfo.CategoryNmae02)
+        if (searchConditionInfo.CategoryNmae01 !== null) {
+          this.presentConditions.push(searchConditionInfo.CategoryNmae01)
+        }
+        if (searchConditionInfo.CategoryNmae02 !== null) {
+          this.presentConditions.push(searchConditionInfo.CategoryNmae02)
+        }
       }
 
       if (searchConditionInfo.MakerFlg) {
