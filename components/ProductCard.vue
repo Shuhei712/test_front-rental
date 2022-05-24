@@ -4,7 +4,7 @@
       <div class="search-tag d-flex text-caption mr-4">
         <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}
       </div>
-      <div class="search-tag d-flex text-caption">
+      <div v-if="isCategoryName2" class="search-tag d-flex text-caption">
         <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}
       </div>
     </div>
@@ -19,7 +19,7 @@
           <div class="search-tag d-flex text-body-2 mr-5">
             <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}
           </div>
-          <div class="search-tag d-flex text-body-2">
+          <div v-if="isCategoryName2" class="search-tag d-flex text-body-2">
             <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}
           </div>
         </div>
@@ -166,6 +166,12 @@ export default {
         default:
           return 'ASK'
       }
+    },
+    isCategoryName1() {
+      return this.categoryName02 !== null
+    },
+    isCategoryName2() {
+      return this.categoryName02 !== null
     },
   },
   methods: {

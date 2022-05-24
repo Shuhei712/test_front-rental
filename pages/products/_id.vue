@@ -12,7 +12,7 @@
           <div class="search-tag d-flex text-body-2 mr-4">
             <v-icon class="mr-2" small>mdi-check</v-icon>{{ productInfoList.CategoryTagID01 }}
           </div>
-          <div class="search-tag d-flex text-body-2">
+          <div v-if="isCategoryName2" class="search-tag d-flex text-body-2">
             <v-icon class="mr-2" small>mdi-check</v-icon>{{ productInfoList.CategoryTagID02 }}
           </div>
         </div>
@@ -44,7 +44,7 @@
               <div class="search-tag d-flex text-body-2 mr-5">
                 <v-icon class="mr-2" small>mdi-check</v-icon>{{ productInfoList.CategoryTagID01 }}
               </div>
-              <div class="search-tag d-flex text-body-2">
+              <div v-if="isCategoryName2" class="search-tag d-flex text-body-2">
                 <v-icon class="mr-2" small>mdi-check</v-icon>{{ productInfoList.CategoryTagID02 }}
               </div>
             </div>
@@ -313,6 +313,9 @@ export default {
     },
     linkDocLists() {
       return this.productDocLists.filter((object) => object.DocumentType === 1)
+    },
+    isCategoryName2() {
+      return this.productInfoList.CategoryTagID02 !== null
     },
   },
   watch: {
