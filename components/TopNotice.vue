@@ -2,16 +2,22 @@
   <div class="top__notice text-body-1">
     <div class="notice__inner d-flex">
       <div class="notice__pickup d-flex text-body-2 text-sm-body-1 pr-md-3 py-2">
-        <div>
-          <span class="pickup__category d-none d-md-inline-block text-caption text-white mr-3 px-6 py-1">
-            {{ newsLists[0].NewsCategory }}
-          </span>
-        </div>
-        <a href="/notice" class="pickup__link">
-          <p class="py-1 mb-0">
-            {{ newsLists[0].NewsTitle }}
-          </p>
-        </a>
+        <hooper :settings="hooperSettings">
+          <slide v-for="(list, index) in newsLists" :key="index">
+            <div class="d-flex">
+              <div>
+                <span class="pickup__category d-none d-md-inline-block text-caption text-white mr-3 px-6 py-1">
+                  {{ list.NewsCategory }}
+                </span>
+              </div>
+              <a href="/notice" class="pickup__link">
+                <p class="py-1 mb-0">
+                  {{ list.NewsTitle }}
+                </p>
+              </a>
+            </div>
+          </slide>
+        </hooper>
       </div>
       <div class="notice__lists d-flex align-center justify-center justify-lg-start px-3 pl-lg-10 py-2">
         <a class="text-white text-caption text-sm-body-2" href="/notice">
@@ -29,6 +35,18 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  data() {
+    return {
+      hooperSettings: {
+        itemsToShow: 1,
+        autoPlay: true,
+        infiniteScroll: true,
+        wheelControl: false,
+        playSpeed: 5000,
+        transition: 500,
+      },
+    }
   },
 }
 </script>
