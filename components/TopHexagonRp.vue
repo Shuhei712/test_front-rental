@@ -85,7 +85,7 @@ export default {
         },
         {
           ImageURL:
-            'https:/rental-document.takenaka-co.co.jp/catalog-img/takenaka/01rental/04visual_device/img_visual_device/roland_vr-4hd.jpg',
+            'https://rental-document.takenaka-co.co.jp/catalog-img/takenaka/01rental/04visual_device/img_visual_device/roland_vr-4hd.jpg',
           PageURL: null,
           PickupCatchCopy1: 'HDMI、コンポジ入力、XLR',
           PickupCatchCopy2: 'RCAUSBストリーム出力',
