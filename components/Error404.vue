@@ -15,6 +15,24 @@
   </div>
 </template>
 
+<script>
+export default {
+  mounted() {
+    document.addEventListener('touchmove', this.disableScroll, { passive: false })
+    document.addEventListener('mousewheel', this.disableScroll, { passive: false })
+  },
+  beforeDestroy() {
+    document.removeEventListener('touchmove', this.disableScroll, { passive: false })
+    document.removeEventListener('mousewheel', this.disableScroll, { passive: false })
+  },
+  methods: {
+    disableScroll(event) {
+      event.preventDefault()
+    },
+  },
+}
+</script>
+
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
 
