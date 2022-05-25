@@ -56,9 +56,30 @@
                 <div class="mail__address d-flex align-center mr-lg-5">
                   <v-icon class="mr-2" color="primary">mdi-email-outline</v-icon>{{ list.email }}
                 </div>
-                <v-btn class="mail__copy text-white text-caption text-sm-body-2 mt-3 mt-lg-0" outlined small>
+                <v-btn
+                  class="mail__copy text-white text-caption text-sm-body-2 mt-3 mt-lg-0"
+                  outlined
+                  small
+                  @click="mailCopy(list.email)">
                   <v-icon class="mr-2" color="primary" small>mdi-content-copy</v-icon>メールアドレスをコピー
                 </v-btn>
+                <v-snackbar
+                  v-model="snackbar"
+                  color="primary"
+                  class="mail__snackbar">
+                  <span class="text-white">
+                    {{ copiedMail }} を<span class="word-keep">コピーしました</span>
+                  </span>
+                  <template #action="{ attrs }">
+                    <v-btn
+                      color="#fff"
+                      text
+                      v-bind="attrs"
+                      @click="snackbar = false">
+                      Close
+                    </v-btn>
+                  </template>
+                </v-snackbar>
               </div>
             </div>
           </div>
@@ -79,6 +100,8 @@
 export default {
   data() {
     return {
+      snackbar: false,
+      copiedMail: '',
       snsLists: [
         {
           name: 'facebook',
@@ -134,6 +157,13 @@ export default {
         },
       ],
     }
+  },
+  methods: {
+    mailCopy(mail) {
+      this.$copyText(mail)
+      this.copiedMail = mail
+      this.snackbar = true
+    },
   },
 }
 </script>
@@ -246,6 +276,12 @@ export default {
 
         @include mq(sm) {
           font-size: 11px !important;
+        }
+      }
+      .mail__snackbar .v-snack__wrapper {
+        @include mq(sm) {
+          width: 95%;
+          min-width: 300px;
         }
       }
     }

@@ -65,6 +65,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     'vue-scrollto/nuxt',
+    'nuxt-clipboard2',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
