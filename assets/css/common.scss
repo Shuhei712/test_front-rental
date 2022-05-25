@@ -75,10 +75,6 @@ $leading-loose: 2 !default;
   }
 }
 
-// html {
-//   overflow: visible !important;
-// }
-
 body,
 html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique', sans-serif !important;
@@ -256,6 +252,17 @@ ul {
       .v-icon {
         font-size: 16px !important;
       }
+    }
+  }
+}
+
+.v-snack__wrapper {
+  .footer & {
+    box-shadow: 2px 2px 3px rgba(#000, 10%) !important;
+
+    @include mq(sm) {
+      width: 90%;
+      min-width: 300px !important;
     }
   }
 }
