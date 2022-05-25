@@ -4,8 +4,8 @@
     <div id="hexagon-2" class="hexagon"></div>
     <div class="loading__inner">
       <div class="loading__img d-flex justify-center justify-sm-space-between align-end">
-        <img id="monitan" class="mr-5 mr-sm-0" src="/img/pickup/monitan.png" alt="" />
-        <img id="protan" src="/img/pickup/protan.png" alt="" />
+        <img id="monitan" class="mr-5 mr-sm-0" src="/img/pickup/monitan.png" alt="モニタン" />
+        <img id="protan" src="/img/pickup/protan.png" alt="プロタン" />
       </div>
       <div class="loading__text text-h5 text-sm-h4 text-white letter-space-015em">Sorry... 404 Not Found</div>
       <div class="text-center">
@@ -14,6 +14,24 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  mounted() {
+    document.addEventListener('touchmove', this.disableScroll, { passive: false })
+    document.addEventListener('mousewheel', this.disableScroll, { passive: false })
+  },
+  beforeDestroy() {
+    document.removeEventListener('touchmove', this.disableScroll, { passive: false })
+    document.removeEventListener('mousewheel', this.disableScroll, { passive: false })
+  },
+  methods: {
+    disableScroll(event) {
+      event.preventDefault()
+    },
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
