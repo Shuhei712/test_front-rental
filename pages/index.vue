@@ -27,7 +27,7 @@
     <top-main-rp class="hidden-lg-and-up"></top-main-rp>
     <top-notice :news-lists="newsLists"></top-notice>
     <div class="top__inner d-flex pt-16">
-      <category-lists :category-lists="categoryLists"></category-lists>
+      <category-lists></category-lists>
       <div class="content ml-lg-10">
         <top-new :new-product-lists="newProductLists"></top-new>
         <top-article
@@ -52,7 +52,6 @@ export default {
   data() {
     return {
       menuLists: [],
-      categoryLists: [],
       newsLists: [],
       pickupLists: [],
       newProductLists: [],
@@ -63,26 +62,22 @@ export default {
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     this.resetBreadCrumbs()
-    const [menuLists, categoryLists, newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] =
-      await Promise.all([
-        this.getMenuList(),
-        this.getCategoryList(),
-        this.getNewsList(),
-        this.getPickupList(),
-        this.getNewProductList(),
-        this.getSpecialPageList(),
-        this.getPickUpTagList(),
-      ])
+    const [menuLists, newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] = await Promise.all([
+      this.getMenuList(),
+      this.getNewsList(),
+      this.getPickupList(),
+      this.getNewProductList(),
+      this.getSpecialPageList(),
+      this.getPickUpTagList(),
+    ])
 
     this.menuLists = menuLists
-    this.categoryLists = categoryLists
     this.pickupLists = pickupLists
     this.newProductLists = newProductLists
     this.specialPageLists = specialPageLists
     this.pickupTagLists = pickupTagLists
     this.$store.commit('loading/changeStatus', false)
   },
-  mounted() {},
   updated() {
     this.scrollShareButton()
     this.scrollBackButton()
@@ -135,14 +130,6 @@ export default {
       const res = await this.$axios.$post('get_menu_list.php', param)
       // console.log(res)
       return res.MenuRootList
-    },
-    async getCategoryList() {
-      const param = new URLSearchParams()
-      param.append('ProjectKey', this.$config.PROJECT_KEY)
-      param.append('LangType', this.$config.LANG_JAPANESE)
-      const res = await this.$axios.$post('get_category_list.php', param)
-      // console.log(res)
-      return res.CategoryRootList
     },
     async getNewsList() {
       const param = new URLSearchParams()

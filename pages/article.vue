@@ -2,17 +2,20 @@
   <section class="article">
     <top-bar title="特設ページ 一覧" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="article__inner d-lg-flex py-16 px-3 px-lg-0">
-      <category-lists :category-lists="categoryLists"></category-lists>
+      <category-lists></category-lists>
       <div class="content ml-lg-15">
         <div class="page-link mb-16">
-          <div class="page-link__heading d-flex align-center justify-center text-caption text-md-body-2 text-gray pa-2 pa-lg-0">
+          <div
+            class="page-link__heading d-flex align-center justify-center text-caption text-md-body-2 text-gray pa-2 pa-lg-0">
             クリックでページ内項目にジャンプします
           </div>
           <div class="page-link__list pt-7 pb-2">
             <ul
               class="d-flex flex-wrap justify-space-between justify-sm-center pl-4 pl-sm-7 text-body-2 text-md-body-1">
               <li v-for="article in pageClassLists" :key="article.PageClassColor" class="mr-4 mr-sm-7 mb-5">
-                <a v-scroll-to="{ el: '#' + article.PageClassColor, offset: -130 }" class="d-flex align-center text-gray">
+                <a
+                  v-scroll-to="{ el: '#' + article.PageClassColor, offset: -130 }"
+                  class="d-flex align-center text-gray">
                   <v-icon class="mr-2" :color="article.PageClassColor">{{ article.IconImageURL }}</v-icon>
                   {{ article.PageClassName }}
                   <v-icon color="#878787">mdi-chevron-down</v-icon>
@@ -226,7 +229,6 @@ export default {
       //     ],
       //   },
       // ],
-      categoryLists: [],
       pageClassLists: [],
       breadCrumbs: [],
     }
@@ -234,18 +236,10 @@ export default {
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     this.setBreadCrumbs()
-    await Promise.all([this.getCategoryList(), this.getSpecialPageList()])
+    await this.getSpecialPageList()
     this.$store.commit('loading/changeStatus', false)
   },
   methods: {
-    async getCategoryList() {
-      const param = new URLSearchParams()
-      param.append('ProjectKey', this.$config.PROJECT_KEY)
-      param.append('LangType', this.$config.LANG_JAPANESE)
-      const res = await this.$axios.$post('get_category_list.php', param)
-      // console.log(res)
-      this.categoryLists = res.CategoryRootList
-    },
     async getSpecialPageList() {
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)

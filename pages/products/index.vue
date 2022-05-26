@@ -16,7 +16,7 @@
     </search-refinement>
     <top-bar title="検索結果一覧" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="products__inner d-lg-flex py-16 px-2 px-lg-0">
-      <category-lists :category-lists="categoryLists"></category-lists>
+      <category-lists></category-lists>
       <div class="content ml-lg-15">
         <div class="product__search d-flex">
           <div class="search__number d-flex flex-column align-center justify-center text-center px-2 px-sm-5 py-3">
@@ -192,7 +192,7 @@ export default {
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    await Promise.all([this.getCategoryList(), this.searchProducts()])
+    await this.searchProducts()
     this.setBreadCrumbs(this.$route.query.type)
     this.$store.commit('loading/changeStatus', false)
   },
@@ -216,13 +216,6 @@ export default {
     },
   },
   methods: {
-    async getCategoryList() {
-      const param = new URLSearchParams()
-      param.append('ProjectKey', this.$config.PROJECT_KEY)
-      param.append('LangType', this.$config.LANG_JAPANESE)
-      const res = await this.$axios.$post('get_category_list.php', param)
-      this.categoryLists = res.CategoryRootList
-    },
     async getCategoryInfo(categoryID) {
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
