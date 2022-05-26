@@ -1,7 +1,6 @@
 <template>
   <section class="top__main">
     <top-hexagon></top-hexagon>
-    <!-- <top-slider></top-slider> -->
     <v-container class="top__inner py-16">
       <v-row class="main__catch" no-gutters>
         <v-col cols="12">

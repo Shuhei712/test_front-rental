@@ -8,7 +8,6 @@
     </div>
     <div class="tag__lists flex-grow-1 px-4 px-sm-6 px-lg-8">
       <div v-for="(list, index) in searchTagLists" :key="index" class="tag-list pb-5">
-        <!-- <div v-if="list.FeatureList.length == 0" class="text-gray">特徴はありません</div> -->
         <div class="index-label d-flex mb-3 text-subtitle-2 text-gray px-3 py-1">
           <v-icon class="mr-2" small>mdi-check</v-icon>{{ list.TagCategoryName }}
         </div>
@@ -20,10 +19,10 @@
               type="checkbox"
               :value="{ id: tag.TagID, name: tag.TagName }"
               @change="sendTagLists()" />
-              <div class="checkbox d-flex align-flex-start">
-                <span class="checkbox__parts"></span>
-                <span class="text-body-2 text-gray pt-1 px-3">{{ tag.TagName }}</span>
-              </div>
+            <div class="checkbox d-flex align-flex-start">
+              <span class="checkbox__parts"></span>
+              <span class="text-body-2 text-gray pt-1 px-3">{{ tag.TagName }}</span>
+            </div>
           </label>
         </div>
       </div>

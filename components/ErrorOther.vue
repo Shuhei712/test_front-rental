@@ -143,37 +143,6 @@ export default {
     span {
       display: inline-block;
       vertical-align: middle;
-
-      // &:nth-of-type(1) {
-      //   animation: animation 2s ease 0s infinite;
-      // }
-      // &:nth-of-type(2) {
-      //   animation: animation 2s ease 0.1s infinite;
-      // }
-      // &:nth-of-type(3) {
-      //   animation: animation 2s ease 0.2s infinite;
-      // }
-      // &:nth-of-type(4) {
-      //   animation: animation 2s ease 0.3s infinite;
-      // }
-      // &:nth-of-type(5) {
-      //   animation: animation 2s ease 0.4s infinite;
-      // }
-      // &:nth-of-type(6) {
-      //   animation: animation 2s ease 0.5s infinite;
-      // }
-      // &:nth-of-type(7) {
-      //   animation: animation 2s ease 0.6s infinite;
-      // }
-      // &:nth-of-type(8) {
-      //   animation: animation 2s ease 0.7s infinite;
-      // }
-      // &:nth-of-type(9) {
-      //   animation: animation 2s ease 0.8s infinite;
-      // }
-      // &:nth-of-type(10) {
-      //   animation: animation 2s ease 0.9s infinite;
-      // }
     }
   }
 }
