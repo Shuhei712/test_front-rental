@@ -26,7 +26,14 @@
 
 <script>
 export default {
+  computed: {
+    categoryLists() {
+      return this.$store.getters['category/getLists']
     },
+  },
+  mounted() {
+    const isCategoryLists = this.$store.getters['category/getLists'].length === 0
+    if (isCategoryLists) this.$store.dispatch('category/getLists')
   },
 }
 </script>
