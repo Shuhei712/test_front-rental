@@ -26,10 +26,6 @@
 
 <script>
 export default {
-  props: {
-    categoryLists: {
-      type: Array,
-      required: true,
     },
   },
 }
