@@ -5,14 +5,17 @@
       <category-lists></category-lists>
       <div class="content ml-lg-15">
         <div class="page-link mb-16">
-          <div class="page-link__heading d-flex align-center justify-center text-caption text-md-body-2 text-gray pa-2 pa-lg-0">
+          <div
+            class="page-link__heading d-flex align-center justify-center text-caption text-md-body-2 text-gray pa-2 pa-lg-0">
             クリックでページ内項目にジャンプします
           </div>
           <div class="page-link__list pt-7 pb-2">
             <ul
               class="d-flex flex-wrap justify-space-between justify-sm-center pl-4 pl-sm-7 text-body-2 text-md-body-1">
               <li v-for="article in pageClassLists" :key="article.PageClassColor" class="mr-4 mr-sm-7 mb-5">
-                <a v-scroll-to="{ el: '#' + article.PageClassColor, offset: -130 }" class="d-flex align-center text-gray">
+                <a
+                  v-scroll-to="{ el: '#' + article.PageClassColor, offset: -130 }"
+                  class="d-flex align-center text-gray">
                   <v-icon class="mr-2" :color="article.PageClassColor">{{ article.IconImageURL }}</v-icon>
                   {{ article.PageClassName }}
                   <v-icon color="#878787">mdi-chevron-down</v-icon>
