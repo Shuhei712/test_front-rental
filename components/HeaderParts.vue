@@ -226,7 +226,11 @@ export default {
       ],
     }
   },
+    menuLists() {
+      return this.$store.getters['menu/getLists']
+    },
   mounted() {
+    this.$store.dispatch('menu/getLists')
     window.addEventListener('resize', this.resizeWindow)
     if (this.isClient) {
       window.addEventListener('scroll', this.onScroll)
