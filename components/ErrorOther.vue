@@ -9,7 +9,7 @@
       </div>
       <div class="loading__text text-h5 text-sm-h4 text-white letter-space-015em">Sorry... An Error occurred.</div>
       <div class="text-center">
-        <v-btn class="text-white" to="/" text><v-icon color="#ffffff">mdi-home</v-icon>TOPページに戻る</v-btn>
+        <v-btn class="text-white" href="/" text><v-icon color="#ffffff">mdi-home</v-icon>TOPページに戻る</v-btn>
       </div>
     </div>
   </div>
