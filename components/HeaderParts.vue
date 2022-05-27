@@ -13,42 +13,25 @@
           <div class="header__main d-flex align-center">
             <nav class="menu">
               <ul class="main-menu d-flex">
-                <li v-for="root in menuLists" :key="root.MenuTitle">
-                  <span
-                    v-if="root.SubMenuCnt != 0"
-                    v-click-outside="onClickOutside"
-                    class="main-menu__text d-flex justify-space-between text-body-2 text-gray py-4 py-lg-2 px-2"
-                    :class="{ active: subMenuFlg }"
+                <li v-for="(root, index) in menuLists" :key="root.MenuTitle">
+                  <!-- サブメニューあり -->
+                  <div
+                    v-if="root.MenuType === 0"
+                    class="main-menu__text d-block d-lg-flex justify-space-between text-body-2 text-gray py-4 py-lg-2 px-2"
+                    :class="{ active: subMenuFlg[index] }"
                     :href="root.ActionURL"
-                    @click="toggleSubMenu()">
-                    <span class="d-flex align-center">
-                      <v-icon class="mr-1" color="primary">{{ root.IconImageURL }}</v-icon>
-                      {{ root.MenuTitle }}
-                    </span>
-                    <span class="main-menu__trigger">
-                      <v-icon>{{ subMenuFlg === true ? 'mdi-minus' : 'mdi-plus' }}</v-icon>
-                    </span>
-                  </span>
-                  <a
-                    v-else
-                    class="main-menu__text d-flex justify-space-between text-body-2 text-gray py-4 py-lg-2 px-2"
-                    :href="root.ActionURL">
-                    <span class="d-flex align-center">
-                      <v-icon class="mr-1" color="primary">{{ root.IconImageURL }}</v-icon>
-                      {{ root.MenuTitle }}
-                    </span>
-                    <span class="main-menu__trigger">
-                      <v-icon>mdi-chevron-right</v-icon>
-                    </span>
-                  </a>
-                  <ul v-if="root.SubMenuCnt != 0" class="sub-menu mt-lg-3 mt-xl-5" :class="{ show: subMenuFlg }">
-                    <li v-for="child in root.SubMenuList" :key="child.MenuTitle" class="px-7 my-2">
-                      <a class="sub-menu__text d-flex align-center text-body-2 text-gray pa-2" :href="root.ActionURL">
-                        {{ child.MenuTitle }}
-                        <v-icon class="d-lg-none ml-2" color="primary" small>mdi-chevron-right</v-icon>
-                      </a>
-                    </li>
-                  </ul>
+                    @click="toggleSubMenu(index)"
+                    @mouseover="!isMobile ? openSubMenu(index) : null"
+                    @mouseleave="!isMobile ? closeSubMenu(index) : null">
+                    <div class="d-flex justify-space-between align-center">
+                      <span class="d-flex align-center">
+                        <v-icon class="mr-1" color="primary">{{ root.IconImageURL }}</v-icon>
+                        {{ root.MenuTitle }}
+                      </span>
+                      <span class="main-menu__trigger">
+                        <v-icon>{{ subMenuFlg[index] === true ? 'mdi-minus' : 'mdi-plus' }}</v-icon>
+                      </span>
+                    </div>
                     <!-- サブメニュー部分 -->
                     <ul
                       v-if="root.MenuType === 0"
@@ -159,7 +142,7 @@ export default {
       scrollPosition: 0,
       isClient: process.client,
       menuFlg: false,
-      subMenuFlg: false,
+      subMenuFlg: [],
       searchWindowFlg: false,
     }
   },
@@ -178,6 +161,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch('menu/getLists')
+    this.subMenuFlg = Array(this.menuLists.length).fill(false)
+    this.windowWidth = window.innerWidth
     window.addEventListener('resize', this.resizeWindow)
     if (this.isClient) {
       window.addEventListener('scroll', this.onScroll)
@@ -187,8 +172,14 @@ export default {
     toggleMenu() {
       this.menuFlg = !this.menuFlg
     },
-    toggleSubMenu() {
-      this.subMenuFlg = !this.subMenuFlg
+    toggleSubMenu(index) {
+      this.subMenuFlg.splice(index, 1, !this.subMenuFlg[index])
+    },
+    openSubMenu(index) {
+      this.subMenuFlg.splice(index, 1, true)
+    },
+    closeSubMenu(index) {
+      this.subMenuFlg.splice(index, 1, false)
     },
     toggleSearchWindow() {
       this.searchWindowFlg = !this.searchWindowFlg
@@ -208,7 +199,7 @@ export default {
         }
         // SP用メニュー表示の時 サブメニュー開いたままの場合は閉じる
       } else if (this.subMenuFlg) {
-        this.subMenuFlg = false
+        this.subMenuFlg.fill(false)
       }
     },
     onScroll() {
@@ -222,9 +213,6 @@ export default {
         headerElm.classList.remove('is-scroll')
       }
       this.scrollPosition = scroll
-    },
-    onClickOutside() {
-      this.subMenuFlg = false
     },
     searchKeyword() {
       window.location.href = '/products?type=3&keyword=' + this.keyword
@@ -380,6 +368,7 @@ ul {
       visibility: hidden;
       width: 230px;
       position: absolute;
+      top: 30px;
       transition: opacity 0.4s, visibility 0.4s;
 
       &.show {
@@ -394,6 +383,7 @@ ul {
         width: 100%;
         display: none;
         position: relative;
+        top: 10px;
 
         &.show {
           display: block;
