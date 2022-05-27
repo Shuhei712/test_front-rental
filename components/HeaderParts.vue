@@ -49,6 +49,17 @@
                       </a>
                     </li>
                   </ul>
+                    <!-- サブメニュー部分 -->
+                    <ul
+                      v-if="root.MenuType === 0"
+                      class="sub-menu mt-0 mt-lg-3 mt-xl-5"
+                      :class="{ show: subMenuFlg[index] }">
+                      <li v-for="child in root.SubMenuList" :key="child.MenuTitle" class="px-7 my-2">
+                        <sub-menu :menu-type="child.MenuType" :action-url="child.ActionURL" :title="child.MenuTitle">
+                        </sub-menu>
+                      </li>
+                    </ul>
+                  </div>
                   <!-- サブメニューなし -->
                   <div v-else>
                     <no-sub-menu
