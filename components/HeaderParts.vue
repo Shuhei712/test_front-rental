@@ -163,9 +163,19 @@ export default {
       searchWindowFlg: false,
     }
   },
+  computed: {
     menuLists() {
       return this.$store.getters['menu/getLists']
     },
+    isMobile() {
+      const headerBP = 1263
+      if (this.windowWidth < headerBP) {
+        return true
+      } else {
+        return false
+      }
+    },
+  },
   mounted() {
     this.$store.dispatch('menu/getLists')
     window.addEventListener('resize', this.resizeWindow)
