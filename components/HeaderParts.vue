@@ -161,69 +161,6 @@ export default {
       menuFlg: false,
       subMenuFlg: false,
       searchWindowFlg: false,
-      menuLists: [
-        {
-          MenuTitle: 'レンタルご利用案内',
-          ActionURL: 'https://takenaka-rental.com/SpecialPage/PageView/14',
-          IconImageURL: 'mdi-information-outline',
-          SubMenuCnt: '8',
-          SubMenuList: [
-            {
-              MenuTitle: 'ご利用方法',
-              ActionURL: 'https://takenaka-rental.com/SpecialPage/PageView/14#rental-flow',
-              SubMenuCnt: '0',
-            },
-            {
-              MenuTitle: 'はじめての方へ',
-              ActionURL: 'https://takenaka-rental.com/SpecialPage/PageView/14#entry',
-              SubMenuCnt: '0',
-            },
-            {
-              MenuTitle: 'よくある質問',
-              ActionURL: 'https://takenaka-rental.com/SpecialPage/PageView/11',
-              SubMenuCnt: '0',
-            },
-            {
-              MenuTitle: '用語集',
-              ActionURL: 'https://www.takenaka-co.co.jp/01rental/rental_term/rental_term.html',
-              SubMenuCnt: '0',
-            },
-            {
-              MenuTitle: 'スクリーンサイズ表',
-              ActionURL: 'https://takenaka-rental.com/screen/index',
-              SubMenuCnt: '0',
-            },
-            {
-              MenuTitle: 'レンタル申込書',
-              ActionURL: 'https://takenaka-rental.com/Resources/Top%20menu/rental%20order%20sheet_20181217.pdf',
-              SubMenuCnt: '0',
-            },
-            {
-              MenuTitle: '会社概要',
-              ActionURL: 'https://www.takenaka-co.co.jp/company/profile.html',
-              SubMenuCnt: '0',
-            },
-          ],
-        },
-        {
-          MenuTitle: 'カテゴリからさがす',
-          ActionURL: '/category',
-          IconImageURL: 'mdi-shape-outline',
-          SubMenuCnt: '0',
-        },
-        // {
-        //   MenuTitle: "閲覧履歴",
-        //   ActionURL: "/history",
-        //   IconImageURL: "mdi-history",
-        //   SubMenuCnt: "0",
-        // },
-        {
-          MenuTitle: 'お問い合わせ',
-          ActionURL: 'https://www.takenaka-co.co.jp/contact/index.html',
-          IconImageURL: 'mdi-email-outline',
-          SubMenuCnt: '0',
-        },
-      ],
     }
   },
     menuLists() {
