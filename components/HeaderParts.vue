@@ -49,6 +49,15 @@
                       </a>
                     </li>
                   </ul>
+                  <!-- サブメニューなし -->
+                  <div v-else>
+                    <no-sub-menu
+                      :menu-type="root.MenuType"
+                      :action-url="root.ActionURL"
+                      :icon-image-url="root.IconImageURL"
+                      :title="root.MenuTitle">
+                    </no-sub-menu>
+                  </div>
                 </li>
               </ul>
             </nav>
