@@ -94,7 +94,7 @@
               <div class="descripsion line-height-25em mt-5 text-body-2" v-html="productInfoList.Description"></div>
               <!-- eslint-enable -->
               <div class="case-size mt-5">
-                <v-btn color="primary" :disabled="!isCaseSize" @click="caseSizeDialog = true" elevation="1">
+                <v-btn elevation="1" color="primary" :disabled="!isCaseSize" @click="caseSizeDialog = true">
                   <v-icon class="mr-2">mdi-archive-outline</v-icon>ケースサイズ
                 </v-btn>
               </div>
