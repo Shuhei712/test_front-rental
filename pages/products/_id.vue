@@ -292,6 +292,7 @@ export default {
         itemsToShow: 1,
       },
       tariffDialog: false,
+      caseSizeDialog: false,
       breadCrumbs: [],
     }
   },
@@ -342,6 +343,9 @@ export default {
     },
     reseiveTariffDialogFlg(value) {
       this.tariffDialog = value
+    },
+    reseiveCaseSizeDialogFlg(value) {
+      this.caseSizeDialog = value
     },
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
