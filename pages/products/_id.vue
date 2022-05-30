@@ -5,6 +5,11 @@
       :items="productTariffList.TariffList"
       @change-tariff-dialog="reseiveTariffDialogFlg">
     </tariff-card>
+    <case-size-card
+      :dialog="caseSizeDialog"
+      :case-size-info="productCaseInfo"
+      @change-case-size-dialog="reseiveCaseSizeDialogFlg">
+    </case-size-card>
     <top-bar title="機材詳細" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="detail__inner py-6 py-sm-10 py-lg-16">
       <div class="content px-2 px-lg-0">
