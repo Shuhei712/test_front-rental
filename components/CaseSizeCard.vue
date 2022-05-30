@@ -59,9 +59,9 @@ export default {
       required: true,
     },
     caseSizeInfo: {
-      type: Array,
+      type: Object,
       required: false,
-      default: () => [],
+      default: () => {},
     },
   },
   data() {
