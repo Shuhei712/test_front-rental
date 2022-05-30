@@ -5,6 +5,11 @@
       :items="productTariffList.TariffList"
       @change-tariff-dialog="reseiveTariffDialogFlg">
     </tariff-card>
+    <case-size-card
+      :dialog="caseSizeDialog"
+      :case-size-info="productCaseInfo"
+      @change-case-size-dialog="reseiveCaseSizeDialogFlg">
+    </case-size-card>
     <top-bar title="機材詳細" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="detail__inner py-6 py-sm-10 py-lg-16">
       <div class="content px-2 px-lg-0">
@@ -89,7 +94,9 @@
               <div class="descripsion line-height-25em mt-5 text-body-2" v-html="productInfoList.Description"></div>
               <!-- eslint-enable -->
               <div class="case-size mt-5">
-                <v-btn color="primary" disabled><v-icon class="mr-2">mdi-archive-outline</v-icon>ケースサイズ</v-btn>
+                <v-btn color="primary" :disabled="!isCaseSize" @click="caseSizeDialog = true" elevation="1">
+                  <v-icon class="mr-2">mdi-archive-outline</v-icon>ケースサイズ
+                </v-btn>
               </div>
             </div>
           </div>
@@ -285,6 +292,7 @@ export default {
         itemsToShow: 1,
       },
       tariffDialog: false,
+      caseSizeDialog: false,
       breadCrumbs: [],
     }
   },
@@ -319,6 +327,9 @@ export default {
     isCategoryName2() {
       return this.productInfoList.CategoryTagID02 !== null
     },
+    isCaseSize() {
+      return this.productInfoList.CaseSizeID !== null
+    },
   },
   watch: {
     carouselData() {
@@ -332,6 +343,9 @@ export default {
     },
     reseiveTariffDialogFlg(value) {
       this.tariffDialog = value
+    },
+    reseiveCaseSizeDialogFlg(value) {
+      this.caseSizeDialog = value
     },
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
