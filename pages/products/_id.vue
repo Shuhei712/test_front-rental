@@ -67,9 +67,7 @@
                 </div>
                 <div class="price__product d-flex align-center mr-3 mr-sm-5 mb-2">
                   <div class="price__product-inner d-flex align-baseline">
-                    <span class="price__val letter-space-015em font-weight-medium">{{
-                      productInfoList.PriceValue
-                    }}</span>
+                    <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
                     <span class="price__unit font-weight-light">{{ productInfoList.PriceUnit }}</span>
                   </div>
                 </div>
@@ -329,6 +327,18 @@ export default {
     },
     isCaseSize() {
       return this.productInfoList.CaseSizeID !== null
+    },
+    getPrice() {
+      switch (this.productInfoList.priceType) {
+        case 0:
+          return this.productInfoLists.priceValue
+        case 1:
+          return this.productInfoList.priceValue
+        case 9:
+          return 'ASK'
+        default:
+          return 'ASK'
+      }
     },
   },
   watch: {
