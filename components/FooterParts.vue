@@ -271,7 +271,7 @@ export default {
         }
       }
       .mail__copy {
-        border: 1px solid $line !important;
+        border: 1px solid #8e8e8e !important;
         font-size: 13px !important;
 
         @include mq(sm) {

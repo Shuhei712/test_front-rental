@@ -98,7 +98,9 @@
         </div>
       </div>
     </div>
-    <div class="header__corporate--pc">
+    <div
+      v-if="$route.path === '/' || $route.path === 'index'"
+      class="header__corporate--pc">
       <a
         class="hover-opacity d-flex align-center text-caption letter-space-03em mr-2 mr-xl-5"
         href="https://www.takenaka-co.co.jp/"
@@ -298,12 +300,10 @@ ul {
       flex-direction: column !important;
       width: 100%;
       min-height: 100vh;
-      opacity: 0;
-      visibility: hidden;
       top: 0;
-      left: 0;
+      left: 100%;
       position: fixed;
-      transition: opacity 0.4s, visibility 0.4s;
+      transition: left 0.4s;
     }
   }
 
@@ -368,7 +368,7 @@ ul {
       visibility: hidden;
       width: 230px;
       position: absolute;
-      top: 30px;
+      top: 100%;
       transition: opacity 0.4s, visibility 0.4s;
 
       &.show {
@@ -382,8 +382,8 @@ ul {
         box-shadow: none;
         width: 100%;
         display: none;
+        padding-top: 10px;
         position: relative;
-        top: 10px;
 
         &.show {
           display: block;
@@ -528,8 +528,7 @@ ul {
 
   .header__main {
     @include mq(lg) {
-      opacity: 1;
-      visibility: visible;
+      left: 0;
     }
   }
 

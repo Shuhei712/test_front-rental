@@ -32,7 +32,8 @@
                 v-scroll-to="{ el: '#category-id_' + root.CategoryID, offset: -130 }"
                 class="d-flex align-center text-gray">
                 <v-icon class="mr-2">{{ root.IconImageURL }}</v-icon>
-                {{ root.CategoryName }}<v-icon color="#878787">mdi-chevron-down</v-icon>
+                <span class="category__text">{{ root.CategoryName }}</span>
+                <v-icon color="#878787">mdi-chevron-down</v-icon>
               </a>
             </li>
           </ul>
@@ -193,6 +194,12 @@ $other-bg: #563a2e;
       li {
         min-width: calc((100% - 36px) / 2); // margin-right 16px*2
       }
+    }
+
+    .category__text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }

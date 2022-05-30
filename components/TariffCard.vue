@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="tariff-wrap text-center">
     <v-dialog v-model="tariffDialog" width="600">
       <v-card class="tariff">
         <v-card-title class="text-h5 primary text-white"> 2日目以降の料金 </v-card-title>
@@ -54,3 +54,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.tariff-wrap {
+  z-index: 600;
+}
+</style>

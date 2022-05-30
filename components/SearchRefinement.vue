@@ -127,7 +127,8 @@
           <v-row justify="center" no-gutters>
             <v-col cols="10" sm="5" class="mb-3 mb-md-5">
               <v-btn color="primary" elevation="0" block small @click="sendSearchConditions()">
-                <v-icon class="mr-2" small>mdi-text-search</v-icon>この条件で検索
+                <v-icon class="mr-2" small>mdi-text-search</v-icon>
+                <span class="lh-crop-12">この条件で検索</span>
               </v-btn>
             </v-col>
             <v-col cols="10" sm="5" class="mb-3 mb-md-5 mx-sm-5">
@@ -139,16 +140,18 @@
                 block
                 small
                 @click="resetAll()">
-                <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>すべての条件をリセット
+                <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>
+                <span class="lh-crop-12">すべての条件をリセット</span>
               </v-btn>
               <v-btn v-else color="primary" elevation="0" block small @click="toggleFlg()">
-                <v-icon class="mr-2" small>mdi-chevron-left</v-icon>選択状態で戻る
+                <v-icon class="mr-2" small>mdi-chevron-left</v-icon>
+                <span class="lh-crop-12">選択状態で戻る</span>
               </v-btn>
             </v-col>
             <v-col cols="10" sm="5">
               <v-btn color="line" block outlined small @click="closeDialog()">
                 <v-icon class="mr-2" color="primary" small>mdi-close</v-icon>
-                <span class="text-gray">変更せずに閉じる</span>
+                <span class="text-gray lh-crop-12">変更せずに閉じる</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -302,6 +305,10 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
+
+.search-refinement {
+  z-index: 600;
+}
 
 .dialog-card {
   position: relative;
