@@ -67,9 +67,7 @@
                 </div>
                 <div class="price__product d-flex align-center mr-3 mr-sm-5 mb-2">
                   <div class="price__product-inner d-flex align-baseline">
-                    <span class="price__val letter-space-015em font-weight-medium">{{
-                      productInfoList.PriceValue
-                    }}</span>
+                    <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
                     <span class="price__unit font-weight-light">{{ productInfoList.PriceUnit }}</span>
                   </div>
                 </div>
@@ -94,7 +92,7 @@
               <div class="descripsion line-height-25em mt-5 text-body-2" v-html="productInfoList.Description"></div>
               <!-- eslint-enable -->
               <div class="case-size mt-5">
-                <v-btn color="primary" :disabled="!isCaseSize" @click="caseSizeDialog = true" elevation="1">
+                <v-btn elevation="1" color="primary" :disabled="!isCaseSize" @click="caseSizeDialog = true">
                   <v-icon class="mr-2">mdi-archive-outline</v-icon>ケースサイズ
                 </v-btn>
               </div>
@@ -173,8 +171,8 @@
               </div>
               <div class="product-document__content d-flex flex-wrap justify-center mt-10">
                 <v-card
-                  v-for="(list, index) in downloadDocLists"
-                  :key="index"
+                  v-for="list in downloadDocLists"
+                  :key="list.DocumentName"
                   elevation="0"
                   class="document document--pdf d-flex flex-column align-center px-2 py-3 ma-2 mb-3"
                   :href="list.DocumentURL"
@@ -188,8 +186,8 @@
                   </div>
                 </v-card>
                 <v-card
-                  v-for="(list, index) in linkDocLists"
-                  :key="index"
+                  v-for="list in linkDocLists"
+                  :key="list.DocumentName"
                   elevation="0"
                   class="document document--link d-flex flex-column align-center px-2 py-3 ma-2 mb-3"
                   :href="list.DocumentURL"
@@ -329,6 +327,18 @@ export default {
     },
     isCaseSize() {
       return this.productInfoList.CaseSizeID !== null
+    },
+    getPrice() {
+      switch (this.productInfoList.priceType) {
+        case 0:
+          return this.productInfoLists.priceValue
+        case 1:
+          return this.productInfoList.priceValue
+        case 9:
+          return 'ASK'
+        default:
+          return 'ASK'
+      }
     },
   },
   watch: {
