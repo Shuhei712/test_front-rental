@@ -171,8 +171,8 @@
               </div>
               <div class="product-document__content d-flex flex-wrap justify-center mt-10">
                 <v-card
-                  v-for="(list, index) in downloadDocLists"
-                  :key="index"
+                  v-for="list in downloadDocLists"
+                  :key="list.DocumentName"
                   elevation="0"
                   class="document document--pdf d-flex flex-column align-center px-2 py-3 ma-2 mb-3"
                   :href="list.DocumentURL"
@@ -186,8 +186,8 @@
                   </div>
                 </v-card>
                 <v-card
-                  v-for="(list, index) in linkDocLists"
-                  :key="index"
+                  v-for="list in linkDocLists"
+                  :key="list.DocumentName"
                   elevation="0"
                   class="document document--link d-flex flex-column align-center px-2 py-3 ma-2 mb-3"
                   :href="list.DocumentURL"
