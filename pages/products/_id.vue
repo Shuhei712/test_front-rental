@@ -334,6 +334,8 @@ export default {
           return this.productInfoList.PriceValue
         case 1:
           return this.productInfoList.PriceValue
+        case 2:
+          return '本体に含む'
         case 9:
           return 'ASK'
         default:

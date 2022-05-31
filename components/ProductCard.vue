@@ -161,6 +161,8 @@ export default {
           return this.priceValue
         case 1:
           return this.priceValue
+        case 2:
+          return '本体に含む'
         case 9:
           return 'ASK'
         default:
