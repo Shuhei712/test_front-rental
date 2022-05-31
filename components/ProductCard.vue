@@ -38,7 +38,7 @@
           <div class="price__product d-flex align-center mr-3 mr-sm-5">
             <div class="price__product-inner d-flex align-baseline">
               <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
-              <span class="price__unit font-weight-light">{{ priceUnit }}</span>
+              <span v-if="isPriceUnit" class="price__unit font-weight-light">{{ priceUnit }}</span>
             </div>
           </div>
           <button class="price__more d-flex align-center px-md-3" @click="openTariffModal(id, 1)">
@@ -56,7 +56,7 @@
       <div class="price__product d-flex align-center mr-3 mr-sm-5 mb-2">
         <div class="price__product-inner d-flex align-baseline">
           <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
-          <span class="price__unit font-weight-light">{{ priceUnit }}</span>
+          <span v-if="isPriceUnit" class="price__unit font-weight-light">{{ priceUnit }}</span>
         </div>
       </div>
       <button class="price__more d-flex align-center mb-2 px-md-3" @click="openTariffModal(id, 1)">
@@ -174,6 +174,20 @@ export default {
     },
     isCategoryName2() {
       return this.categoryName02 !== null
+    },
+    isPriceUnit() {
+      switch (this.priceType) {
+        case 0:
+          return true
+        case 1:
+          return true
+        case 2:
+          return false
+        case 9:
+          return false
+        default:
+          return true
+      }
     },
   },
   methods: {
