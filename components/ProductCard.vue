@@ -41,7 +41,10 @@
               <span v-if="isPriceUnit" class="price__unit font-weight-light">{{ priceUnit }}</span>
             </div>
           </div>
-          <button class="price__more d-flex align-center px-md-3" @click="openTariffModal(id, 1)">
+          <button
+            class="price__more d-flex align-center px-md-3"
+            :disabled="!isTariffBtn"
+            @click="openTariffModal(id, 1)">
             <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
             <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
           </button>
@@ -59,7 +62,10 @@
           <span v-if="isPriceUnit" class="price__unit font-weight-light">{{ priceUnit }}</span>
         </div>
       </div>
-      <button class="price__more d-flex align-center mb-2 px-md-3" @click="openTariffModal(id, 1)">
+      <button
+        class="price__more d-flex align-center mb-2 px-md-3"
+        :disabled="!isTariffBtn"
+        @click="openTariffModal(id, 1)">
         <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
         <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
       </button>
@@ -189,6 +195,20 @@ export default {
           return true
       }
     },
+    isTariffBtn() {
+      switch (this.priceType) {
+        case 0:
+          return true
+        case 1:
+          return true
+        case 2:
+          return false
+        case 9:
+          return false
+        default:
+          return true
+      }
+    },
   },
   methods: {
     async getProductTariff(productID, tariffID) {
@@ -304,6 +324,16 @@ $bp_xs: 362px;
       @media screen and (max-width: $bp_xs) {
         flex-direction: row;
         width: 100%;
+      }
+    }
+
+    .price__more:disabled {
+      background-color: #e0e0e0;
+      color: #a6a6a6;
+
+      .price__class {
+        background-color: #fffafa;
+        color: #a6a6a6;
       }
     }
 
