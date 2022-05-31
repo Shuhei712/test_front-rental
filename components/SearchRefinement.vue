@@ -1,5 +1,5 @@
 <template>
-  <div class="search-refinement text-center">
+  <div class="popup text-center">
     <v-dialog v-model="dialogFlg" width="700" scrollable>
       <v-card class="dialog-card">
         <div class="dialog-card__head px-3 pt-4 pt-md-7">
@@ -305,10 +305,6 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
-
-.search-refinement {
-  z-index: 600;
-}
 
 .dialog-card {
   position: relative;
