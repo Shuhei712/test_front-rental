@@ -329,11 +329,11 @@ export default {
       return this.productInfoList.CaseSizeID !== null
     },
     getPrice() {
-      switch (this.productInfoList.priceType) {
+      switch (this.productInfoList.PriceType) {
         case 0:
-          return this.productInfoLists.priceValue
+          return this.productInfoList.PriceValue
         case 1:
-          return this.productInfoList.priceValue
+          return this.productInfoList.PriceValue
         case 9:
           return 'ASK'
         default:
@@ -387,7 +387,7 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_info_master.php', param)
-      // console.log(res)
+      console.log(res)
       this.productInfoList = res.ProductInfo
     },
     async getProductItemInfo() {
