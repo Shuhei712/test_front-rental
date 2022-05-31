@@ -68,10 +68,15 @@
                 <div class="price__product d-flex align-center mr-3 mr-sm-5 mb-2">
                   <div class="price__product-inner d-flex align-baseline">
                     <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
-                    <span class="price__unit font-weight-light">{{ productInfoList.PriceUnit }}</span>
+                    <span v-if="isPriceUnit" class="price__unit font-weight-light">
+                      {{ productInfoList.PriceUnit }}
+                    </span>
                   </div>
                 </div>
-                <button class="price__more d-flex align-center mb-2 px-md-3" @click="tariffDialog = true">
+                <button
+                  class="price__more d-flex align-center mb-2 px-md-3"
+                  :disabled="!isTariffBtn"
+                  @click="tariffDialog = true">
                   <span class="price__class mb-1 mb-md-0 mr-md-2">{{ productTariffList.TariffSectionName }}</span>
                   <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
                 </button>
@@ -340,6 +345,34 @@ export default {
           return 'ASK'
         default:
           return 'ASK'
+      }
+    },
+    isPriceUnit() {
+      switch (this.productInfoList.PriceType) {
+        case 0:
+          return true
+        case 1:
+          return true
+        case 2:
+          return false
+        case 9:
+          return false
+        default:
+          return true
+      }
+    },
+    isTariffBtn() {
+      switch (this.productInfoList.PriceType) {
+        case 0:
+          return true
+        case 1:
+          return true
+        case 2:
+          return false
+        case 9:
+          return false
+        default:
+          return true
       }
     },
   },
@@ -659,6 +692,17 @@ $bp_xs: 362px;
             width: 100%;
           }
         }
+
+        .price__more:disabled {
+          background-color: #e0e0e0;
+          color: #a6a6a6;
+
+          .price__class {
+            background-color: #fffafa;
+            color: #a6a6a6;
+          }
+        }
+
         .price__class {
           background-color: #ffffff;
           border-radius: 50%;
