@@ -98,9 +98,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="$route.path === '/' || $route.path === 'index'"
-      class="header__corporate--pc">
+    <div v-if="$route.path === '/' || $route.path === 'index'" class="header__corporate--pc">
       <a
         class="hover-opacity d-flex align-center text-caption letter-space-03em mr-2 mr-xl-5"
         href="https://www.takenaka-co.co.jp/"
@@ -118,6 +116,7 @@
         </div>
         <v-form class="d-flex align-center" @submit.prevent>
           <v-text-field
+            ref="searchWindow"
             v-model="keyword"
             color="primary"
             placeholder="キーワード検索"
@@ -185,6 +184,15 @@ export default {
     },
     toggleSearchWindow() {
       this.searchWindowFlg = !this.searchWindowFlg
+      if (this.searchWindowFlg) {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs.searchWindow.$refs.input.focus()
+          }, 100)
+        })
+      } else {
+        this.keyword = undefined
+      }
     },
     resizeWindow() {
       const headerBP = 1263
