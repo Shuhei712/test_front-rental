@@ -1,15 +1,19 @@
 <template>
-  <div class="tariff-wrap text-center">
-    <v-dialog v-model="tariffDialog" width="600">
+  <div class="popup text-center">
+    <v-dialog v-model="tariffDialog" width="600" scrollable>
       <v-card class="tariff">
-        <v-card-title class="text-h5 primary text-white"> 2日目以降の料金 </v-card-title>
-        <v-card-text>
-          <v-data-table :headers="tariffHeaders" :items="items" :items-per-page="5"></v-data-table>
+        <v-card-title class="tariff__title text-h5">2日目以降の料金</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text class="tariff__content">
+          <v-data-table
+            :headers="tariffHeaders"
+            :items="items"
+            :items-per-page="5"></v-data-table>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="closeDialog()">確認</v-btn>
+          <v-btn color="primary" text @click="closeDialog()">閉じる</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -56,7 +60,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tariff-wrap {
-  z-index: 600;
+@import '~/assets/css/common.scss';
+
+.tariff {
+  &__title {
+    color: $primary !important;
+  }
+
+  &__content {
+    @include scrollbar();
+  }
 }
 </style>

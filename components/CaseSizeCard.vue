@@ -1,17 +1,19 @@
 <template>
-  <div class="text-center">
-    <v-dialog v-model="caseSizeDialog" width="600">
+  <div class="popup text-center">
+    <v-dialog v-model="caseSizeDialog" width="600" scrollable>
       <v-card class="case-size">
-        <v-card-title class="text-h5 primary text-white">ケースサイズ</v-card-title>
-        <v-card-text>
+        <v-card-title class="case-size__title text-h5">ケースサイズ</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text class="case-size__content">
           <div class="table my-3">
-            <div class="table-head d-flex align-center px-3 py-2">
+            <div class="table-head d-flex align-center px-3 py-2 mb-2">
               <v-icon class="mr-2">mdi-table</v-icon>ケースサイズ表
             </div>
             <v-data-table
               :headers="caseSizeHeaders"
               :items="caseSizeTableItem"
-              :disable-sort="false"
+              disable-sort
+              dense
               hide-default-footer></v-data-table>
           </div>
           <div v-if="caseSizeInfo.Description !== null" class="description my-3">
@@ -44,7 +46,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="closeDialog()">確認</v-btn>
+          <v-btn color="primary" text @click="closeDialog()">閉じる</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -105,6 +107,14 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/css/common.scss';
 .case-size {
+  &__content {
+    @include scrollbar();
+  }
+
+  &__title {
+    color: $primary !important;
+  }
+
   .table-head,
   .description-head,
   .image-head {
