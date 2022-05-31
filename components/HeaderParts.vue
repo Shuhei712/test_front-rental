@@ -98,9 +98,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="$route.path === '/' || $route.path === 'index'"
-      class="header__corporate--pc">
+    <div v-if="$route.path === '/' || $route.path === 'index'" class="header__corporate--pc">
       <a
         class="hover-opacity d-flex align-center text-caption letter-space-03em mr-2 mr-xl-5"
         href="https://www.takenaka-co.co.jp/"
