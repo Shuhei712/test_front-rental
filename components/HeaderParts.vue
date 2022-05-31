@@ -118,6 +118,7 @@
         </div>
         <v-form class="d-flex align-center" @submit.prevent>
           <v-text-field
+            ref="searchWindow"
             v-model="keyword"
             color="primary"
             placeholder="キーワード検索"
@@ -185,6 +186,15 @@ export default {
     },
     toggleSearchWindow() {
       this.searchWindowFlg = !this.searchWindowFlg
+      if (this.searchWindowFlg) {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs.searchWindow.$refs.input.focus()
+          }, 100)
+        })
+      } else {
+        this.keyword = undefined
+      }
     },
     resizeWindow() {
       const headerBP = 1263
