@@ -1,5 +1,6 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error" id="products" class="products">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top" class="products">
+    <to-top-btn></to-top-btn>
     <tariff-card :dialog="tariffDialog" :items="tariffLists" @change-tariff-dialog="reseiveTariffDialogFlg">
     </tariff-card>
     <search-refinement
@@ -214,6 +215,9 @@ export default {
         this.page = value
       },
     },
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     async getCategoryInfo(categoryID) {

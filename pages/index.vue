@@ -72,6 +72,7 @@ export default {
     this.$store.commit('loading/changeStatus', false)
   },
   updated() {
+    this.$scrollBackButton()
   },
   methods: {
     async getMenuList() {

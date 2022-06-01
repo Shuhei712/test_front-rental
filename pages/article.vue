@@ -1,5 +1,6 @@
 <template>
-  <section class="article">
+  <section id="top" class="article">
+    <to-top-btn></to-top-btn>
     <top-bar title="特設ページ 一覧" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="article__inner d-lg-flex py-16 px-3 px-lg-0">
       <category-lists></category-lists>
@@ -77,6 +78,9 @@ export default {
     this.setBreadCrumbs()
     await this.getSpecialPageList()
     this.$store.commit('loading/changeStatus', false)
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     async getSpecialPageList() {

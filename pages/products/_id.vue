@@ -1,5 +1,6 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error" class="detail">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top" class="detail">
+    <to-top-btn></to-top-btn>
     <tariff-card
       :dialog="tariffDialog"
       :items="productTariffList.TariffList"
@@ -381,7 +382,9 @@ export default {
       this.$refs.carousel.slideTo(this.carouselData)
     },
   },
-
+  updated() {
+    this.$scrollBackButton()
+  },
   methods: {
     updateCarousel(payload) {
       this.carouselData = payload.currentSlide
