@@ -15,7 +15,7 @@
       <div class="article__list order-1 order-sm-0">
         <div class="slide__prev" @click="slidePrev()"></div>
         <div class="slide__next" @click="slideNext()"></div>
-        <hooper ref="article" class="hooper" :settings="hooperSettings">
+        <hooper ref="article" :settings="hooperSettings">
           <slide v-for="(list, index) in matchedSpecialPageLists" :key="index">
             <article-card
               :color="toPageClassColorFrom(list.PageClassID)"
@@ -269,16 +269,16 @@ export default {
   }
 }
 
-.hooper-slide {
+.hooper::v-deep .hooper-slide {
   height: auto !important;
   padding: 0 5px !important;
+  user-select: none; // CSS3
+  -moz-user-select: none; // Firefox
+  -webkit-user-select: none; // Safari、Chromeなど
+  -ms-user-select: none; // Edge
   @include mq(sm) {
     max-height: 70px !important;
     margin: 5px 0 !important;
   }
-}
-
-.is-clone {
-  height: auto !important;
 }
 </style>
