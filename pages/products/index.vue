@@ -143,7 +143,7 @@
         <div class="product__pagination text-center mt-15">
           <v-pagination
             v-model="pageNumber"
-            v-scroll-to="{ el: '#products', offset: -200 }"
+            v-scroll-to="{ el: '#top', offset: -200 }"
             :length="pageMaxLength"
             @input="changePage"></v-pagination>
         </div>
