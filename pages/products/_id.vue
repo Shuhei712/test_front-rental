@@ -158,7 +158,13 @@
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-information-outline</v-icon>製品情報
               </div>
               <div v-for="(object, index) in infoLists" :key="index" class="product-info__content mt-10">
-                <div v-for="list in object.SectionList" :key="list.ProductSubjectID" v-html="list.HtmlCode"></div>
+                <div
+                  v-for="list in object.SectionList"
+                  :key="list.ProductSubjectID"
+                  class="d-md-flex align-center mb-15">
+                  <div class="section-head text-center mb-5 mb-lg-0">{{ list.SectionName }}</div>
+                  <div class="section-html flex-grow-1" v-html="list.HtmlCode"></div>
+                </div>
               </div>
             </section>
             <section id="product-specification" class="product-specification content__sec mt-15">
@@ -787,56 +793,20 @@ $bp_xs: 362px;
 
       // 以下のCSSは読み込むHTMLに従属させる
       .product-info__content {
-        width: 100%;
-        table,
-        tbody,
-        tr {
-          @include mq(md) {
-            width: 100%;
-            display: block;
-          }
-        }
-        th {
+        .section-head {
           width: 400px;
+          font-size: 1.15rem;
+          color: $text;
+
+          @include mq(lg) {
+            width: 300px;
+          }
 
           @include mq(md) {
             width: 100%;
-            display: block;
             background-color: $cushion;
-            padding: 10px 20px;
-          }
-        }
-
-        td {
-          @include mq(md) {
-            width: 100%;
-            display: block;
-          }
-        }
-
-        ul {
-          padding-left: 0;
-        }
-
-        li {
-          list-style: none;
-          padding: 10px 20px;
-          border-left: 2px solid $line;
-          margin-bottom: 20px;
-
-          img {
-            width: 100%;
-            object-fit: cover;
-
-            @include mq(md) {
-              margin-top: 20px;
-            }
-          }
-
-          @include mq(md) {
-            margin-top: 20px;
-            border-left: 0;
-            padding: 5px 10px;
+            padding: 10px 0;
+            font-size: 1rem;
           }
         }
       }
