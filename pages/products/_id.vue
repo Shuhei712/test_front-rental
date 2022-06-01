@@ -794,12 +794,12 @@ $bp_xs: 362px;
       // 以下のCSSは読み込むHTMLに従属させる
       .product-info__content {
         .section-head {
-          width: 400px;
+          min-width: 400px;
           font-size: 1.15rem;
           color: $text;
 
           @include mq(lg) {
-            width: 300px;
+            min-width: 300px;
           }
 
           @include mq(md) {
