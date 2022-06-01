@@ -12,7 +12,7 @@ if (process.client) {
 const scrollBackButton = () => {
   gsap.to('.top__back', {
     scrollTrigger: {
-      trigger: '.back-btn-trigger',
+      // trigger: '.back-btn-trigger',
       markers: false,
       start: 'top top',
       end: 'bottom top',
