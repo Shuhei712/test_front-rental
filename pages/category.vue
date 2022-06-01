@@ -1,5 +1,6 @@
 <template>
-  <section class="category">
+  <section id="top" class="category">
+    <to-top-btn></to-top-btn>
     <top-bar title="カテゴリから探す" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner category__inner py-16">
       <div class="category__search mb-16">
@@ -97,7 +98,9 @@ export default {
     await this.getCategoryList()
     this.$store.commit('loading/changeStatus', false)
   },
-  beforeDestroy() {},
+  updated() {
+    this.$scrollBackButton()
+  },
   methods: {
     async getCategoryList() {
       const param = new URLSearchParams()

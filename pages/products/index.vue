@@ -1,5 +1,6 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error" id="products" class="products">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top" class="products">
+    <to-top-btn></to-top-btn>
     <tariff-card :dialog="tariffDialog" :items="tariffLists" @change-tariff-dialog="reseiveTariffDialogFlg">
     </tariff-card>
     <search-refinement
@@ -142,7 +143,7 @@
         <div class="product__pagination text-center mt-15">
           <v-pagination
             v-model="pageNumber"
-            v-scroll-to="{ el: '#products', offset: -200 }"
+            v-scroll-to="{ el: '#top', offset: -200 }"
             :length="pageMaxLength"
             @input="changePage"></v-pagination>
         </div>
@@ -214,6 +215,9 @@ export default {
         this.page = value
       },
     },
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     async getCategoryInfo(categoryID) {

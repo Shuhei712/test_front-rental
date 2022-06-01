@@ -40,13 +40,6 @@
   </div>
 </template>
 <script>
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
 export default {
   loading: false,
   data() {
@@ -79,50 +72,9 @@ export default {
     this.$store.commit('loading/changeStatus', false)
   },
   updated() {
-    this.scrollShareButton()
-    this.scrollBackButton()
+    this.$scrollBackButton()
   },
   methods: {
-    scrollShareButton() {
-      gsap.to('.top', {
-        scrollTrigger: {
-          trigger: '.footer',
-          markers: false,
-          start: 'top bottom',
-          end: 'bottom top',
-          toggleClass: {
-            targets: '.top__share',
-            className: 'top__share--absolute',
-          },
-        },
-      })
-    },
-    scrollBackButton() {
-      gsap.to('.top__back', {
-        scrollTrigger: {
-          trigger: '.content',
-          markers: false,
-          start: 'top bottom',
-          end: 'bottom top',
-          toggleClass: {
-            targets: '.top__back',
-            className: 'top__back--active',
-          },
-        },
-      })
-      gsap.to('.top', {
-        scrollTrigger: {
-          trigger: '.footer',
-          markers: false,
-          start: 'top bottom',
-          end: 'bottom top',
-          toggleClass: {
-            targets: '.top__back',
-            className: 'top__back--absolute',
-          },
-        },
-      })
-    },
     async getMenuList() {
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
