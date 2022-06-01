@@ -20,7 +20,7 @@
             <div class="description-head d-flex align-center px-3 py-2 mb-2">
               <v-icon class="mr-2">mdi-alert-circle-check-outline</v-icon>詳細・注意事項
             </div>
-            <p>{{ caseSizeInfo.Description }}</p>
+            <p class="description-content">{{ caseSizeInfo.Description }}</p>
           </div>
           <div v-if="caseSizeInfo.CaseImageURL01 !== null" class="image my-3">
             <div class="image-head d-flex align-center px-3 py-2 mb-2">
@@ -119,6 +119,11 @@ export default {
   .description-head,
   .image-head {
     background-color: $cushion;
+  }
+
+  .description-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   .image-content {
