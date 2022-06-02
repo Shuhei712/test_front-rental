@@ -778,20 +778,7 @@ $bp_xs: 362px;
           }
         }
       }
-      // 以下のCSSは読み込むHTMLに従属させる
-      .w-400 {
-        width: 400px;
-      }
 
-      .bg-primary {
-        background-color: $primary;
-      }
-
-      .bg-cushion {
-        background-color: $cushion;
-      }
-
-      // 以下のCSSは読み込むHTMLに従属させる
       .product-info__content {
         .section-head {
           min-width: 400px;
@@ -811,35 +798,8 @@ $bp_xs: 362px;
         }
       }
 
-      // 以下のCSSは読み込むHTMLに従属させる
       .product-specification__content {
         width: 100%;
-
-        th,
-        td {
-          padding: 10px 20px;
-          border: solid 1px $line;
-        }
-
-        th {
-          @include mq(md) {
-            border: 0;
-          }
-        }
-
-        td {
-          @include mq(md) {
-            display: block;
-            width: 100% !important;
-            border: 0;
-          }
-        }
-
-        td:first-child {
-          @include mq(md) {
-            color: $primary;
-          }
-        }
       }
 
       .product-document__content {
@@ -897,6 +857,47 @@ $bp_xs: 362px;
           }
         }
       }
+
+      // 以下のCSSは読み込むHTMLに従属させる
+      // .w-400 {
+      //   width: 400px;
+      // }
+
+      // .bg-primary {
+      //   background-color: $primary;
+      // }
+
+      // .bg-cushion {
+      //   background-color: $cushion;
+      // }
+
+      // 以下のCSSは読み込むHTMLに従属させる
+      //   th,
+      //   td {
+      //     padding: 10px 20px;
+      //     border: solid 1px $line;
+      //   }
+
+      //   th {
+      //     @include mq(md) {
+      //       border: 0;
+      //     }
+      //   }
+
+      //   td {
+      //     @include mq(md) {
+      //       display: block;
+      //       width: 100% !important;
+      //       border: 0;
+      //     }
+      //   }
+
+      //   td:first-child {
+      //     @include mq(md) {
+      //       color: $primary;
+      //     }
+      //   }
+      // }
     }
   }
 }
