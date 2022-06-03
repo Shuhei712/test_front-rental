@@ -29,9 +29,20 @@
         <div class="detail__top d-flex flex-column flex-sm-row">
           <div class="top__image mr-0 mr-sm-5 d-flex flex-wrap d-sm-block">
             <div class="image__main mt-3 mt-md-0 mr-5 mr-sm-0">
+              <div ref="zoomArea" class="zoom-area">
+                <img ref="zoomImage" src="" alt="zoom-image" />
+              </div>
               <hooper ref="carousel" :settings="hooperSettings" @slide="updateCarousel">
                 <slide v-for="(list, index) in productInfoList.ProductImageList" :key="index">
-                  <img :src="list.ProductImageURL" :alt="list.ProductImageName" />
+                  <div
+                    ref="lensContainer"
+                    class="m-lens-container"
+                    @mouseenter="mouseEnter(index)"
+                    @mouseleave="mouseLeave"
+                    @mousemove="mouseMove(index, $event)">
+                    <img ref="lensImage" :src="list.ProductImageURL" :alt="list.ProductImageName" />
+                    <div ref="lens" class="m-lens"></div>
+                  </div>
                 </slide>
               </hooper>
             </div>
@@ -493,6 +504,39 @@ export default {
     getProductDoc() {
       this.docLists = this.productItemLists.filter((object) => object.SubjectKey === this.$config.PRODUCT_DOC)
     },
+    mouseEnter(index) {
+      const lens = this.$refs.lens[index]
+      const presentImage = this.$refs.lensImage[index]
+      const zoomArea = this.$refs.zoomArea
+      const zoomImage = this.$refs.zoomImage
+      const size = lens.offsetWidth
+      const scale = 500 / size
+      zoomArea.classList.add('active')
+      zoomImage.setAttribute('src', presentImage.currentSrc)
+      zoomImage.style.width = presentImage.offsetWidth * scale + 'px'
+      zoomImage.style.height = presentImage.offsetHeight * scale + 'px'
+    },
+    mouseLeave() {
+      const zoomArea = this.$refs.zoomArea
+      zoomArea.classList.remove('active')
+    },
+    mouseMove(index, event) {
+      const lens = this.$refs.lens[index]
+      const zoomImage = this.$refs.zoomImage
+      const size = lens.offsetWidth
+      const scale = 500 / size
+      const rect = event.currentTarget.getBoundingClientRect()
+      const mouseX = event.clientX
+      const mouseY = event.clientY
+      const offsetX = mouseX - rect.left
+      const offsetY = mouseY - rect.top
+      const left = offsetX - size / 2
+      const top = offsetY - size / 2
+      lens.style.top = top + 'px'
+      lens.style.left = left + 'px'
+      zoomImage.style.marginLeft = -(left * scale) + 'px'
+      zoomImage.style.marginTop = -(top * scale) + 'px'
+    },
   },
 }
 </script>
@@ -562,7 +606,7 @@ $bp_xs: 362px;
         width: 100%;
         max-width: 400px;
         min-width: 220px;
-        overflow: hidden;
+        // overflow: hidden;
         position: relative;
 
         @include mq(sm) {
@@ -574,6 +618,28 @@ $bp_xs: 362px;
           display: block;
           width: 100%;
           padding-top: 100%;
+        }
+
+        .zoom-area {
+          display: none;
+          position: absolute;
+          top: -1px;
+          left: 100%;
+          border: 1px solid $line;
+          background-color: #ffffff;
+          height: 500px;
+          width: 500px;
+          overflow: hidden;
+          z-index: 100;
+        }
+
+        .zoom-area.active {
+          display: block;
+        }
+
+        .zoom-area img {
+          object-fit: contain;
+          max-width: none !important;
         }
 
         .hooper {
@@ -591,6 +657,31 @@ $bp_xs: 362px;
           height: 100%;
           object-fit: contain;
         }
+      }
+
+      .m-lens-container {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        @include mq(md) {
+          pointer-events: none;
+        }
+      }
+
+      .m-lens {
+        display: none;
+        position: absolute;
+        z-index: 2;
+        background: $accent;
+        opacity: 0.3;
+        height: 172px;
+        width: 172px;
+      }
+
+      .m-lens-container:hover .m-lens {
+        display: block;
       }
 
       .image__sub {
