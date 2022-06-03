@@ -292,9 +292,6 @@
 </template>
 
 <script>
-import TariffCard from '~/components/TariffCard.vue'
-import '~/assets/css/old-rental.scss'
-
 export default {
   data() {
     return {
