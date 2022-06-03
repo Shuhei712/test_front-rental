@@ -338,6 +338,18 @@ export default {
 
     this.$store.commit('loading/changeStatus', false)
   },
+  head: {
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://rental-resource.takenaka-co.co.jp/catalog-page/detail/css/old-rental.css',
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://rental-resource.takenaka-co.co.jp/catalog-page/detail/css/product-info.css',
+      },
+    ],
+  },
   computed: {
     downloadDocLists() {
       return this.productDocLists.filter((object) => object.DocumentType === 0)
