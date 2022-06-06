@@ -174,7 +174,7 @@
                   :key="list.ProductSubjectID"
                   class="d-md-flex align-center mb-15">
                   <div class="section-head text-center mb-5 mb-lg-0">{{ list.SectionName }}</div>
-                  <div class="section-html flex-grow-1" v-html="list.HtmlCode"></div>
+                  <div class="section-html" v-html="list.HtmlCode"></div>
                 </div>
               </div>
             </section>
@@ -881,20 +881,24 @@ $bp_xs: 362px;
 
       .product-info__content {
         .section-head {
-          min-width: 400px;
+          width: 400px;
           font-size: 1.15rem;
-          color: $text;
+          color: $headingText;
+          padding: 10px 20px;
 
           @include mq(lg) {
-            min-width: 300px;
+            width: 300px;
           }
 
           @include mq(md) {
             width: 100%;
             background-color: $cushion;
-            padding: 10px 0;
+            padding: 10px 5px;
             font-size: 1rem;
           }
+        }
+        .section-html {
+          flex: 1;
         }
       }
 
