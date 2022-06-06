@@ -1,6 +1,6 @@
 <template>
   <section class="top__main pb-15">
-    <top-hexagon-rp></top-hexagon-rp>
+    <top-hexagon-rp :pickup-lists="pickupLists"></top-hexagon-rp>
     <v-container class="top__inner pa-0">
       <v-row class="main__catch" no-gutters>
         <v-col cols="12" class="mt-sm-5">
@@ -76,6 +76,12 @@
 
 <script>
 export default {
+  props: {
+    pickupLists: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       keyword: '',

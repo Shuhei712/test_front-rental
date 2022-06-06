@@ -1,6 +1,6 @@
 <template>
   <section class="top__main">
-    <top-hexagon></top-hexagon>
+    <top-hexagon :pickup-lists="pickupLists"></top-hexagon>
     <v-container class="top__inner py-16">
       <v-row class="main__catch" no-gutters>
         <v-col cols="12">
@@ -61,6 +61,12 @@
 
 <script>
 export default {
+  props: {
+    pickupLists: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       keyword: undefined,
