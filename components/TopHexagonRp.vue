@@ -10,14 +10,16 @@
               <div class="content__bg"></div>
               <div class="content__item">
                 <div class="item__container px-3">
-                  <div class="item__image text-center">
+                  <div class="item__image text-center mb-3 mb-md-6">
                     <img :src="pickUpItem.ImageURL" :alt="pickUpItem.PickupTitle" />
                   </div>
-                  <div class="item__maker text-caption text-md-body-2 letter-space-015em mb-1">
-                    {{ pickUpItem.PickupHeader }}
+                  <div class="item__info">
+                    <div class="item__maker text-caption text-md-body-2 letter-space-015em mb-1">
+                      {{ pickUpItem.PickupHeader }}
+                    </div>
+                    <div class="item__border mb-2"></div>
+                    <div class="item__name text-body-2 text-md-subtitle-1">{{ pickUpItem.PickupTitle }}</div>
                   </div>
-                  <div class="item__border mb-2"></div>
-                  <div class="item__name text-body-2 text-md-subtitle-1">{{ pickUpItem.PickupTitle }}</div>
                   <!-- <div class="item__name text-caption text-md-body-2">{{ pickUpItem.PickupTypeNumber }}</div> -->
                 </div>
                 <div class="item__btn text-center">
@@ -36,74 +38,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      pickUpLists: [
-        {
-          ImageURL: 'https://rental-resource.takenaka-co.co.jp/catalog-img/article/suggest/04.png',
-          PageURL: 'https://www.takenaka-co.co.jp/streaming/',
-          PickupCatchCopy1: 'ライブ配信に関する',
-          PickupCatchCopy2: 'お困りごとを解決！',
-          PickupDescription:
-            'ライブ配信に関するお困りごとを解決！\r\nオンラインイベント実績の多い弊社が、生配信もサポートします。',
-          PickupHeader: 'SPECIAL',
-          PickupTitle: 'ライブ配信ソリューション',
-          PickupType: 1,
-          PickupTypeNumber: null,
-          PicupHeaderID: 1,
-          ProductID: null,
-          TagID: null,
-        },
-        {
-          ImageURL: 'https://rental-resource.takenaka-co.co.jp/catalog-img/article/feature/03.png',
-          PageURL: 'https://www.takenaka-co.co.jp/thermal-camera/',
-          PickupCatchCopy1: 'サーモグラフィーカメラで',
-          PickupCatchCopy2: '安全なイベント運営を！',
-          PickupDescription: '高度な検知機能搭載サーモグラフィーカメラを使って安全なイベント運営を！',
-          PickupHeader: 'SPECIAL',
-          PickupTitle: 'サーモグラフィーカメラ特設ページ',
-          PickupType: 1,
-          PickupTypeNumber: null,
-          PicupHeaderID: 2,
-          ProductID: null,
-          TagID: null,
-        },
-        {
-          ImageURL:
-            'https://rental-document.takenaka-co.co.jp/catalog-img/Resources/root/visual_device/VR-50HD MkⅡ_top_re.png',
-          PageURL: null,
-          PickupCatchCopy1: 'イベント・ライブ配信向け',
-          PickupCatchCopy2: 'オールイン・ワンAVミキサー',
-          PickupDescription: 'イベント・ライブ配信向けオールイン・ワンAVミキサー',
-          PickupHeader: 'Roland',
-          PickupTitle: 'マルチフォーマットビデオスイッチャー',
-          PickupType: 0,
-          PickupTypeNumber: 'VR50HD MKⅡ',
-          PicupHeaderID: 3,
-          ProductID: 2594,
-          TagID: null,
-        },
-        {
-          ImageURL:
-            'https://rental-document.takenaka-co.co.jp/catalog-img/takenaka/01rental/04visual_device/img_visual_device/roland_vr-4hd.jpg',
-          PageURL: null,
-          PickupCatchCopy1: 'HDMI、コンポジ入力、XLR',
-          PickupCatchCopy2: 'RCAUSBストリーム出力',
-          PickupDescription: 'HDMI、コンポジ入力、XLR、\r\nRCAUSBストリーム出力',
-          PickupHeader: 'Roland',
-          PickupTitle: 'AVミキサー',
-          PickupType: 0,
-          PickupTypeNumber: 'VR4-HD',
-          PicupHeaderID: 4,
-          ProductID: 1801,
-          TagID: null,
-        },
-      ],
-    }
+  props: {
+    pickupLists: {
+      type: Array,
+      required: true,
+    },
   },
+
   computed: {
     pickUpItem() {
-      const itemLists = this.pickUpLists.filter((ele) => ele.PickupType === 0)
+      const itemLists = this.pickupLists.filter((ele) => ele.PickupType === 0)
       const max = itemLists.length
       const min = 0
       const pickUpNum = Math.floor(Math.random() * (max - min)) + min
@@ -231,12 +175,19 @@ export default {
     }
 
     .item__image {
+      position: relative;
+      height: 60%;
       @include mq(sm) {
         display: none;
       }
 
       img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         width: calc(#{$hexagon-width} - 45%);
+        max-height: 100%;
         object-fit: contain;
       }
     }

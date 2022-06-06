@@ -23,8 +23,8 @@
       <div class="hexagon"></div>
       <div class="hexagon"></div>
     </div>
-    <top-main class="hidden-md-and-down"></top-main>
-    <top-main-rp class="hidden-lg-and-up"></top-main-rp>
+    <top-main :pickup-lists="pickupLists" class="hidden-md-and-down"></top-main>
+    <top-main-rp :pickup-lists="pickupLists" class="hidden-lg-and-up"></top-main-rp>
     <top-notice :news-lists="newsLists"></top-notice>
     <div class="top__inner d-flex pt-16">
       <category-lists></category-lists>
@@ -63,12 +63,6 @@ export default {
       this.getSpecialPageList(),
       this.getPickUpTagList(),
     ])
-
-    this.menuLists = menuLists
-    this.pickupLists = pickupLists
-    this.newProductLists = newProductLists
-    this.specialPageLists = specialPageLists
-    this.pickupTagLists = pickupTagLists
     this.$store.commit('loading/changeStatus', false)
   },
   updated() {
@@ -81,7 +75,7 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_menu_list.php', param)
       // console.log(res)
-      return res.MenuRootList
+      this.menuLists = res.MenuRootList
     },
     async getNewsList() {
       const param = new URLSearchParams()
@@ -96,8 +90,8 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_pickup_list_top.php', param)
-      // console.log(res)
-      return res
+      console.log(res)
+      this.pickupLists = res.NewsReleaseList
     },
     async getNewProductList() {
       const param = new URLSearchParams()
@@ -106,7 +100,7 @@ export default {
       param.append('ListMaxCnt', 4)
       const res = await this.$axios.$post('get_new_product_list_top.php', param)
       // console.log(res)
-      return res.NewProductList
+      this.newProductLists = res.NewProductList
     },
     async getSpecialPageList() {
       const param = new URLSearchParams()
@@ -114,7 +108,7 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_special_page_list_top.php', param)
       // console.log(res)
-      return res
+      this.specialPageLists = res
     },
     async getPickUpTagList() {
       const param = new URLSearchParams()
@@ -123,7 +117,7 @@ export default {
       param.append('ListMaxCnt', 4)
       const res = await this.$axios.$post('get_pickup_tag_list_top.php', param)
       // console.log(res)
-      return res
+      this.pickupTagLists = res
     },
     resetBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')

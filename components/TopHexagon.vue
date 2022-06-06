@@ -1,12 +1,8 @@
 <template>
   <div class="top__slide">
-    <img class="hexagon__pickup" src="/img/top/pickup.png" alt="" />
-    <div id="catch-copy-1" class="hexagon__catch text-h6 text-xl-h5 letter-space-015em pl-1 pr-2 py-5">
-      キャッチコピー一行目
-    </div>
-    <div id="catch-copy-2" class="hexagon__catch text-h6 text-xl-h5 letter-space-015em pl-1 pr-2 py-5">
-      キャッチコピー二行目
-    </div>
+    <img class="hexagon__pickup" src="/img/top/pickup.png" alt="PICKUP" />
+    <div id="catch-copy-1" class="hexagon__catch text-h6 text-xl-h5 pl-1 pr-2 py-5">ライブ配信に関する</div>
+    <div id="catch-copy-2" class="hexagon__catch text-h6 text-xl-h5 pl-1 pr-2 py-5">お困りごとを解決！</div>
     <div class="slide__prev" @click="slidePrev()"></div>
     <div class="slide__next" @click="slideNext()"></div>
     <div class="hexagon">
@@ -15,9 +11,9 @@
           <div class="hexagon__inner-3">
             <div class="hexagon__content">
               <hooper ref="carousel" class="top-hooper" :settings="hooperSettings" @slide="updateCarousel">
-                <slide v-for="(list, index) in pickUpLists" :key="index">
-                  <div class="catch-copy-1--hidden">{{ list.PickupCatchCopy1 }}</div>
-                  <div class="catch-copy-2--hidden">{{ list.PickupCatchCopy2 }}</div>
+                <slide v-for="(list, index) in pickupLists" :key="index">
+                  <div class="catch-copy-1--hidden">{{ list.PickupCatchCopy01 }}</div>
+                  <div class="catch-copy-2--hidden">{{ list.PickupCatchCopy02 }}</div>
                   <div v-if="list.PickupType !== 1" class="content__item">
                     <div class="item__box d-flex flex-column justify-center align-center">
                       <div class="item__image mb-4">
@@ -58,7 +54,7 @@
                           <div class="box__left flex-grow-1">
                             <div class="feature-title text-subtitle-1 text-xl-h6">{{ list.PickupTitle }}</div>
                             <div class="feature-subtitle text-body-2 text-xl-subtitle-1">
-                              {{ list.PickupCatchCopy1 }}
+                              {{ list.PickupDescription }}
                             </div>
                           </div>
                           <div class="box__right ml-3">
@@ -83,6 +79,12 @@
 
 <script>
 export default {
+  props: {
+    pickupLists: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       hooperSettings: {
@@ -94,69 +96,6 @@ export default {
         playSpeed: 10000,
         transition: 500,
       },
-      catchCopy1: '',
-      catchCopy2: '',
-      pickUpLists: [
-        {
-          ImageURL: 'https://rental-resource.takenaka-co.co.jp/catalog-img/article/suggest/04.png',
-          PageURL: 'https://www.takenaka-co.co.jp/streaming/',
-          PickupCatchCopy1: 'ライブ配信に関する',
-          PickupCatchCopy2: 'お困りごとを解決！',
-          PickupDescription:
-            'ライブ配信に関するお困りごとを解決！\r\nオンラインイベント実績の多い弊社が、生配信もサポートします。',
-          PickupHeader: 'SPECIAL',
-          PickupTitle: 'ライブ配信ソリューション',
-          PickupType: 1,
-          PickupTypeNumber: null,
-          PicupHeaderID: 1,
-          ProductID: null,
-          TagID: null,
-        },
-        {
-          ImageURL: 'https://rental-resource.takenaka-co.co.jp/catalog-img/article/feature/03.png',
-          PageURL: 'https://www.takenaka-co.co.jp/thermal-camera/',
-          PickupCatchCopy1: 'サーモグラフィーカメラで',
-          PickupCatchCopy2: '安全なイベント運営を！',
-          PickupDescription: '高度な検知機能搭載サーモグラフィーカメラを使って安全なイベント運営を！',
-          PickupHeader: 'SPECIAL',
-          PickupTitle: 'サーモグラフィーカメラ特設ページ',
-          PickupType: 1,
-          PickupTypeNumber: null,
-          PicupHeaderID: 2,
-          ProductID: null,
-          TagID: null,
-        },
-        {
-          ImageURL:
-            'https://rental-document.takenaka-co.co.jp/catalog-img/Resources/root/visual_device/VR-50HD MkⅡ_top_re.png',
-          PageURL: null,
-          PickupCatchCopy1: 'イベント・ライブ配信向け',
-          PickupCatchCopy2: 'オールイン・ワンAVミキサー',
-          PickupDescription: 'イベント・ライブ配信向けオールイン・ワンAVミキサー',
-          PickupHeader: 'Roland',
-          PickupTitle: 'マルチフォーマットビデオスイッチャー',
-          PickupType: 0,
-          PickupTypeNumber: 'VR50HD MKⅡ',
-          PicupHeaderID: 3,
-          ProductID: 2594,
-          TagID: null,
-        },
-        {
-          ImageURL:
-            'https://rental-document.takenaka-co.co.jp/catalog-img/takenaka/01rental/04visual_device/img_visual_device/roland_vr-4hd.jpg',
-          PageURL: null,
-          PickupCatchCopy1: 'HDMI、コンポジ入力、XLR',
-          PickupCatchCopy2: 'RCAUSBストリーム出力',
-          PickupDescription: 'HDMI、コンポジ入力、XLR、\r\nRCAUSBストリーム出力',
-          PickupHeader: 'Roland',
-          PickupTitle: 'AVミキサー',
-          PickupType: 0,
-          PickupTypeNumber: 'VR4-HD',
-          PicupHeaderID: 4,
-          ProductID: 1801,
-          TagID: null,
-        },
-      ],
     }
   },
   methods: {
@@ -238,7 +177,8 @@ export default {
     z-index: 100;
     position: absolute;
     writing-mode: vertical-rl;
-    // text-orientation: upright;
+    text-orientation: upright;
+    letter-spacing: 0.15em;
     align-items: center;
     background-color: $primary;
     text-align: center;
@@ -249,6 +189,7 @@ export default {
     animation-name: catch-copy-show;
     animation-duration: 0.9s;
     animation-timing-function: ease-in-out;
+    // opacity: 0;
   }
 
   #catch-copy-1 {
@@ -288,6 +229,9 @@ export default {
     0% {
       transform: scale(1, 1) rotate(10deg);
       opacity: 1;
+    }
+    75% {
+      opacity: 0;
     }
     100% {
       opacity: 0;
