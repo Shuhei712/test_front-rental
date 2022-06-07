@@ -136,6 +136,7 @@
               :tariff-name="list.TariffName"
               :tag-lists="list.FeatureTagList"
               :description="list.Description"
+              :release-date="list.ReleaseDate"
               @send-tariff-data="receiveTariffLists">
             </product-card>
           </div>
@@ -179,7 +180,7 @@ export default {
         PriceRangeID: null,
         FeatureTagList: null,
       },
-      orderRelease: this.$config.ORDER_NEW,
+      orderRelease: '',
       orderPrice: '',
       tariffDialog: false,
       tariffLists: [],
