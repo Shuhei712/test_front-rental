@@ -83,6 +83,7 @@ export default {
     ORDER_ASC: process.env.ORDER_ASC,
     ORDER_DESC: process.env.ORDER_DESC,
     PAGE_ROW_COUNT: process.env.PAGE_ROW_COUNT,
+    UNDER_NEW_PRODUCT_DAY: process.env.UNDER_NEW_PRODUCT_DAY,
 
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,

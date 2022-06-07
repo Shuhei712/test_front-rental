@@ -29,6 +29,7 @@
         <div class="detail__top d-flex flex-column flex-sm-row">
           <div class="top__image mr-0 mr-sm-5 d-flex flex-wrap d-sm-block">
             <div class="image__main mt-3 mt-md-0 mr-5 mr-sm-0">
+              <span v-if="isNew(productInfoList.ReleaseDate)" class="product-new">New</span>
               <div ref="zoomArea" class="zoom-area">
                 <img ref="zoomImage" src="" alt="zoom-image" />
               </div>
@@ -546,6 +547,16 @@ export default {
       zoomImage.style.marginLeft = -(left * scale) + 'px'
       zoomImage.style.marginTop = -(top * scale) + 'px'
     },
+    isNew(date) {
+      const now = new Date()
+      const releaseYear = date.substr(0, 4)
+      const releaseMonth = date.substr(4, 2)
+      const releaseDay = date.substr(6, 2)
+      const releaseDate = new Date(releaseYear, releaseMonth, releaseDay)
+      const diffMilliSec = Math.abs(releaseDate - now)
+      const diffDays = parseInt(diffMilliSec / 1000 / 60 / 60 / 24)
+      return diffDays < this.$config.UNDER_NEW_PRODUCT_DAY
+    },
   },
 }
 </script>
@@ -627,6 +638,39 @@ $bp_xs: 362px;
           display: block;
           width: 100%;
           padding-top: 100%;
+        }
+
+        .product-new {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 60px;
+          height: 20px;
+          line-height: 20px;
+          text-align: center;
+          background-color: $accent;
+          color: #ffffff;
+          font-size: 0.8rem;
+          font-weight: 500;
+          z-index: 10;
+          animation: flash 3s linear infinite;
+          @include mq(sm) {
+            font-size: 0.6rem;
+            width: 40px;
+            height: 18px;
+            line-height: 18px;
+          }
+        }
+        @keyframes flash {
+          0%,
+          100% {
+            opacity: 1;
+          }
+
+          50% {
+            opacity: 0;
+          }
         }
 
         .zoom-area {
