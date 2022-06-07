@@ -7,7 +7,7 @@
           <span class="tag rounded-pill px-5 text-caption text-md-body-2 mb-2 mb-sm-3">
             {{ className }}
           </span>
-          <p class="title text-body-2 text-md-body-1 bold mb-0">{{ title }}</p>
+          <p class="title text-body-2 text-md-body-1 bold">{{ title }}</p>
         </div>
       </div>
     </div>

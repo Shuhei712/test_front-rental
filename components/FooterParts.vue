@@ -86,7 +86,7 @@
         </v-col>
       </v-row>
       <div class="footer__company-group d-flex justify-center align-center flex-column-reverse flex-lg-row text-caption text-sm-body-2">
-        <p class="text-center mb-0">株式会社タケナカは<span class="word-keep">シンユニティグループの一員です</span></p>
+        <p class="text-center">株式会社タケナカは<span class="word-keep">シンユニティグループの一員です</span></p>
         <img class="ml-0 ml-lg-5 mb-4 mb-lg-0" src="/img/footer/symunity_logo.svg" alt="SYMUNITY GROUP" />
       </div>
       <div class="footer__copy-light text-center text-caption text-sm-body-2 mb-5">

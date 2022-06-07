@@ -119,7 +119,7 @@
         </div>
         <div class="detail__information mt-15">
           <div class="information__menu">
-            <p class="d-flex d-sm-none justify-center text-caption text-md-body-2 text-gray mb-0 pa-2 pa-lg-0">
+            <p class="d-flex d-sm-none justify-center text-caption text-md-body-2 text-gray pa-2 pa-lg-0">
               クリックでページ内項目にジャンプします
             </p>
             <ul

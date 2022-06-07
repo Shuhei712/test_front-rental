@@ -203,9 +203,6 @@ export default {
   position: absolute;
 }
 
-.news__title p {
-  margin-bottom: 0;
-}
 /* NOTICE：ニュースタイトル */
 .notice .news__title p {
   // color: #cc2929;
