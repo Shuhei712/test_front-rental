@@ -11,7 +11,7 @@
                 </span>
               </div>
               <a href="/notice" class="pickup__link">
-                <p class="py-1 mb-0">
+                <p class="py-1">
                   {{ list.NewsTitle }}
                 </p>
               </a>

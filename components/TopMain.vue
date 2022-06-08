@@ -11,7 +11,7 @@
               レンタル<span class="catch__font--small">で</span><span class="word-keep">揃います!</span>
             </span>
           </h2>
-          <p class="letter-space-02em lh-crop-25 text-white no-wrap pb-13 mb-0">
+          <p class="letter-space-02em lh-crop-25 text-white no-wrap pb-13">
             あなたが今実現したいことは何でしょう。<br />
             配信、イベント、会議…etc<br />
             大丈夫! タケナカのレンタルにおまかせください
