@@ -26,8 +26,9 @@
         </div>
         <div class="name mt-2 mt-md-5">
           <div class="name__maker text-caption text-sm-body-2">{{ maker }}</div>
-          <div class="name__product text-body-2 font-weight-medium text-sm-h6 letter-space-015em mt-1">
-            {{ name }} <span class="word-keep">{{ typeNumber }}</span>
+          <div class="name__product mt-1">
+            <div class="text-subtitle-2 text-sm-subtitle-1 letter-space-015em font-weight-medium">{{ name }}</div>
+            <div class="text-subtitle-1 text-sm-h6 letter-space-015em font-weight-bold">{{ typeNumber }}</div>
           </div>
         </div>
         <v-spacer></v-spacer>

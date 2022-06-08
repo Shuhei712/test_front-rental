@@ -23,8 +23,9 @@
           </div>
         </div>
         <div class="maker--sp text-body-2">{{ productInfoList.MakerName }}</div>
-        <div class="name--sp text-subtitle-1 letter-space-015em font-weight-medium mt-2">
-          {{ productInfoList.ProductName }} <span class="word-keep">{{ productInfoList.ProductTypeNumber }}</span>
+        <div class="name--sp mt-2">
+          <div class="text-subtitle-2 letter-space-015em font-weight-medium">{{ productInfoList.ProductName }}</div>
+          <div class="text-subtitle-1 letter-space-015em font-weight-bold">{{ productInfoList.ProductTypeNumber }}</div>
         </div>
         <div class="detail__top d-flex flex-column flex-sm-row">
           <div class="top__image mr-0 mr-sm-5 d-flex flex-wrap d-sm-block">
@@ -68,8 +69,9 @@
             </div>
             <div class="info__main mt-sm-3 mt-md-5 mt-lg-8">
               <div class="maker text-body-2">{{ productInfoList.MakerName }}</div>
-              <div class="name text-h6 text-md-h5 letter-space-015em font-weight-medium mt-3 mt-lg-5">
-                {{ productInfoList.ProductName }} <span class="word-keep">{{ productInfoList.ProductTypeNumber }}</span>
+              <div class="name mt-3 mt-lg-5">
+                <div class="text-subtitle-1 text-md-h6 letter-space-015em font-weight-medium">{{ productInfoList.ProductName }}</div>
+                <div class="text-h6 text-md-h5 letter-space-015em font-weight-bold">{{ productInfoList.ProductTypeNumber }}</div>
               </div>
               <div class="price d-flex justify-space-between justify-sm-start flex-wrap mt-5 mt-md-6 mt-lg-10">
                 <div class="d-md-flex align-center mr-2 mr-sm-4 mb-2 text-caption text-md-body-2">
@@ -107,7 +109,7 @@
                 </v-btn>
               </div>
               <!-- eslint-disable vue/no-v-html -->
-              <div class="descripsion line-height-25em mt-5 text-body-2" v-html="productInfoList.Description"></div>
+              <div class="description line-height-25em mt-5 text-body-2" v-html="productInfoList.Description"></div>
               <!-- eslint-enable -->
               <div class="case-size mt-5">
                 <v-btn elevation="1" color="primary" :disabled="!isCaseSize" @click.stop="caseSizeDialog = true">
@@ -119,7 +121,7 @@
         </div>
         <div class="detail__information mt-15">
           <div class="information__menu">
-            <p class="d-flex d-sm-none justify-center text-caption text-md-body-2 text-gray mb-0 pa-2 pa-lg-0">
+            <p class="d-flex d-sm-none justify-center text-caption text-md-body-2 text-gray pa-2 pa-lg-0">
               クリックでページ内項目にジャンプします
             </p>
             <ul
