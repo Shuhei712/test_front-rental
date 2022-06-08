@@ -31,7 +31,7 @@
             <div class="condition__head text-caption text-md-body-2 d-flex align-center flex-wrap text-no-wrap">
               <span class="text-gray">現在の検索条件</span>
               <v-icon color="#8e8e8e">mdi-chevron-right</v-icon>
-              <v-btn class="text-caption text-md-body-2 px-0" color="primary" text @click="getFilterCondition()">
+              <v-btn class="text-caption text-md-body-2 px-0" color="primary" text @click.stop="getFilterCondition()">
                 <v-icon color="primary" class="mr-1">mdi-text-search</v-icon>変更して絞り込む
               </v-btn>
             </div>

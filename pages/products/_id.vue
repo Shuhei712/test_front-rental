@@ -89,7 +89,7 @@
                 <button
                   class="price__more d-flex align-center mb-2 px-md-3"
                   :disabled="!isTariffBtn"
-                  @click="tariffDialog = true">
+                  @click.stop="tariffDialog = true">
                   <span class="price__class mb-1 mb-md-0 mr-md-2">{{ productTariffList.TariffSectionName }}</span>
                   <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
                 </button>
@@ -110,7 +110,7 @@
               <div class="descripsion line-height-25em mt-5 text-body-2" v-html="productInfoList.Description"></div>
               <!-- eslint-enable -->
               <div class="case-size mt-5">
-                <v-btn elevation="1" color="primary" :disabled="!isCaseSize" @click="caseSizeDialog = true">
+                <v-btn elevation="1" color="primary" :disabled="!isCaseSize" @click.stop="caseSizeDialog = true">
                   <v-icon class="mr-2">mdi-archive-outline</v-icon>ケースサイズ
                 </v-btn>
               </div>

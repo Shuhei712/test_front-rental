@@ -66,7 +66,7 @@
       <button
         class="price__more d-flex align-center mb-2 px-md-3"
         :disabled="!isTariffBtn"
-        @click="openTariffModal(id, 1)">
+        @click.stop="openTariffModal(id, 1)">
         <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
         <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
       </button>
