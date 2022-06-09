@@ -90,7 +90,7 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_pickup_list_top.php', param)
-      console.log(res)
+      // console.log(res)
       this.pickupLists = res.NewsReleaseList
     },
     async getNewProductList() {
