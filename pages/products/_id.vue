@@ -419,6 +419,7 @@ export default {
   },
   updated() {
     this.$scrollBackButton()
+    this.jsSmoothScroll()
   },
   methods: {
     updateCarousel(payload) {
@@ -564,6 +565,24 @@ export default {
       const diffMilliSec = Math.abs(releaseDate - now)
       const diffDays = parseInt(diffMilliSec / 1000 / 60 / 60 / 24)
       return diffDays < this.$config.UNDER_NEW_PRODUCT_DAY
+    },
+    jsSmoothScroll() {
+      const scrollTrigger = document.querySelectorAll('a[href^="#"]')
+      for (let i = 0; i < scrollTrigger.length; i++){
+        scrollTrigger[i].addEventListener('click', (e) => {
+          e.preventDefault()
+          const href = scrollTrigger[i].getAttribute('href')
+          const target = document.getElementById(href.replace('#', ''))
+          const rect = target.getBoundingClientRect().top
+          const offset = window.pageYOffset
+          const gap = 100
+          const position = rect + offset - gap
+          window.scrollTo({
+            top: position,
+            behavior: 'smooth',
+          })
+        })
+      }
     },
   },
 }
