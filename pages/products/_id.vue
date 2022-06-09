@@ -70,8 +70,12 @@
             <div class="info__main mt-sm-3 mt-md-5 mt-lg-8">
               <div class="maker text-body-2">{{ productInfoList.MakerName }}</div>
               <div class="name mt-3 mt-lg-5">
-                <div class="text-subtitle-1 text-md-h6 letter-space-015em font-weight-medium">{{ productInfoList.ProductName }}</div>
-                <div class="text-h6 text-md-h5 letter-space-015em font-weight-bold">{{ productInfoList.ProductTypeNumber }}</div>
+                <div class="text-subtitle-1 text-md-h6 letter-space-015em font-weight-medium">
+                  {{ productInfoList.ProductName }}
+                </div>
+                <div class="text-h6 text-md-h5 letter-space-015em font-weight-bold">
+                  {{ productInfoList.ProductTypeNumber }}
+                </div>
               </div>
               <div class="price d-flex justify-space-between justify-sm-start flex-wrap mt-5 mt-md-6 mt-lg-10">
                 <div class="d-md-flex align-center mr-2 mr-sm-4 mb-2 text-caption text-md-body-2">
@@ -251,6 +255,8 @@
                           :maker="product.MakerName"
                           :name="product.ProductName"
                           :model="product.ProductTypeNumber"
+                          :price="product.ProductPrice"
+                          :price-unit="product.PriceUnit"
                           :link="'/products/' + product.ProductID + '?name=' + product.ProductName">
                         </item-card>
                       </v-col>
