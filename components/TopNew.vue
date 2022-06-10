@@ -22,7 +22,10 @@
             :maker="list.MakerName"
             :name="list.ProductName"
             :link="'/products/' + list.ProductID + '?name=' + list.ProductName"
-            :model="list.ProductTypeNumber"></item-card>
+            :model="list.ProductTypeNumber"
+            :price-unit="list.PriceUnit"
+            :price="list.PriceValue"
+            :price-type="list.PriceType"></item-card>
         </v-col>
       </v-row>
     </v-container>
