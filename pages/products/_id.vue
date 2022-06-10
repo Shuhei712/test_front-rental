@@ -257,6 +257,7 @@
                           :model="product.ProductTypeNumber"
                           :price="product.ProductPrice"
                           :price-unit="product.PriceUnit"
+                          :price-type="product.PriceType"
                           :link="'/products/' + product.ProductID + '?name=' + product.ProductName">
                         </item-card>
                       </v-col>
