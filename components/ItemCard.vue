@@ -49,6 +49,11 @@ export default {
       required: false,
       default: '',
     },
+    priceType: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
   computed: {
     isNullCheckImageURL() {
