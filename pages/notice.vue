@@ -8,21 +8,26 @@
             <li
               v-for="(list, index) in newsLists"
               :key="index"
-              class="news-item notice news--tgl"
+              class="news-item news--tgl d-flex flex-column flex-md-row py-5 px-md-4"
+              :class="addCategoryClass(list.NewsCategory)"
               @click="handleToggle(index)">
-              <div class="news__head">
-                <div class="news__head-group">
-                  <span class="news__date">{{ convertDate(list.ReleaseDate) }}</span>
-                  <span class="news__tag tag--notice">{{ list.NewsCategory }}</span>
+              <div class="news__head mr-8 mb-4 mb-md-0">
+                <div class="news__head-group d-flex align-center justify-space-between">
+                  <span class="news__date text-body-2 text-sm-body-1 font-weight-bold">
+                    {{ convertDate(list.ReleaseDate) }}
+                  </span>
+                  <span class="news__tag font-weight-bold text-white text-center">
+                    {{ list.NewsCategory }}
+                  </span>
                 </div>
               </div>
-              <div class="news__foot">
-                <div class="news__title" :class="{ 'is-open': isOpen[index] }">
-                  <p>{{ list.NewsTitle }}</p>
+              <div class="news__foot flex-grow-1">
+                <div class="news__title text-body-2 text-sm-body-1 font-weight-bold pr-6" :class="{ 'is-open': isOpen[index] }">
+                  <p class="hover-opacity">{{ list.NewsTitle }}</p>
                 </div>
                 <slide-up-down :active="isOpen[index]" :duration="200">
                   <!-- eslint-disable-next-line vue/no-v-html -->
-                  <div class="news__content" v-html="list.NewsHTMLText"></div>
+                  <div class="news__content text-caption text-sm-body-1 py-3 pr-6" v-html="list.NewsHTMLText"></div>
                 </slide-up-down>
               </div>
             </li>
@@ -79,12 +84,23 @@ export default {
       this.$store.commit('breadCrumbs/addList', { name: 'お知らせ一覧', path: '/notice' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
+    addCategoryClass(category) {
+      if(category === '重要なお知らせ') {
+        return 'important'
+      } else {
+        ;
+      }
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
+
+ul {
+  list-style: none;
+}
 
 .news {
   &__inner {
@@ -100,19 +116,9 @@ export default {
   }
 }
 
-/* --- 共通 --- */
-.word-nowrap {
-  display: inline-block;
-}
-.br-2 {
-  margin-bottom: 2rem;
-}
-.br-4 {
-  margin-bottom: 4rem;
-}
 /* --- リスト --- */
 .itemize li {
-  padding-left: 2rem;
+  padding-left: 20px;
   position: relative;
 }
 .itemize > li::before {
@@ -125,156 +131,128 @@ export default {
 .itemize--bullet > li::before {
   content: '・';
 }
-/* --- NEWS --- */
-.news {
-  width: 100%;
-  max-width: 1200px;
-  margin: auto;
-}
+
 .news-item {
-  display: flex;
-  padding: 20px 15px;
-}
-.news-item:not(:last-child) {
-  border-bottom: 1px solid #afafaf;
-}
-.news__head {
-  width: 20%;
-  min-width: 250px;
-  margin-right: 3rem;
-}
-.news__head-group {
-  display: flex;
-  align-items: center;
-}
-.news__foot {
-  flex-grow: 1;
-}
-.news__date,
-.news__tag,
-.news__title {
-  font-weight: 600;
-}
-.news__date {
-  font-size: 1rem;
-  margin-right: 2.5rem;
-  flex-grow: 1;
-}
-.news__tag {
-  border-radius: 10px;
-  color: #fff;
-  display: inline-block;
-  font-size: 0.6rem;
-  width: 55%;
-  height: 22px;
-  line-height: 22px;
-  min-width: 120px;
-  text-align: center;
-}
-.news__tag::before {
-  color: #fff;
-}
-/* タグカテゴリー：NOTICE */
-.tag--notice {
-  background-color: #cc2929;
-}
-// .tag--notice::before {
-//   content: 'NOTICE';
-// }
-/* タグカテゴリー：INFO */
-.tag--info {
-  background-color: #4b5654;
-}
-// .tag--info::before {
-//   content: 'INFO';
-// }
-/* --- ニュースタイトル --- */
-.news__title {
-  color: $text;
-  padding-right: 3rem;
-  position: relative;
-  user-select: none;
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE10～ */
-}
-.news__title::before {
-  content: '';
-  display: inline-block;
-  position: absolute;
+  &:not(:last-child) {
+    border-bottom: 1px solid $line;
+  }
 }
 
-/* NOTICE：ニュースタイトル */
-.notice .news__title p {
-  // color: #cc2929;
-  color: $text;
-}
-/* ニュース開閉 */
-.news--tgl .news__title {
-  cursor: pointer;
-}
-/* 閉じた状態(アイコン：＋) */
-.news--tgl .news__title::before,
-.news--tgl .news__title::after {
-  background-color: #3bb2a3;
-  width: 12px;
-  height: 2px;
-  top: 12px;
-  right: 0;
-}
-.news--tgl .news__title::after {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  transform: rotate(90deg);
-  transition: opacity 0.2s;
-}
-.news--tgl .news__title + .news__content {
-  display: none;
-}
-/* 開いた状態(アイコン：－) */
-.news--tgl .news__title.is-open::after {
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-/* ニュース外部リンク */
-.news--link .news__title::before {
-  border-top: 2px solid #3bb2a3;
-  border-right: 2px solid #3bb2a3;
-  width: 10px;
-  height: 10px;
-  top: 9px;
-  right: 3px;
-  transform: rotate(45deg);
-}
-/* --- ニュース本文 --- */
-.news__content {
-  padding: 1.5rem 3rem 1.5rem 0;
-}
-@media screen and (max-width: 960px) {
-  html {
-    font-size: 51%;
+.news__head {
+  width: 20%;
+  min-width: 255px;
+
+  @include mq(sm) {
+    width: 100%;
+    max-width: 230px;
+    min-width: auto;
   }
-  .news-item {
-    flex-direction: column;
-    padding: 20px 0px;
-  }
-  .news__head {
-    margin: 0 0 2rem 0;
-    min-width: 215px;
-  }
+
   .news__date {
-    width: 36%;
+    letter-spacing: 0.12em !important;
   }
-  /* ニュース開閉 */
-  /* 閉じた状態(アイコン：＋) */
-  .news--tgl .news__title::before,
-  .news--tgl .news__title::after {
-    top: 10px;
-  }
-  /* ニュース外部リンク */
-  .news--link .news__title::before {
-    top: 5px;
-    transform: rotate(45deg);
+
+  .news__tag {
+    background-color: $outline;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 10px;
+    width: 50%;
+    min-width: 120px;
+    height: 22px;
+    line-height: 22px;
   }
 }
+
+// ニュースタイトル
+.news__title {
+  color: $text;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none; // Safari
+  -ms-user-select: none; // IE10～
+
+  &::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+  }
+}
+
+// 重要なお知らせ
+.important {
+  .news__tag {
+    background-color: $category;
+  }
+  .news__title {
+    color: $category;
+  }
+}
+
+// ニュース開閉タイプ + -
+.news--tgl {
+  .news__title {
+    cursor: pointer;
+
+    // 閉じた状態 アイコン：＋
+    &::before,
+    &::after {
+      background-color: #3bb2a3;
+      width: 12px;
+      height: 2px;
+      top: 12px;
+      right: 0;
+
+      @include mq(md) {
+        top: 10px;
+      }
+    }
+
+    &::after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      transform: rotate(90deg);
+      transition: opacity 0.2s;
+    }
+
+    // 開いた状態 アイコン：－
+    &.is-open::after {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  }
+}
+
+// ニュース外部リンクタイプ >
+.news--link {
+  .news__title {
+    &::before {
+      border-top: 2px solid #3bb2a3;
+      border-right: 2px solid #3bb2a3;
+      width: 10px;
+      height: 10px;
+      top: 9px;
+      right: 3px;
+      transform: rotate(45deg);
+
+      @include mq(md) {
+        top: 5px;
+      }
+    }
+  }
+}
+
+// ニュース本文
+.news__content {
+  line-height: $leading-relaxed;
+}
+.news__content::v-deep a {
+  color: $primary !important;
+  transition: opacity 0.4s ease;
+}
+.news__content::v-deep a:hover {
+  opacity: 0.75 !important;
+}
+
 </style>
