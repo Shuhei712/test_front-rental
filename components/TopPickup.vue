@@ -38,7 +38,10 @@
                 :maker="item.MakerName"
                 :name="item.ProductName"
                 :link="'/products/' + item.ProductID + '?name=' + item.ProductName"
-                :model="item.ProductTypeNumber"></item-card>
+                :model="item.ProductTypeNumber"
+                :price-unit="item.PriceUnit"
+                :price="item.PriceValue"
+                :price-type="item.PriceType"></item-card>
             </v-col>
           </v-row>
         </v-container>
