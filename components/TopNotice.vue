@@ -4,14 +4,14 @@
       <div class="notice__pickup d-flex text-body-2 text-sm-body-1 pr-md-3 py-2">
         <hooper :settings="hooperSettings">
           <slide v-for="(list, index) in newsLists" :key="index">
-            <div class="d-flex">
+            <div class="d-flex" :class="addCategoryClass(list.NewsCategory)">
               <div>
-                <span class="pickup__category d-none d-md-inline-block text-caption text-white mr-3 px-6 py-1">
+                <span class="pickup__category d-none d-md-inline-block text-caption text-white no-wrap mr-3 px-6 py-1">
                   {{ list.NewsCategory }}
                 </span>
               </div>
-              <a href="/notice" class="pickup__link">
-                <p class="py-1">
+              <a href="/notice" class="pickup__link d-flex align-center">
+                <p class="text-body-2 text-sm-body-1">
                   {{ list.NewsTitle }}
                 </p>
               </a>
@@ -48,6 +48,15 @@ export default {
       },
     }
   },
+  methods: {
+    addCategoryClass(category) {
+      if(category === '重要なお知らせ') {
+        return 'important'
+      } else {
+        ;
+      }
+    },
+  },
 }
 </script>
 
@@ -71,7 +80,6 @@ export default {
   }
   .notice__pickup {
     width: 70%;
-    color: $category;
     flex-grow: 1;
 
     @include mq(lg) {
@@ -80,8 +88,35 @@ export default {
     }
 
     .pickup__category {
-      background-color: $category;
+      background-color: $outline;
       border-radius: 30px;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .pickup__link {
+      overflow: hidden;
+
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        @include mq(sm) {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          text-overflow: clip;
+          white-space: normal;
+        }
+      }
+    }
+  }
+
+  .important {
+    .pickup__category {
+      background-color: $category;
     }
     .pickup__link p {
       color: $category;
