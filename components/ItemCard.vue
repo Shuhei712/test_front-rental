@@ -10,7 +10,7 @@
       <span class="item__maker word-keep">{{ model }}</span>
     </v-card-subtitle>
     <v-card-title v-if="isPrice" class="item__price text-body-1 mb-2 px-0 py-1">
-      {{ price }}
+      {{ getPrice }}
       <span class="item__price-unit">{{ priceUnit }}</span>
     </v-card-title>
   </v-card>
@@ -61,6 +61,20 @@ export default {
     },
     isPrice() {
       return this.price !== ''
+    },
+    getPrice() {
+      switch (this.priceType) {
+        case 0:
+          return this.price
+        case 1:
+          return this.price
+        case 2:
+          return '本体に含む'
+        case 9:
+          return 'ASK'
+        default:
+          return 'ASK'
+      }
     },
   },
 }
