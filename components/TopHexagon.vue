@@ -94,7 +94,7 @@ export default {
       hooperSettings: {
         itemsToShow: 1,
         vertical: true,
-        autoPlay: false,
+        autoPlay: true,
         infiniteScroll: true,
         wheelControl: false,
         playSpeed: 10000,
