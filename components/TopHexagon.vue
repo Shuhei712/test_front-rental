@@ -1,8 +1,12 @@
 <template>
   <div class="top__slide">
     <img class="hexagon__pickup" src="/img/top/pickup.png" alt="PICKUP" />
-    <div id="catch-copy-1" class="hexagon__catch text-h6 text-xl-h5 pl-1 pr-2 py-5">ライブ配信に関する</div>
-    <div id="catch-copy-2" class="hexagon__catch text-h6 text-xl-h5 pl-1 pr-2 py-5">お困りごとを解決！</div>
+    <div id="catch-copy-1" class="hexagon__catch pl-2 pr-3 py-3">
+      <span id="catch-copy-1--text">ライブ配信に関する</span>
+    </div>
+    <div id="catch-copy-2" class="hexagon__catch pl-2 pr-3 py-3">
+      <span id="catch-copy-2--text">お困りごとを解決！</span>
+    </div>
     <div class="slide__prev" @click="slidePrev()"></div>
     <div class="slide__next" @click="slideNext()"></div>
     <div class="hexagon">
@@ -15,18 +19,18 @@
                   <div class="catch-copy-1--hidden">{{ list.PickupCatchCopy01 }}</div>
                   <div class="catch-copy-2--hidden">{{ list.PickupCatchCopy02 }}</div>
                   <div v-if="list.PickupType !== 1" class="content__item">
-                    <div class="item__box d-flex flex-column justify-center align-center">
-                      <div class="item__image mb-4">
+                    <div class="item__box">
+                      <div class="item__image">
                         <img :src="list.ImageURL" :alt="list.PickupTitle" />
                       </div>
                       <div class="item__info">
-                        <div class="info__maker text-caption text-xl-body-2 pb-1">{{ list.PickupHeader }}</div>
-                        <div class="info__box d-flex my-4">
+                        <div class="info__maker pb-1">{{ list.PickupHeader }}</div>
+                        <div class="info__box d-flex mt-3">
                           <div class="box__left flex-grow-1">
-                            <div class="item-name text-subtitle-1 text-xl-h6">{{ list.PickupTitle }}</div>
-                            <div class="item-number text-body-2 text-xl-subtitle-1">{{ list.PickupTypeNumber }}</div>
+                            <div class="item-name">{{ list.PickupTitle }}</div>
+                            <div class="item-number">{{ list.PickupTypeNumber }}</div>
                           </div>
-                          <div class="box__right ml-3">
+                          <div class="box__right ml-2 mr-0">
                             <v-btn
                               class="text-body-2"
                               :href="'/products/' + list.ProductID + '?name=' + list.PickupTitle"
@@ -49,11 +53,11 @@
                     <div class="feature__bg"></div>
                     <div class="feature__content">
                       <div class="feature__info">
-                        <div class="info__category text-caption text-xl-body-2 pb-1">{{ list.PickupHeader }}</div>
-                        <div class="info__box d-flex my-4">
+                        <div class="info__category pb-1">{{ list.PickupHeader }}</div>
+                        <div class="info__box d-flex my-2 my-xl-4">
                           <div class="box__left flex-grow-1">
-                            <div class="feature-title text-subtitle-1 text-xl-h6">{{ list.PickupTitle }}</div>
-                            <div class="feature-subtitle text-body-2 text-xl-subtitle-1">
+                            <div class="feature-title">{{ list.PickupTitle }}</div>
+                            <div class="feature-subtitle">
                               {{ list.PickupDescription }}
                             </div>
                           </div>
@@ -90,7 +94,7 @@ export default {
       hooperSettings: {
         itemsToShow: 1,
         vertical: true,
-        autoPlay: true,
+        autoPlay: false,
         infiniteScroll: true,
         wheelControl: false,
         playSpeed: 10000,
@@ -106,10 +110,10 @@ export default {
       this.$refs.carousel.slideNext()
     },
     async updateCarousel() {
-      this.hideCatchCopy()
+      this.showCatchCopy()
       await this.waitUpdateCatchCopy()
       this.updateCatchCopy()
-      this.showCatchCopy()
+      this.hideCatchCopy()
     },
     waitUpdateCatchCopy() {
       return new Promise((resolve) => {
@@ -125,8 +129,8 @@ export default {
       const catchCopy2Text = document.querySelectorAll('li.hooper-slide.is-active > div.catch-copy-2--hidden')[0]
         .textContent
 
-      const catchCopy1Elem = document.getElementById('catch-copy-1')
-      const catchCopy2Elem = document.getElementById('catch-copy-2')
+      const catchCopy1Elem = document.getElementById('catch-copy-1--text')
+      const catchCopy2Elem = document.getElementById('catch-copy-2--text')
 
       catchCopy1Elem.textContent = catchCopy1Text
       catchCopy2Elem.textContent = catchCopy2Text
@@ -156,7 +160,7 @@ export default {
   left: 55%;
 
   @include mq(xl) {
-    top: 21%;
+    top: 23%;
   }
 
   $hexagon-width: calc(650 * 100vw / 1920);
@@ -176,78 +180,63 @@ export default {
     display: inline-block;
     z-index: 100;
     position: absolute;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    letter-spacing: 0.15em;
     align-items: center;
     background-color: $primary;
     text-align: center;
-    color: #ffffff;
-    transform: scale(1, 1) rotate(10deg);
+    transform: rotate(8deg) scaleY(0);
     white-space: nowrap;
-    transform-origin: top;
-    animation-name: catch-copy-show;
-    animation-duration: 0.9s;
-    animation-timing-function: ease-in-out;
-    // opacity: 0;
+    transform-origin: left top;
+  }
+
+  .hexagon__catch.is-active {
+    transform: rotate(8deg) scaleY(1);
   }
 
   #catch-copy-1 {
     top: 220px;
     right: -45px;
+    transition: all 0.3s ease-in;
 
     @include mq(xl) {
-      top: 180px;
+      top: 150px;
       right: -55px;
     }
   }
 
   #catch-copy-2 {
-    top: 320px;
+    top: calc(220px + 2em);
     right: 25px;
+    transition: all 0.3s 0.1s ease-in;
     @include mq(xl) {
-      top: 280px;
-      right: 15px;
+      top: calc(150px + 2em);
+      right: 5px;
     }
   }
 
-  #catch-copy-1.is-active {
-    // transform: scale(0, 0) rotate(10deg);
-    animation-name: catch-copy-hide;
-    animation-duration: 1.1s;
-    animation-timing-function: ease-in-out;
-  }
+  .hexagon__catch span {
+    display: inline-block;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    opacity: 0;
+    text-align: left;
+    color: #ffffff;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 0.15em;
+    transition: opacity 0.3s 0.3s ease-in;
 
-  #catch-copy-2.is-active {
-    // transform: scale(0, 0) rotate(10deg);
-    animation-name: catch-copy-hide;
-    animation-duration: 1.1s;
-    animation-timing-function: ease-in-out;
-  }
-
-  @keyframes catch-copy-hide {
-    0% {
-      transform: scale(1, 1) rotate(10deg);
-      opacity: 1;
-    }
-    75% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-      transform: scale(0, 0) rotate(10deg);
+    @include mq(xl) {
+      font-size: 1.25rem;
+      line-height: 1.25rem;
     }
   }
 
-  @keyframes catch-copy-show {
-    0% {
-      transform: scale(0, 0) rotate(10deg);
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1, 1) rotate(10deg);
-    }
+  .catch-copy-2--text {
+    transition: opacity 0.3s 0.4s ease-in;
+  }
+
+  .hexagon__catch.is-active span {
+    opacity: 1;
   }
 
   .catch-copy-1--hidden,
@@ -267,6 +256,7 @@ export default {
     border-right: solid 2px $primary;
     transform: rotate(-45deg);
     transition: all 0.1s ease-in-out;
+    cursor: pointer;
   }
 
   .slide__prev:hover {
@@ -286,6 +276,7 @@ export default {
     border-right: solid 2px $primary;
     transform: rotate(135deg);
     transition: all 0.1s ease-in-out;
+    cursor: pointer;
   }
 
   .slide__next:hover {
@@ -297,9 +288,11 @@ export default {
     z-index: 1;
     position: relative;
     width: $hexagon-width;
-    // box-shadow: 0 0 0 1px #1699cb inset;
     overflow: hidden;
     transform: rotate(-10deg);
+
+    @include mq(md) {
+    }
   }
   .hexagon::before {
     display: block;
@@ -341,41 +334,63 @@ export default {
   .content__item {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: calc(#{$hexagon-width} * 2 / 1.732);
 
     .item__box {
       position: absolute;
-      width: 70%;
-      top: 45%;
-      left: 35%;
-      transform: translate(-35%, -50%) rotate(10deg);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: translate(-5%, 0) rotate(10deg);
+      padding: 0 15%;
     }
 
     .item__image {
+      position: relative;
+      width: 100%;
+      height: 60%;
+      text-align: center;
       img {
-        width: 320px;
+        position: absolute;
+        bottom: 0%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        width: 100%;
+        height: 75%;
         object-fit: contain;
-
-        @include mq(xl) {
-          width: 250px;
-        }
       }
     }
 
     .item__info {
-      min-width: 100%;
+      width: 100%;
+      max-height: 20%;
       .info__maker {
+        font-size: 0.85rem;
         border-bottom: 1px solid $primary;
       }
 
       .info__box {
+        width: 100%;
         .box__left {
-          // width: 70%;
+          .item-name {
+            font-size: 1.2rem;
+            line-height: 1.4em;
+
+            @include mq(xl) {
+              font-size: 1rem;
+            }
+          }
+
+          .item-number {
+            font-size: 0.9rem;
+            @include mq(xl) {
+              font-size: 0.85rem;
+            }
+          }
         }
 
         .box__right {
-          // width: 30%;
-
           .v-btn {
             width: 90px;
             height: 90px;
@@ -384,8 +399,8 @@ export default {
             color: $primary !important;
 
             @include mq(xl) {
-              width: 75px;
-              height: 75px;
+              width: 70px;
+              height: 70px;
             }
           }
         }
@@ -395,13 +410,12 @@ export default {
 
   .content__feature {
     width: 110%;
-    height: 100%;
+    height: calc(#{$hexagon-width} * 2 / 1.732);
     position: relative;
-    // background-image: url('/img/top/top_slide.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    transform: translate(-5%, -10px) rotate(10deg);
+    transform: translate(-5%, 0) rotate(10deg);
 
     .feature__bg {
       position: absolute;
@@ -418,27 +432,42 @@ export default {
       bottom: 0;
       left: -5%;
       width: 100%;
-      height: 42%;
+      height: 43%;
       @include mq(xl) {
-        height: 44%;
+        height: 42.5%;
       }
     }
 
     .feature__info {
-      width: 60%;
+      width: 65%;
       margin: 0 auto;
       .info__category {
+        font-size: 0.85rem;
         border-bottom: 1px solid $primary;
       }
 
       .info__box {
         .box__left {
-          // width: 70%;
+          .feature-title {
+            font-size: 1.2rem;
+            line-height: 1.4em;
+
+            @include mq(xl) {
+              font-size: 0.9rem;
+            }
+          }
+
+          .feature-subtitle {
+            line-height: 1.25em;
+            font-size: 0.9rem;
+            padding-top: 0.5em;
+            @include mq(xl) {
+              font-size: 0.8rem;
+            }
+          }
         }
 
         .box__right {
-          // width: 30%;
-
           .v-btn {
             width: 90px;
             height: 90px;
