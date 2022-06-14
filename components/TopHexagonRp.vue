@@ -10,15 +10,15 @@
               <div class="content__bg"></div>
               <div class="content__item">
                 <div class="item__container px-3">
-                  <div class="item__image text-center mb-3 mb-md-6">
+                  <div class="item__image text-center">
                     <img :src="pickUpItem.ImageURL" :alt="pickUpItem.PickupTitle" />
                   </div>
                   <div class="item__info">
-                    <div class="item__maker text-caption text-md-body-2 letter-space-015em mb-1">
+                    <div class="item__maker letter-space-015em">
                       {{ pickUpItem.PickupHeader }}
                     </div>
-                    <div class="item__border mb-2"></div>
-                    <div class="item__name text-body-2 text-md-subtitle-1">{{ pickUpItem.PickupTitle }}</div>
+                    <div class="item__border mb-1"></div>
+                    <div class="item__name">{{ pickUpItem.PickupTitle }}</div>
                   </div>
                   <!-- <div class="item__name text-caption text-md-body-2">{{ pickUpItem.PickupTypeNumber }}</div> -->
                 </div>
@@ -195,6 +195,11 @@ export default {
     .item__maker {
       color: #ffffff;
       font-weight: 600;
+      font-size: 0.8rem;
+
+      @include mq(sm) {
+        font-size: 0.7rem;
+      }
     }
 
     .item__border {
@@ -207,6 +212,13 @@ export default {
     .item__name {
       color: #ffffff;
       font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.25rem;
+
+      @include mq(sm) {
+        font-size: 0.75rem;
+        line-height: 1.25rem;
+      }
     }
   }
 
