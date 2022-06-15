@@ -14,7 +14,7 @@
             prepend-inner-icon="mdi-magnify"
             hide-details="auto"
             @keyup.enter="searchKeyword"></v-text-field>
-          <v-btn color="primary" class="ml-2 ml-md-5" :href="'/products?type=3&keyword=' + keyword">
+          <v-btn color="primary" class="text-white ml-2 ml-md-5" :href="'/products?type=3&keyword=' + keyword">
             <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索
           </v-btn>
         </v-form>
@@ -72,6 +72,11 @@
                     '/products?type=2&categoryID=' + grandChild.CategoryID + '&categoryName=' + grandChild.CategoryName
                   ">
                   <span class="cat-group__btn-name">{{ grandChild.CategoryName }}</span>
+                  <span
+                    class="cat-group__btn-img"
+                    :style="
+                      'background-image: url(' + grandChild.ImageURL + ')'
+                    "></span>
                 </a>
               </v-col>
             </v-row>
@@ -155,12 +160,6 @@ $other-bg: #563a2e;
   width: 95%;
 }
 
-.category__search {
-  .v-btn {
-    color: #ffffff !important;
-  }
-}
-
 .category {
   &__heading {
     background-color: $cushion;
@@ -208,6 +207,7 @@ $other-bg: #563a2e;
 }
 .cat-group {
   overflow-x: hidden;
+
   &__ttl {
     &-icon {
       display: inline-block;
@@ -219,6 +219,7 @@ $other-bg: #563a2e;
       }
     }
   }
+
   &__child {
     &-ttl {
       border-style: solid;
@@ -331,9 +332,11 @@ $other-bg: #563a2e;
       }
     }
   }
+
   &__container {
     width: 100% !important;
   }
+
   &__row {
     margin: -7px -8px;
 
@@ -341,6 +344,7 @@ $other-bg: #563a2e;
       margin: -5px -6px;
     }
   }
+
   &__col {
     height: 82px; // 82px-padding:14px =中身68px
     padding: 7px 8px !important;
@@ -349,11 +353,8 @@ $other-bg: #563a2e;
       padding: 5px 6px !important;
     }
   }
+
   &__btn {
-    background: {
-      repeat: no-repeat;
-      position: right -5% center;
-    }
     border: {
       width: 1px;
       style: solid;
@@ -364,30 +365,46 @@ $other-bg: #563a2e;
     width: 100%;
     height: 100%;
     position: relative;
+
     &-name {
       color: #fff;
       position: relative;
       z-index: 1;
     }
-    &::before,
-    &::after {
-      content: '';
+
+    &-img {
+      background: {
+        repeat: no-repeat;
+        position: center;
+        size: 100% auto;
+      }
       display: inline-block;
-      position: absolute;
-    }
-    &::before {
-      background-position: center center;
-      background-size: 100% auto;
       width: 60%;
+      max-width: 300px;
       height: 100%;
       top: 0;
       right: -7%;
+      position: absolute;
+
+      @include mq(lg) {
+        max-width: 280px;
+        min-width: 180px;
+      }
+
+      @include mq(sm) {
+        min-width: 140px;
+      }
     }
+
     &::after {
+      content: '';
+      display: inline-block;
       width: 100%;
       height: 100%;
       top: 0;
       left: 0;
+      position: absolute;
+
       #category-id_1 & {
         background-color: rgba($online-bg, 0.6);
       }
@@ -423,6 +440,7 @@ $other-bg: #563a2e;
       }
     }
   }
+
   &__child-ttl,
   &__btn {
     #category-id_1 & {
@@ -457,548 +475,6 @@ $other-bg: #563a2e;
     }
     #category-id_11 & {
       border-color: $other;
-    }
-  }
-}
-#category-id_1 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // オンラインイベント機器
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-01.png');
-          background-position-y: 15%;
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-03.png');
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-04.png');
-          background-position-y: 60%;
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-05.png');
-          background-position-y: 70%;
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-06.png');
-          background-position-y: bottom;
-        }
-        &:nth-child(7) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-07.png');
-        }
-        &:nth-child(8) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-08.png');
-          background-position-y: bottom;
-        }
-        &:nth-child(9) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-09.png');
-          background-position-y: 80%;
-        }
-        &:nth-child(10) .cat-group__btn::before {
-          background-image: url('/img/category/online/1-10.png');
-        }
-      }
-    }
-  }
-}
-#category-id_2 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // LEDディスプレイ
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/led/1-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/led/1-02.png');
-          background-position-y: top;
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/led/1-03.png');
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/led/1-04.png');
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/led/1-05.png');
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/led/1-06.png');
-        }
-        &:nth-child(7) .cat-group__btn::before {
-          background-image: url('/img/category/led/1-07.png');
-          background-position-y: 80%;
-        }
-        &:nth-child(8) .cat-group__btn::before {
-          background-image: url('/img/category/led/1-08.png');
-        }
-      }
-    }
-  }
-}
-#category-id_3 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // プロジェクター本体 / レンズ
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/projector/1-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/projector/1-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/projector/1-03.png');
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/projector/1-04.png');
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/projector/1-05.png');
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/projector/1-06.png');
-        }
-        &:nth-child(7) .cat-group__btn::before {
-          background-image: url('/img/category/projector/1-07.png');
-        }
-      }
-    }
-    &:nth-of-type(2) {
-      // プロジェクター関連機器
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/projector/2-01.png');
-          background-position-y: 15%;
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/projector/2-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/projector/2-03.png');
-          background-position-y: 10%;
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/projector/2-04.png');
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/projector/2-05.png');
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/projector/2-06.png');
-        }
-      }
-    }
-    &:nth-of-type(3) {
-      // スクリーン
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/projector/3-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/projector/3-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/projector/3-03.png');
-          background-position-y: bottom;
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/projector/3-04.png');
-          background-position-y: 75%;
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/projector/3-05.png');
-          background-position-y: bottom;
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/projector/3-06.png');
-          background-position-y: 40%;
-        }
-        &:nth-child(7) .cat-group__btn::before {
-          background-image: url('/img/category/projector/3-07.png');
-          background-position-y: 80%;
-        }
-      }
-    }
-  }
-}
-#category-id_4 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // フラットディスプレイ
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/display/1-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/display/1-01.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/display/1-03.png');
-          background-position-y: 80%;
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/display/1-04.png');
-          background-position-y: bottom;
-        }
-      }
-    }
-    &:nth-of-type(2) {
-      // その他ディスプレイ
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/display/2-01.png');
-          background-position-y: 27%;
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/display/2-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/display/2-03.png');
-          background-position-y: 27%;
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/display/2-04.png');
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/display/2-05.png');
-          background-position-y: 80%;
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/display/2-06.png');
-          background-position-y: bottom;
-        }
-        &:nth-child(7) .cat-group__btn::before {
-          background-image: url('/img/category/display/2-07.png');
-          background-position-y: bottom;
-        }
-      }
-    }
-    &:nth-of-type(3) {
-      // 自立スタンド / 壁掛・吊金具
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/display/3-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/display/3-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/display/3-03.png');
-          background-position-y: 5%;
-        }
-      }
-    }
-  }
-}
-#category-id_5 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // メディアサーバー
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/media-player/1-01.png');
-        }
-      }
-    }
-    &:nth-of-type(2) {
-      // プレーヤー / レコーダー
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/media-player/2-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/media-player/2-02.png');
-        }
-      }
-    }
-    &:nth-of-type(3) {
-      // ハードディスク（メディア）レコーダー / プレーヤー
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/media-player/3-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/media-player/3-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/media-player/3-03.png');
-        }
-      }
-    }
-    &:nth-of-type(4) {
-      // ビデオカセットレコーダー(VCR)
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/media-player/4-01.png');
-        }
-      }
-    }
-  }
-}
-#category-id_6 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // 映像周辺機器
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-02.png');
-          background-position-y: 15%;
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-03.png');
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-04.png');
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-05.png');
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-06.png');
-          background-position-y: 70%;
-        }
-        &:nth-child(7) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-07.png');
-        }
-        &:nth-child(8) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-08.png');
-        }
-        &:nth-child(9) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-09.png');
-          background-position-y: 93%;
-        }
-        &:nth-child(10) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-10.png');
-        }
-        &:nth-child(11) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-11.png');
-        }
-        &:nth-child(12) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-12.png');
-        }
-        &:nth-child(13) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-13.png');
-        }
-        &:nth-child(14) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-14.png');
-        }
-        &:nth-child(15) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/1-15.png');
-        }
-      }
-    }
-    &:nth-of-type(2) {
-      // ケーブル
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/2-01.png');
-          background-position-y: top;
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/2-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/2-03.png');
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/2-04.png');
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/2-05.png');
-          background-position-y: top;
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/video-peripheral/2-06.png');
-          background-position-y: top;
-        }
-      }
-    }
-  }
-}
-#category-id_7 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // カメラ
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/camera/1-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/camera/1-02.png');
-          background-position-y: 35%;
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/camera/1-03.png');
-          background-position-y: 10%;
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/camera/1-04.png');
-          background-position-y: 10%;
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/camera/1-05.png');
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/camera/1-06.png');
-          background-position-y: top;
-        }
-        &:nth-child(7) .cat-group__btn::before {
-          background-image: url('/img/category/camera/1-07.png');
-          background-position-y: 30%;
-        }
-      }
-    }
-  }
-}
-#category-id_8 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // メディアアプリケーション/ センサー/インタラクティブ関連
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/sensor/1-01.png');
-          background-position-y: 70%;
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/sensor/1-02.png');
-          background-position-y: 60%;
-        }
-      }
-    }
-  }
-}
-#category-id_9 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // 音響機器
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-01.png');
-          background-position-y: top;
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-02.png');
-          background-position-y: 80%;
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-03.png');
-          background-position-y: 90%;
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-04.png');
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-05.png');
-        }
-        &:nth-child(6) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-06.png');
-        }
-        &:nth-child(7) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-07.png');
-        }
-        &:nth-child(8) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-08.png');
-        }
-        &:nth-child(9) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-09.png');
-          background-position-y: 20%;
-        }
-        &:nth-child(10) .cat-group__btn::before {
-          background-image: url('/img/category/sound/1-10.png');
-        }
-      }
-    }
-    &:nth-of-type(2) {
-      // インカム / トランシーバー
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/sound/2-01.png');
-        }
-      }
-    }
-  }
-}
-#category-id_10 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // 会議用機器
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/network/1-01.png');
-          background-position-y: 70%;
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/network/1-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/network/1-03.png');
-          background-position-y: 16%;
-        }
-      }
-    }
-    &:nth-of-type(2) {
-      // PC / ICTネットワーク機器
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/network/2-01.png');
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/network/2-02.png');
-          background-position-y: 80%;
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/network/2-03.png');
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/network/2-04.png');
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/network/2-05.png');
-          background-position-y: 80%;
-        }
-      }
-    }
-  }
-}
-#category-id_11 {
-  .cat-group__child {
-    &:nth-of-type(1) {
-      // 照明機器
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/other/1-01.png');
-          background-position-y: top;
-        }
-      }
-    }
-    &:nth-of-type(2) {
-      // 多目的用品
-      .cat-group__col {
-        &:nth-child(1) .cat-group__btn::before {
-          background-image: url('/img/category/other/2-01.png');
-          background-position-y: top;
-        }
-        &:nth-child(2) .cat-group__btn::before {
-          background-image: url('/img/category/other/2-02.png');
-        }
-        &:nth-child(3) .cat-group__btn::before {
-          background-image: url('/img/category/other/2-03.png');
-        }
-        &:nth-child(4) .cat-group__btn::before {
-          background-image: url('/img/category/other/2-04.png');
-        }
-        &:nth-child(5) .cat-group__btn::before {
-          background-image: url('/img/category/other/2-05.png');
-        }
-      }
     }
   }
 }
