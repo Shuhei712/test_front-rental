@@ -11,7 +11,7 @@
     </v-card-subtitle>
     <v-card-title v-if="isPrice" class="item__price text-body-1 mb-2 px-0 py-1">
       {{ getPrice }}
-      <span class="item__price-unit">{{ priceUnit }}</span>
+      <span v-if="isPriceUnit" class="item__price-unit">{{ priceUnit }}</span>
     </v-card-title>
   </v-card>
 </template>
@@ -61,6 +61,20 @@ export default {
     },
     isPrice() {
       return this.price !== ''
+    },
+    isPriceUnit() {
+      switch (this.priceType) {
+        case 0:
+          return true
+        case 1:
+          return true
+        case 2:
+          return false
+        case 9:
+          return false
+        default:
+          return true
+      }
     },
     getPrice() {
       switch (this.priceType) {
