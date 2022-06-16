@@ -66,7 +66,12 @@ export default {
     '@nuxtjs/axios',
     'vue-scrollto/nuxt',
     'nuxt-clipboard2',
+    '@nuxtjs/gtm',
   ],
+
+  gtm: {
+    id: 'GTM-KQMB8MN',
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
@@ -87,6 +92,9 @@ export default {
 
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
+    },
+    gtm: {
+      id: process.env.GOOGLE_TAG_MANAGER_ID,
     },
   },
 
