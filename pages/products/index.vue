@@ -158,7 +158,7 @@ export default {
   data() {
     return {
       dialog: false,
-      page: 1,
+      page: '',
       pageMaxLength: '',
       productLists: [],
       productTariffList: [],
