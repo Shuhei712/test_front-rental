@@ -191,7 +191,7 @@
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-database-outline</v-icon>仕様
               </div>
               <div v-for="(object, index) in specLists" :key="index" class="product-specification__content mt-10">
-                <div v-for="list in object.SectionList" :key="list.ProductSubjectID" v-html="list.HtmlCode"></div>
+                <div v-for="list in object.SectionList" :key="list.ProductSubjectID" class="mb-15" v-html="list.HtmlCode"></div>
               </div>
             </section>
             <section v-if="productDocLists !== null" id="product-document" class="product-document content__sec mt-15">
