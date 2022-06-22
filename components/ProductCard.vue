@@ -11,7 +11,8 @@
     <div class="product__info d-flex">
       <div class="info__img mr-3">
         <div class="img__inner">
-          <span v-if="isNew(releaseDate)" class="product-new">New</span>
+          <span v-if="isComingsoon(releaseDate)" class="product-comingsoon">Coming soon</span>
+          <span v-else-if="isNew(releaseDate)" class="product-new">New</span>
           <img :src="image" :alt="name" class="pa-1" />
         </div>
       </div>
@@ -241,10 +242,20 @@ export default {
       const releaseYear = date.substr(0, 4)
       const releaseMonth = date.substr(4, 2)
       const releaseDay = date.substr(6, 2)
-      const releaseDate = new Date(releaseYear, releaseMonth, releaseDay)
+      const releaseDate = new Date(releaseYear, releaseMonth - 1, releaseDay)
       const diffMilliSec = Math.abs(releaseDate - now)
       const diffDays = parseInt(diffMilliSec / 1000 / 60 / 60 / 24)
       return diffDays < this.$config.UNDER_NEW_PRODUCT_DAY
+    },
+    isComingsoon(date) {
+      const now = new Date()
+      const releaseYear = date.substr(0, 4)
+      const releaseMonth = date.substr(4, 2)
+      const releaseDay = date.substr(6, 2)
+      const releaseDate = new Date(releaseYear, releaseMonth - 1, releaseDay)
+      const diffMilliSec = releaseDate - now
+      const diffDays = parseInt(diffMilliSec / 1000 / 60 / 60 / 24)
+      return diffDays > 0
     },
   },
 }
@@ -288,7 +299,8 @@ $bp_xs: 362px;
         padding-top: 100%;
       }
     }
-    .product-new {
+    .product-new,
+    .product-comingsoon {
       display: block;
       position: absolute;
       top: 0;
@@ -309,6 +321,10 @@ $bp_xs: 362px;
         height: 18px;
         line-height: 18px;
       }
+    }
+
+    .product-comingsoon {
+      width: 120px;
     }
     @keyframes flash {
       0%,

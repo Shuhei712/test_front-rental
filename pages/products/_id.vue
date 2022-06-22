@@ -30,7 +30,8 @@
         <div class="detail__top d-flex flex-column flex-sm-row">
           <div class="top__image mr-0 mr-sm-5 d-flex flex-wrap d-sm-block">
             <div class="image__main mt-3 mt-md-0 mr-5 mr-sm-0">
-              <span v-if="isNew(productInfoList.ReleaseDate)" class="product-new">New</span>
+              <span v-if="isComingsoon(productInfoList.ReleaseDate)" class="product-comingsoon">Coming soon</span>
+              <span v-else-if="isNew(productInfoList.ReleaseDate)" class="product-new">New</span>
               <div ref="zoomArea" class="zoom-area">
                 <img ref="zoomImage" src="" alt="zoom-image" />
               </div>
@@ -191,7 +192,11 @@
                 <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-database-outline</v-icon>仕様
               </div>
               <div v-for="(object, index) in specLists" :key="index" class="product-specification__content mt-10">
-                <div v-for="list in object.SectionList" :key="list.ProductSubjectID" class="mb-15" v-html="list.HtmlCode"></div>
+                <div
+                  v-for="list in object.SectionList"
+                  :key="list.ProductSubjectID"
+                  class="mb-15"
+                  v-html="list.HtmlCode"></div>
               </div>
             </section>
             <section v-if="productDocLists !== null" id="product-document" class="product-document content__sec mt-15">
@@ -562,10 +567,20 @@ export default {
       const releaseYear = date.substr(0, 4)
       const releaseMonth = date.substr(4, 2)
       const releaseDay = date.substr(6, 2)
-      const releaseDate = new Date(releaseYear, releaseMonth, releaseDay)
+      const releaseDate = new Date(releaseYear, releaseMonth - 1, releaseDay)
       const diffMilliSec = Math.abs(releaseDate - now)
       const diffDays = parseInt(diffMilliSec / 1000 / 60 / 60 / 24)
       return diffDays < this.$config.UNDER_NEW_PRODUCT_DAY
+    },
+    isComingsoon(date) {
+      const now = new Date()
+      const releaseYear = date.substr(0, 4)
+      const releaseMonth = date.substr(4, 2)
+      const releaseDay = date.substr(6, 2)
+      const releaseDate = new Date(releaseYear, releaseMonth - 1, releaseDay)
+      const diffMilliSec = releaseDate - now
+      const diffDays = parseInt(diffMilliSec / 1000 / 60 / 60 / 24)
+      return diffDays > 0
     },
     jsSmoothScroll() {
       const scrollTrigger = document.querySelectorAll('a[href^="#"]')
@@ -668,7 +683,8 @@ $bp_xs: 362px;
           padding-top: 100%;
         }
 
-        .product-new {
+        .product-new,
+        .product-comingsoon {
           display: block;
           position: absolute;
           top: 0;
@@ -689,6 +705,10 @@ $bp_xs: 362px;
             height: 18px;
             line-height: 18px;
           }
+        }
+
+        .product-comingsoon {
+          width: 120px;
         }
         @keyframes flash {
           0%,
