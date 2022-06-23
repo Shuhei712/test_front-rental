@@ -18,7 +18,7 @@
                 <slide v-for="(list, index) in pickupLists" :key="index">
                   <div class="catch-copy-1--hidden">{{ list.PickupCatchCopy01 }}</div>
                   <div class="catch-copy-2--hidden">{{ list.PickupCatchCopy02 }}</div>
-                  <div v-if="list.PickupType !== 1" class="content__item">
+                  <div v-if="list.PickupType === 0" class="content__item">
                     <div class="item__box">
                       <div class="item__image">
                         <img :src="list.ImageURL" :alt="list.PickupTitle" />
@@ -37,6 +37,32 @@
                               :elevation="0"
                               >詳細へ</v-btn
                             >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    v-else-if="list.PickupType === 1"
+                    class="content__feature"
+                    :style="[
+                      {
+                        'background-image': 'url(' + list.ImageURL + ')',
+                      },
+                    ]">
+                    <div class="feature__bg"></div>
+                    <div class="feature__content">
+                      <div class="feature__info">
+                        <div class="info__category pb-1">{{ list.PickupHeader }}</div>
+                        <div class="info__box d-flex my-2 my-xl-4">
+                          <div class="box__left flex-grow-1">
+                            <div class="feature-title">{{ list.PickupTitle }}</div>
+                            <div class="feature-subtitle">
+                              {{ list.PickupDescription }}
+                            </div>
+                          </div>
+                          <div class="box__right ml-3">
+                            <v-btn class="text-body-2" :href="list.PageURL" :elevation="0">詳細へ</v-btn>
                           </div>
                         </div>
                       </div>
@@ -62,7 +88,12 @@
                             </div>
                           </div>
                           <div class="box__right ml-3">
-                            <v-btn class="text-body-2" :href="list.PageURL" :elevation="0">詳細へ</v-btn>
+                            <v-btn
+                              class="text-body-2"
+                              :href="'/products/?type=1&tagID=' + list.TagID + '&tagName=' + list.PickupTitle"
+                              :elevation="0"
+                              >詳細へ</v-btn
+                            >
                           </div>
                         </div>
                       </div>
