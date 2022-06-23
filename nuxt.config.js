@@ -40,7 +40,7 @@ export default {
     ],
   },
   server: {
-    host: '0.0.0.0',
+    port: 3005,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
