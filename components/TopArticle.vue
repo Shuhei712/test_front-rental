@@ -15,8 +15,8 @@
       <div class="article__list order-1 order-sm-0">
         <div class="slide__prev" @click="slidePrev()"></div>
         <div class="slide__next" @click="slideNext()"></div>
-        <hooper ref="article" :settings="hooperSettings">
-          <slide v-for="(list, index) in matchedSpecialPageLists" :key="index">
+        <hooper ref="article" :settings="hooperSettings" @slide="updateCarousel">
+          <slide v-for="(list, index) in matchedSpecialPageLists" :key="index" ref="slide">
             <article-card
               :color="toPageClassColorFrom(list.PageClassID)"
               :path="list.SpecialPageImageURL"
@@ -61,12 +61,14 @@ export default {
   data() {
     return {
       tag: 6,
+      slideCountMax: undefined,
+      carouselData: 0,
       hooperSettings: {
         itemsToShow: 4,
         vertical: true,
-        autoPlay: true,
+        autoPlay: false,
         playSpeed: 3000,
-        infiniteScroll: true,
+        infiniteScroll: false,
         breakpoints: {
           600: {
             itemsToShow: 3,
@@ -82,9 +84,16 @@ export default {
   },
   computed: {
     matchedSpecialPageLists() {
-      return this.specialPageLists.filter((el) => {
+      const matchedSpecialPageLists = this.specialPageLists.filter((el) => {
         return this.tag === 6 ? true : el.PageClassID === this.tag
       }, this)
+      if (matchedSpecialPageLists.length < 4) {
+        this.offInfiteScroll()
+      } else {
+        this.calcSlideCount()
+        this.onInfiteScroll()
+      }
+      return matchedSpecialPageLists
     },
   },
   methods: {
@@ -101,6 +110,36 @@ export default {
     },
     slideNext() {
       this.$refs.article.slideNext()
+    },
+    slideScroll() {
+      if (this.carouselData >= this.slideCountMax - 4) {
+        this.slideInit()
+      } else {
+        this.$refs.article.slideTo(this.carouselData + 1)
+      }
+    },
+    calcSlideCount() {
+      return this.$nextTick().then(() => {
+        this.slideCountMax = this.$refs.slide.length
+      })
+    },
+    onInfiteScroll() {
+      this.slideInit()
+      clearInterval(this.intervalId)
+      this.intervalId = setInterval(this.slideScroll, 3000)
+    },
+    offInfiteScroll() {
+      this.slideInit()
+      clearInterval(this.intervalId)
+    },
+    slideInit() {
+      return this.$nextTick().then(() => {
+        this.carouselData = 0
+        this.$refs.article.slideTo(0)
+      })
+    },
+    updateCarousel(payload) {
+      this.carouselData = payload.currentSlide
     },
   },
 }
