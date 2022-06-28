@@ -9,7 +9,7 @@
             <div class="hexagon__content">
               <div class="content__bg"></div>
               <div class="content__item">
-                <div class="item__container px-3">
+                <div class="item__container">
                   <div class="item__image text-center">
                     <img :src="pickUpItem.ImageURL" :alt="pickUpItem.PickupTitle" />
                   </div>
@@ -17,10 +17,10 @@
                     <div class="item__maker letter-space-015em">
                       {{ pickUpItem.PickupHeader }}
                     </div>
-                    <div class="item__border mb-1"></div>
+                    <div class="item__border"></div>
                     <div class="item__name">{{ pickUpItem.PickupTitle }}</div>
+                    <div class="item__number">{{ pickUpItem.PickupTypeNumber }}</div>
                   </div>
-                  <!-- <div class="item__name text-caption text-md-body-2">{{ pickUpItem.PickupTypeNumber }}</div> -->
                 </div>
                 <div class="item__btn text-center">
                   <v-btn :href="'/products/' + pickUpItem.ProductID + '?name=' + pickUpItem.PickupTitle" text
@@ -89,10 +89,10 @@ export default {
     @include mq(sm) {
       display: block;
       position: absolute;
-      width: calc(#{$hexagon-width} - 50px);
+      width: calc(#{$hexagon-width} + 10%);
       top: -10%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-40%, -50%);
       object-fit: contain;
       z-index: 50;
     }
@@ -165,18 +165,14 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-10deg);
-    width: 90%;
-    height: 60%;
+    width: calc(#{$hexagon-width} + 40px);
+    height: calc(#{$hexagon-width});
     overflow: hidden;
-
-    @include mq(sm) {
-      width: 100%;
-      height: 50%;
-    }
 
     .item__image {
       position: relative;
-      height: 60%;
+      width: 100%;
+      height: 55%;
       @include mq(sm) {
         display: none;
       }
@@ -185,10 +181,29 @@ export default {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        width: calc(#{$hexagon-width} - 45%);
+        transform: translate(-50%, -35%);
+        width: calc(#{$hexagon-width});
         max-height: 100%;
         object-fit: contain;
+      }
+    }
+
+    .item__info {
+      width: calc(#{$hexagon-width} - 7em);
+      margin: 0 auto;
+      margin-top: 2rem;
+
+      @include mq(md) {
+        width: calc(#{$hexagon-width} - 4em);
+        margin-top: 0;
+      }
+
+      @include mq(sm) {
+        width: calc(#{$hexagon-width} - 1em);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -55%);
       }
     }
 
@@ -197,16 +212,25 @@ export default {
       font-weight: 600;
       font-size: 0.8rem;
 
-      @include mq(sm) {
+      @include mq(md) {
         font-size: 0.7rem;
       }
     }
 
     .item__border {
-      width: 120%;
+      width: calc(#{$hexagon-width} + 50px);
       height: 1px;
-      transform: translate(-10%, 0);
+      transform: translate(-15%, 0);
       background-color: #ffffff;
+      margin-bottom: 0.5em;
+
+      @include mq(md) {
+        transform: translate(-20%, 0);
+      }
+
+      @include mq(sm) {
+        margin-bottom: 0.25em;
+      }
     }
 
     .item__name {
@@ -215,9 +239,25 @@ export default {
       font-size: 1rem;
       line-height: 1.25rem;
 
+      @include mq(md) {
+        font-size: 0.8rem;
+        line-height: 1.25rem;
+      }
+
       @include mq(sm) {
         font-size: 0.75rem;
         line-height: 1.25rem;
+      }
+    }
+
+    .item__number {
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      line-height: 1.25rem;
+
+      @include mq(md) {
+        display: none;
       }
     }
   }
