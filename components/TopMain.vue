@@ -40,7 +40,7 @@
       </v-row>
       <v-row class="main__menu width-50">
         <v-col cols="6">
-          <v-btn color="#fff" block>
+          <v-btn color="#fff" to="/guide#entry" block>
             <img class="icon mr-1" src="/img/top/beginner-icon.png" /><span class="btn-text lh-crop-12"
               >はじめての方へ</span
             >
@@ -48,7 +48,7 @@
           </v-btn>
         </v-col>
         <v-col cols="6">
-          <v-btn color="#fff" block>
+          <v-btn color="#fff" to="/faq" block>
             <v-icon class="mr-1" color="primary">mdi-help-circle-outline</v-icon
             ><span class="btn-text lh-crop-12">よくある質問</span>
             <v-icon color="primary">mdi-chevron-right </v-icon>
