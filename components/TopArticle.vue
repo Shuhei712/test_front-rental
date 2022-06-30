@@ -96,6 +96,9 @@ export default {
       return matchedSpecialPageLists
     },
   },
+  beforeDestroy() {
+    clearInterval(this.intervalId)
+  },
   methods: {
     toPageClassNameFrom(pageClassID) {
       const result = this.pageClassLists.find((list) => list.PageClassID === pageClassID)
