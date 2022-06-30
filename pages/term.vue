@@ -41,7 +41,7 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async loadHtml() {
-      const res = await this.$axios.$get('https://backet-rental-catalog.s3.ap-northeast-1.amazonaws.com/catalog-page/rental-menu/rental-term/index.html')
+      const res = await this.$axios.$get('https://rental-resource.takenaka-co.co.jp/catalog-page/rental-menu/rental-term/index.html')
       this.html = res
     }
   },
