@@ -18,7 +18,7 @@
                 <slide v-for="(list, index) in pickupLists" :key="index">
                   <div class="catch-copy-1--hidden">{{ list.PickupCatchCopy01 }}</div>
                   <div class="catch-copy-2--hidden">{{ list.PickupCatchCopy02 }}</div>
-                  <div v-if="list.PickupType === 0" class="content__item">
+                  <div v-if="list.PickupType === TYPE_PRODUCT" class="content__item">
                     <div class="item__box">
                       <div class="item__image">
                         <img :src="list.ImageURL" :alt="list.PickupTitle" />
@@ -43,7 +43,7 @@
                     </div>
                   </div>
                   <div
-                    v-else-if="list.PickupType === 1"
+                    v-else-if="list.PickupType === TYPE_FEATURE"
                     class="content__feature"
                     :style="[
                       {
@@ -90,7 +90,7 @@
                           <div class="box__right ml-3">
                             <v-btn
                               class="text-body-2"
-                              :href="'/products/?type=1&tagID=' + list.TagID + '&tagName=' + list.PickupTitle"
+                              :href="'/products/?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
                               :elevation="0"
                               >詳細へ</v-btn
                             >
@@ -131,6 +131,9 @@ export default {
         playSpeed: 10000,
         transition: 500,
       },
+        TYPE_PRODUCT: 0,
+        TYPE_FEATURE: 1,
+        TYPE_TAG: 2,
     }
   },
   methods: {

@@ -12,7 +12,27 @@
         <img class="protan" src="/img/pickup/protan.png" alt="プロタン" />
       </div>
       <div v-for="(list, index) in pickupLists" :key="index" class="item py-10">
-        <div class="item__heading d-flex align-center flex-column flex-lg-row mx-auto mb-4 mb-lg-5">
+        <div v-if="list.PickupType === TYPE_TAG" class="item__heading d-flex align-center flex-column flex-lg-row mx-auto mb-4 mb-lg-5">
+          <div class="d-flex align-center">
+            <img class="icon mr-3" :src="list.IconImageURL" :alt="list.IconImageURL" />
+            <h4
+              class="heading__title font-heading text-h6 text-lg-h5 text-gray font-weight-regular letter-space-02em mr-lg-10">
+              {{ list.PageCategoryName }}
+            </h4>
+          </div>
+          <v-divider class="heading__line hidden-md-and-down" color="line"></v-divider>
+          <v-btn
+            :to="'/products?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
+            class="ml-lg-5 mt-4 mt-lg-0"
+            color="headingText"
+            elevation="2"
+            outlined
+            small>
+            <span class="lh-crop-12">一覧へ</span>
+            <v-icon color="primary" class="mr-n2">mdi-chevron-right</v-icon>
+          </v-btn>
+        </div>
+        <div v-else class="item__heading d-flex align-center flex-column flex-lg-row mx-auto mb-4 mb-lg-5">
           <div class="d-flex align-center">
             <img class="icon mr-3" :src="list.IconImageURL" :alt="list.IconImageURL" />
             <h4
@@ -68,7 +88,10 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      TYPE_TAG: 0,
+      TYPE_CATEGORY: 1,
+    }
   },
 }
 </script>
