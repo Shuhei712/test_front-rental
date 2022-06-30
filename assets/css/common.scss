@@ -289,3 +289,24 @@ p {
 .popup {
   z-index: 600;
 }
+
+// 用語集 上書きCSS (Vuetifyと競合のため)
+.blued {
+  color: #0101c9 !important;
+  border-bottom: 1px solid #0101c9 !important;
+}
+
+.blued:visited {
+  color: #00007b !important;
+  border-bottom: 1px solid #00007b !important;
+}
+
+.link {
+  color: #0101c9 !important;
+  border-bottom: 1px solid #0101c9 !important;
+}
+
+.link:visited {
+  color: #00007b !important;
+  border-bottom: 1px solid #00007b !important;
+}
