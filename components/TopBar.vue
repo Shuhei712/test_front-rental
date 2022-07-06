@@ -2,7 +2,7 @@
   <div class="top-bar">
     <div class="bar__inner container">
       <bread-crumbs :bread-crumbs="breadCrumbs"></bread-crumbs>
-      <h2 class="text-white letter-space-03em text-h6 text-sm-h5 bold my-5">
+      <h2 class="text-white letter-space-03em text-h6 text-sm-h5 bold my-4">
         {{ title }}
       </h2>
     </div>
