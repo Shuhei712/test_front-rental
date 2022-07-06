@@ -7,7 +7,7 @@
     <v-card-subtitle class="text-caption text-sm-body-2 pa-0" color="text">
       <span class="item__name">{{ name }}</span>
       &ensp;
-      <span class="item__maker word-keep">{{ model }}</span>
+      <span class="item__maker item__model word-keep">{{ model }}</span>
     </v-card-subtitle>
     <v-card-title v-if="isPrice" class="item__price text-body-1 mb-2 px-0 py-1">
       {{ getPrice }}
@@ -127,9 +127,14 @@ export default {
     }
   }
   .item__maker {
+    font-weight: 300;
     @include mq(sm) {
       font-size: 11px !important;
     }
+  }
+
+  .item__name, .item__model {
+    font-weight: 400;
   }
 
   .item__price {
