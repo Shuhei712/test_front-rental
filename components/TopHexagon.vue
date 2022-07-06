@@ -214,12 +214,17 @@ export default {
     display: inline-block;
     z-index: 100;
     position: absolute;
+    width: 45px;
     align-items: center;
     background-color: $primary;
     text-align: center;
     transform: rotate(8deg) scaleY(0);
     white-space: nowrap;
     transform-origin: left top;
+
+    @include mq(xl) {
+      width: 40px;
+    }
   }
 
   .hexagon__catch.is-active {
