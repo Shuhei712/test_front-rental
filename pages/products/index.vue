@@ -508,11 +508,6 @@ export default {
         this.presentConditions.push(searchConditionInfo.PriceRangeName)
       }
     },
-    async resetConditions() {
-      const categoryInfo = await this.getCategoryInfo(this.presentCategoryID)
-      window.location.href =
-        '/products?type=2&categoryID=' + categoryInfo.CategoryID + '&categoryName=' + categoryInfo.CategoryName
-    },
     reseiveDialogFlg(value) {
       this.dialog = value
     },
@@ -548,6 +543,11 @@ export default {
     async receivedAllReset() {
       this.presentCategoryID = undefined
       await this.getFilterCondition()
+    },
+    async resetConditions() {
+      const categoryInfo = await this.getCategoryInfo(this.presentCategoryID)
+      window.location.href =
+        '/products?type=2&categoryID=' + categoryInfo.CategoryID + '&categoryName=' + categoryInfo.CategoryName
     },
   },
 }
