@@ -243,6 +243,9 @@ export default {
       if(searchConditionInfo.PriceFlg) {
         this.selectedPriceLists = [{id: searchConditionInfo.PriceRangeID, name: searchConditionInfo.PriceRangeName }]
       }
+      if(searchConditionInfo.KeyWordFlg) {
+        this.keyword = this.$store.getters['searchCondition/getKeyword']
+      }
     } else {
       if (this.$route.query.keyword !== undefined && this.$route.query.keyword !== 'undefined') {
       this.keyword = this.$route.query.keyword

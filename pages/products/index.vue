@@ -450,7 +450,7 @@ export default {
       } else {
         this.selectedPriceLists = []
       }
-      // this.keyword = searchConditionInfo.KeyWordFlg ? this.$store.getters['searchCondition/getKeyword'] : null
+      this.keyword = searchConditionInfo.KeyWordFlg ? this.$store.getters['searchCondition/getKeyword'] : undefined
     },
     changeOrderPrice() {
       this.orderRelease = ''
