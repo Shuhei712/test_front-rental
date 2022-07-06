@@ -345,6 +345,10 @@ export default {
       if (!isCategoryPage) this.$store.commit('breadCrumbs/deleteList')
 
       switch (type) {
+        case '0':
+          this.$store.commit('breadCrumbs/addList', { name: '絞り込み検索', path: '' })
+          this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
+          break
         case '1':
           this.$store.commit('breadCrumbs/addList', { name: this.$route.query.tagName, path: '' })
           this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
