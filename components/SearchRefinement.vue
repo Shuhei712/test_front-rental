@@ -34,11 +34,13 @@
               ref="maker"
               :search-maker-lists="searchMakerLists"
               :maker-flg="makerFlg"
+              :query-maker-lists="selectedMakerLists"
               @received-maker-lists="updateMakerLists"></search-maker>
             <search-price
               ref="price"
               :search-price-lists="searchPriceLists"
               :price-flg="priceFlg"
+              :query-price-lists="selectedPriceLists"
               @received-price-lists="updatePriceLists"></search-price>
             <search-tag
               ref="tag"
@@ -82,7 +84,7 @@
                 </div>
                 <v-row class="terms__box mt-2 px-3" no-gutters align="center" @click="openMaker()">
                   <v-col cols="11" class="terms__text">
-                    <span v-for="maker in selectedMakerLists" :key="maker.id"> {{ maker.name }} / </span>
+                    <span v-for="maker in selectedMakerLists" :key="maker.MakerID"> {{ maker.MakerName }} / </span>
                   </v-col>
                   <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
                 </v-row>
@@ -117,7 +119,7 @@
                 </v-row>
                 <v-row v-else class="terms__box mt-2 px-3" no-gutters align="center" @click="openTag()">
                   <v-col cols="11" class="terms__text">
-                    <span v-for="tag in selectedTagLists" :key="tag.id"> {{ tag.name }} / </span>
+                    <span v-for="tag in selectedTagLists" :key="tag.TagID"> {{ tag.TagName }} / </span>
                   </v-col>
                   <v-col cols="1" class="d-flex justify-end align-center"><v-icon>mdi-chevron-right</v-icon></v-col>
                 </v-row>
@@ -227,14 +229,30 @@ export default {
     },
   },
   created() {
-    if (this.$route.query.keyword !== undefined && this.$route.query.keyword !== 'undefined') {
+    if(this.$route.query.type === '0') {
+      const searchConditionInfo = this.$store.getters['searchCondition/getInfo']
+      if(searchConditionInfo.CategoryFlg) {
+        this.selectedCategoryLists = [{id: searchConditionInfo.CategoryID, name: searchConditionInfo.CategoryNmae02 }]
+      }
+      if(searchConditionInfo.MakerFlg) {
+        this.selectedMakerLists = searchConditionInfo.MakerList
+      }
+      if(searchConditionInfo.FeatureFlg) {
+        this.selectedTagLists = searchConditionInfo.FeatureList
+      }
+      if(searchConditionInfo.PriceFlg) {
+        this.selectedPriceLists = [{id: searchConditionInfo.PriceRangeID, name: searchConditionInfo.PriceRangeName }]
+      }
+    } else {
+      if (this.$route.query.keyword !== undefined && this.$route.query.keyword !== 'undefined') {
       this.keyword = this.$route.query.keyword
-    }
-    if (this.$route.query.categoryID !== undefined) {
-      this.selectedCategoryLists = [{ id: this.$route.query.categoryID, name: this.$route.query.categoryName }]
-    }
-    if (this.$route.query.tagID !== undefined) {
-      this.selectedTagLists = [{ id: this.$route.query.tagID, name: this.$route.query.tagName }]
+      }
+      if (this.$route.query.categoryID !== undefined) {
+        this.selectedCategoryLists = [{ id: this.$route.query.categoryID, name: this.$route.query.categoryName }]
+      } 
+      if (this.$route.query.tagID !== undefined) {
+        this.selectedTagLists = [{ TagID: this.$route.query.tagID, TagName: this.$route.query.tagName }]
+      }
     }
   },
   mounted() {

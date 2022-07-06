@@ -36,10 +36,14 @@ export default {
       type: Array,
       required: true,
     },
+    queryPriceLists: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      selectedPriceLists: [],
+      selectedPriceLists: this.queryPriceLists,
     }
   },
   methods: {

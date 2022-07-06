@@ -194,7 +194,15 @@ export default {
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    await this.searchProducts()
+    if(this.$route.query.type === '0') {
+      this.extractPresentCondition(this.$store.getters['searchCondition/getInfo'])
+      this.setSelectedData(this.$store.getters['searchCondition/getInfo'])
+      this.setCondisionJson()
+      await this.searchProductsUsingFilter()
+    } else {
+      await this.searchProducts()
+    }
+    
     this.setBreadCrumbs(this.$route.query.type)
     this.$store.commit('loading/changeStatus', false)
   },
@@ -313,10 +321,13 @@ export default {
       this.productLists = res.SearchProductList
       this.searchProductListCount = res.SearchAllCnt
       this.searchConditionInfo = res.SerchConditionInfo
+      this.$store.commit('searchCondition/addInfo', res.SerchConditionInfo)
+      this.$store.commit('searchCondition/addKeyword', res.KeyWord)
       this.page = res.PageNo
       this.pageMaxLength = res.PageNoMax
       this.extractPresentCondition(this.searchConditionInfo)
       this.setPresentCategoryID()
+      this.$router.push({query: {type:0}})
       await Promise.all([this.getMakerListforSearch(), this.getTagListforSearch()])
     },
     initializeCondisionJson() {
@@ -368,7 +379,7 @@ export default {
 
       if (this.selectedMakerLists.length) {
         this.selectedMakerLists.forEach((element) => {
-          this.conditionJson.MakerList.push({ MakerID: element.id })
+          this.conditionJson.MakerList.push({ MakerID: element.MakerID })
         })
       } else {
         this.conditionJson.MakerList = null
@@ -376,7 +387,7 @@ export default {
 
       if (this.selectedTagLists.length) {
         this.selectedTagLists.forEach((element) => {
-          this.conditionJson.FeatureTagList.push({ TagID: element.id })
+          this.conditionJson.FeatureTagList.push({ TagID: element.TagID })
         })
       } else {
         this.conditionJson.FeatureTagList = null
@@ -410,6 +421,32 @@ export default {
             break
         }
       }
+    },
+    setSelectedData(searchConditionInfo) {
+      if(searchConditionInfo.CategoryFlg) {
+        this.selectedCategoryLists.push({id: searchConditionInfo.CategoryID, name: searchConditionInfo.CategoryNmae02})
+      } else {
+        this.selectedCategoryLists = []
+      }
+
+      if(searchConditionInfo.MakerFlg) {
+        this.selectedMakerLists = searchConditionInfo.MakerList
+      } else {
+        this.selectedMakerLists = []
+      }
+
+      if(searchConditionInfo.FeatureFlg) {
+        this.selectedTagLists = searchConditionInfo.FeatureList
+      } else {
+        this.selectedTagLists = []
+      }
+    
+      if(searchConditionInfo.PriceFlg) {
+        this.selectedPriceLists.push({id: searchConditionInfo.PriceRangeID, name: searchConditionInfo.PriceRangeName})
+      } else {
+        this.selectedPriceLists = []
+      }
+      // this.keyword = searchConditionInfo.KeyWordFlg ? this.$store.getters['searchCondition/getKeyword'] : null
     },
     changeOrderPrice() {
       this.orderRelease = ''
