@@ -17,7 +17,7 @@
               v-model="selectedTagLists"
               class="terms__checkbox"
               type="checkbox"
-              :value="{ id: tag.TagID, name: tag.TagName }"
+              :value="{ TagID: tag.TagID, TagName: tag.TagName }"
               @change="sendTagLists()" />
             <div class="checkbox d-flex align-flex-start">
               <span class="checkbox__parts"></span>

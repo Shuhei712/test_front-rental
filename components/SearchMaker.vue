@@ -17,7 +17,7 @@
               v-model="selectedMakerLists"
               class="terms__checkbox"
               type="checkbox"
-              :value="{ id: maker.MakerID, name: maker.MakerName }"
+              :value="{ MakerID: maker.MakerID, MakerName: maker.MakerName }"
               @change="sendMakerLists()" />
             <div class="checkbox d-flex align-flex-start">
               <span class="checkbox__parts"></span>
@@ -41,10 +41,14 @@ export default {
       type: Array,
       required: true,
     },
+    queryMakerLists: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      selectedMakerLists: [],
+      selectedMakerLists: this.queryMakerLists,
     }
   },
   methods: {
