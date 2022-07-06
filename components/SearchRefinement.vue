@@ -392,7 +392,7 @@ export default {
 
 .dialog-card {
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
   cursor: move;
 
   @include mq(md) {
