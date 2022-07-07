@@ -58,6 +58,7 @@
                   dense
                   outlined
                   hide-details="auto"></v-text-field>
+                  @focus="isFocus = true" @blur="isFocus = false"></v-text-field>
               </v-col>
               <v-col cols="12" class="pb-5">
                 <div class="terms__title d-flex align-center">
@@ -204,6 +205,7 @@ export default {
       selectedPriceLists: [],
       keyword: '',
       isDraged: false,
+      isFocus: false,
       pos: {
         x: null,
         y: null,
@@ -356,7 +358,7 @@ export default {
     },
     drag(event) {
       event.preventDefault()
-      if (this.isDraged && !this.isMobile) {
+      if (this.isDraged && !this.isMobile && !this.isFocus) {
         const dialog = this.$refs.dialog
         dialog.style.position = 'fixed'
         dialog.style.margin = '0px'
