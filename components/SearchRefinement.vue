@@ -57,7 +57,8 @@
                   label="キーワードを入力できます"
                   dense
                   outlined
-                  hide-details="auto"></v-text-field>
+                  hide-details="auto"
+                  clearable
                   @focus="isFocus = true" @blur="isFocus = false"></v-text-field>
               </v-col>
               <v-col cols="12" class="pb-5">
