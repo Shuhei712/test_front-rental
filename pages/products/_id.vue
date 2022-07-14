@@ -274,7 +274,7 @@
           </div>
         </div>
         <div class="back-btn d-flex flex-column flex-sm-row flex-wrap align-start align-sm-center justify-center mt-15">
-          <v-btn
+          <a
             :href="
               '/products?type=2&categoryID=' +
               productInfoList.CategoryNmae01 +
@@ -282,12 +282,12 @@
               productInfoList.CategoryTagID01
             "
             color="footer"
-            class="mr-4 px-2 mb-1"
+            class="d-flex align-center mr-4 px-2 mb-1"
             text>
             <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon>
-            {{ productInfoList.CategoryTagID01 }}に戻る
-          </v-btn>
-          <v-btn
+            <span>{{ productInfoList.CategoryTagID01 }}に戻る</span>
+          </a>
+          <a
             :href="
               '/products?type=2&categoryID=' +
               productInfoList.CategoryNmae02 +
@@ -298,8 +298,8 @@
             class="px-2 mb-1"
             text>
             <v-icon class="mr-2 ml-n1" color="primary">mdi-chevron-left</v-icon>
-            {{ productInfoList.CategoryTagID02 }}に戻る
-          </v-btn>
+            <span>{{ productInfoList.CategoryTagID02 }}に戻る</span>
+          </a>
         </div>
       </div>
     </div>
@@ -1101,6 +1101,30 @@ $bp_xs: 362px;
       //     }
       //   }
       // }
+    }
+  }
+
+  .back-btn {
+    a {
+      display: inline-block;
+      font-size: 0.875rem;
+      color: $footer !important;
+      font-weight: 500;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.6, 1);
+      border-radius: 5px;
+
+      span {
+        display: inline-block;
+        // padding-left: 2em;
+      }
+
+      @include mq(sm) {
+        font-size: 0.8rem;
+      }
+    }
+
+    a:hover {
+      opacity: 0.85;
     }
   }
 }
