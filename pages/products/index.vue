@@ -301,6 +301,7 @@ export default {
       param.append('OrderPrice', this.orderPrice)
       param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
       param.append('PageNo', this.page)
+      this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
       // console.log(res)
       this.productLists = res.SearchProductList
@@ -308,6 +309,7 @@ export default {
       this.setPresentCategoryID()
       this.page = res.PageNo
       this.pageMaxLength = res.PageNoMax
+      this.$store.commit('loading/changeStatus', false)
     },
     async searchProductsUsingFilter() {
       const conditionJSON = JSON.stringify(this.conditionJson)
@@ -323,6 +325,7 @@ export default {
       param.append('OrderPrice', this.orderPrice)
       param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
       param.append('PageNo', this.page)
+      this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
       // console.log(res)
       this.conditionalSearchFlg = true
@@ -337,6 +340,7 @@ export default {
       this.setPresentCategoryID()
       this.$router.push({query: {type:0}})
       await Promise.all([this.getMakerListforSearch(), this.getTagListforSearch()])
+      this.$store.commit('loading/changeStatus', false)
     },
     initializeCondisionJson() {
       this.conditionJson.CategoryID = ''
