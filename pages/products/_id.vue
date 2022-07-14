@@ -244,7 +244,7 @@
               </div>
               <div class="product-related__content mt-10">
                 <div v-for="(list, index) in productRefLists" :key="index" class="related__product mt-5">
-                  <div class="product__categories d-flex px-3 py-1">
+                  <div class="product__categories d-flex flex-wrap px-3 py-1">
                     <div class="search-tag d-flex text-body-2 mr-4 mr-md-5">
                       <v-icon class="mr-2" small>mdi-check</v-icon>{{ list.CategoryTagID01 }}
                     </div>
