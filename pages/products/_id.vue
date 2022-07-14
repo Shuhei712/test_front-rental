@@ -327,6 +327,7 @@ export default {
       tariffDialog: false,
       caseSizeDialog: false,
       breadCrumbs: [],
+      title: this.$route.query.name
     }
   },
   async fetch() {
@@ -350,17 +351,23 @@ export default {
 
     this.$store.commit('loading/changeStatus', false)
   },
-  head: {
-    link: [
-      {
-        rel: 'stylesheet',
-        href: 'https://rental-resource.takenaka-co.co.jp/catalog-page/detail/css/old-rental.css',
-      },
-      {
-        rel: 'stylesheet',
-        href: 'https://rental-resource.takenaka-co.co.jp/catalog-page/detail/css/product-info.css',
-      },
-    ],
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.title + ' | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
+      ],
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://rental-resource.takenaka-co.co.jp/catalog-page/detail/css/old-rental.css',
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://rental-resource.takenaka-co.co.jp/catalog-page/detail/css/product-info.css',
+        },
+      ],
+    }
   },
   computed: {
     downloadDocLists() {
