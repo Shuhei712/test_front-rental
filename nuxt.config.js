@@ -4,8 +4,8 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   ssr: false,
   head: {
-    titleTemplate: '%s - takenaka_rental',
-    title: 'takenaka_rental',
+    titleTemplate: '%s - 映像機材・音響機器のレンタルサービス | 株式会社タケナカ',
+    title: '映像機材・音響機器のレンタルサービス | 株式会社タケナカ',
     htmlAttrs: {
       lang: 'ja',
     },
