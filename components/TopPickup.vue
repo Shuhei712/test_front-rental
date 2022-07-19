@@ -42,7 +42,7 @@
           </div>
           <v-divider class="heading__line hidden-md-and-down" color="line"></v-divider>
           <v-btn
-            :to="'/products?type=2&categoryID=' + list.CategoryID + '&categoryName=' + list.CategoryName"
+            :to="'/products?type=2&categoryID=' + list.TagID + '&categoryName=' + list.TagName"
             class="ml-lg-5 mt-4 mt-lg-0"
             color="headingText"
             elevation="2"
