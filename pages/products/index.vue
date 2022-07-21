@@ -190,11 +190,15 @@ export default {
       presentCategoryID: '',
       breadCrumbs: [],
       title: '',
+      TYPE_CONDITION_SEARCH: '0',
+      TYPE_TAG_SEARCH: '1',
+      TYPE_CATEGORY_SEARCH: '2',
+      TYPE_KEYWORD_SEARCH: '3'
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    if(this.$route.query.type === '0') {
+    if(this.$route.query.type === this.TYPE_CONDITION_SEARCH) {
       this.extractPresentCondition(this.$store.getters['searchCondition/getInfo'])
       this.setSelectedData(this.$store.getters['searchCondition/getInfo'])
       this.setCondisionJson()
@@ -316,7 +320,7 @@ export default {
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
-      param.append('SearchType', '0')
+      param.append('SearchType', this.TYPE_CONDITION_SEARCH)
       param.append('Keyword', this.keyword)
       // param.append('CategoryTagID', '')
       // param.append('SearchTagID', '')
@@ -338,7 +342,7 @@ export default {
       this.pageMaxLength = res.PageNoMax
       this.extractPresentCondition(this.searchConditionInfo)
       this.setPresentCategoryID()
-      this.$router.push({query: {type:0}})
+      this.$router.push({query: {type:this.TYPE_CONDITION_SEARCH}})
       await Promise.all([this.getMakerListforSearch(), this.getTagListforSearch()])
       this.$store.commit('loading/changeStatus', false)
     },
@@ -357,23 +361,22 @@ export default {
       if (!isCategoryPage) this.$store.commit('breadCrumbs/deleteList')
 
       switch (type) {
-        case '0':
+        case this.TYPE_CONDITION_SEARCH:
           this.$store.commit('breadCrumbs/addList', { name: '絞り込み検索', path: '' })
           this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
           break
-        case '1':
+        case this.TYPE_TAG_SEARCH:
           this.$store.commit('breadCrumbs/addList', { name: this.$route.query.tagName, path: '' })
           this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
           break
-        case '2':
+        case this.TYPE_CATEGORY_SEARCH:
           this.$store.commit('breadCrumbs/addList', { name: this.$route.query.categoryName, path: '' })
           this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
           break
-        case '3':
+        case this.TYPE_KEYWORD_SEARCH:
           this.$store.commit('breadCrumbs/addList', { name: 'キーワード検索結果', path: '' })
           this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
           break
-
         default:
           break
       }
@@ -423,13 +426,13 @@ export default {
           this.searchConditionInfo.CategoryID === null ? undefined : this.searchConditionInfo.CategoryID
       } else {
         switch (this.$route.query.type) {
-          case '1':
+          case this.TYPE_TAG_SEARCH:
             this.presentCategoryID = undefined
             break
-          case '2':
+          case this.TYPE_CATEGORY_SEARCH:
             this.presentCategoryID = this.$route.query.categoryID
             break
-          case '3':
+          case this.TYPE_KEYWORD_SEARCH:
             this.presentCategoryID = undefined
             break
           default:
