@@ -115,7 +115,7 @@
             outlined
             small
             :disabled="!presentCategoryID"
-            @click="resetConditions()">
+            @click="resetConditionsExceptCategory()">
             カテゴリ以外の条件をリセット
           </v-btn>
         </div>
@@ -556,7 +556,7 @@ export default {
       this.presentCategoryID = undefined
       await this.getFilterCondition()
     },
-    async resetConditions() {
+    async resetConditionsExceptCategory() {
       const categoryInfo = await this.getCategoryInfo(this.presentCategoryID)
       window.location.href =
         '/products?type=2&categoryID=' + categoryInfo.CategoryID + '&categoryName=' + categoryInfo.CategoryName
