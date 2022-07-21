@@ -1,77 +1,210 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+  <div v-if="!$fetchState.pending && !$fetchState.error" id="top" class="top">
+    <div class="top__share top__share--fixed">
+      <v-btn
+        class="share__twitter text-white text-subtitle-2 mr-2"
+        color="twitter"
+        href="https://twitter.com/TakenakaCoLtd"
+        target="_blank">
+        <div class="btn-shadow"></div>
+        <v-icon class="mr-2 rotate-90">mdi-twitter</v-icon>Tweet
+      </v-btn>
+      <v-btn
+        class="share__twitter text-white text-subtitle-2 mr-2"
+        color="facebook"
+        href="https://www.facebook.com/TAKENAKACoLtd"
+        target="_blank">
+        <v-icon class="mr-2 rotate-90">mdi-facebook</v-icon>Share
+      </v-btn>
+    </div>
+    <to-top-btn></to-top-btn>
+    <div class="top__hexagon hidden-md-and-down">
+      <div class="hexagon"></div>
+      <div class="hexagon"></div>
+      <div class="hexagon"></div>
+    </div>
+    <top-main :pickup-lists="pickupLists" class="hidden-md-and-down"></top-main>
+    <top-main-rp :pickup-lists="pickupLists" class="hidden-lg-and-up"></top-main-rp>
+    <top-notice :news-lists="newsLists"></top-notice>
+    <div class="top__inner d-flex pt-16">
+      <category-lists></category-lists>
+      <div class="content ml-lg-10">
+        <top-new :new-product-lists="newProductLists"></top-new>
+        <top-article
+          :page-class-lists="specialPageLists.PageClassList"
+          :special-page-lists="specialPageLists.SpecialPageList">
+        </top-article>
+        <top-pickup :pickup-lists="pickupTagLists.NewProductList"></top-pickup>
+      </div>
+    </div>
+  </div>
 </template>
+<script>
+export default {
+  loading: false,
+  data() {
+    return {
+      menuLists: [],
+      newsLists: [],
+      pickupLists: [],
+      newProductLists: [],
+      specialPageLists: [],
+      pickupTagLists: [],
+    }
+  },
+  async fetch() {
+    this.$store.commit('loading/changeStatus', true)
+    this.resetBreadCrumbs()
+    const [menuLists, newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] = await Promise.all([
+      this.getMenuList(),
+      this.getNewsList(),
+      this.getPickupList(),
+      this.getNewProductList(),
+      this.getSpecialPageList(),
+      this.getPickUpTagList(),
+    ])
+    this.$store.commit('loading/changeStatus', false)
+  },
+  updated() {
+    this.$scrollBackButton()
+  },
+  methods: {
+    async getMenuList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_menu_list.php', param)
+      // console.log(res)
+      this.menuLists = res.MenuRootList
+    },
+    async getNewsList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_news_list_top.php', param)
+      // console.log(res)
+      this.newsLists = res.NewsReleaseList
+    },
+    async getPickupList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_pickup_list_top.php', param)
+      // console.log(res)
+      this.pickupLists = res.NewsReleaseList
+    },
+    async getNewProductList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ListMaxCnt', 4)
+      const res = await this.$axios.$post('get_new_product_list_top.php', param)
+      // console.log(res)
+      this.newProductLists = res.NewProductList
+    },
+    async getSpecialPageList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      const res = await this.$axios.$post('get_special_page_list_top.php', param)
+      // console.log(res)
+      this.specialPageLists = res
+    },
+    async getPickUpTagList() {
+      const param = new URLSearchParams()
+      param.append('ProjectKey', this.$config.PROJECT_KEY)
+      param.append('LangType', this.$config.LANG_JAPANESE)
+      param.append('ListMaxCnt', 4)
+      const res = await this.$axios.$post('get_pickup_tag_list_top.php', param)
+      // console.log(res)
+      this.pickupTagLists = res
+    },
+    resetBreadCrumbs() {
+      this.$store.commit('breadCrumbs/deleteList')
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import 'assets/css/common.scss';
+
+.top {
+  overflow: hidden;
+  position: relative;
+  height: auto;
+
+  &__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 140px !important;
+  }
+}
+
+.top__share {
+  z-index: 100;
+  transform-origin: right top;
+  transform: rotate(90deg) translate(0, 0);
+
+  @include mq(lg) {
+    display: none;
+  }
+
+  .share__twitter {
+    box-shadow: 5px -5px 0px -2px #ffffff;
+    border-radius: 5px;
+  }
+}
+
+.top__share--fixed {
+  position: fixed;
+  bottom: 24px;
+  right: calc(30 / 1920 * 100vw);
+}
+
+.top__share--absolute {
+  position: absolute;
+  bottom: 24px;
+  right: calc(30 / 1920 * 100vw);
+}
+
+.content {
+  width: 70%;
+  flex-grow: 1;
+
+  @include mq(lg) {
+    width: 100%;
+  }
+}
+
+.top__hexagon {
+  width: calc(103px * 2);
+  height: calc(103px * 1.732);
+  bottom: -35px;
+  right: calc(-50 / 1920 * 100vw);
+  transform: rotate(-10deg);
+  position: absolute;
+  z-index: 1;
+
+  .hexagon {
+    border-top: 1px solid $primary; // 辺の長さを調整
+    border-bottom: 1px solid $primary; // 辺の長さを調整
+    box-sizing: border-box;
+    width: 103px; // 辺の長さを調整
+    height: calc(103px * 1.732); // 辺の長さを調整
+    left: calc(103px * 0.5); // 位置を調整
+    position: absolute;
+
+    &:nth-of-type(1) {
+      transform: rotate(0deg);
+    }
+    &:nth-of-type(2) {
+      transform: rotate(60deg);
+    }
+    &:nth-of-type(3) {
+      transform: rotate(120deg);
+    }
+  }
+}
+</style>
