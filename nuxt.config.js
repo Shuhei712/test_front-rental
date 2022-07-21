@@ -12,6 +12,10 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      /* ------------------------  develop  ------------------------ */
+      { name: 'robots', content: 'noindex' },
+      { name: 'robots', content: 'nofollow' },
+      /* ------------------------  develop  ------------------------ */
       {
         hid: 'description',
         name: 'description',
