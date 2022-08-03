@@ -23,13 +23,13 @@
       <div class="hexagon"></div>
       <div class="hexagon"></div>
     </div>
-    <top-main :pickup-lists="pickupLists" class="hidden-md-and-down"></top-main>
-    <top-main-rp :pickup-lists="pickupLists" class="hidden-lg-and-up"></top-main-rp>
-    <top-notice :news-lists="newsLists"></top-notice>
+    <top-main :pickup-lists="pickupLists.NewsReleaseList" class="hidden-md-and-down"></top-main>
+    <top-main-rp :pickup-lists="pickupLists.NewsReleaseList" class="hidden-lg-and-up"></top-main-rp>
+    <top-notice :news-lists="newsLists.NewsReleaseList"></top-notice>
     <div class="top__inner d-flex pt-16">
       <category-lists></category-lists>
       <div class="content ml-lg-10">
-        <top-new :new-product-lists="newProductLists"></top-new>
+        <top-new :new-product-lists="newProductLists.NewProductList"></top-new>
         <top-article
           :page-class-lists="specialPageLists.PageClassList"
           :special-page-lists="specialPageLists.SpecialPageList">
@@ -44,7 +44,6 @@ export default {
   loading: false,
   data() {
     return {
-      menuLists: [],
       newsLists: [],
       pickupLists: [],
       newProductLists: [],
@@ -55,70 +54,27 @@ export default {
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     this.resetBreadCrumbs()
-    const [menuLists, newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] = await Promise.all([
-      this.getMenuList(),
-      this.getNewsList(),
-      this.getPickupList(),
-      this.getNewProductList(),
-      this.getSpecialPageList(),
-      this.getPickUpTagList(),
+
+    const [newsLists, pickupLists, newProductLists, specialPageLists, pickupTagLists] = await Promise.all([
+      this.$api.getNewsList(),
+      this.$api.getPickupList(),
+      this.$api.getNewProductList(4),
+      this.$api.getSpecialPageList(),
+      this.$api.getPickUpTagList(4),
     ])
+
+    this.newsLists = newsLists
+    this.pickupLists = pickupLists
+    this.newProductLists = newProductLists
+    this.specialPageLists = specialPageLists
+    this.pickupTagLists = pickupTagLists
+
     this.$store.commit('loading/changeStatus', false)
   },
   updated() {
     this.$scrollBackButton()
   },
   methods: {
-    async getMenuList() {
-      const param = new URLSearchParams()
-      param.append('ProjectKey', this.$config.PROJECT_KEY)
-      param.append('LangType', this.$config.LANG_JAPANESE)
-      const res = await this.$axios.$post('get_menu_list.php', param)
-      // console.log(res)
-      this.menuLists = res.MenuRootList
-    },
-    async getNewsList() {
-      const param = new URLSearchParams()
-      param.append('ProjectKey', this.$config.PROJECT_KEY)
-      param.append('LangType', this.$config.LANG_JAPANESE)
-      const res = await this.$axios.$post('get_news_list_top.php', param)
-      // console.log(res)
-      this.newsLists = res.NewsReleaseList
-    },
-    async getPickupList() {
-      const param = new URLSearchParams()
-      param.append('ProjectKey', this.$config.PROJECT_KEY)
-      param.append('LangType', this.$config.LANG_JAPANESE)
-      const res = await this.$axios.$post('get_pickup_list_top.php', param)
-      // console.log(res)
-      this.pickupLists = res.NewsReleaseList
-    },
-    async getNewProductList() {
-      const param = new URLSearchParams()
-      param.append('ProjectKey', this.$config.PROJECT_KEY)
-      param.append('LangType', this.$config.LANG_JAPANESE)
-      param.append('ListMaxCnt', 4)
-      const res = await this.$axios.$post('get_new_product_list_top.php', param)
-      // console.log(res)
-      this.newProductLists = res.NewProductList
-    },
-    async getSpecialPageList() {
-      const param = new URLSearchParams()
-      param.append('ProjectKey', this.$config.PROJECT_KEY)
-      param.append('LangType', this.$config.LANG_JAPANESE)
-      const res = await this.$axios.$post('get_special_page_list_top.php', param)
-      // console.log(res)
-      this.specialPageLists = res
-    },
-    async getPickUpTagList() {
-      const param = new URLSearchParams()
-      param.append('ProjectKey', this.$config.PROJECT_KEY)
-      param.append('LangType', this.$config.LANG_JAPANESE)
-      param.append('ListMaxCnt', 4)
-      const res = await this.$axios.$post('get_pickup_tag_list_top.php', param)
-      // console.log(res)
-      this.pickupTagLists = res
-    },
     resetBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
     },
