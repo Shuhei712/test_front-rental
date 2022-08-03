@@ -1,21 +1,8 @@
 <template>
   <div v-if="!$fetchState.pending && !$fetchState.error" id="top" class="top">
     <div class="top__share top__share--fixed">
-      <v-btn
-        class="share__twitter text-white text-subtitle-2 mr-2"
-        color="twitter"
-        href="https://twitter.com/TakenakaCoLtd"
-        target="_blank">
-        <div class="btn-shadow"></div>
-        <v-icon class="mr-2 rotate-90">mdi-twitter</v-icon>Tweet
-      </v-btn>
-      <v-btn
-        class="share__twitter text-white text-subtitle-2 mr-2"
-        color="facebook"
-        href="https://www.facebook.com/TAKENAKACoLtd"
-        target="_blank">
-        <v-icon class="mr-2 rotate-90">mdi-facebook</v-icon>Share
-      </v-btn>
+      <twitter-button></twitter-button>
+      <facebook-button></facebook-button>
     </div>
     <to-top-btn></to-top-btn>
     <div class="top__hexagon hidden-md-and-down">
@@ -105,11 +92,6 @@ export default {
 
   @include mq(lg) {
     display: none;
-  }
-
-  .share__twitter {
-    box-shadow: 5px -5px 0px -2px #ffffff;
-    border-radius: 5px;
   }
 }
 
