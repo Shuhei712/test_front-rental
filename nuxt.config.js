@@ -53,7 +53,14 @@ export default {
   css: ['@/assets/css/common.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~plugins/vue-scrollto', '~plugins/hooper', '~/plugins/persistedState.client.js', '~/plugins/gsap.js'],
+  plugins: [
+    '~plugins/vue-scrollto',
+    '~plugins/hooper',
+    '~/plugins/persistedState.client.js',
+    '~/plugins/gsap.js',
+    '~/plugins/axios',
+    '~/plugins/api',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -85,6 +92,7 @@ export default {
   publicRuntimeConfig: {
     PROJECT_KEY: process.env.PROJECT_KEY,
     LANG_JAPANESE: process.env.LANG_JAPANESE,
+    API_BASE_URL: process.env.API_BASE_URL,
     PRODUCT_INFO: process.env.PRODUCT_INFO,
     PRODUCT_SPEC: process.env.PRODUCT_SPEC,
     PRODUCT_REFFER: process.env.PRODUCT_REFFER,
