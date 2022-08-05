@@ -1,5 +1,5 @@
 <template>
-  <v-card class="product mt-8 mt-sm-10 mt-lg-13" elevation="0" :to="'/products/' + id + '?name=' + name">
+  <v-card class="product mt-8 mt-sm-10 mt-lg-13" elevation="0">
     <div class="categories categories--sp d-flex flex-wrap px-3 py-1 mb-3">
       <div class="search-tag d-flex text-caption mr-4">
         <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}
@@ -13,7 +13,7 @@
         <div class="img__inner">
           <span v-if="isComingsoon(releaseDate)" class="product-comingsoon">Coming soon</span>
           <span v-else-if="isNew(releaseDate)" class="product-new">New</span>
-          <img :src="image" :alt="name" class="pa-1" />
+          <a :href="'/products/' + id + '?name=' + name"><img :src="image" :alt="name" class="pa-1" /></a>
         </div>
       </div>
       <div class="info__details flex-grow-1 d-flex flex-column">
@@ -28,8 +28,12 @@
         <div class="name mt-2 mt-md-5">
           <div class="name__maker text-caption text-sm-body-2">{{ maker }}</div>
           <div class="name__product mt-1">
-            <div class="text-subtitle-2 text-sm-subtitle-1 letter-space-015em font-weight-medium">{{ name }}</div>
-            <div class="text-subtitle-1 text-sm-h6 letter-space-015em font-weight-bold">{{ typeNumber }}</div>
+            <div class="text-subtitle-2 text-sm-subtitle-1 letter-space-015em font-weight-medium">
+              <a :href="'/products/' + id + '?name=' + name">{{ name }}</a>
+            </div>
+            <div class="text-subtitle-1 text-sm-h6 letter-space-015em font-weight-bold">
+              <a :href="'/products/' + id + '?name=' + name">{{ typeNumber }}</a>
+            </div>
           </div>
         </div>
         <v-spacer></v-spacer>
