@@ -358,8 +358,8 @@ export default {
       this.pos.y = mouseY - rect.top
     },
     drag(event) {
-      event.preventDefault()
-      if (this.isDraged && !this.isMobile && !this.isFocus) {
+      // event.preventDefault()
+      if (this.isDraged && !this.isMobile && this.dialogFlg && !this.isFocus) {
         const dialog = this.$refs.dialog
         dialog.style.position = 'fixed'
         dialog.style.margin = '0px'
