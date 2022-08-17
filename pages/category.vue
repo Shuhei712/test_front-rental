@@ -145,6 +145,8 @@ $led: #c986d1;
 $led-bg: #5a2066;
 $pj: #cc8071;
 $pj-bg: #922617;
+$screen: #cc8071;
+$screen-bg: #922617;
 $display: #7b9456;
 $display-bg: #3f600b;
 $media: #bf9540;
@@ -328,6 +330,14 @@ $other-bg: #563a2e;
           font-size: 90px;
         }
       }
+      #category-id_1119 & {
+        font-size: 159px;
+        top: 55%;
+
+        @include mq(md) {
+          font-size: 110px;
+        }
+      }
     }
     &-note {
       color: #878787;
@@ -446,6 +456,9 @@ $other-bg: #563a2e;
       #category-id_11 & {
         background-color: rgba($other-bg, 0.5);
       }
+      #category-id_1119 & {
+        background-color: rgba($screen-bg, 0.5);
+      }
     }
   }
 
@@ -483,6 +496,9 @@ $other-bg: #563a2e;
     }
     #category-id_11 & {
       border-color: $other;
+    }
+    #category-id_1119 & {
+      border-color: $screen;
     }
   }
 }
