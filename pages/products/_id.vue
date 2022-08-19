@@ -181,7 +181,7 @@
                   v-for="list in object.SectionList"
                   :key="list.ProductSubjectID"
                   class="d-md-flex align-center mb-15">
-                  <div class="section-head text-center mb-5 mb-lg-0">{{ list.SectionName }}</div>
+                  <div class="section-head text-center mb-5 mb-md-0">{{ list.SectionName }}</div>
                   <div class="section-html" v-html="list.HtmlCode"></div>
                 </div>
               </div>
