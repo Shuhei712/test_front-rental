@@ -19,10 +19,10 @@ $lightGray: #9da5a4;
 
 // ブレイクポイント
 $breakpoints: (
-  'sm': 'screen and (max-width: 599px)',
-  'md': 'screen and (max-width: 959px)',
-  'lg': 'screen and (max-width: 1263px)',
-  'xl': 'screen and (max-width: 1903px)',
+  'sm': 'screen and (max-width: 599.9px)',
+  'md': 'screen and (max-width: 959.9px)',
+  'lg': 'screen and (max-width: 1263.9px)',
+  'xl': 'screen and (max-width: 1903.9px)',
 ) !default;
 
 @mixin mq($breakpoint) {

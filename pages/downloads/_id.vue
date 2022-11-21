@@ -11,7 +11,7 @@
       :case-size-info="productCaseInfo"
       @change-case-size-dialog="reseiveCaseSizeDialogFlg">
     </case-size-card>
-    <top-bar title="機材詳細" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="資料ダウンロード" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="detail__inner py-6 py-sm-10 py-lg-16">
       <div class="content px-2 px-lg-0">
         <div class="info__categories--sp d-flex flex-wrap px-3 py-1 mb-3">
@@ -130,25 +130,7 @@
               クリックでページ内項目にジャンプします
             </p>
             <ul
-              class="d-flex flex-wrap justify-space-between justify-sm-center pt-5 pt-sm-3 pl-4 pl-sm-5 pl-md-16 text-body-2 text-md-body-1">
-              <li class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
-                <a
-                  v-scroll-to="{ el: '#product-info', offset: -200 }"
-                  class="d-flex align-center text-gray hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-information-outline</v-icon>製品情報<v-icon color="#878787">
-                    mdi-chevron-down
-                  </v-icon>
-                </a>
-              </li>
-              <li class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
-                <a
-                  v-scroll-to="{ el: '#product-specification', offset: -200 }"
-                  class="d-flex align-center text-gray hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-database-outline</v-icon>仕様<v-icon color="#878787">
-                    mdi-chevron-down
-                  </v-icon>
-                </a>
-              </li>
+              class="d-flex flex-wrap justify-center justify-sm-center pt-5 pt-sm-3 pl-4 pl-sm-5 pl-md-16 text-body-2 text-md-body-1">
               <li v-if="productDocLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
                 <a
                   v-scroll-to="{ el: '#product-document', offset: -200 }"
@@ -159,46 +141,9 @@
                   </v-icon>
                 </a>
               </li>
-              <li v-if="productRefLists !== null" class="mr-4 mr-sm-5 mr-md-16 mb-5 mb-sm-3">
-                <a
-                  v-scroll-to="{ el: '#product-related', offset: -200 }"
-                  class="d-flex align-center text-gray hover-opacity">
-                  <v-icon class="mr-2" color="primary">mdi-link</v-icon>関連機材<v-icon color="#878787">
-                    mdi-chevron-down
-                  </v-icon>
-                </a>
-              </li>
             </ul>
           </div>
           <div class="information__content">
-            <section id="product-info" class="product-info content__sec mt-15">
-              <div
-                class="content__head product-info__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 font-weight-medium letter-space-02em text-gray">
-                <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-information-outline</v-icon>製品情報
-              </div>
-              <div v-for="(object, index) in infoLists" :key="index" class="product-info__content mt-10">
-                <div
-                  v-for="list in object.SectionList"
-                  :key="list.ProductSubjectID"
-                  class="d-md-flex align-center mb-15">
-                  <div class="section-head text-center mb-5 mb-md-0">{{ list.SectionName }}</div>
-                  <div class="section-html" v-html="list.HtmlCode"></div>
-                </div>
-              </div>
-            </section>
-            <section id="product-specification" class="product-specification content__sec mt-15">
-              <div
-                class="content__head product-specification__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 font-weight-medium letter-space-02em text-gray">
-                <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-database-outline</v-icon>仕様
-              </div>
-              <div v-for="(object, index) in specLists" :key="index" class="product-specification__content mt-10">
-                <div
-                  v-for="list in object.SectionList"
-                  :key="list.ProductSubjectID"
-                  class="mb-15"
-                  v-html="list.HtmlCode"></div>
-              </div>
-            </section>
             <section v-if="productDocLists !== null" id="product-document" class="product-document content__sec mt-15">
               <div
                 class="content__head product-document__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 font-weight-medium letter-space-02em text-gray">
@@ -235,40 +180,6 @@
                     {{ list.DocumentName }}
                   </div>
                 </v-card>
-              </div>
-            </section>
-            <section v-if="productRefLists !== null" id="product-related" class="product-related content__sec mt-15">
-              <div
-                class="content__head product-related__head d-flex flex-column flex-sm-row align-center justify-center text-h6 text-sm-h5 font-weight-medium letter-space-02em text-gray">
-                <v-icon class="mb-1 mb-sm-0 mr-sm-5" color="primary">mdi-link</v-icon>関連機材
-              </div>
-              <div class="product-related__content mt-10">
-                <div v-for="(list, index) in productRefLists" :key="index" class="related__product mt-5">
-                  <div class="product__categories d-flex flex-wrap px-3 py-1">
-                    <div class="search-tag d-flex text-body-2 mr-4 mr-md-5">
-                      <v-icon class="mr-2" small>mdi-check</v-icon>{{ list.CategoryTagID01 }}
-                    </div>
-                    <div class="search-tag d-flex text-body-2">
-                      <v-icon class="mr-2" small>mdi-check</v-icon>{{ list.CategoryTagID02 }}
-                    </div>
-                  </div>
-                  <div class="product__related mt-5">
-                    <v-row>
-                      <v-col v-for="product in list.ProductList" :key="product.ProductID" cols="6" sm="3" md="2">
-                        <item-card
-                          :path="product.ProductImageURL"
-                          :maker="product.MakerName"
-                          :name="product.ProductName"
-                          :model="product.ProductTypeNumber"
-                          :price="product.ProductPrice"
-                          :price-unit="product.PriceUnit"
-                          :price-type="product.PriceType"
-                          :link="'/products/' + product.ProductID + '?name=' + product.ProductName">
-                        </item-card>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </div>
               </div>
             </section>
           </div>
