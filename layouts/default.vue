@@ -1,19 +1,17 @@
 <template>
   <v-app>
-      <header-parts></header-parts>
-      <v-main>
-        <div v-if="loading">
-          <loading></loading>
-        </div>
-        <Nuxt />
-      </v-main>
-      <footer-parts></footer-parts>
-    </div>
+    <header-parts></header-parts>
+    <v-main>
+      <div v-if="loading">
+        <loading></loading>
+      </div>
+      <Nuxt />
+    </v-main>
+    <footer-parts></footer-parts>
   </v-app>
 </template>
 
 <script>
-
 export default {
   computed: {
     loading() {

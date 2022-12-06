@@ -17,7 +17,14 @@
                   <!-- サブメニューあり -->
                   <div
                     v-if="root.MenuType === 0"
-                    class="main-menu__text d-block d-lg-flex justify-space-between text-body-2 text-gray py-4 py-lg-2 px-2"
+                    class="
+                      main-menu__text
+                      d-block d-lg-flex
+                      justify-space-between
+                      text-body-2 text-gray
+                      py-4 py-lg-2
+                      px-2
+                    "
                     :class="{ active: subMenuFlg[index] }"
                     :href="root.ActionURL"
                     @click="toggleSubMenu(index)"
@@ -55,20 +62,33 @@
                 </li>
               </ul>
             </nav>
-            <v-form class="header__search d-flex align-center mt-5 mt-lg-0 ml-lg-2" @submit.prevent>
-              <v-text-field
-                v-model="keyword"
-                color="primary"
-                placeholder="キーワード検索"
-                outlined
-                dense
-                prepend-inner-icon="mdi-magnify"
-                hide-details="auto"
-                @keyup.enter="searchKeyword"></v-text-field>
-              <v-btn color="primary" class="text-white ml-2" :href="'/products?type=3&keyword=' + keyword">
-                <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
-              </v-btn>
-            </v-form>
+            <v-btn elevation="0" color="transparent" class="mr-2">
+              <v-icon class="mr-1">mdi-magnify</v-icon>
+            </v-btn>
+            <div class="d-none">
+              <v-form class="header__search d-flex align-center mt-5 mt-lg-0 ml-lg-2" @submit.prevent>
+                <v-text-field
+                  v-model="keyword"
+                  color="primary"
+                  placeholder="キーワード検索"
+                  outlined
+                  dense
+                  prepend-inner-icon="mdi-magnify"
+                  hide-details="auto"
+                  @keyup.enter="searchKeyword"></v-text-field>
+                <v-btn color="primary" class="text-white ml-2" :href="'/products?type=3&keyword=' + keyword">
+                  <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>
+                </v-btn>
+              </v-form>
+            </div>
+            <div v-if="isLogin" class="header__login--active">
+              <v-btn outlined small href="myaccount/favorite"> お気に入り </v-btn>
+              <v-btn small color="primary" class="text-white ml-2" href="/myaccount"> 会員情報 </v-btn>
+            </div>
+            <div v-else class="header__login--active">
+              <v-btn outlined small href="/login"> ログイン </v-btn>
+              <v-btn small color="primary" class="text-white ml-2" href="/register"> 新規登録 </v-btn>
+            </div>
             <div class="header__corporate--sp">
               <a
                 class="d-flex align-center justify-center hover-opacity mt-10 text-caption"
@@ -159,6 +179,9 @@ export default {
         return false
       }
     },
+    isLogin() {
+      return this.$store.getters['auth/getAuthToken']
+    },
   },
   mounted() {
     this.$store.dispatch('menu/getLists')
@@ -227,6 +250,9 @@ export default {
     searchKeyword() {
       window.location.href = '/products?type=3&keyword=' + this.keyword
     },
+    logout() {
+      return false
+    },
   },
 }
 </script>
@@ -252,6 +278,11 @@ ul {
     @include mq(sm) {
       top: 5px;
     }
+  }
+  &__member {
+    width: 95%;
+    max-width: 1700px;
+    margin: 0 auto;
   }
 
   &__content {
