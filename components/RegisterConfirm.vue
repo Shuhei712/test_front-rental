@@ -23,25 +23,6 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="4">
-                パスワード
-              </v-col>
-              <v-col cols="8">
-                <v-text-field
-                  :value="pass"
-                  readonly
-                  outlined
-                  required
-                  dense
-                  hide-details="auto"
-                  :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
-                  :type="show ? 'text':'password'"
-                  @click:append="show=!show"
-                ></v-text-field>
-
-              </v-col>
-            </v-row>
-            <v-row>
               <v-col cols="4">氏名</v-col>
               <v-col cols="8">
                 <v-text-field
@@ -65,6 +46,25 @@
                   dense
                   hide-details="auto"
                 ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                パスワード
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  :value="pass"
+                  readonly
+                  outlined
+                  required
+                  dense
+                  hide-details="auto"
+                  :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
+                  :type="show ? 'text':'password'"
+                  @click:append="show=!show"
+                ></v-text-field>
+
               </v-col>
             </v-row>
             <v-row>
@@ -136,6 +136,8 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async register(){
+
+      this.$store.commit('loading/changeStatus', true)
       this.$set(this.user,'NecDocFlg','0')
       const userInfo = JSON.stringify(this.user);
       const param = new URLSearchParams()
@@ -144,15 +146,16 @@ export default {
       param.append('JsonData',userInfo)
       const res = await this.$memberAxios.post('member/', param)
       console.log(res)
-      if(res.Status){
+      if(res.data.Status === 'TRUE'){
         this.$store.commit('user/setUser',this.user.Email)
         this.$store.commit('auth/setAuthToken', res.AuthToken)
         this.$store.commit('auth/setAccessToken', res.AccessToken)
         this.$router.push('/register#complete')
       }else{
-        this.$emit('update:registerErr', String(res.ErrorNo))
+        this.$emit('update:registerErr', String(res.data.ErrorNo))
         this.$router.push('/register#input')
       }
+      this.$store.commit('loading/changeStatus', false)
     },
 
   }

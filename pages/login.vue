@@ -15,7 +15,7 @@
               </p>
               <ValidationProvider
                 v-slot="{ errors }"
-                name="メールアドレス"
+                name="email"
                 rules="required|email">
                 <v-row>
                   <v-col cols="3">
@@ -28,15 +28,16 @@
                       required
                       dense
                       hide-details="auto"
+                      autocomplete="on"
+                      :error-messages="errors"
                     ></v-text-field>
-                    <span class="red--text">{{errors[0]}}</span>
                   </v-col>
                 </v-row>
               </ValidationProvider>
               <ValidationProvider
                 v-slot="{ errors }"
                 rules="required"
-                name="パスワード">
+                name="password">
                 <v-row>
                   <v-col cols="3">
                     パスワード
@@ -48,11 +49,11 @@
                       required
                       dense
                       hide-details="auto"
+                      :error-messages="errors"
                       :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                       :type="show ? 'text':'password'"
                       @click:append="show=!show"
                     ></v-text-field>
-                    <span class="red--text">{{errors[0]}}</span>
                   </v-col>
                 </v-row>
               </ValidationProvider>
@@ -63,16 +64,15 @@
                   :disabled="ObserverProps.invalid || !ObserverProps.validated"
                   @click="login()"
                 >ログイン</v-btn>
-                <a class="text-gray d-block text-decoration-underline my-2" href="">メールアドレスやパスワードを忘れた方はこちら</a>
+                <a class="text-gray d-block text-decoration-underline my-2" href="/forgetpassword">パスワードを忘れた方はこちら</a>
                 <a class="text-gray d-block text-decoration-underline" href="/register">新規会員登録</a>
               </div>
-
-            <!-- {{ObserverProps}} -->
             </v-form>
           </v-container>
         </ValidationObserver>
       </v-card>
     </div>
+
   </section>
 </template>
 <script>
@@ -84,10 +84,6 @@ export default {
       id: null,
       password: null,
       loginErr : null,
-      emailRule: [
-        v => !!v || '必須です',
-        v => /.+@.+\..+/.test(v) || '形式が正しくありません',
-      ],
     }
   },
   fetch() {
@@ -111,6 +107,7 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async login(){
+      this.$store.commit('loading/changeStatus', true)
       const param = new URLSearchParams()
       param.append('LoginID', this.id)
       param.append('Password', this.password)
@@ -121,10 +118,11 @@ export default {
         this.$store.commit('auth/setAuthToken', res.data.AuthToken)
         this.$store.commit('auth/setAccessToken', res.data.AccessToken)
         this.$router.push('/');
-
       }else{
         this.loginErr = true
+        this.$store.commit('loading/changeStatus', false)
       }
+
     }
   }
 }
