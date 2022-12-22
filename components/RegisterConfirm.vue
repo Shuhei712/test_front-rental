@@ -12,8 +12,8 @@
           :value="valid">
           <v-container>
             <v-row>
-              <v-col cols="4">会員タイプ</v-col>
-              <v-col cols="8">
+              <v-col cols="12" md="4">会員タイプ</v-col>
+              <v-col cols="12" md="8">
                 <div v-if="user.MemberType==='0'">
                   個人
                 </div>
@@ -22,9 +22,22 @@
                 </div>
               </v-col>
             </v-row>
+            <v-row v-if="user.MemberType==='1'">
+              <v-col cols="12" md="4">会社名</v-col>
+              <v-col cols="12" md="8">
+                <v-text-field
+                  :value="user.Organization"
+                  readonly
+                  outlined
+                  required
+                  dense
+                  hide-details="auto"
+                ></v-text-field>
+              </v-col>
+            </v-row>
             <v-row>
-              <v-col cols="4">氏名</v-col>
-              <v-col cols="8">
+              <v-col cols="12" md="4">氏名</v-col>
+              <v-col cols="12" md="8">
                 <v-text-field
                   :value="user.MemberName"
                   readonly
@@ -36,8 +49,21 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="4">メールアドレス</v-col>
-              <v-col cols="8">
+              <v-col cols="12" md="4">連絡先</v-col>
+              <v-col cols="12" md="8">
+                <v-text-field
+                  :value="user.Tel"
+                  readonly
+                  outlined
+                  required
+                  dense
+                  hide-details="auto"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="4">メールアドレス</v-col>
+              <v-col cols="12" md="8">
                 <v-text-field
                   :value="user.Email"
                   readonly
@@ -49,10 +75,42 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="4">
+              <v-col cols="12" md="4">住所</v-col>
+              <v-col cols="12" md="8">
+                <v-text-field
+                  :value="user.ZipCode"
+                  readonly
+                  outlined
+                  required
+                  dense
+                  hide-details="auto"
+                  prefix="〒"
+                  class="input-short mb-1"
+                ></v-text-field>
+                <v-text-field
+                  :value="user.Prefect"
+                  readonly
+                  outlined
+                  required
+                  dense
+                  hide-details="auto"
+                  class="input-short mb-1"
+                ></v-text-field>
+                <v-text-field
+                  :value="user.Address"
+                  readonly
+                  outlined
+                  required
+                  dense
+                  hide-details="auto"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="4">
                 パスワード
               </v-col>
-              <v-col cols="8">
+              <v-col cols="12" md="8">
                 <v-text-field
                   :value="pass"
                   readonly
@@ -68,8 +126,8 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="4">メールマガジン</v-col>
-              <v-col cols="8">
+              <v-col cols="12" md="4">メールマガジン</v-col>
+              <v-col cols="12" md="8">
                 <div v-if="user.DMFlg==='0'">
                   受け取る
                 </div>
@@ -171,5 +229,8 @@ export default {
 }
 .confirm input{
   cursor: default;
+}
+.input-short{
+  max-width: 225px;
 }
 </style>

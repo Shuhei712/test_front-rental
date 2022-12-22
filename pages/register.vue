@@ -1,5 +1,5 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error" id="top" class="products">
+  <section id="top" class="products">
     <to-top-btn></to-top-btn>
     <component :is="child" :pass.sync="pass" :user.sync="user" :register-err.sync="registerErr"></component>
   </section>
@@ -14,10 +14,6 @@ export default {
       pass: '',
       registerErr: ''
     };
-  },
-  fetch() {
-    this.$store.commit("loading/changeStatus", true);
-    this.$store.commit("loading/changeStatus", false);
   },
   head() {
     return {
@@ -42,11 +38,6 @@ export default {
     }
   },
   methods: {
-    setBreadCrumbs() {
-      this.$store.commit("breadCrumbs/deleteList");
-      this.$store.commit("breadCrumbs/addList", { name: "新規登録", path: "/register" });
-      this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
-    },
   },
 }
 </script>

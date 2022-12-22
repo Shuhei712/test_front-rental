@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { ValidationProvider, ValidationObserver, extend, localize, setInteractionMode } from 'vee-validate'
-import { required, email, min, max} from 'vee-validate/dist/rules'
+import { required, email, min, max, numeric} from 'vee-validate/dist/rules'
 
 const errMessage = {
   messages:{
@@ -8,11 +8,13 @@ const errMessage = {
     "email": "有効なメールアドレスではありません",
     "min": "{length}文字以上にしてください",
     "max": "{length}文字以内にしてください",
+    "numeric": "半角数字のみにしてください"
   }
 }
 localize('ja', errMessage);
 extend('required', required, {message:"必須です"})
 extend('email', email)
+extend('numeric', numeric)
 extend('min', min)
 extend('max', max)
 extend('pass', {
@@ -20,7 +22,14 @@ extend('pass', {
     if( value.match(/^[A-Za-z0-9]*$/) ) return true
     return false
   },
-  message: '半角英数字でお願いいたします'
+  message: '半角英数字でお願いします'
+})
+extend('num', {
+  validate(value) {
+    if( value.match(/^[0-9０-９]{7,11}$/) ) return true
+    return false
+  },
+  message: '正しい形式でお願いします(数字のみ)'
 })
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
