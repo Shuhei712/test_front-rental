@@ -36,10 +36,10 @@
                 rules="required"
                 name="passOld">
                 <v-row>
-                  <v-col cols="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                  <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                     現在のパスワード
                   </v-col>
-                  <v-col cols="8">
+                  <v-col cols="12" md="8">
                     <v-text-field
                       v-model="oldPass"
                       outlined
@@ -60,12 +60,12 @@
                 rules="required|min:8|max:24|pass"
                 name="passNew">
                 <v-row>
-                  <v-col cols="4">
+                  <v-col cols="12" md="4">
                     <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                     新しいパスワード
                     <span class="caption d-block">(半角英数字8文字以上24文字以下)</span>
                   </v-col>
-                  <v-col cols="8">
+                  <v-col cols="12" md="8">
                     <v-text-field
                       v-model="newPass"
                       outlined
