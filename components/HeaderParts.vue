@@ -62,32 +62,49 @@
                 </li>
               </ul>
             </nav>
-            <v-btn elevation="0" color="transparent" class="mr-2">
-              <v-icon class="mr-1">mdi-magnify</v-icon>
-            </v-btn>
-            <div class="d-none">
-              <v-form class="header__search d-flex align-center mt-5 mt-lg-0 ml-lg-2" @submit.prevent>
-                <v-text-field
-                  v-model="keyword"
-                  color="primary"
-                  placeholder="キーワード検索"
-                  outlined
-                  dense
-                  prepend-inner-icon="mdi-magnify"
-                  hide-details="auto"
-                  @keyup.enter="searchKeyword"></v-text-field>
-                <v-btn color="primary" class="text-white ml-2" :href="'/products?type=3&keyword=' + keyword">
-                  <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>
-                </v-btn>
-              </v-form>
+            <v-form class="header__search d-flex align-center mt-5 mt-lg-0 ml-lg-2" @submit.prevent>
+              <v-text-field
+                v-model="keyword"
+                color="primary"
+                placeholder="キーワード検索"
+                outlined
+                dense
+                hide-details="auto"
+                @keyup.enter="searchKeyword"></v-text-field>
+              <v-btn color="primary"
+                max-width="40"
+                min-width="53"
+                class="text-white ml-2"
+                :href="'/products?type=3&keyword=' + keyword">
+                <v-icon class="mr-1" color="#fff">mdi-magnify</v-icon>
+              </v-btn>
+            </v-form>
+            <div v-if="isLogin" class="header__login--active d-flex text-center py-4 py-lg-0 ms-2">
+              <router-link
+                tag="a"
+                class="d-flex flex-column px-1"
+                to="/myaccount" exact>
+                <v-icon color="secondary">mdi-account</v-icon>
+                <span class="caption">マイページ</span>
+              </router-link>
+              <router-link
+                tag="a"
+                class="d-flex flex-column px-1"
+                to="/myaccount/favorite" exact>
+                <v-icon color="secondary">mdi-heart</v-icon>
+                <span class="caption">お気に入り</span>
+              </router-link>
+              <router-link
+                tag="a"
+                class="d-flex flex-column px-1"
+                to="/myaccount/cart" exact>
+                <v-icon color="secondary">mdi-cart</v-icon>
+                <span class="caption">カート</span>
+              </router-link>
             </div>
-            <div v-if="isLogin" class="header__login--active">
-              <v-btn outlined small href="myaccount/favorite"> お気に入り </v-btn>
-              <v-btn small color="primary" class="text-white ml-2" href="/myaccount"> 会員情報 </v-btn>
-            </div>
-            <div v-else class="header__login--active">
+            <div v-else class="header__login--active ms-3 py-4 py-lg-0">
               <v-btn outlined small href="/login"> ログイン </v-btn>
-              <v-btn small color="primary" class="text-white ml-2" href="/register"> 新規登録 </v-btn>
+              <v-btn small color="accent" class="text-white" href="/register"> 新規登録 </v-btn>
             </div>
             <div class="header__corporate--sp">
               <a
@@ -165,6 +182,7 @@ export default {
       menuFlg: false,
       subMenuFlg: [],
       searchWindowFlg: false,
+      memberNav: null
     }
   },
   computed: {
@@ -445,7 +463,7 @@ ul {
 
   &__search {
     flex: 1;
-    max-width: 300px;
+    max-width: 220px;
 
     @include mq(lg) {
       flex: none;
@@ -580,5 +598,11 @@ ul {
     top: 0;
     transition: top 0.4s;
   }
+}
+.nuxt-link-exact-active{
+  color: $primary !important;
+}
+.nuxt-link-exact-active .v-icon{
+  color: $primary !important;
 }
 </style>

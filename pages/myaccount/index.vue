@@ -3,11 +3,13 @@
     <to-top-btn></to-top-btn>
     <top-bar title="会員情報" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
+      <h2 class="pb-1 headingText--text">商品管理</h2>
+      <v-divider class="mb-4"></v-divider>
       <v-row>
         <v-col
-          v-for="item in menu" :key="item.title"
-          cols="4"
-          class="mb-4">
+          v-for="item in menuItem" :key="item.title"
+          cols="12" md="4"
+          class="">
           <div class="px-3">
             <v-btn
               outlined
@@ -19,10 +21,41 @@
           </div>
         </v-col>
       </v-row>
+      <h2 class="pt-12 pb-1 headingText--text">アカウント管理</h2>
+      <v-divider class="mb-4"></v-divider>
       <v-row>
         <v-col
-          cols="4"
-          class="mb-4">
+          v-for="item in menuAccount" :key="item.title"
+          cols="12" md="4"
+          class="">
+          <div class="px-3">
+            <v-btn
+              outlined
+              block
+              x-large
+              :href=item.path>
+              {{item.title}}
+            </v-btn>
+          </div>
+        </v-col>
+      </v-row>
+      <h2 class="pt-12 pb-1 headingText--text">その他</h2>
+      <v-divider class="mb-4"></v-divider>
+      <v-row>
+        <v-col
+          cols="12" md="4">
+          <div class="px-3">
+            <v-btn
+              outlined
+              block
+              x-large
+              href="myaccount/other">
+              ヘルプ・ガイド
+            </v-btn>
+          </div>
+        </v-col>
+        <v-col
+          cols="12" md="4">
           <div class="px-3">
             <v-btn
               outlined
@@ -34,9 +67,10 @@
           </div>
         </v-col>
       </v-row>
+      <v-divider class="mt-12 mb-4"></v-divider>
       <v-row>
         <v-col
-          cols="4"
+          cols="12" md="4"
           class="mb-4">
           <div class="px-3">
             <v-btn
@@ -102,14 +136,24 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      menu: [
-        {
-          title: 'アカウント情報',
-          path: 'myaccount/edit'
-        },
+      menuItem: [
         {
           title: 'お気にいり',
           path: 'myaccount/favorite'
+        },
+        {
+          title: 'カート',
+          path: 'myaccount/cart'
+        },
+        {
+          title: '申し込み履歴',
+          path: 'myaccount/order-history'
+        },
+      ],
+      menuAccount: [
+        {
+          title: 'アカウント情報',
+          path: 'myaccount/info'
         },
         {
           title: '本人確認',
@@ -118,10 +162,6 @@ export default {
         {
           title: 'パスワード変更',
           path: 'myaccount/password'
-        },
-        {
-          title: 'ヘルプ・その他',
-          path: 'myaccount/delete'
         },
       ],
       logoutFlg:false,
@@ -178,13 +218,12 @@ export default {
         const res = await this.$getAccessToken()
         // this.logout()
         if(task==='logout'){
-          this.logout('logout')
+          this.logout()
         }else if(task==='delete'){
-          this.logout('delete')
+          this.deleteAccount()
         }
       }
 
-      this.$store.commit('loading/changeStatus', false)
     },
     logout(){
       this.execAction('logout')
