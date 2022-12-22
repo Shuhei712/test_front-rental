@@ -1,7 +1,7 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error">
     <to-top-btn></to-top-btn>
-    <top-bar title="会員情報" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="マイページ" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
       <h2 class="pb-1 headingText--text">商品管理</h2>
       <v-divider class="mb-4"></v-divider>
@@ -175,16 +175,16 @@ export default {
   },
   head () {
     return {
-      title: "会員情報",
+      title: "マイページ",
       meta: [
-        { hid: 'description', name: 'description', content: '会員情報 | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
+        { hid: "robots", name: "robots", content: "noindex" }
       ]
     }
   },
   methods: {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
-      this.$store.commit("breadCrumbs/addList", { name: "会員情報", path: "/myaccount" });
+      this.$store.commit("breadCrumbs/addList", { name: "マイページ", path: "/myaccount" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async execAction(task){

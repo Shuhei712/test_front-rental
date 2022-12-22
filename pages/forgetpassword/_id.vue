@@ -135,6 +135,13 @@ export default {
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
+  head () {
+    return {
+      meta: [
+        { hid: "robots", name: "robots", content: "noindex" }
+      ]
+    }
+  },
   methods: {
 
     setBreadCrumbs() {
