@@ -327,7 +327,7 @@ export default {
     },
     async checkAddress(){
       this.loading = true
-      const url = 'http://zipcloud.ibsnet.co.jp/api/search?zipcode='
+      const url = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode='
       const res = await this.$axios.get(url + this.userInfo.ZipCode)
       if (res.data.status !== 200 || !res.data.results) {
         this.userInfo.Prefect = ''
