@@ -15,7 +15,7 @@
               outlined
               block
               x-large
-              :href=item.path>
+              :to=item.path>
               {{item.title}}
             </v-btn>
           </div>
@@ -33,7 +33,7 @@
               outlined
               block
               x-large
-              :href=item.path>
+              :to=item.path>
               {{item.title}}
             </v-btn>
           </div>
@@ -49,7 +49,7 @@
               outlined
               block
               x-large
-              href="myaccount/other">
+              to="myaccount/other">
               ヘルプ・ガイド
             </v-btn>
           </div>
@@ -184,7 +184,7 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
-      this.$store.commit("breadCrumbs/addList", { name: "マイページ", path: "/myaccount" });
+      this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async execAction(task){
@@ -205,7 +205,10 @@ export default {
           }
         })
       }
-      console.log(res)
+
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
       if(res.data.Status==='TRUE'){
         this.$store.dispatch('auth/resetUser')
         this.$router.push('/');

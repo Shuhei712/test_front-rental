@@ -3,6 +3,9 @@
     <to-top-btn></to-top-btn>
     <top-bar title="アカウント情報" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="register__inner py-16 px-3 px-lg-0">
+      <p class="pb-3 mx-1 lightGray--text">
+        ログインID：{{loginID}}
+      </p>
       <v-card
         outlined
         class="py-6">
@@ -72,6 +75,25 @@
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="userInfo.MemberName"
+                      outlined
+                      required
+                      dense
+                      hide-details="auto"
+                      :error-messages="errors"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </ValidationProvider>
+
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="nameKana"
+                rules="max:50">
+                <v-row class="my-1">
+                  <v-col cols="12" md="4"><span class="white--text secondary px-2 py-1 rounded">任意</span> お名前(カナ)</v-col>
+                  <v-col cols="12" md="8">
+                    <v-text-field
+                      v-model="userInfo.NameKana"
                       outlined
                       required
                       dense
@@ -211,7 +233,7 @@
                 <v-btn large
                   class="my-4 mx-2 white--text"
                   color="secondary"
-                  href="/myaccount"
+                  to="/myaccount"
                 >戻る</v-btn>
                 <v-btn large
                   :disabled="(ObserverProps.invalid)"
@@ -236,10 +258,12 @@ export default {
       breadCrumbs: [],
       errFlg: null,
       doneFlg: null,
+      loginID: null,
       userInfo: [],
       userNewInfo: {},
       prefect: ['北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県','その他'],
-      loading:false
+      loading:false,
+
     }
   },
   async fetch() {
@@ -259,8 +283,8 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
-      this.$store.commit("breadCrumbs/addList", { name: "会員情報", path: "/myaccount" });
-      this.$store.commit("breadCrumbs/addList", { name: "アカウント情報", path: "/myaccount" });
+      this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" });
+      this.$store.commit('breadCrumbs/addList', { name: "アカウント情報", path: "/myaccount/info" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async getAccountInfo(){
@@ -271,17 +295,21 @@ export default {
           Authorization: `Bearer ${accessToken}`
         }
       })
-      console.log(res)
+
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
       if(res.data.Status==='TRUE'){
         this.userInfo = res.data.MemberInfo
-      }else if(res.data.ErrorNo===100001){
-        // 認証tokenの有効期限切れ
-        this.$store.dispatch('auth/resetUser')
-        this.$router.push('/login');
+        this.loginID = res.data.LoginID
       }else if(res.data.ErrorNo===100002){
         // access認証token有効期限切れ
         const res = await this.$getAccessToken()
         this.getAccountInfo()
+      }else {
+        // 認証tokenの有効期限切れ
+        this.$store.dispatch('auth/resetUser')
+        this.$router.push('/login');
       }
     },
     async update(){
@@ -296,6 +324,12 @@ export default {
       this.$set(this.userNewInfo, 'ZipCode', this.userInfo.ZipCode)
       this.$set(this.userNewInfo, 'Prefect', this.userInfo.Prefect)
       this.$set(this.userNewInfo, 'Address', this.userInfo.Address)
+      if(!this.userInfo.NameKana) {
+        this.$set(this.userNewInfo, 'NameKana', '')
+      }else{
+        this.$set(this.userNewInfo, 'NameKana', this.userInfo.NameKana)
+      }
+
 
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
@@ -308,7 +342,10 @@ export default {
           Authorization: `Bearer ${accessToken}`
         }
       })
-      console.log(res)
+
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
       if(res.data.Status === 'TRUE'){
         this.doneFlg = true
         this.errFlg = null

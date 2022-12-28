@@ -9,7 +9,7 @@
           <v-btn large
             class="my-4 text-white"
             color="primary"
-            href="/"
+            to="/"
           >トップページ</v-btn>
         </div>
 
@@ -23,7 +23,7 @@
               <v-btn large
                 class="my-4 mx-2 text-white pb-9"
                 color="primary"
-                href="/forgetpassword/"
+                to="/forgetpassword/"
               >最初から始める</v-btn>
             </div>
           </div>
@@ -159,8 +159,9 @@ export default {
           Authorization: `Bearer ${token}`
         }
       })
-      console.log(token)
-      console.log(res.data)
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
       if(res.data.Status === 'TRUE'){
         this.doneFlg = true
       }else{

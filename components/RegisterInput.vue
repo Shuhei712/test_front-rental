@@ -217,6 +217,25 @@
 
               <ValidationProvider
                 v-slot="{ errors }"
+                name="nameKana"
+                rules="max:50">
+                <v-row class="my-1">
+                  <v-col cols="12" md="4"><span class="white--text secondary px-2 py-1 rounded">任意</span> お名前(カナ)</v-col>
+                  <v-col cols="12" md="8">
+                    <v-text-field
+                      v-model="syncedUser.NameKana"
+                      outlined
+                      required
+                      dense
+                      hide-details="auto"
+                      :error-messages="errors"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </ValidationProvider>
+
+              <ValidationProvider
+                v-slot="{ errors }"
                 name="tel"
                 rules="required|num">
                 <v-row class="my-1">
@@ -459,7 +478,6 @@ export default {
       this.$emit('update:registerErr', '')
       this.$router.push('/register#confirm')
     },
-
     reset() {
       this.$refs.form.reset()
       this.$refs.observer.reset()
@@ -480,7 +498,6 @@ export default {
       this.loading = false
     },
     toNum(e){
-      console.log(e.replace(/-/g,''))
       return e.replace(/[０-９]/g, function(m) {
         return "０１２３４５６７８９".indexOf(m)
       }).replace(/-|ー/g,'')

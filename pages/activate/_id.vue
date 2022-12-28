@@ -8,7 +8,7 @@
           <v-btn large
             class="my-4 text-white"
             color="primary"
-            href="/"
+            to="/"
           >トップページ</v-btn>
         </div>
         <div v-else class="activate__err red--text">
@@ -18,7 +18,7 @@
             <v-btn large
               class="my-6 text-white"
               color="primary"
-              href="/"
+              to="/"
             >トップページ</v-btn>
           </div>
           <div v-else>
@@ -26,7 +26,7 @@
             <v-btn large
               class="my-6 mx-2 text-white"
               color="primary"
-              href="/register"
+              to="/register"
             >新規登録</v-btn>
             <v-btn large
               class="my-4 mx-2 text-white"
@@ -56,7 +56,10 @@ export default {
         Authorization: `Bearer ${token}`
       }
     })
-    console.log(res)
+
+    if (this.$config.DEBUG_MODE) {
+      console.log(res)
+    }
     if(res.data.Status==='TRUE'){
       this.activateFlg = true
       this.$store.commit('auth/setAuthToken', res.AuthToken)

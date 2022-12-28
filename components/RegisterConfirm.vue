@@ -48,6 +48,19 @@
                 ></v-text-field>
               </v-col>
             </v-row>
+            <v-row class="my-1">
+              <v-col cols="12" md="4">お名前(カナ)</v-col>
+              <v-col cols="12" md="8">
+                <v-text-field
+                  :value="user.NameKana"
+                  readonly
+                  outlined
+                  required
+                  dense
+                  hide-details="auto"
+                ></v-text-field>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col cols="12" md="4">連絡先</v-col>
               <v-col cols="12" md="8">
@@ -203,7 +216,10 @@ export default {
       param.append('Password',this.pass)
       param.append('JsonData',userInfo)
       const res = await this.$memberAxios.post('member/', param)
-      console.log(res)
+
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
       if(res.data.Status === 'TRUE'){
         this.$store.commit('user/setUser',this.user.Email)
         this.$store.commit('auth/setAuthToken', res.AuthToken)

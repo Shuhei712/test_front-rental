@@ -24,6 +24,11 @@ export default {
       required: true
     },
   },
+  data() {
+    return {
+      breadCrumbs: [],
+    }
+  },
 
   fetch() {
     if(!this.pass){

@@ -14,7 +14,7 @@
           <v-btn
             color="outline"
             class="mx-3 white--text"
-            href="/login">
+            to="/login">
             戻る
           </v-btn>
         </div>
@@ -60,7 +60,7 @@
               <v-btn
                 color="outline"
                 class="mx-3 white--text"
-                href="/login">
+                to="/login">
                 戻る
               </v-btn>
             </div>
@@ -96,14 +96,17 @@ export default {
   },
   methods: {
     setBreadCrumbs() {
-      this.$store.commit("breadCrumbs/addList", { name: "パスワード変更", path: "/forgetpassword" });
+      this.$store.commit('breadCrumbs/addList', { name: "パスワード変更", path: "/forgetpassword" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async passChange(){
 
       this.$store.commit('loading/changeStatus', true)
       const res = await this.$memberAxios.get(`/auth/forgetRequest/${this.mail}`)
-      console.log(res)
+
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
       if(res.data.Status==='TRUE'){
         this.doneFlg = true
       }else{

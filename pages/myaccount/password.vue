@@ -12,8 +12,8 @@
           <v-btn
             color="outline"
             class="mx-3 white--text"
-            href="/myaccount">
-            会員情報に戻る
+            to="/myaccount">
+            マイページに戻る
           </v-btn>
         </div>
         <div v-else>
@@ -39,8 +39,8 @@
           <v-btn
             color="outline"
             class="mx-3 white--text"
-            href="/myaccount">
-            会員情報に戻る
+            to="/myaccount">
+            マイページに戻る
           </v-btn>
         </div>
       </div>
@@ -72,8 +72,8 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
-      this.$store.commit("breadCrumbs/addList", { name: "会員情報", path: "/myaccount" });
-      this.$store.commit("breadCrumbs/addList", { name: "パスワード変更", path: "/myaccount/password" });
+      this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" });
+      this.$store.commit('breadCrumbs/addList', { name: "パスワード変更", path: "/myaccount/password" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async passChange(){
