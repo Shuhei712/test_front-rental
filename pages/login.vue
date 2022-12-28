@@ -4,73 +4,7 @@
 
     <top-bar title="ログイン" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="login__inner py-16 px-3 px-lg-0">
-      <v-card
-        outlined
-        class="py-6">
-        <ValidationObserver v-slot="ObserverProps">
-          <v-container>
-            <v-form>
-              <p v-if="loginErr" class="red--text pb-4">
-                メールアドレスまたはパスワードが正しくありません。
-              </p>
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="email"
-                rules="required|email">
-                <v-row>
-                  <v-col cols="3">
-                    メールアドレス
-                  </v-col>
-                  <v-col cols="9">
-                    <v-text-field
-                      v-model="id"
-                      outlined
-                      required
-                      dense
-                      hide-details="auto"
-                      autocomplete="on"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </ValidationProvider>
-              <ValidationProvider
-                v-slot="{ errors }"
-                rules="required"
-                name="password">
-                <v-row>
-                  <v-col cols="3">
-                    パスワード
-                  </v-col>
-                  <v-col cols="9">
-                    <v-text-field
-                      v-model="password"
-                      outlined
-                      required
-                      dense
-                      hide-details="auto"
-                      :error-messages="errors"
-                      :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
-                      :type="show ? 'text':'password'"
-                      @click:append="show=!show"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </ValidationProvider>
-              <div class="text-center mt-6">
-                <v-btn large
-                  class="my-4"
-                  color="primary"
-                  :disabled="ObserverProps.invalid || !ObserverProps.validated"
-                  @click="login()"
-                >ログイン</v-btn>
-                <a class="text-gray d-block text-decoration-underline my-2" href="/forgetpassword">パスワードを忘れた方はこちら</a>
-                <a class="text-gray d-block text-decoration-underline" href="/register">新規会員登録</a>
-              </div>
-            </v-form>
-          </v-container>
-        </ValidationObserver>
-      </v-card>
+      <login></login>
     </div>
 
   </section>
