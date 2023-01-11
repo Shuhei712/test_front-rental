@@ -478,7 +478,7 @@ export default {
       this.productInfoList = res.ProductInfo
       if (this.productInfoList.ProductName === null) {
         this.$nuxt.error({
-          statusCode: 404
+          statusCode: 999
         });
       }
     },
