@@ -30,8 +30,8 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
-      this.$store.commit("breadCrumbs/addList", { name: "会員情報", path: "/myaccount" });
-      this.$store.commit("breadCrumbs/addList", { name: "本人確認", path: "/myaccount/" });
+      this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" });
+      this.$store.commit('breadCrumbs/addList', { name: "本人確認", path: "/myaccount/" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
   },

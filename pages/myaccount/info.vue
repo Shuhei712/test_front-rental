@@ -18,7 +18,7 @@
               </div>
               <div v-if="errFlg" class="mb-5 red--text">
                 <p v-if="errFlg===120201">
-                  ご記入のメールアドレスは既に使用されております。
+                  ご入力のメールアドレスは既に使用されております。
                 </p>
                 <p v-else>
                   処理が正常に行われませんでした。<br>しばらくして、もう一度お試しいただくか、お問い合わせ下さい。
@@ -260,7 +260,7 @@ export default {
       doneFlg: null,
       loginID: null,
       userInfo: [],
-      userNewInfo: {},
+      userCopyInfo: {},
       prefect: ['北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県','その他'],
       loading:false,
 
@@ -314,29 +314,29 @@ export default {
     },
     async update(){
       this.$store.commit('loading/changeStatus', true)
-      this.$set(this.userNewInfo, 'MemberName', this.userInfo.MemberName)
-      this.$set(this.userNewInfo, 'Email', this.userInfo.Email)
-      this.$set(this.userNewInfo, 'MemberType', this.userInfo.MemberType)
-      this.$set(this.userNewInfo, 'DMFlg', this.userInfo.DMFlg)
-      this.$set(this.userNewInfo, 'NecDocFlg','0')
-      this.$set(this.userNewInfo, 'Organization', this.userInfo.Organization)
-      this.$set(this.userNewInfo, 'Tel', this.userInfo.Tel)
-      this.$set(this.userNewInfo, 'ZipCode', this.userInfo.ZipCode)
-      this.$set(this.userNewInfo, 'Prefect', this.userInfo.Prefect)
-      this.$set(this.userNewInfo, 'Address', this.userInfo.Address)
+      this.$set(this.userCopyInfo, 'MemberName', this.userInfo.MemberName)
+      this.$set(this.userCopyInfo, 'Email', this.userInfo.Email)
+      this.$set(this.userCopyInfo, 'MemberType', this.userInfo.MemberType)
+      this.$set(this.userCopyInfo, 'DMFlg', this.userInfo.DMFlg)
+      this.$set(this.userCopyInfo, 'NecDocFlg','0')
+      this.$set(this.userCopyInfo, 'Organization', this.userInfo.Organization)
+      this.$set(this.userCopyInfo, 'Tel', this.userInfo.Tel)
+      this.$set(this.userCopyInfo, 'ZipCode', this.userInfo.ZipCode)
+      this.$set(this.userCopyInfo, 'Prefect', this.userInfo.Prefect)
+      this.$set(this.userCopyInfo, 'Address', this.userInfo.Address)
       if(!this.userInfo.NameKana) {
-        this.$set(this.userNewInfo, 'NameKana', '')
+        this.$set(this.userCopyInfo, 'NameKana', '')
       }else{
-        this.$set(this.userNewInfo, 'NameKana', this.userInfo.NameKana)
+        this.$set(this.userCopyInfo, 'NameKana', this.userInfo.NameKana)
       }
 
 
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
-      const userNewInfo = JSON.stringify(this.userNewInfo);
+      const userCopyInfo = JSON.stringify(this.userCopyInfo);
 
       const param = new URLSearchParams()
-      param.append('JsonData',userNewInfo)
+      param.append('JsonData',userCopyInfo)
       const res = await this.$memberAxios.put(`member/${loginID}`,param,{
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -383,7 +383,7 @@ export default {
     toNum(e){
       return e.replace(/[０-９]/g, function(m) {
         return "０１２３４５６７８９".indexOf(m)
-      }).replace(/-|ー/g,'')
+      }).replace(/-|－|ー/g,'')
     }
   },
 }

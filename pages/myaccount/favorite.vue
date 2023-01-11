@@ -6,24 +6,6 @@
 
       <v-row class="product__main">
         <v-col v-for="(list, index) in favLists" :key="index" cols="12" sm="6" md="4">
-          <!-- <product-card
-            :id="list.ProductID"
-            :name="list.ProductName"
-            :type-number="list.TypeNumber"
-            :image="list.ProductImage"
-            :maker="list.MakerName"
-            :category-name01="list.CategoryNmae01"
-            :category-name02="list.CategoryNmae02"
-            :price-value="list.PriceValue"
-            :price-type="list.PriceType"
-            :price-unit="list.PriceUnit"
-            :tariff-id="list.TariffID"
-            :tariff-name="list.TariffName"
-            :tag-lists="list.FeatureTagList"
-            :description="list.Description"
-            :release-date="list.ReleaseDate"
-            @send-tariff-data="receiveTariffLists">
-          </product-card> -->
           <product-card-simple
             :id="list.ProductID"
             :name="list.ProductName"
@@ -31,6 +13,7 @@
             :image="list.ProductImage"
             :maker="list.MakerName"
             :price-value="list.Price"
+            :price-type="list.PriceType"
             :price-unit="list.PriceUnit">
           </product-card-simple>
         </v-col>
