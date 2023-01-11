@@ -79,7 +79,7 @@
                 <v-icon class="mr-1" color="#fff">mdi-magnify</v-icon>
               </v-btn>
             </v-form>
-            <div v-if="isLogin" class="header__login--active d-flex text-center py-4 py-lg-0 ms-2">
+            <div v-if="isLogin" class="header__member d-flex text-center py-6 py-lg-0 ms-2">
               <router-link
                 tag="a"
                 class="d-flex flex-column px-1"
@@ -98,13 +98,21 @@
                 tag="a"
                 class="d-flex flex-column px-1"
                 to="/myaccount/cart" exact>
-                <v-icon color="secondary">mdi-cart</v-icon>
+                <!-- offset-x -->
+                <!-- <span class="cartNum">{{cartNum}}</span> -->
+                <v-badge
+                  color="green"
+                  overlap
+                  :content="cartNum"
+                >
+                  <v-icon color="secondary">mdi-cart</v-icon>
+                </v-badge>
                 <span class="caption">カート</span>
               </router-link>
             </div>
-            <div v-else class="header__login--active ms-3 py-4 py-lg-0">
-              <v-btn outlined small href="/login"> ログイン </v-btn>
-              <v-btn small color="accent" class="text-white" href="/register"> 新規登録 </v-btn>
+            <div v-else class="header__signIn ms-3 py-6 py-lg-0">
+              <v-btn outlined small to="/login"> ログイン </v-btn>
+              <v-btn small color="accent" class="text-white" to="/register"> 新規登録 </v-btn>
             </div>
             <div class="header__corporate--sp">
               <a
@@ -200,6 +208,9 @@ export default {
     isLogin() {
       return this.$store.getters['auth/getAuthToken']
     },
+    cartNum(){
+      return this.$store.getters['cart/getCart'].length
+    }
   },
   mounted() {
     this.$store.dispatch('menu/getLists')
@@ -296,11 +307,6 @@ ul {
     @include mq(sm) {
       top: 5px;
     }
-  }
-  &__member {
-    width: 95%;
-    max-width: 1700px;
-    margin: 0 auto;
   }
 
   &__content {

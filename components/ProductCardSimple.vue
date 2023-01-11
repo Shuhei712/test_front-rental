@@ -62,14 +62,14 @@
             <div class="price__head px-3 py-1 text-no-wrap text-center">レンタル価格</div>
             <div class="price__day letter-space-015em px-3 py-1 text-center text-no-wrap">1日/税別</div>
           </div>
-          <div class="price__product d-flex align-center">
+          <div class="price__product d-flex align-center mt-1">
             <div class="price__product-inner d-flex align-baseline red--text">
-              <!-- <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span> -->
-              <span class="price__val letter-space-015em font-weight-medium mt-1">{{ priceValue }}</span>
-              <template v-if="priceValue">
+              <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
+              <!-- <span class="price__val letter-space-015em font-weight-medium mt-1">{{ priceValue }}</span> -->
+              <!-- <template v-if="priceValue">
               {{ priceUnit }}
-              </template>
-              <!-- <span v-if="isPriceUnit" class="price__unit font-weight-light">{{ priceUnit }}</span> -->
+              </template> -->
+              <span v-if="isPriceUnit" class="price__unit font-weight-light">{{ priceUnit }}</span>
             </div>
           </div>
           <!-- <button
@@ -158,10 +158,10 @@ export default {
       type: String,
       required: true,
     },
-    // priceType: {
-    //   type: Number,
-    //   required: true,
-    // },
+    priceType: {
+      type: Number,
+      required: true,
+    },
     priceUnit: {
       type: String,
       required: true,
@@ -197,40 +197,40 @@ export default {
     }
   },
   computed: {
-    // getPrice() {
-    //   switch (this.priceType) {
-    //     case 0:
-    //       return this.priceValue
-    //     case 1:
-    //       return this.priceValue
-    //     case 2:
-    //       return '本体に含む'
-    //     case 9:
-    //       return 'ASK'
-    //     default:
-    //       return 'ASK'
-    //   }
-    // },
+    getPrice() {
+      switch (this.priceType) {
+        case 0:
+          return this.priceValue
+        case 1:
+          return this.priceValue
+        case 2:
+          return '本体に含む'
+        case 9:
+          return 'ASK'
+        default:
+          return 'ASK'
+      }
+    },
     // isCategoryName1() {
     //   return this.categoryName02 !== null
     // },
     // isCategoryName2() {
     //   return this.categoryName02 !== null
     // },
-    // isPriceUnit() {
-    //   switch (this.priceType) {
-    //     case 0:
-    //       return true
-    //     case 1:
-    //       return true
-    //     case 2:
-    //       return false
-    //     case 9:
-    //       return false
-    //     default:
-    //       return true
-    //   }
-    // },
+    isPriceUnit() {
+      switch (this.priceType) {
+        case 0:
+          return true
+        case 1:
+          return true
+        case 2:
+          return false
+        case 9:
+          return false
+        default:
+          return true
+      }
+    },
     // isTariffBtn() {
     //   switch (this.priceType) {
     //     case 0:

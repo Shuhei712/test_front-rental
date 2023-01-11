@@ -122,6 +122,50 @@
                 </v-btn>
               </div>
             </div>
+            <div class="info__status mt-sm-3 mt-md-5 mt-lg-8 pa-4 cushion">
+              <div class="align-center mb-2 info__status-quantity">
+                数量：
+                <v-text-field
+                  v-model.number="itemNum"
+                  outlined
+                  required
+                  type="number"
+                  hide-details="auto"
+                  dense
+                  class="d-inline-block w-50"
+                  >
+                </v-text-field>
+              </div>
+              <div class="info__status-cart">
+                <v-btn
+                  color="accent"
+                  width="100%"
+                  class="mb-2"
+                  @click="addCart(itemNum)">
+                  <v-icon class="pe-1" size="21">mdi-cart</v-icon>
+                  カートに入れる
+                </v-btn>
+              </div>
+              <div class="info__status-favorite">
+                <v-btn
+                  v-if="favoriteFlg"
+                  color="line"
+                  width="100%"
+                  @click="setFavorite(false)">
+                  <v-icon class="pe-1" size="21">mdi-heart</v-icon>
+                  お気に入り済
+                </v-btn>
+                <v-btn
+                  v-else
+                  color="primary"
+                  width="100%"
+                  @click="setFavorite(true)">
+                  <v-icon class="pe-1" size="21">mdi-heart</v-icon>
+                  お気に入り追加
+                </v-btn>
+              </div>
+
+            </div>
           </div>
         </div>
         <div class="detail__information mt-15">
@@ -303,6 +347,20 @@
         </div>
       </div>
     </div>
+    <v-dialog
+      v-model="loginDialog"
+      width="700">
+      <v-card class="pa-5 text-center">
+        <p class="mb-4">ログインが必要になります</p>
+        <login></login>
+        <v-btn
+          color="outline"
+          class="mt-4 white--text"
+          @click="loginDialog=false">
+          戻る
+        </v-btn>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
@@ -327,7 +385,11 @@ export default {
       tariffDialog: false,
       caseSizeDialog: false,
       breadCrumbs: [],
-      title: this.$route.query.name
+      title: this.$route.query.name,
+      itemNum: 1,
+      favoriteFlg: false,
+      isLogin: false,
+      loginDialog: false
     }
   },
   async fetch() {
@@ -348,6 +410,12 @@ export default {
     this.getProductDocList()
 
     this.setBreadCrumbs()
+    const loginID = this.$store.getters["auth/getUser"]
+    const token = this.$store.getters["auth/getAccessToken"]
+    if(loginID && token){
+      this.isLogin = true
+      const productFavoriteFlg = await this.getFavorite()
+    }
 
     this.$store.commit('loading/changeStatus', false)
   },
@@ -607,6 +675,73 @@ export default {
         })
       }
     },
+    async getFavorite(){
+      const res = await this.favorite('favorite/getStatus/', 'post')
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
+      if(res==='again'){
+        this.getFavorite()
+        alert('stop')
+      }else if(res.data.Status==='TRUE'){
+        this.favoriteFlg = res.data.FavoriteStatus
+      }
+    },
+    addCart(Qty){
+      this.$store.commit('cart/addCart', {
+        ProductID: this.$route.params.id,
+        Qty
+      })
+    },
+    async setFavorite(flg){
+      if(!this.isLogin){
+        this.loginDialog = true
+        return false
+      }
+      let res
+      if(flg){
+        res = await this.favorite('favorite/registProduct/', 'put')
+      }else{
+        res = await this.favorite('favorite/unregistProduct/', 'put')
+      }
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
+
+      if(res==='again'){
+        this.setFavorite(flg)
+        alert('again')
+      }else if(res.data.Status==='TRUE'){
+        this.favoriteFlg = flg ? 1 : 0
+      }
+    },
+    async favorite(api, method){
+      const loginID = this.$store.getters["auth/getUser"]
+      const token = this.$store.getters["auth/getAccessToken"]
+      const param = new URLSearchParams()
+      param.append('LoginID', loginID)
+      const axiosMethod = (method==='post') ? this.$memberBaseAxios.post : this.$memberBaseAxios.put
+      const res = await axiosMethod( api + this.$route.params.id, param,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
+      if(res.data.Status==='TRUE'){
+        return res
+      }else if(res.data.ErrorNo===100002){
+        // access認証tokenの有効期限が切れています
+        const resAccess = await this.$getAccessToken()
+        if(resAccess.data.Status==='TRUE'){
+          return 'again'
+        }else if(resAccess.data.Status==='FALSE'){
+          this.$store.dispatch('auth/resetUser')
+          location.reload()
+        }
+      }
+    }
   },
 }
 </script>
@@ -858,6 +993,13 @@ $bp_xs: 362px;
             display: none !important;
           }
         }
+      }
+
+      .info__status{
+        max-width: 365px;
+      }
+      .w-50{
+        width: 50px;
       }
 
       .price {
