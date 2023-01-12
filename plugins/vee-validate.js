@@ -31,6 +31,13 @@ extend('num', {
   },
   message: '正しい形式でお願いします(数字のみ)'
 })
+extend('file', {
+  validate(value) {
+    if( value.size < 3000000 ) return true
+    return false
+  },
+  message: '3MG以内でお願いします'
+})
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 setInteractionMode('lazy')
