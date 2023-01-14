@@ -1,156 +1,6 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error">
     <to-top-btn></to-top-btn>
-    <!-- <v-dialog
-      v-model="estDialog"
-      width="800">
-      <ValidationObserver v-slot="ObserverProps" ref="observer">
-        <v-card class="pa-5">
-          <v-card-title class="justify-center">
-            <h3>宛先情報</h3>
-          </v-card-title>
-          <v-card-text>
-            <v-divider class="mb-8"></v-divider>
-            <v-form>
-              <v-row>
-                <v-col cols="12" md="3"><span class="white--text secondary px-2 py-1 rounded">任意</span>
-                  ご担当者様</v-col>
-                <v-col cols="12" md="9">
-                  <v-text-field
-                  v-model="estJson.OwnerName"
-                  dense
-                  outlined
-                  hide-details="auto"
-                  required></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" md="3"><span class="white--text secondary px-2 py-1 rounded">任意</span>
-                  電話番号</v-col>
-                <v-col cols="12" md="9">
-                  <v-text-field
-                  v-model="estJson.OwnerTel"
-                  dense
-                  outlined
-                  hide-details="auto"
-                  required></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" md="3"><span class="white--text secondary px-2 py-1 rounded">任意</span>
-                  宛名
-                </v-col>
-                <v-col cols="12" md="9">
-                  <v-text-field
-                  v-model="estJson.n"
-                  dense
-                  outlined
-                  hide-details="auto"
-                  required></v-text-field>
-                </v-col>
-              </v-row>
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="email"
-                rules="required|email">
-                <v-row class="my-1">
-                  <v-col cols="12" md="3"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
-                    メールアドレス
-                  </v-col>
-                  <v-col cols="12" md="9">
-                    <v-text-field
-                      v-model="estJson.OwnerEmail"
-                      outlined
-                      required
-                      dense
-                      hide-details="auto"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </ValidationProvider>
-              <v-row>
-                <v-col cols="12" md="3">
-                  <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
-                  ご使用期間
-                </v-col>
-                <v-col cols="12" md="9">
-
-                  <v-menu
-                    ref="datePick2"
-                    v-model="datePick[3]"
-                    :close-on-click="false"
-                    :close-on-content-click="false"
-                    :return-value.sync="rentRange"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                  >
-                    <template #activator="{ on, attrs }">
-                      <ValidationProvider
-                        v-slot="{ errors }"
-                        name="rentRange"
-                        rules="required">
-                        <v-text-field
-                          v-model="getRentRange"
-                          outlined
-                          dense
-                          hide-details="auto"
-                          readonly
-                          :error-messages="errors"
-                          v-bind="attrs"
-                          v-on="on"
-                        ></v-text-field>
-                      </ValidationProvider>
-                    </template>
-                    <v-date-picker
-                      v-model="rentRange"
-                      no-title
-                      scrollable
-                      range
-                      locale="jp-ja"
-                      :day-format="(date) => new Date(date).getDate()"
-                      :min="rentRangeMin"
-                    >
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="rentRange=[]"
-                      >
-                        リセット
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.datePick2.save(rentRange)"
-                      >
-                        作成
-                      </v-btn>
-                    </v-date-picker>
-                  </v-menu>
-                  ( {{rentJson.UseDay}}日間 )
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-card-text>
-          <v-card-actions class="justify-center">
-            <v-btn
-              class="mt-4 mx-2"
-              dark
-              color="secondary"
-              @click="estDialog=false">戻る
-            </v-btn>
-            <v-btn
-              class="mt-4 mx-2"
-              color="primary"
-              :disabled="ObserverProps.invalid"
-              @click="estSend">送信
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </ValidationObserver>
-    </v-dialog> -->
     <est-card
       :dialog="estDialog"
       :rent-obj="rentJson"
@@ -188,7 +38,7 @@
           <template #[`item.Price`]="{ item }">
             {{ getPrice(item.PriceType, item.Price) }}
           </template>
-          <template #[`item.Qty`]="{ item,index }">
+          <template #[`item.Qty`]="{ item }">
             <div class="d-flex align-center">
               <v-text-field
                 v-model.number="item.Qty"
@@ -206,7 +56,7 @@
                 x-small
                 elevation="0"
                 color="feature"
-                @click="showConfirm(item.ProductID, index)">
+                @click="setDeleteDialog(item.ProductID, item)">
                 <v-icon dark>
                   mdi-close
                 </v-icon>
@@ -281,7 +131,30 @@
             <v-form>
               <v-container>
                 <v-row class="border-bottom">
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="4" class="pb-0">
+                    <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                    連絡方法
+                  </v-col>
+                  <v-col cols="12" md="8">
+                    <v-radio-group v-model.number="rentJson.ContactType"
+                      hide-details="auto"
+                      mandatory
+                      row
+                      class="mt-0 mb-4">
+                      <v-radio
+                        label="お電話"
+                        :value="0"
+                      ></v-radio>
+                      <v-radio
+                        label="メール"
+                        :value="1"
+                      ></v-radio>
+
+                    </v-radio-group>
+                  </v-col>
+                </v-row>
+                <v-row class="border-bottom">
+                  <v-col cols="12" md="4" class="pb-0">
                     <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                     お引渡
                   </v-col>
@@ -304,11 +177,11 @@
                         :value="2"
                       ></v-radio>
                     </v-radio-group>
-                    <v-divider class="mb-4"></v-divider>
+                    <!-- <v-divider class="mb-4"></v-divider> -->
 
                     <div v-if="rentJson.DeliveryType===0">
                       <v-row>
-                        <v-col cols="12" md="3">引取日</v-col>
+                        <v-col cols="12" md="3" class="pb-0">引取日</v-col>
                         <v-col cols="12" md="9">
                           <v-menu
                             v-model="datePick[0]"
@@ -323,7 +196,7 @@
                                 name="RentDate0"
                                 rules="required">
                                 <v-text-field
-                                  v-model="rentJson.DeliveryDate"
+                                  v-model="DeliveryDate"
                                   outlined
                                   dense
                                   readonly
@@ -335,7 +208,7 @@
                               </ValidationProvider>
                             </template>
                             <v-date-picker
-                              v-model="rentJson.DeliveryDate"
+                              v-model="DeliveryDate"
                               no-title
                               scrollable
                               @input="datePick[0] = false"
@@ -343,11 +216,18 @@
                           </v-menu>
                         </v-col>
                       </v-row>
+                      <v-divider class="my-4"></v-divider>
+                      <v-row>
+                        <v-col cols="12" md="3" class="pb-0">引取時間</v-col>
+                        <v-col cols="12" md="9">
+                          <set-time v-model="rentJson.DeliveryTime" @change-time="rentJson.DeliveryTime = $event"></set-time>
+                        </v-col>
+                      </v-row>
                     </div>
 
                     <div v-else-if="rentJson.DeliveryType===1">
                       <v-row>
-                        <v-col cols="12" md="3">貴社着日</v-col>
+                        <v-col cols="12" md="3" class="pb-0">貴社着日</v-col>
                         <v-col cols="12" md="9">
                           <v-menu
                             v-model="datePick[0]"
@@ -362,7 +242,7 @@
                                 name="RentDate1"
                                 rules="required">
                                 <v-text-field
-                                  v-model="rentJson.DeliveryDate"
+                                  v-model="DeliveryDate"
                                   outlined
                                   dense
                                   hide-details="auto"
@@ -374,7 +254,7 @@
                               </ValidationProvider>
                             </template>
                             <v-date-picker
-                              v-model="rentJson.DeliveryDate"
+                              v-model="DeliveryDate"
                               no-title
                               scrollable
                               @input="datePick[0] = false"
@@ -386,7 +266,7 @@
 
                     <div v-else>
                       <v-row>
-                        <v-col cols="12" md="3">搬入日</v-col>
+                        <v-col cols="12" md="3" class="pb-0">搬入日</v-col>
                         <v-col cols="12" md="9">
                           <v-menu
                             v-model="datePick[0]"
@@ -402,7 +282,7 @@
                                 name="RentDate2"
                                 rules="required">
                                 <v-text-field
-                                  v-model="rentJson.DeliveryDate"
+                                  v-model="DeliveryDate"
                                   outlined
                                   dense
                                   hide-details="auto"
@@ -414,7 +294,7 @@
                               </ValidationProvider>
                             </template>
                             <v-date-picker
-                              v-model="rentJson.DeliveryDate"
+                              v-model="DeliveryDate"
                               no-title
                               scrollable
                               @input="datePick[0] = false"
@@ -424,7 +304,14 @@
                       </v-row>
                       <v-divider class="my-4"></v-divider>
                       <v-row>
-                        <v-col cols="12" md="3">場所{{address}}</v-col>
+                        <v-col cols="12" md="3" class="pb-0">搬入時間</v-col>
+                        <v-col cols="12" md="9">
+                          <set-time @change-time="rentJson.DeliveryTime = $event"></set-time>
+                        </v-col>
+                      </v-row>
+                      <v-divider class="my-4"></v-divider>
+                      <v-row>
+                        <v-col cols="12" md="3" class="pb-0">場所{{address}}</v-col>
                         <v-col cols="12" md="9">
                         <ValidationProvider
                           v-slot="{ errors }"
@@ -499,7 +386,7 @@
                 </v-row>
 
                 <v-row class="border-bottom">
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="4" class="pb-0">
                     <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                     ご使用期間(リハーサル含む)
                   </v-col>
@@ -561,7 +448,7 @@
                 </v-row>
 
                 <v-row class="border-bottom">
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="4" class="pb-0">
                     <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                     ご返却
                   </v-col>
@@ -584,10 +471,10 @@
                         :value="2"
                       ></v-radio>
                     </v-radio-group>
-                    <v-divider class="mb-4"></v-divider>
+                    <!-- <v-divider class="mb-4"></v-divider> -->
                     <div v-if="rentJson.ReturnType===0">
                       <v-row>
-                        <v-col cols="12" md="3">返却日</v-col>
+                        <v-col cols="12" md="3" class="pb-0">返却日</v-col>
                         <v-col cols="12" md="9">
                           <v-menu
                             v-model="datePick[2]"
@@ -603,7 +490,7 @@
                                 name="ReturnDate0"
                                 rules="required">
                                 <v-text-field
-                                  v-model="rentJson.ReturnDate"
+                                  v-model="ReturnDate"
                                   outlined
                                   dense
                                   hide-details="auto"
@@ -615,7 +502,7 @@
                               </ValidationProvider>
                             </template>
                             <v-date-picker
-                              v-model="rentJson.ReturnDate"
+                              v-model="ReturnDate"
                               no-title
                               scrollable
                               @input="datePick[2] = false"
@@ -623,11 +510,18 @@
                           </v-menu>
                         </v-col>
                       </v-row>
+                      <v-divider class="my-4"></v-divider>
+                      <v-row>
+                        <v-col cols="12" md="3" class="pb-0">返却時間</v-col>
+                        <v-col cols="12" md="9">
+                          <set-time @change-time="rentJson.ReturnTime = $event"></set-time>
+                        </v-col>
+                      </v-row>
                     </div>
 
                     <div v-else-if="rentJson.ReturnType===1">
                       <v-row>
-                        <v-col cols="12" md="3">貴社着日</v-col>
+                        <v-col cols="12" md="3" class="pb-0">貴社着日</v-col>
                         <v-col cols="12" md="9">
                           <v-menu
                             v-model="datePick[2]"
@@ -642,7 +536,7 @@
                                 name="ReturnDate1"
                                 rules="required">
                                 <v-text-field
-                                  v-model="rentJson.ReturnDate"
+                                  v-model="ReturnDate"
                                   outlined
                                   dense
                                   hide-details="auto"
@@ -654,7 +548,7 @@
                               </ValidationProvider>
                             </template>
                             <v-date-picker
-                              v-model="rentJson.ReturnDate"
+                              v-model="ReturnDate"
                               no-title
                               scrollable
                               @input="datePick[2] = false"
@@ -666,7 +560,7 @@
 
                     <div v-else>
                       <v-row>
-                        <v-col cols="12" md="3">搬入日</v-col>
+                        <v-col cols="12" md="3" class="pb-0">搬入日</v-col>
                         <v-col cols="12" md="9">
                           <v-menu
                             v-model="datePick[2]"
@@ -681,7 +575,7 @@
                                 name="ReturnDate2"
                                 rules="required">
                                 <v-text-field
-                                  v-model="rentJson.ReturnDate"
+                                  v-model="ReturnDate"
                                   outlined
                                   dense
                                   hide-details="auto"
@@ -693,7 +587,7 @@
                               </ValidationProvider>
                             </template>
                             <v-date-picker
-                              v-model="rentJson.ReturnDate"
+                              v-model="ReturnDate"
                               no-title
                               scrollable
                               @input="datePick[2] = false"
@@ -703,7 +597,14 @@
                       </v-row>
                       <v-divider class="my-4"></v-divider>
                       <v-row>
-                        <v-col cols="12" md="3">場所{{address}}</v-col>
+                        <v-col cols="12" md="3" class="pb-0">搬入時間</v-col>
+                        <v-col cols="12" md="9">
+                          <set-time @change-time="rentJson.ReturnTime = $event"></set-time>
+                        </v-col>
+                      </v-row>
+                      <v-divider class="my-4"></v-divider>
+                      <v-row>
+                        <v-col cols="12" md="3" class="pb-0">場所{{address}}</v-col>
                         <v-col cols="12" md="9">
                         <ValidationProvider
                           v-slot="{ errors }"
@@ -785,6 +686,7 @@
                 color="primary"
                 large
                 class="ml-0 my-1 text-h6 px-6"
+                :loading="orderLoading"
                 :disabled="ObserverProps.invalid"
                 @click="order()">注文する
               </v-btn>
@@ -793,32 +695,90 @@
         </v-card>
 
       </div>
-      <br>
-      <br>
-
-      {{cartInfo}}
     </div>
 
 
-    <v-dialog
-      v-model="deleteConfirm"
-      width="500">
+    <v-dialog v-model="deleteDialog"
+      width="580">
       <v-card class="pa-5 text-center">
-        <p>選択した商品をカートから消去しますか？</p>
-        <v-btn
-          class="mt-4 mx-2"
-          dark
-          color="secondary"
-          @click="deleteConfirm=false">戻る
-        </v-btn>
-        <v-btn
-          class="mt-4 mx-2"
-          dark
-          color="feature"
-          @click="deleteItem">消去
-        </v-btn>
+        <template v-if="!result">
+          <p>選択した商品をカートから消去しますか？</p>
+          <v-card-actions class="justify-center">
+            <v-btn
+              class="mt-4 mx-2"
+              dark
+              color="secondary"
+              @click="deleteDialog=false">戻る
+            </v-btn>
+            <v-btn
+              class="mt-4 mx-2"
+              dark
+              color="feature"
+              :loading="deleteLoading"
+              @click="deleteItem">消去
+            </v-btn>
+          </v-card-actions>
+        </template>
+        <template v-else>
+          <p v-if="result==='success'" class="text-left text-md-center">
+            登録が完了いたしました。
+          </p>
+          <p v-else class="text-left text-md-center">
+            処理が正常に行われませんでした。<br>
+            しばらくしてもう一度お試しいただくか、お問い合わせ下さい。
+          </p>
+          <v-card-actions class="justify-center">
+            <v-btn
+              color="outline"
+              class="mx-3 white--text"
+              @click="deleteDialog=false">
+              戻る
+            </v-btn>
+            <v-btn
+              color="primary"
+              class="mx-3 white--text"
+              to="/myaccount">
+              マイページ
+            </v-btn>
+          </v-card-actions>
+        </template>
       </v-card>
     </v-dialog>
+
+    <!-- <v-dialog v-model="doneDialog" width="600" persistent>
+      <v-card class="text-center pa-5">
+
+        <template v-if="registerErr" class="err mb-5 red--text">
+          <p v-if="registerErr==='120107'||registerErr==='120108'">。
+          </p>
+          <p v-else>
+            処理が正常に行われませんでした。<br>
+            しばらくしてもう一度お試しいただくか、お問い合わせ下さい。
+          </p>
+          <v-card-actions class="justify-center">
+            <v-btn
+              color="outline"
+              class="mx-3 white--text"
+              @click="doneDialog=false">
+              戻る
+            </v-btn>
+          </v-card-actions>
+        </template>
+        <template v-else>
+          <p class="mb-4 text-left text-md-center">
+            登録が完了いたしました。
+          </p>
+          <v-card-actions class="justify-center">
+            <v-btn
+              color="outline"
+              class="mx-3 white--text"
+              to="/myaccount">
+              マイページ
+            </v-btn>
+          </v-card-actions>
+        </template>
+      </v-card>
+    </v-dialog> -->
   </section>
 </template>
 <script>
@@ -836,8 +796,10 @@ export default {
         // { text: '', value: 'delete', sortable: false, width: '80px' },
       ],
       estDialog: false,
-      deleteConfirm: false,
+      deleteDialog: false,
       deleteProductID: null,
+      deleteIndex: null,
+      deleteLoading: false,
       rentJson: {},
       estJson: {},
       prefect: [
@@ -846,8 +808,14 @@ export default {
       address: null,
       loading: false,
       datePick: [ false,false,false,false,],
+      DeliveryDate: null,
+      ReturnDate: null,
       rentRange: [],
-      userInfo: null
+      userInfo: null,
+      doneDialog: false,
+      registerErr: null,
+      orderLoading: false,
+      result: false
 
     }
   },
@@ -899,7 +867,6 @@ export default {
         "ProductListCnt": cartItem.length,
         "ProductList": cartItem
       }
-      console.log(obj)
       if(cartItem.length===0){
         this.msg = "カートは空です。"
         return false
@@ -945,15 +912,19 @@ export default {
           return 'ASK'
       }
     },
-    showConfirm(ProductID, index){
-      this.deleteConfirm = true
-      this.deleteIndex = index
+    setDeleteDialog(ProductID, row){
+      this.deleteDialog = true
+      this.deleteIndex = row
       this.deleteProductID = ProductID
     },
     deleteItem(){
+      this.deleteLoading = true
+
       this.$store.commit('cart/deleteItem', String(this.deleteProductID))
       this.cartInfo.ProductList.splice( this.deleteIndex, 1 )
-      this.deleteConfirm = false
+      this.deleteDialog = false
+      this.deleteLoading = false
+
     },
     changeQuantity(ProductID, qty){
       ProductID = String(ProductID)
@@ -979,13 +950,47 @@ export default {
         return "０１２３４５６７８９".indexOf(m)
       }).replace(/-|－|ー/g,'')
     },
-    order(){
-      return true
+    async order(){
+      this.orderLoading = true
+      const accessToken = this.$store.getters["auth/getAccessToken"]
+      const loginID = this.$store.getters["auth/getUser"]
+      const cartItem = this.$store.getters["cart/getCart"]
+      this.$set(this.rentJson, "DeliveryDate", this.DeliveryDate.replace(/-/g,''))
+      this.$set(this.rentJson, "ReturnDate", this.ReturnDate.replace(/-/g,''))
+      this.$set(this.rentJson, "ProductListCnt", cartItem.length)
+      this.$set(this.rentJson, "ProductList", cartItem)
+
+      const param = new URLSearchParams()
+      param.append('LoginID', loginID)
+      param.append('JsonData', JSON.stringify(this.rentJson) )
+      const res = await this.$memberBaseAxios.post(`order/orderRental`, param, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
+      if(res.data.Status === 'TRUE'){
+        this.registerErr = null
+        this.orderLoading = false
+        this.result = 'success'
+        // this.doneDialog = true
+      }else if(res.data.ErrorNo === 100002){
+        const res = await this.$getAccessToken()
+        this.order()
+      }else{
+        this.orderLoading = false
+        this.result = res.data.ErrorNo
+        // this.doneDialog = true
+        // this.registerErr = res.data.ErrorNo
+      }
     },
     toDate (str) {
       return new Date(str.split('-')[0], str.split('-')[1] - 1, str.split('-')[2]);
     },
-    async estSend(){
+    async downloadEst(){
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
       const cartItem = this.$store.getters["cart/getCart"]
@@ -1019,7 +1024,7 @@ export default {
         this.$set(this.rentalJson, "QuotationURL", res.QuotationURL)
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.estSend()
+        this.downloadEst()
       }
     }
   },
@@ -1035,7 +1040,8 @@ export default {
   .info__img{
     width: 140px;
     max-height: 120px;
-    object-fit: cover;
+    object-fit: contain;
+    height: 60px;
   }
   ::v-deep .v-data-table-header{
     background-color: #f2f2f2;
@@ -1047,7 +1053,7 @@ export default {
 .border-bottom{
   border-bottom: 1px solid #dddddd;
   padding-bottom: 0.5rem;
-  padding-top: 0.2rem;
+  padding-top: 0.5rem;
 }
 .input-short{
   max-width: 225px;
