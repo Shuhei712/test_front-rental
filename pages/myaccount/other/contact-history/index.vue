@@ -10,20 +10,20 @@
         :items="contactLists"
         :sort-by="'ContactDate'"
         :sort-desc="true"
+        :items-per-page="30"
         item-key="name"
         class="elevation-1"
       >
         <template #[`item.ContactDate`]="{ item }">
           {{dateFormat(item.ContactDate)}}
         </template>
-        <template #[`item.details`]="{ item, index }">
+        <template #[`item.details`]="{ item }">
           <td class="px-0">
             <v-btn
               color="outline"
               small
               :to="`/myaccount/other/contact-history/${item.ContactNo}`"
-              class="white--text"
-              @click="toDetails(index)"> 詳細
+              class="white--text"> 詳細
             </v-btn>
           </td>
         </template>
@@ -102,9 +102,6 @@ export default {
         return entryDate
       }
     },
-    toDetails(index){
-      return false
-    }
   }
 }
 </script>

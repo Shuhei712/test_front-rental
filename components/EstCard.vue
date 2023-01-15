@@ -5,15 +5,11 @@
       width="800" scrollable>
       <ValidationObserver v-slot="ObserverProps" ref="observer">
         <v-card class="pa-5">
-          <v-card-title class="justify-center">
-            <h3>宛先情報</h3>
-          </v-card-title>
           <v-card-text>
-            <v-divider class="mb-8"></v-divider>
             <v-form>
               <v-row>
-                <v-col cols="12" md="3"><span class="white--text secondary px-2 py-1 rounded">任意</span>
-                  ご担当者様</v-col>
+                <v-col cols="12" md="3" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span>
+                  担当者名</v-col>
                 <v-col cols="12" md="9">
                   <v-text-field
                   v-model="estJson.OwnerName"
@@ -24,7 +20,19 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" md="3"><span class="white--text secondary px-2 py-1 rounded">任意</span>
+                <v-col cols="12" md="3" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span>
+                  会社名</v-col>
+                <v-col cols="12" md="9">
+                  <v-text-field
+                  v-model="estJson.Organization"
+                  dense
+                  outlined
+                  hide-details="auto"
+                  required></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12" md="3" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span>
                   電話番号</v-col>
                 <v-col cols="12" md="9">
                   <v-text-field
@@ -35,35 +43,15 @@
                   required></v-text-field>
                 </v-col>
               </v-row>
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="title"
-                rules="required">
-                <v-row class="my-1">
-                  <v-col cols="12" md="3"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
-                    件名
-                  </v-col>
-                  <v-col cols="12" md="9">
-                    <v-text-field
-                      v-model="estJson.QuotationTitle"
-                      outlined
-                      required
-                      dense
-                      hide-details="auto"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </ValidationProvider>
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="email"
-                rules="required|email">
-                <v-row class="my-1">
-                  <v-col cols="12" md="3"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
-                    メールアドレス
-                  </v-col>
-                  <v-col cols="12" md="9">
+              <v-row>
+                <v-col cols="12" md="3" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                  メールアドレス
+                </v-col>
+                <v-col cols="12" md="9">
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    name="email"
+                    rules="required|email">
                     <v-text-field
                       v-model="estJson.OwnerEmail"
                       outlined
@@ -72,11 +60,31 @@
                       hide-details="auto"
                       :error-messages="errors"
                     ></v-text-field>
+                  </ValidationProvider>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12" md="3" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                  タイトル
+                </v-col>
+                <v-col cols="12" md="9">
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    name="title"
+                    rules="required">
+                    <v-text-field
+                      v-model="estJson.QuotationTitle"
+                      outlined
+                      required
+                      dense
+                      hide-details="auto"
+                      :error-messages="errors"
+                    ></v-text-field>
+                  </ValidationProvider>
                   </v-col>
                 </v-row>
-              </ValidationProvider>
               <v-row>
-                <v-col cols="12" md="3">
+                <v-col cols="12" md="3" class="pb-0">
                   <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                   ご使用期間
                 </v-col>
@@ -139,7 +147,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" md="3"><span class="white--text secondary px-2 py-1 rounded">任意</span>
+                <v-col cols="12" md="3" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span>
                   ご使用場所</v-col>
                 <v-col cols="12" md="9">
                   <v-text-field
@@ -275,7 +283,6 @@ export default {
       this.$set(this.estJson, "UseDay", this.rentJson.UseDay)
       this.$set(this.estJson, "ProductListCnt", cartItem.length)
       this.$set(this.estJson, "ProductList", cartItem)
-      console.log(JSON.stringify(this.estJson))
 
       const param = new URLSearchParams()
       param.append('LoginID', loginID)

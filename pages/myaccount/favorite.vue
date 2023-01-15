@@ -32,7 +32,7 @@ export default {
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    const getInfo = await this.getFavInfo()
+    await this.getFavInfo()
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -64,14 +64,11 @@ export default {
         console.log(res)
       }
       if(res.data.Status==='TRUE'){
-        this.favLists = res.data.FavoriteList
+        this.favLists = res.data.FavoriteList.slice().reverse()
       }else if(res.data.ErrorNo===100002){
-        // access認証token有効期限切れ
         const res = await this.$getAccessToken()
-        this.getFavInfo()
-        alert('again')
+        await this.getFavInfo()
       }else {
-        // 認証tokenの有効期限切れ
         this.$store.dispatch('auth/resetUser')
         this.$router.push('/login');
       }

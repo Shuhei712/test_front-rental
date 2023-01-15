@@ -1,6 +1,7 @@
 <template>
   <div class="popup text-center">
     <v-dialog v-model="cancelDialog"
+      persistent
       width="580">
       <v-card class="pa-5 text-center">
         <template v-if="!result">

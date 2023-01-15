@@ -104,6 +104,7 @@
                   color="green"
                   overlap
                   :content="cartNum"
+                  :value="cartNum"
                 >
                   <v-icon color="secondary">mdi-cart</v-icon>
                 </v-badge>
