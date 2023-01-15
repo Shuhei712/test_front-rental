@@ -29,6 +29,7 @@
           dense
           :headers="headers"
           :items="order.ProductList"
+          :items-per-page="30"
           item-key="ProductID"
           class="order__info"
           hide-default-footer
@@ -76,6 +77,35 @@
           outlined
           class="py-6">
           <v-container>
+
+            <v-row class="border-bottom">
+              <v-col cols="12" md="4" class="pb-0">連絡方法
+              </v-col>
+              <v-col cols="12" md="8">
+                <p>{{order.ContactTypeDisp}}</p>
+
+                <v-text-field
+                  v-if="order.ContactType"
+                  :value="order.ContactEmail"
+                  outlined
+                  dense
+                  hide-details="auto"
+                  readonly>
+                </v-text-field>
+                <v-text-field
+                  v-else
+                  :value="order.ContactTel"
+                  outlined
+                  dense
+                  hide-details="auto"
+                  readonly>
+                </v-text-field>
+
+              </v-col>
+            </v-row>
+
+            <v-divider class="my-4"></v-divider>
+
             <v-row class="border-bottom">
               <v-col cols="12" md="4" class="pb-0">お引渡方法
               </v-col>
@@ -236,7 +266,7 @@ export default {
       breadCrumbs: [],
       order: null,
       headers: [
-        { text: '商品名', value: 'ProductName', sortable: false,align: 'center' },
+        { text: '商品名', value: 'ProductName', sortable: false, align: 'center'},
         { text: '価格(円)', value: 'Price', sortable: false },
         { text: '日数掛け率', value: 'DayRate', sortable: false, width: '100px' },
         { text: '数量', value: 'Qty', sortable: false, width: '60px' },

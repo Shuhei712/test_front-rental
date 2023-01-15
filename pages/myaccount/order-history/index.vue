@@ -15,6 +15,9 @@
         dense
         :headers="headers"
         :items="orderHistoryLists"
+        :sort-by="['OrderNo']"
+        :sort-desc="true"
+        :items-per-page="30"
         item-key="name"
         class="elevation-1"
         mobile-breakpoint="740"
@@ -50,47 +53,6 @@
       <p v-else>申し込みの履歴がございません。</p>
     </div>
 
-    <!-- <v-dialog v-model="cancelDialog"
-      width="580">
-      <v-card class="pa-5 text-center">
-        <template v-if="!result">
-          <p>以下の申し込みをキャンセルいたしますか？</p>
-          注文番号：{{ cancelID }}
-          <v-card-actions class="justify-center">
-            <v-btn
-              class="mt-4 mx-2"
-              dark
-              color="secondary"
-              @click="cancelDialog=false">戻る
-            </v-btn>
-            <v-btn
-              class="mt-4 mx-2"
-              dark
-              color="feature"
-              :loading="deleteLoading"
-              @click="deleteItem">申し込みキャンセル
-            </v-btn>
-          </v-card-actions>
-        </template>
-        <template v-else>
-          <p v-if="result==='success'" class="text-left text-md-center">
-            申し込みをキャンセルいたしました。
-          </p>
-          <p v-else class="text-left text-md-center">
-            処理が正常に行われませんでした。<br>
-            しばらくしてもう一度お試しいただくか、お問い合わせ下さい。
-          </p>
-          <v-card-actions class="justify-center">
-            <v-btn
-              class="mt-4 mx-2"
-              dark
-              color="secondary"
-              @click="cancelDialog=false">戻る
-            </v-btn>
-          </v-card-actions>
-        </template>
-      </v-card>
-    </v-dialog> -->
   </section>
 </template>
 
@@ -111,8 +73,6 @@ export default {
       ],
       cancelDialog: false,
       cancelID: null,
-      // deleteIndex: null,
-      // deleteLoading: false,
       result: false
     }
   },
@@ -156,7 +116,7 @@ export default {
       }else if(res.data.ErrorNo===100002){
         // access認証tokenの有効期限が切れています
         const resAccess = await this.$getAccessToken()
-        this.getOrderHistory()
+        await this.getOrderHistory()
         console.log(this.orderHistoryLists)
 
       }
@@ -166,34 +126,6 @@ export default {
       this.cancelDialog = true
       this.cancelID = orderNo
     },
-    // async deleteItem(){
-    //   this.deleteLoading = true
-    //   const accessToken = this.$store.getters["auth/getAccessToken"]
-    //   const loginID = this.$store.getters["auth/getUser"]
-    //   const param = new URLSearchParams()
-    //   param.append('LoginID', loginID)
-    //   const res = await this.$memberBaseAxios.put(`order/cancelOrder/${this.cancelID}`, param, {
-    //     headers: {
-    //       Authorization: `Bearer ${accessToken}`
-    //     }
-    //   })
-
-    //   if (this.$config.DEBUG_MODE) {
-    //     console.log(res)
-    //   }
-    //   if(res.data.Status === 'TRUE'){
-    //     this.deleteLoading = false
-    //     this.result = 'success'
-    //     this.getOrderHistory()
-    //   }else if(res.data.ErrorNo === 100002){
-    //     const res = await this.$getAccessToken()
-    //     this.deleteItem()
-    //   }else{
-    //     this.orderLoading = false
-    //     this.result = res.data.ErrorNo
-    //   }
-
-    // },
     dateFormat(num){
       if(num){
         const year = num.substring(0, 4);

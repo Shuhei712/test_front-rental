@@ -20,31 +20,13 @@
         <v-icon>mdi-heart</v-icon>
       </v-btn>
     </div>
-    <!-- <div class="categories categories--sp d-flex flex-wrap px-3 py-1 mb-3">
-      <div class="search-tag d-flex text-caption mr-4">
-        <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}
-      </div>
-      <div v-if="isCategoryName2" class="search-tag d-flex text-caption">
-        <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}
-      </div>
-    </div> -->
     <div class="product__info d-flex flex-column">
       <div class="info__img ma-auto">
         <div class="img__inner">
-          <!-- <span v-if="isComingsoon(releaseDate)" class="product-comingsoon">Coming soon</span>
-          <span v-else-if="isNew(releaseDate)" class="product-new">New</span> -->
           <a :href="'/products/' + id + '?name=' + name"><img :src="image" :alt="name" class="pa-1" /></a>
         </div>
       </div>
       <div class="info__details flex-grow-1 d-flex flex-column">
-        <!-- <div class="categories categories--pc d-flex px-3 py-1">
-          <div class="search-tag d-flex text-body-2 mr-5">
-            <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}
-          </div>
-          <div v-if="isCategoryName2" class="search-tag d-flex text-body-2">
-            <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}
-          </div>
-        </div> -->
         <div class="name mt-2 mt-md-5">
           <div class="name__maker text-caption text-sm-body-2">{{ maker }}</div>
           <div class="name__product mt-1">
@@ -65,58 +47,12 @@
           <div class="price__product d-flex align-center mt-1">
             <div class="price__product-inner d-flex align-baseline red--text">
               <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
-              <!-- <span class="price__val letter-space-015em font-weight-medium mt-1">{{ priceValue }}</span> -->
-              <!-- <template v-if="priceValue">
-              {{ priceUnit }}
-              </template> -->
               <span v-if="isPriceUnit" class="price__unit font-weight-light">{{ priceUnit }}</span>
             </div>
           </div>
-          <!-- <button
-            class="price__more d-flex align-center px-md-3"
-            :disabled="!isTariffBtn"
-            @click="openTariffModal(id, tariffId)">
-            <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
-            <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
-          </button> -->
         </div>
       </div>
     </div>
-    <!-- <div class="price price--sp d-flex justify-space-between justify-sm-start flex-wrap mt-5 mt-md-6 mt-lg-10">
-      <div class="d-md-flex align-center mr-2 mr-sm-4 mb-2 text-caption text-md-body-2">
-        <div class="price__head pa-2 px-md-3 py-md-1 text-no-wrap text-center">レンタル価格</div>
-        <div class="price__day letter-space-015em pa-2 px-md-3 py-md-1 text-center text-no-wrap">1日/税別</div>
-      </div> -->
-      <!-- <div class="price__product d-flex align-center mr-3 mr-sm-5 mb-2">
-        <div class="price__product-inner d-flex align-baseline">
-          <span class="price__val letter-space-015em font-weight-medium">{{ getPrice }}</span>
-          <span v-if="isPriceUnit" class="price__unit font-weight-light">{{ priceUnit }}</span>
-        </div>
-      </div> -->
-      <!-- <button
-        class="price__more d-flex align-center mb-2 px-md-3"
-        :disabled="!isTariffBtn"
-        @click.stop="openTariffModal(id, tariffId)">
-        <span class="price__class mb-1 mb-md-0 mr-md-2">{{ tariffName }}</span>
-        <span class="text-md-body-2 lh-crop-15">2日目以降<span class="word-keep">の料金</span></span>
-      </button> -->
-    <!-- </div> -->
-    <!-- <div class="product__tags mt-3 mt-sm-6">
-      <v-btn
-        v-for="tag in tagLists"
-        :key="tag.TagName"
-        class="product-tag px-3 py-1 mr-2 mb-2"
-        color="cushion"
-        elevation="0"
-        tile
-        small
-        @click="searchTag(tag.TagID, tag.TagName)">
-        {{ tag.TagName }}
-      </v-btn>
-    </div> -->
-    <!-- <div class="product__descriptions text-caption text-sm-body-1 mt-3 mt-md-2">
-      {{ description }}
-    </div> -->
   </v-card>
 </template>
 
@@ -156,7 +92,8 @@ export default {
     // },
     priceValue: {
       type: String,
-      required: true,
+      required: false,
+      default: null
     },
     priceType: {
       type: Number,
