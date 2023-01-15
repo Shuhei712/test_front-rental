@@ -16,7 +16,7 @@
     <top-bar title="カート" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 cart">
       <div class="cart__item">
-        <h1 class="mb-4">ショッピングカート一覧</h1>
+        <h2 class="mb-4">ショッピングカート一覧</h2>
         <p v-if="msg">{{msg}}</p>
         <v-data-table v-else
           dense
@@ -24,7 +24,8 @@
           :items="cartInfo.ProductList"
           item-key="ProductID"
           class="cart__info"
-          hide-default-footer>
+          hide-default-footer
+          mobile-breakpoint="740">
           <template #[`item.ProductName`]="{ item }">
             <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left">
               <img :src=item.ProductImage alt="商品イメージ" class="info__img mr-4 my-2">
@@ -66,44 +67,11 @@
         </v-data-table>
 
         <v-divider></v-divider>
-
-        <v-card
-          max-width="320"
-          color="cushion"
-          elevation="0"
-          class="ml-auto mt-3">
-          <v-card-text>
-            <template v-if="cartInfo.Total">
-              <p class="d-flex justify-space-between">
-                <span>小計</span><span>￥{{cartInfo.SubTotal}}</span>
-              </p>
-              <p class="d-flex justify-space-between mb-2">
-                <span>消費税</span><span>￥{{cartInfo.Tax}}</span>
-              </p>
-              <v-divider></v-divider>
-              <p class="font-weight-bold text-right mt-2 red--text">
-                合計&emsp;
-                <span class="text-h5">￥{{cartInfo.Total}}</span> (税込)
-              </p>
-            </template>
-            <template v-else>
-              <p class="font-weight-bold text-right mt-2 red--text">
-                合計&emsp;
-                <span class="text-h5">ASK</span>
-              </p>
-            </template>
-          </v-card-text>
-          <v-card-actions tag="div" class="justify-end">
-            <v-btn
-              class="mt-1"
-              dark
-              outlined
-              elevation="0"
-              color="primary"
-              @click="getCartInfo()">再計算
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+        <price-card
+          :item-info="cartInfo"
+          :calc="true"
+          @get-item-info="getCartInfo">
+        </price-card>
 
         <v-card
           max-width="320"
@@ -792,8 +760,9 @@ export default {
       headers: [
         { text: '商品名', value: 'ProductName', sortable: false,align: 'center' },
         { text: '価格(円)', value: 'Price', sortable: false },
-        { text: '数量', value: 'Qty', sortable: false, width: '140px' },
-        // { text: '', value: 'delete', sortable: false, width: '80px' },
+        { text: '日数掛け率', value: 'DayRate', sortable: false },
+        { text: '数量', value: 'Qty', sortable: false, width: '130px' },
+        // { text: '小計', value: 'Qty', sortable: false, width: '130px' },
       ],
       estDialog: false,
       deleteDialog: false,
