@@ -32,38 +32,6 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" md="3" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span>
-                  電話番号</v-col>
-                <v-col cols="12" md="9">
-                  <v-text-field
-                  v-model="estJson.OwnerTel"
-                  dense
-                  outlined
-                  hide-details="auto"
-                  required></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" md="3" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
-                  メールアドレス
-                </v-col>
-                <v-col cols="12" md="9">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="email"
-                    rules="required|email">
-                    <v-text-field
-                      v-model="estJson.OwnerEmail"
-                      outlined
-                      required
-                      dense
-                      hide-details="auto"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </ValidationProvider>
-                </v-col>
-              </v-row>
-              <v-row>
                 <v-col cols="12" md="3" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                   件名
                 </v-col>
@@ -279,8 +247,9 @@ export default {
       const cartItem = this.$store.getters["cart/getCart"]
 
       const now = new Date()
-      const nowFormat = now.getFullYear() + String(now.getMonth()+1) + now.getDate()
-
+      const nowDate = String(now.getDate()).padStart(2, '0')
+      const nowMonth = String(now.getMonth()+1).padStart(2, '0')
+      const nowFormat = now.getFullYear() + nowMonth + nowDate
       this.$set(this.estJson, "DeliveryDate", "")
       this.$set(this.estJson, "ReturnDate", "")
       this.$set(this.estJson, "PrintDate", nowFormat)

@@ -269,6 +269,7 @@ export default {
         { text: '価格(円)', value: 'Price', sortable: false },
         { text: '日数掛け率', value: 'DayRate', sortable: false, width: '100px' },
         { text: '数量', value: 'Qty', sortable: false, width: '60px' },
+        { text: '備考', value: 'ProductComment', sortable: false, width: '120px' },
       ],
       cancelDialog:false,
       cancelID: null,
@@ -324,9 +325,9 @@ export default {
     getPrice(priceType, price) {
       switch (priceType) {
         case 0:
-          return price
+          return price.toLocaleString()
         case 1:
-          return price
+          return price.toLocaleString()
         case 2:
           return '本体に含む'
         case 9:
@@ -358,7 +359,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .sec__inner {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   width: 95%;
 }

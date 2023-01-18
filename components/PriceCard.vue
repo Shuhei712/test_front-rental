@@ -7,15 +7,15 @@
     <v-card-text>
       <template v-if="itemInfo.Total">
         <p class="d-flex justify-space-between">
-          <span>小計</span><span>￥{{itemInfo.SubTotal}}</span>
+          <span>小計</span><span>￥{{itemInfo.SubTotal.toLocaleString()}}</span>
         </p>
         <p class="d-flex justify-space-between mb-2">
-          <span>消費税</span><span>￥{{itemInfo.Tax}}</span>
+          <span>消費税</span><span>￥{{itemInfo.Tax.toLocaleString()}}</span>
         </p>
         <v-divider></v-divider>
         <p class="font-weight-bold text-right mt-2 red--text">
           合計&emsp;
-          <span class="text-h5">￥{{itemInfo.Total}}</span> (税込)
+          <span class="text-h5">￥{{itemInfo.Total.toLocaleString()}}</span> (税込)
         </p>
       </template>
       <template v-else>

@@ -874,8 +874,6 @@ export default {
     async inputUserInfo(){
       const res = await this.$getUserInfo()
       this.$set(this.estJson, 'OwnerName', res.MemberName)
-      this.$set(this.estJson, 'OwnerEmail', res.Email)
-      this.$set(this.estJson, 'OwnerTel', res.Tel)
       this.$set(this.estJson, 'Organization', res.Organization)
       this.$set(this.rentJson, 'ContactEmail', res.Email)
       this.$set(this.rentJson, 'ContactTel', res.Tel)
@@ -883,9 +881,9 @@ export default {
     getPrice(priceType, price) {
       switch (priceType) {
         case 0:
-          return price
+          return price.toLocaleString()
         case 1:
-          return price
+          return price.toLocaleString()
         case 2:
           return '本体に含む'
         case 9:
