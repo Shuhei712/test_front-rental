@@ -1,7 +1,11 @@
 <template>
-  <div>
+  <div v-if="!$fetchState.pending && !$fetchState.error">
     <top-bar title="お問い合わせ 入力" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="register__inner py-16 px-3 px-lg-0">
+      <dl class="d-flex">
+        <dt>会員番号</dt>
+        <dd>：{{ loginInfo.MemberID }}</dd>
+      </dl>
       <v-card
         outlined
         class="py-6">
@@ -24,7 +28,7 @@
                   <v-select
                     v-model="syncedUser.ContactType"
                     item-text="ItemDispName"
-                    :items="displayLists"
+                    :items="displayLists[0].ItemChoicesList"
                     hide-details="false"
                     outlined
                     dense
@@ -151,11 +155,11 @@
               </ValidationProvider>
 
               <div class="text-center mt-6">
-                <v-btn large
+                <!-- <v-btn large
                   class="my-4 mx-2"
                   color="secondary"
                   @click="reset()"
-                >リセット</v-btn>
+                >リセット</v-btn> -->
                 <v-btn large
                   :disabled="ObserverProps.invalid"
                   class="my-4 mx-2 white--text"
@@ -188,7 +192,7 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      displayLists: null,
+      displayLists: {},
       loginInfo: null,
       userInfo: {},
       contactInfo: {},
@@ -203,6 +207,8 @@ export default {
     this.displayLists = await this.$getDisplayInfo('DISP_2003')
     this.loginInfo = await this.$getLoginInfo()
     this.userInfo = await this.getUserInfo()
+    console.log(this.displayLists)
+    console.log(this.loginInfo)
     if(this.$route.query.id) this.contactInfo = await this.getContactInfo()
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)

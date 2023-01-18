@@ -127,6 +127,7 @@
               <v-btn large
                 class="my-4 mx-2"
                 color="primary"
+                :loading="loading"
                 @click="register()"
               >登録</v-btn>
             </div>
@@ -150,6 +151,7 @@ export default {
   data() {
     return {
       breadCrumbs: [],
+      loading: false
     }
   },
 
@@ -174,7 +176,7 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async register(){
-      this.$store.commit('loading/changeStatus', true)
+      this.loading = true
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
       if(!this.user.NameKana) this.$set(this.user, 'NameKana', '')

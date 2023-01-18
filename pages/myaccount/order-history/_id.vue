@@ -31,7 +31,6 @@
           :items="order.ProductList"
           :items-per-page="30"
           item-key="ProductID"
-          class="order__info"
           hide-default-footer
           mobile-breakpoint="740">
           <template #[`item.ProductName`]="{ item }">
@@ -284,7 +283,7 @@ export default {
   },
   head() {
     return {
-      title: "申し込み履歴 詳細",
+      title: "注文履歴 詳細",
       meta: [
         { hid: "robots", name: "robots", content: "noindex" }
       ]
@@ -294,7 +293,7 @@ export default {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
       this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" })
-      this.$store.commit('breadCrumbs/addList', { name: '申し込み履歴', path: '/myaccount/order-history' })
+      this.$store.commit('breadCrumbs/addList', { name: '注文履歴', path: '/myaccount/order-history' })
       this.$store.commit('breadCrumbs/addList', { name: '詳細', path: '/myaccount/other-history' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },

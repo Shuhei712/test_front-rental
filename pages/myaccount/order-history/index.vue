@@ -7,7 +7,7 @@
       @change-cancel-dialog="cancelDialog = $event"
       @get-new-info="getOrderHistory">
     </cancel-card>
-    <top-bar title="申し込み履歴" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="注文履歴" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
 
       <v-data-table
@@ -86,7 +86,7 @@ export default {
   },
   head () {
     return {
-      title: "申し込み履歴",
+      title: "注文履歴",
       meta: [
         { hid: "robots", name: "robots", content: "noindex" }
       ]
@@ -96,7 +96,7 @@ export default {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
       this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" });
-      this.$store.commit('breadCrumbs/addList', { name: "申し込み履歴", path: "/myaccount/" });
+      this.$store.commit('breadCrumbs/addList', { name: "注文履歴", path: "/myaccount/" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async getOrderHistory(){

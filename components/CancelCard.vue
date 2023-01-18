@@ -91,6 +91,7 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
+      this.$setLog('会員申し込み履歴', 'キャンセル', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.loading = false
         this.result = 'success'

@@ -13,6 +13,7 @@
         :items-per-page="30"
         item-key="name"
         class="elevation-1"
+        mobile-breakpoint="740"
       >
         <template #[`item.ContactDate`]="{ item }">
           {{dateFormat(item.ContactDate)}}
@@ -39,8 +40,8 @@ export default {
       breadCrumbs: [],
       contactLists:null,
       headers: [
-        { text: 'ID', value: 'ContactNo', width: '70px'},
-        { text: '問い合わせ日', value: 'ContactDate', width: '130px', },
+        { text: '問い合わせ番号', value: 'ContactNo', width: '140px'},
+        { text: '日付', value: 'ContactDate', width: '130px', },
         { text: '件名', value: 'ContactSubject' },
         { text: '状況', value: 'ContactStatusDisp', width: '120px',sortable: false},
         { text: '', value: 'details' , width: '80px', sortable: false},
@@ -84,11 +85,11 @@ export default {
       if(res.data.Status==='TRUE'){
         return res.data.ContactList
       }else if(res.data.ErrorNo===100002){
-        // access認証token有効期限切れ
-        const res = await this.$getAccessToken()
+        // accessToken有効期限切れ
+        const resAccess = await this.$getAccessToken()
         this.getContactHistory()
-      }else {
-        // 認証tokenの有効期限切れ
+      }else if(res.data.ErrorNo===100001) {
+        // 認証token有効期限切れ
         this.$store.dispatch('auth/resetUser')
         this.$router.push('/login');
       }
@@ -108,7 +109,7 @@ export default {
 
 <style lang="scss" scoped>
 .sec__inner {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   width: 95%;
 }

@@ -146,7 +146,7 @@ export default {
           path: 'myaccount/cart'
         },
         {
-          title: '申し込み履歴',
+          title: '注文履歴',
           path: 'myaccount/order-history'
         },
       ],

@@ -65,7 +65,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
-                  タイトル
+                  件名
                 </v-col>
                 <v-col cols="12" md="9">
                   <ValidationProvider
@@ -160,16 +160,18 @@
               </v-row>
             </v-form>
           </v-card-text>
+          <p v-if="result && result!=='success'" class="red--text text-center mt-6">処理に失敗いたしました。</p>
           <v-card-actions class="justify-center">
             <v-btn
-              class="mt-4 mx-2"
+              class="mx-2"
               dark
               color="secondary"
               @click="estDialog=false">戻る
             </v-btn>
             <v-btn
-              class="mt-4 mx-2"
+              class="mx-2"
               color="primary"
+              :loading="loading"
               :disabled="ObserverProps.invalid"
               @click="downloadEst">ダウンロード
             </v-btn>
@@ -212,7 +214,9 @@ export default {
   },
   data(){
     return {
-      datePick: false
+      datePick: false,
+      loading: false,
+      result: null
     }
   },
   computed:{
@@ -268,6 +272,8 @@ export default {
   methods:{
 
     async downloadEst(){
+      this.result = null
+      this.loading = true
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
       const cartItem = this.$store.getters["cart/getCart"]
@@ -296,6 +302,7 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
+      this.$setLog('会員見積もり', 'DL', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.$set(this.rentJson, "QuotationID", res.data.QuotationID)
         this.$set(this.rentJson, "QuotationNo", res.data.QuotationNo)
@@ -303,15 +310,17 @@ export default {
         this.$set(this.rentJson, "QuotationURL", res.data.QuotationURL)
         const a = document.createElement("a");
         a.href = res.data.QuotationURL;
-        a.download = "TAKENAKAお見積もり.pdf";
         a.target = "_blank";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         this.estDialog = false
+        this.loading = false
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
         this.downloadEst()
+      }else{
+        this.result = res.data.ErrorNo
       }
     }
   }
