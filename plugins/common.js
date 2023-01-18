@@ -64,12 +64,11 @@ export default ({store, $config, redirect, route}, inject) => {
     })
     console.log(res)
     if(res.data.Status==='TRUE'){
-      return res.data.DispSelectItemList[0].ItemChoicesList
+      return res.data.DispSelectItemList
     }else if(res.data.ErrorNo===100002){
       // access認証token有効期限切れ
-      const res = await getAccessToken()
-      getDisplayInfo(num)
-      alert('again')
+      const resToken = await getAccessToken()
+      return getDisplayInfo(num)
     }else {
       // 認証tokenの有効期限切れ
       alert('go login')
@@ -92,9 +91,8 @@ export default ({store, $config, redirect, route}, inject) => {
       return res.data.AccountInfo
     }else if(res.data.ErrorNo===100002){
       // access認証token有効期限切れ
-      const res = await getAccessToken()
-      getLoginInfo()
-      alert('again')
+      const resToken = await getAccessToken()
+      return getLoginInfo()
     }else {
       // 認証tokenの有効期限切れ
       store.dispatch('auth/resetUser')
@@ -118,8 +116,8 @@ export default ({store, $config, redirect, route}, inject) => {
       return res.data.MemberInfo
     }else if(res.data.ErrorNo===100002){
       // access認証token有効期限切れ
-      const res = await getAccessToken()
-      getUserInfo()
+      const resToken = await getAccessToken()
+      return getUserInfo()
     }else {
       // 認証tokenの有効期限切れ
       store.dispatch('auth/resetUser')
@@ -128,6 +126,7 @@ export default ({store, $config, redirect, route}, inject) => {
   }
   inject('getUserInfo', getUserInfo)
 
+  // ('会員お問い合わせ', '登録', res.data.Status)
   const setLog = async(display, action, info)=>{
     const token = store.getters["auth/getAccessToken"]
     const loginID = store.getters["auth/getUser"]
@@ -149,9 +148,8 @@ export default ({store, $config, redirect, route}, inject) => {
       return true
     }else if(res.data.ErrorNo===100002){
       // access認証token有効期限切れ
-      const res = await getAccessToken()
-      setLog(display, action, info)
-      alert('again')
+      const resToken = await getAccessToken()
+      return setLog(display, action, info)
     }
   }
   inject('setLog', setLog)
