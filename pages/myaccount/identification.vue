@@ -8,39 +8,40 @@
         <v-form
           ref="form">
           <v-container>
-            <p class="mb-6">
+            <p>
               <span v-if="userInfo.NecDocFlg===1">
-                <div class="green--text text-h6">登録済み</div>
-                <ul>
-                  <li v-if="userInfo.DocFileName1" class="no-list-style">
+                <div class="green--text text-h6">登録済みファイル</div>
+                <v-divider class="mb-3"></v-divider>
+                <ul class="pl-5">
+                  <li v-if="userInfo.DocFileName1">
                     <template v-if="userInfo.MemberType">名刺</template>
                     <template v-else>身分証明書</template>
                   </li>
-                  <li v-if="userInfo.DocFileName2" class="no-list-style">
+                  <li v-if="userInfo.DocFileName2">
                     <template v-if="userInfo.MemberType">社会保険被保険証</template>
                     <template v-else>現住所記載書類</template>
                   </li>
-                  <li v-if="userInfo.DocFileName3" class="no-list-style">
-                    <template v-if="userInfo.MemberType">運転免許証/パスポート/マイナンバーカード</template>
+                  <li v-if="userInfo.DocFileName3">
+                    <template v-if="userInfo.MemberType">運転免許証・パスポート又はマイナンバーカード</template>
                     <template v-else>学生証</template>
                   </li>
                 </ul>
+                <v-divider class="mt-3"></v-divider>
               </span>
               <span v-else class="red--text text-h6">未登録</span>
             </p>
-            <v-divider></v-divider>
-            <ul class="pa-4 pl-8 mb-8 cushion">
-              <li>
+            <ul class="pa-4 mb-8 mt-10 cushion">
+              <li class="note">
                 登録できる添付ファイルはJPG、PNG、PDFで1枚につき3MBまでのファイルのみとなります。
               </li>
-              <li>
+              <li class="note">
                 住所確認できる書類が無い場合は保証金をお預かりする場合があります
               </li>
-              <li>
+              <li class="note">
                 国民健康保険(被用者保険以外)などの場合は以下が必要となります。<br>
                 銀行取引の証明できるもの(取引銀行通帳の表紙裏１枚目の写し又は、法人番号指定通知書の写し)
               </li>
-              <li class="red--text">
+              <li class="red--text note">
                 マイナンバーカードは顔写真・住所記載面のみ(ナンバー記載面は添付しないでください)
               </li>
             </ul>
@@ -113,7 +114,7 @@
                 <v-row class="my-1">
                   <v-col cols="12" md="6" class="pb-0">
                     <div class="d-flex align-start">
-                      <span class="white--text red darken-1 px-2 me-1 rounded">必須</span>
+                      <span class="white--text red darken-1 px-2 me-1 rounded text-no-wrap">必須</span>
                       <span class="line-height-sm">
                         運転免許証・パスポート又はマイナンバーカード
                       </span>
@@ -303,7 +304,7 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      userInfo: null,
+      userInfo: {},
       userJson: {},
       imageSet : false,
       File_01: null,
@@ -425,15 +426,23 @@ export default {
 .line-height-sm{
   line-height: 1.5rem;
 }
-.no-list-style{
-  list-style: none;
-}
 .image-area{
   position: relative;
   &__img{
     height: 60px;
     width: 50px;
     object-fit: contain;
+  }
+}
+.note{
+  margin-bottom: 0;
+  padding-left: 1.2rem;
+  position: relative;
+  list-style: none;
+  &::before{
+    content: "※";
+    left: 0;
+    position: absolute;
   }
 }
 </style>

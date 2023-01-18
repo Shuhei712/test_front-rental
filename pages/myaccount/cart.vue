@@ -19,22 +19,21 @@
       <p v-if="msg">{{msg}}</p>
       <div v-else>
         <div class="cart__item">
-          <h2 class="mb-4">ショッピングカート一覧</h2>
+          <h2 class="mb-4">商品一覧</h2>
           <v-data-table
             dense
             :headers="headers"
             :items="cartInfo.ProductList"
             :items-per-page="30"
             item-key="ProductID"
-            class="cart__info"
             hide-default-footer
             mobile-breakpoint="740">
             <template #[`item.ProductName`]="{ item }">
               <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left">
-                <img :src=item.ProductImage alt="商品イメージ" class="info__img mr-4 my-2">
-                <div class="info__txt">
+                <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
+                <div class="table__txt text-truncate">
                   {{item.ProductName}}
-                  <p class="font-weight-bold">{{item.TypeNumber}}</p>
+                  <p class="font-weight-bold text-truncate">{{item.TypeNumber}}</p>
                 </div>
               </a>
             </template>
@@ -954,6 +953,7 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
+      this.$setLog('会員カート', '申し込み', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.orderLoading = false
         this.result = 'success'
@@ -981,12 +981,23 @@ export default {
   width: 95%;
 }
 .cart {
-  .info__img{
-    width: 140px;
-    max-height: 120px;
-    object-fit: contain;
-    height: 60px;
-  }
+  .table{
+    &__img{
+      width: 140px;
+      max-height: 120px;
+      object-fit: contain;
+      height: 60px;
+      }
+      &__txt{
+        max-width: 220px;
+        @media (min-width:600px) {
+          max-width: unset;
+        }
+      }
+      tr{
+        margin-bottom: 2rem;
+      }
+    }
   ::v-deep .v-data-table-header{
     background-color: #f2f2f2;
   }
@@ -1003,13 +1014,13 @@ export default {
   max-width: 225px;
 }
 .note{
-    margin-bottom: 0;
-    padding-left: 1rem;
-    position: relative;
-    &::before{
-      content: "※";
-      left: 0;
-      position: absolute;
-    }
+  margin-bottom: 0;
+  padding-left: 1rem;
+  position: relative;
+  &::before{
+    content: "※";
+    left: 0;
+    position: absolute;
+  }
 }
 </style>
