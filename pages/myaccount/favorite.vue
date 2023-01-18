@@ -2,20 +2,21 @@
   <section v-if="!$fetchState.pending && !$fetchState.error">
     <to-top-btn></to-top-btn>
     <top-bar title="お気にいり" :bread-crumbs="breadCrumbs"></top-bar>
-    <div class="sec__inner py-16">
+    <div class="sec__inner py-16 fav">
 
       <v-row class="product__main">
-        <v-col v-for="(list, index) in favLists" :key="index" cols="12" sm="6" md="4">
-          <product-card-simple
-            :id="list.ProductID"
-            :name="list.ProductName"
-            :type-number="list.TypeNumber"
-            :image="list.ProductImage"
+        <v-col v-for="(list, index) in favLists" :key="index" cols="12" sm="6" md="3">
+          <item-card
+            :path="list.ProductImage"
             :maker="list.MakerName"
-            :price-value="list.Price"
+            :name="list.ProductName"
+            :link="'/products/' + list.ProductID + '?name=' + list.ProductName"
+            :model="list.TypeNumber"
+            :price-unit="list.PriceUnit"
+            :price="list.Price"
             :price-type="list.PriceType"
-            :price-unit="list.PriceUnit">
-          </product-card-simple>
+            :product-id="list.ProductID"
+            :fav="true"></item-card>
         </v-col>
       </v-row>
     </div>
@@ -84,4 +85,5 @@ export default {
   margin: 0 auto;
   width: 95%;
 }
+
 </style>

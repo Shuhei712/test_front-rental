@@ -675,23 +675,24 @@ export default {
         })
       }
     },
-    async getFavorite(){
-      const res = await this.favorite('favorite/getStatus/', 'post')
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
-      if(res==='again'){
-        this.getFavorite()
-        alert('stop')
-      }else if(res.data.Status==='TRUE'){
-        this.favoriteFlg = res.data.FavoriteStatus
-      }
-    },
     addCart(Qty){
+      if(!this.isLogin){
+        this.loginDialog = true
+        return false
+      }
       this.$store.commit('cart/addCart', {
         ProductID: this.$route.params.id,
         Qty
       })
+      this.$router.push('/myaccount/cart')
+    },
+    async getFavorite(){
+      const res = await this.favorite('favorite/getStatus/', 'post')
+      if( !res ){
+        this.getFavorite()
+      }else if(res.data.Status==='TRUE'){
+        this.favoriteFlg = res.data.FavoriteStatus
+      }
     },
     async setFavorite(flg){
       if(!this.isLogin){
@@ -708,9 +709,8 @@ export default {
         console.log(res)
       }
 
-      if(res==='again'){
+      if( !res ){
         this.setFavorite(flg)
-        alert('again')
       }else if(res.data.Status==='TRUE'){
         this.favoriteFlg = flg ? 1 : 0
       }
@@ -735,10 +735,7 @@ export default {
         // access認証tokenの有効期限が切れています
         const resAccess = await this.$getAccessToken()
         if(resAccess.data.Status==='TRUE'){
-          return 'again'
-        }else if(resAccess.data.Status==='FALSE'){
-          this.$store.dispatch('auth/resetUser')
-          location.reload()
+          return false
         }
       }
     }
