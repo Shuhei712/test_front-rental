@@ -3,8 +3,29 @@
     <to-top-btn></to-top-btn>
     <top-bar title="本人確認" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
+      <p>
+        <span v-if="userInfo.NecDocFlg===1">
+          <div class="green--text text-h6">登録済みファイル</div>
+          <v-divider class="mb-3"></v-divider>
+          <ul class="pl-5">
+            <template v-if="userInfo.MemberType">
+              <li v-if="userInfo.DocFileName1">名刺</li>
+              <li v-if="userInfo.DocFileName2">社会保険被保険証</li>
+              <li v-if="userInfo.DocFileName3">運転免許証・パスポート又はマイナンバーカード</li>
+            </template>
+            <template v-else>
+              <li v-if="userInfo.DocFileName1">身分証明書</li>
+              <li v-if="userInfo.DocFileName2">現住所記載書類</li>
+              <li v-if="userInfo.DocFileName3">学生証</li>
+            </template>
+          </ul>
+          <v-divider class="mt-3"></v-divider>
+        </span>
+        <span v-else class="red--text text-h6">未登録</span>
+      </p>
+      <id-card :member-type="userInfo.MemberType"></id-card>
 
-      <ValidationObserver v-slot="ObserverProps" ref="observer">
+      <!-- <ValidationObserver v-slot="ObserverProps" ref="observer">
         <v-form
           ref="form">
           <v-container>
@@ -13,18 +34,16 @@
                 <div class="green--text text-h6">登録済みファイル</div>
                 <v-divider class="mb-3"></v-divider>
                 <ul class="pl-5">
-                  <li v-if="userInfo.DocFileName1">
-                    <template v-if="userInfo.MemberType">名刺</template>
-                    <template v-else>身分証明書</template>
-                  </li>
-                  <li v-if="userInfo.DocFileName2">
-                    <template v-if="userInfo.MemberType">社会保険被保険証</template>
-                    <template v-else>現住所記載書類</template>
-                  </li>
-                  <li v-if="userInfo.DocFileName3">
-                    <template v-if="userInfo.MemberType">運転免許証・パスポート又はマイナンバーカード</template>
-                    <template v-else>学生証</template>
-                  </li>
+                  <template v-if="userInfo.MemberType">
+                    <li v-if="userInfo.DocFileName1">名刺</li>
+                    <li v-if="userInfo.DocFileName2">社会保険被保険証</li>
+                    <li v-if="userInfo.DocFileName3">運転免許証・パスポート又はマイナンバーカード</li>
+                  </template>
+                  <template v-else>
+                    <li v-if="userInfo.DocFileName1">身分証明書</li>
+                    <li v-if="userInfo.DocFileName2">現住所記載書類</li>
+                    <li v-if="userInfo.DocFileName3">学生証</li>
+                  </template>
                 </ul>
                 <v-divider class="mt-3"></v-divider>
               </span>
@@ -260,9 +279,9 @@
             </div>
           </v-container>
         </v-form>
-      </ValidationObserver>
+      </ValidationObserver> -->
     </div>
-    <v-dialog v-model="doneDialog" width="600" persistent>
+    <!-- <v-dialog v-model="doneDialog" width="600" persistent>
       <v-card class="text-center pa-5">
 
         <template v-if="registerErr" class="err mb-5 red--text">
@@ -295,7 +314,7 @@
           </v-card-actions>
         </template>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </section>
 </template>
 <script>

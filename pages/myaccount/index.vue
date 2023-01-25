@@ -61,7 +61,7 @@
               outlined
               block
               x-large
-              @click="(logoutFlg=true)">
+              @click="(logoutDialog=true)">
               ログアウト
             </v-btn>
           </div>
@@ -77,7 +77,7 @@
               block
               x-large
               color="#cdcece"
-              @click="(deleteFlg=true)">
+              @click="setDeleteDialog">
               退会手続き
             </v-btn>
           </div>
@@ -85,46 +85,57 @@
       </v-row>
     </div>
     <v-dialog
-      v-model="logoutFlg"
+      v-model="logoutDialog"
       width="500">
       <v-card class="pa-5 text-center">
         <p class="mb-4">ログアウトしますか？</p>
         <v-btn
           color="primary"
           class="mx-3"
+          :loading="loading"
           @click="logout">
-          はい
+          ログアウトする
         </v-btn>
         <v-btn
           color="outline"
           class="mx-3 white--text"
-          @click="logoutFlg=false">
-          いいえ
+          @click="logoutDialog=false">
+          戻る
         </v-btn>
       </v-card>
     </v-dialog>
     <v-dialog
-      v-model="deleteFlg"
-      width="500">
-      <v-card class="pa-5 text-center">
-        <p class="mb-4">本当に退会しますか？</p>
-        <ul class="d-inline-block mb-4">
-          <li>お気に入りや購入履歴が消失します。</li>
-        </ul>
-        <div>
-          <v-btn
-            color="primary"
-            class="mx-3"
-            @click="deleteAccount">
-            はい
-          </v-btn>
-          <v-btn
-            color="outline"
-            class="mx-3 white--text"
-            @click="deleteFlg=false">
-            いいえ
-          </v-btn>
-        </div>
+      v-model="deleteDialog"
+      width="500"
+      persistent>
+      <v-card class="pa-5 pb-0 text-center">
+        <v-card-text v-if="result">
+          <result-card
+            :result="result" :action="'退会'"
+            :path="'/'" :dialog.sync="deleteDialog">
+          </result-card>
+        </v-card-text>
+        <v-card-text v-else>
+          <p class="mb-4">退会しますか？</p>
+          <ul class="d-inline-block mb-4">
+            <li>お気に入りや購入履歴が消失します。</li>
+          </ul>
+          <div>
+            <v-btn
+              color="primary"
+              class="mx-3"
+              :loading="loading"
+              @click="deleteAccount">
+              退会する
+            </v-btn>
+            <v-btn
+              color="outline"
+              class="mx-3 white--text"
+              @click="deleteDialog=false">
+              戻る
+            </v-btn>
+          </div>
+        </v-card-text>
       </v-card>
     </v-dialog>
   </section>
@@ -139,33 +150,35 @@ export default {
       menuItem: [
         {
           title: 'お気にいり',
-          path: 'myaccount/favorite'
+          path: '/myaccount/favorite'
         },
         {
           title: 'カート',
-          path: 'myaccount/cart'
+          path: '/myaccount/cart'
         },
         {
           title: '注文履歴',
-          path: 'myaccount/order-history'
+          path: '/myaccount/order-history'
         },
       ],
       menuAccount: [
         {
           title: 'アカウント情報',
-          path: 'myaccount/info'
+          path: '/myaccount/info'
         },
         {
           title: '本人確認',
-          path: 'myaccount/identification'
+          path: '/myaccount/identification'
         },
         {
           title: 'パスワード変更',
-          path: 'myaccount/password'
+          path: '/myaccount/password'
         },
       ],
-      logoutFlg:false,
-      deleteFlg:false,
+      logoutDialog: false,
+      deleteDialog: false,
+      loading: false,
+      result: null
     }
   },
   fetch() {
@@ -188,22 +201,18 @@ export default {
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async execAction(task){
-      this.$store.commit('loading/changeStatus', true)
+      this.loading = true
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
       let res;
+      const headers = { headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
       if(task==='logout'){
-        res = await this.$memberAxios.get(`auth/logout/${loginID}` ,{
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        })
+        res = await this.$memberAxios.get(`auth/logout/${loginID}`, headers)
       }else if(task==='delete'){
-        res = await this.$memberAxios.delete(`member/${loginID}` ,{
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        })
+        res = await this.$memberAxios.delete(`member/${loginID}`, headers)
       }
 
       if (this.$config.DEBUG_MODE) {
@@ -211,22 +220,19 @@ export default {
       }
       if(res.data.Status==='TRUE'){
         this.$store.dispatch('auth/resetUser')
-        this.$router.push('/');
-      }else if(res.data.ErrorNo===100001){
-        // 認証tokenの有効期限が切れています
-        this.$store.dispatch('auth/resetUser')
-        this.$router.push('/login');
+        this.result = 'success'
       }else if(res.data.ErrorNo===100002){
         // access認証tokenの有効期限が切れています
         const res = await this.$getAccessToken()
-        // this.logout()
-        if(task==='logout'){
-          this.logout()
-        }else if(task==='delete'){
-          this.deleteAccount()
-        }
+        if( res ) this.execAction(task)
+      }else {
+        this.result = res.data.ErrorNo
       }
 
+    },
+    setDeleteDialog(){
+      this.result = null
+      this.deleteDialog = true
     },
     logout(){
       this.execAction('logout')
