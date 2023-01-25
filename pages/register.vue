@@ -1,5 +1,5 @@
 <template>
-  <section id="top" class="products">
+  <section>
     <to-top-btn></to-top-btn>
     <component :is="child" :pass.sync="pass" :user.sync="user" :register-err.sync="registerErr"></component>
   </section>
@@ -9,7 +9,6 @@
 export default {
   data() {
     return {
-      breadCrumbs: [],
       user: {},
       pass: '',
       registerErr: ''
@@ -37,7 +36,8 @@ export default {
       }
     }
   },
-  methods: {
+  updated() {
+    this.$scrollBackButton()
   },
 }
 </script>

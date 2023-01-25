@@ -1,7 +1,5 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error" id="top" class="products">
-    <to-top-btn></to-top-btn>
-
+  <section v-if="!$fetchState.pending && !$fetchState.error">
     <top-bar title="ログイン" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="login__inner py-16 px-3 px-lg-0">
       <login></login>
@@ -14,10 +12,6 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      show: false,
-      id: null,
-      password: null,
-      loginErr : null,
     }
   },
   fetch() {
@@ -40,24 +34,6 @@ export default {
       this.$store.commit('breadCrumbs/addList', { name: 'ログイン', path: '/login' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
-    async login(){
-      this.$store.commit('loading/changeStatus', true)
-      const param = new URLSearchParams()
-      param.append('LoginID', this.id)
-      param.append('Password', this.password)
-      const res = await this.$memberAxios.post('auth/login', param)
-      console.log(res.data)
-      if(res.data.Status === 'TRUE'){
-        this.$store.commit('auth/setUser',this.id)
-        this.$store.commit('auth/setAuthToken', res.data.AuthToken)
-        this.$store.commit('auth/setAccessToken', res.data.AccessToken)
-        this.$router.push('/');
-      }else{
-        this.loginErr = true
-        this.$store.commit('loading/changeStatus', false)
-      }
-
-    }
   }
 }
 </script>

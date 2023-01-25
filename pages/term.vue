@@ -1,5 +1,6 @@
 <template>
   <div>
+    <to-top-btn></to-top-btn>
     <top-bar title="用語集" :bread-crumbs="breadCrumbs"></top-bar>
     <section class="term">
       <div class="term__inner px-3 py-16">
@@ -37,6 +38,9 @@ export default {
         { src: 'https://rental-resource.takenaka-co.co.jp/catalog-page/rental-menu/rental-term/index.js'}
       ]
     }
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     setBreadCrumbs() {

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <to-top-btn></to-top-btn>
     <top-bar title="日数掛率表" :bread-crumbs="breadCrumbs"></top-bar>
     <section class="price-rate">
       <div class="price-rate__inner px-3 py-16">
@@ -35,6 +36,9 @@ export default {
         { hid: 'description', name: 'description', content: '日数掛率表 | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
       ]
     }
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     setBreadCrumbs() {
