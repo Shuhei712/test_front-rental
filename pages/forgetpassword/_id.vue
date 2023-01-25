@@ -6,11 +6,11 @@
         <h1 class="text-center py-6 mb-4">パスワード再設定</h1>
         <div v-if="doneFlg" class="text-center">
           <p>パスワード変更が完了いたしました。</p>
-          <v-btn large
+          <v-btn
             class="my-4 text-white"
             color="primary"
-            to="/"
-          >トップページ</v-btn>
+            to="/login"
+          >ログイン画面</v-btn>
         </div>
 
         <div v-else>
@@ -20,9 +20,9 @@
             <p v-else-if="(errFlg===111103)" class="red--text text-left text-md-center">メールアドレスが正しくありません</p>
             <div v-else>
               <p class="red--text text-left text-md-center">処理が正常に行われませんでした。<br>もう一度お試しいただくか、弊社にお問い合わせください。</p>
-              <v-btn large
-                class="my-4 mx-2 text-white pb-9"
-                color="primary"
+              <v-btn
+                class="my-4 mx-2 text-white mb-9"
+                color="outline"
                 to="/forgetpassword/"
               >最初から始める</v-btn>
             </div>
@@ -35,8 +35,8 @@
                   v-slot="{ errors }"
                   name="メールアドレス"
                   rules="required|email">
-                  <v-row>
-                    <v-col cols="12" md="4">
+                  <v-row class="pb-3">
+                    <v-col cols="12" md="4" class="pb-0">
                       <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                       メールアドレス
                     </v-col>
@@ -52,35 +52,12 @@
                     </v-col>
                   </v-row>
                 </ValidationProvider>
-                <!-- <ValidationProvider
-                  v-slot="{ errors }"
-                  rules="required"
-                  name="passOld">
-                  <v-row>
-                    <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
-                      現在のパスワード
-                    </v-col>
-                    <v-col cols="12" md="8">
-                      <v-text-field
-                        v-model="oldPass"
-                        outlined
-                        required
-                        dense
-                        hide-details="auto"
-                        :error-messages="errors"
-                        :append-icon="showOld ? 'mdi-eye':'mdi-eye-off'"
-                        :type="showOld ? 'text':'password'"
-                        @click:append="showOld=!showOld"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </ValidationProvider> -->
                 <ValidationProvider
                   v-slot="{ errors }"
                   rules="required|min:8|max:24|pass"
                   name="passNew">
                   <v-row>
-                    <v-col cols="12" md="4">
+                    <v-col cols="12" md="4" class="pb-0">
                       <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                       新しいパスワード
                       <span class="caption d-block">(半角英数字8文字以上24文字以下)</span>
@@ -93,19 +70,20 @@
                         dense
                         hide-details="auto"
                         :error-messages="errors"
-                        :append-icon="showNew ? 'mdi-eye':'mdi-eye-off'"
-                        :type="showNew ? 'text':'password'"
-                        @click:append="showNew=!showNew"
+                        :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
+                        :type="show ? 'text':'password'"
+                        @click:append="show=!show"
                       ></v-text-field>
 
                     </v-col>
                   </v-row>
                 </ValidationProvider>
                 <div class="text-center mt-6">
-                  <v-btn large
+                  <v-btn
                     :disabled="ObserverProps.invalid || !ObserverProps.validated"
                     class="my-4 mx-2 white--text"
                     color="primary"
+                    :loading="loading"
                     @click="passChange()"
                   >変更する</v-btn>
                 </div>
@@ -123,20 +101,16 @@ export default {
   data() {
     return {
       doneFlg: false,
-      activateFlg: null,
       errFlg: false,
-      showNew: false,
+      show: false,
       newPass: null,
       mail: null,
+      loading: false
     }
-  },
-  fetch(){
-    this.$store.commit('loading/changeStatus', true)
-    this.setBreadCrumbs()
-    this.$store.commit('loading/changeStatus', false)
   },
   head () {
     return {
+      title: "パスワード再設定",
       meta: [
         { hid: "robots", name: "robots", content: "noindex" }
       ]
@@ -144,12 +118,13 @@ export default {
   },
   methods: {
 
-    setBreadCrumbs() {
-      this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'パスワード変更 入力', path: '/setpassword' })
-      this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
-    },
+    // setBreadCrumbs() {
+    //   this.$store.commit('breadCrumbs/deleteList')
+    //   this.$store.commit('breadCrumbs/addList', { name: 'パスワード変更 入力', path: '/setpassword' })
+    //   this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
+    // },
     async passChange(){
+      this.loading = true
       const token = this.$route.params.id
       const param = new URLSearchParams()
       param.append('MailAddress', this.mail)
@@ -167,6 +142,7 @@ export default {
       }else{
         this.errFlg = res.data.ErrorNo
       }
+      this.loading = false
     }
   }
 }

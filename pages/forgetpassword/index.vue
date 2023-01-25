@@ -1,7 +1,6 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error">
-    <!-- <to-top-btn></to-top-btn>
-    <top-bar title="パスワード変更" :bread-crumbs="breadCrumbs"></top-bar> -->
+    <!-- <top-bar title="パスワード変更" :bread-crumbs="breadCrumbs"></top-bar> -->
     <div class="sec__inner py-16 text-center">
       <div class="text-center py-15">
         <h1 class="py-6 mb-4">パスワードをお忘れですか？</h1>
@@ -15,7 +14,7 @@
             color="outline"
             class="mx-3 white--text"
             to="/login">
-            戻る
+            ログイン画面
           </v-btn>
         </div>
         <div v-else>
@@ -24,8 +23,8 @@
             通知メールでお知らせするURLにアクセスいただくことで、パスワードの変更が可能となります。
           </p>
           <div v-if="errFlg">
-            <p class="mb-4 red--text text-left text-md-center">
-              メールアドレスが正しくありません。
+            <p class="mb-4 red--text text-left">
+              ご指定のメールアドレスのアカウントが見つかりません。
             </p>
           </div>
           <ValidationObserver v-slot="ObserverProps">
@@ -34,10 +33,10 @@
               name="メールアドレス"
               rules="required|email">
               <v-row>
-                <v-col sm="3" cols="12" class="text-left text-md-center pb-0 pb-sm-3">
+                <v-col sm="3" cols="12" class="text-left pb-0">
                   メールアドレス
                 </v-col>
-                <v-col sm="9" cols="12">
+                <v-col sm="9" cols="12" class="pt-0 pt-sm-3">
                   <v-text-field
                     v-model="mail"
                     outlined
@@ -54,6 +53,7 @@
                 :disabled="ObserverProps.invalid || !ObserverProps.validated"
                 color="primary"
                 class="mx-3"
+                :loading="loading"
                 @click="passChange">
                 パスワード変更
               </v-btn>
@@ -61,7 +61,7 @@
                 color="outline"
                 class="mx-3 white--text"
                 to="/login">
-                戻る
+                ログイン画面
               </v-btn>
             </div>
           </ValidationObserver>
@@ -75,16 +75,12 @@
 export default {
   data() {
     return {
-      breadCrumbs: [],
+      // breadCrumbs: [],
       doneFlg: false,
       errFlg: false,
-      mail: null
+      mail: null,
+      loading: false
     }
-  },
-  fetch() {
-    this.$store.commit('loading/changeStatus', true)
-    this.setBreadCrumbs()
-    this.$store.commit('loading/changeStatus', false)
   },
   head () {
     return {
@@ -95,15 +91,13 @@ export default {
     }
   },
   methods: {
-    setBreadCrumbs() {
-      this.$store.commit('breadCrumbs/addList', { name: "パスワード変更", path: "/forgetpassword" });
-      this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
-    },
+    // setBreadCrumbs() {
+    //   this.$store.commit('breadCrumbs/addList', { name: "パスワード変更", path: "/forgetpassword" });
+    //   this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
+    // },
     async passChange(){
-
-      this.$store.commit('loading/changeStatus', true)
+      this.loading = true
       const res = await this.$memberAxios.get(`/auth/forgetRequest/${this.mail}`)
-
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
@@ -112,9 +106,7 @@ export default {
       }else{
         this.errFlg = true
       }
-
-      this.$store.commit('loading/changeStatus', false)
-
+      this.loading = false
     }
   },
 }
