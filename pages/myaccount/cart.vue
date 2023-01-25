@@ -2,17 +2,12 @@
   <section v-if="!$fetchState.pending && !$fetchState.error">
     <to-top-btn></to-top-btn>
     <est-card
-      :dialog="estDialog"
-      :rent-obj="rentJson"
-      :est-obj="estJson"
-      :set-rent-range="rentRange"
-      :set-format-range="getRentRange"
-      :set-rent-range-min="rentRangeMin"
-      @change-est-dialog="estDialog = $event"
-      @change-rent-json="rentJson = $event"
-      @change-rent-range="rentRange = $event"
-      @change-get-rent-range="getRentRange = $event"
-      @change-rent-range-min="rentRangeMin = $event">
+      :dialog.sync="estDialog"
+      :rent-obj.sync="rentJson"
+      :est-obj.sync="estJson"
+      :set-rent-range.sync="rentRange"
+      :set-format-range.sync="getRentRange"
+      :set-rent-range-min.sync="rentRangeMin">
     </est-card>
     <top-bar title="カート" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 cart">
@@ -868,7 +863,7 @@ export default {
         return true
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.getCartInfo()
+        return this.getCartInfo()
       }
     },
     async inputUserInfo(){

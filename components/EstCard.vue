@@ -149,6 +149,7 @@
     </v-dialog>
   </div>
 </template>
+
 <script>
 
 export default {
@@ -178,7 +179,6 @@ export default {
       required: false,
       default: ""
     },
-
   },
   data(){
     return {
@@ -190,55 +190,54 @@ export default {
   computed:{
     estDialog:{
       get(){
-        return this.$props.dialog
+        return this.dialog
       },
-      set(value){
-        this.$emit('change-est-dialog', value)
+      set(val){
+        this.$emit('update:dialog', val)
       }
     },
     rentJson: {
       get(){
-        return this.$props.rentObj
+        return this.rentObj
       },
       set(obj){
-        this.$emit('change-rent-json', obj)
+        this.$emit('update:rent-obj', obj)
       }
     },
     estJson: {
       get(){
-        return this.$props.estObj
+        return this.estObj
       },
       set(obj){
-        this.$emit('change-est-json', obj)
+        this.$emit('update:est-obj', obj)
       }
     },
     rentRange: {
       get(){
-        return this.$props.setRentRange
+        return this.setRentRange
       },
-      set(value){
-        this.$emit('change-rent-range', value)
+      set(val){
+        this.$emit('update:set-rent-range', val)
       }
     },
     getRentRange: {
       get(){
-        return this.$props.setFormatRange
+        return this.setFormatRange
       },
-      set(value){
-        this.$emit('change-get-rent-range', value)
+      set(val){
+        this.$emit('update:set-format-range', val)
       }
     },
     rentRangeMin: {
       get(){
-        return this.$props.setRentRangeMin
+        return this.setRentRangeMin
       },
-      set(value){
-        this.$emit('change-rent-range-min', value)
+      set(val){
+        this.$emit('update:set-rent-range-min', val)
       }
     },
   },
   methods:{
-
     async downloadEst(){
       this.result = null
       this.loading = true
