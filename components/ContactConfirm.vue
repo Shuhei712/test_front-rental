@@ -11,8 +11,8 @@
           class="confirm">
           <v-container>
             <v-row class="my-1">
-              <v-col cols="12" md="4">お問い合わせの種類</v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="4" class="pb-0">お問い合わせの種類</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="user.ContactType"
                   readonly
@@ -21,21 +21,12 @@
                   dense
                   hide-details="auto"
                 ></v-text-field>
-                  <!-- <v-select
-                    :value="user.ContactType"
-                    item-text="SelectItemName"
-                    :items="displayLists"
-                    hide-details="false"
-                    readonly
-                    outlined
-                    dense
-                  ></v-select> -->
               </v-col>
             </v-row>
 
             <v-row class="my-1">
-              <v-col cols="12" md="4">氏名</v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="4" class="pb-0">氏名</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="user.Name"
                   readonly
@@ -48,8 +39,8 @@
             </v-row>
 
             <v-row class="my-1">
-              <v-col cols="12" md="4">お名前(カナ)</v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="4" class="pb-0">お名前(カナ)</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="user.NameKana"
                   readonly
@@ -62,8 +53,8 @@
             </v-row>
 
             <v-row class="my-1">
-              <v-col cols="12" md="4">メールアドレス</v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="4" class="pb-0">メールアドレス</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="user.Email"
                   readonly
@@ -76,8 +67,8 @@
             </v-row>
 
             <v-row class="my-1">
-              <v-col cols="12" md="4">注文番号</v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="4" class="pb-0">注文番号</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="user.OrderNo"
                   readonly
@@ -91,8 +82,8 @@
             </v-row>
 
             <v-row class="my-1">
-              <v-col cols="12" md="4">お問い合わせ件名</v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="4" class="pb-0">お問い合わせ件名</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="user.Subject"
                   readonly
@@ -105,8 +96,8 @@
             </v-row>
 
             <v-row class="my-1">
-              <v-col cols="12" md="4">お問い合わせ内容</v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="4" class="pb-0">お問い合わせ内容</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-textarea
                   :value="user.Inquiry"
                   readonly
@@ -129,7 +120,7 @@
                 color="primary"
                 :loading="loading"
                 @click="register()"
-              >登録</v-btn>
+              >送信</v-btn>
             </div>
           </v-container>
         </v-form>
@@ -160,9 +151,7 @@ export default {
     if(!this.user.Name){
       this.$router.push('/myaccount/other/contact#input')
     }
-    window.scrollTo({
-      top: 0,
-    })
+    window.scrollTo({ top: 0 })
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -194,13 +183,9 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
-      this.$setLog('会員お問い合わせ', '登録', res.data.Status)
+      this.$setLog('会員お問い合わせ', '申し込み', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.$router.push('/myaccount/other/contact#complete')
-      }else if(res.data.ErrorNo===100001){
-        // 認証tokenの有効期限が切れています
-        this.$store.dispatch('auth/resetUser')
-        this.$router.push('/login');
       }else if(res.data.ErrorNo===100002){
         // access認証tokenの有効期限が切れています
         const res = await this.$getAccessToken()
@@ -210,7 +195,6 @@ export default {
         const query = this.$route.query.id ? `?id=${this.$route.query.id}` : ''
         this.$router.push(`/myaccount/other/contact${query}#input`)
       }
-      this.$store.commit('loading/changeStatus', false)
     },
 
   }
@@ -229,7 +213,7 @@ export default {
   padding-bottom: 0.5rem;
   padding-top: 0.2rem;
 }
-.confirm input{
+.confirm ::v-deep input{
   cursor: default;
 }
 .input-short{

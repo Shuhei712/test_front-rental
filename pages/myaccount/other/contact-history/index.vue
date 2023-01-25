@@ -87,7 +87,7 @@ export default {
       }else if(res.data.ErrorNo===100002){
         // accessToken有効期限切れ
         const resAccess = await this.$getAccessToken()
-        this.getContactHistory()
+        return this.getContactHistory()
       }else if(res.data.ErrorNo===100001) {
         // 認証token有効期限切れ
         this.$store.dispatch('auth/resetUser')

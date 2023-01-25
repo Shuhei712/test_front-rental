@@ -44,9 +44,7 @@ export default {
     if(!this.user.Name){
       this.$router.push('/myaccount/other/contact#input')
     }
-    window.scrollTo({
-      top: 0,
-    })
+    window.scrollTo({ top: 0 })
     this.setBreadCrumbs()
   },
   methods: {

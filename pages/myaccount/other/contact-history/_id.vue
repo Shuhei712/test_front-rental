@@ -9,7 +9,7 @@
           <v-text-field
             dense
             outlined
-            disabled
+            readonly
             hide-details="auto"
             :value=contactLists.ContactNo>
           </v-text-field>
@@ -21,7 +21,7 @@
           <v-text-field
             dense
             outlined
-            disabled
+            readonly
             hide-details="auto"
             :value=dateFormat(contactLists.ContactDate)>
           </v-text-field>
@@ -33,7 +33,7 @@
           <v-text-field
             dense
             outlined
-            disabled
+            readonly
             hide-details="auto"
             :value=contactLists.Email>
           </v-text-field>
@@ -45,7 +45,7 @@
           <v-text-field
             dense
             outlined
-            disabled
+            readonly
             hide-details="auto"
             :value=contactLists.ContactType>
           </v-text-field>
@@ -57,7 +57,7 @@
           <v-text-field
             dense
             outlined
-            disabled
+            readonly
             hide-details="auto"
             :value=contactLists.Subject>
           </v-text-field>
@@ -70,7 +70,7 @@
             name="inquiry"
             dense
             outlined
-            disabled
+            readonly
             hide-details="auto"
             :value=contactLists.Inquiry>
           </v-textarea>
@@ -91,7 +91,7 @@
           <v-text-field
             dense
             outlined
-            disabled
+            readonly
             hide-details="auto"
             :value=dateFormat(contactLists.ContactResponseDate)>
           </v-text-field>
@@ -104,7 +104,7 @@
             name="staffInquiry"
             dense
             outlined
-            disabled
+            readonly
             hide-details="auto"
             :value=contactLists.ContactResponse>
           </v-textarea>
@@ -164,7 +164,7 @@ export default {
         return res.data
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.getContactDetails()
+        return this.getContactDetails()
       }
     },
     dateFormat(num){
@@ -175,9 +175,6 @@ export default {
         const entryDate = year+"-"+month+"-"+day;
         return entryDate
       }
-    },
-    toDetails(index){
-      return false
     }
   }
 }
@@ -187,11 +184,5 @@ export default {
   max-width: 800px;
   margin: 0 auto;
   width: 95%;
-}
-
-::v-deep {
-   input,textarea{
-      color: #232323 !important;
-   }
 }
 </style>

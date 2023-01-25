@@ -23,7 +23,7 @@
               </div>
 
               <v-row class="my-1">
-                <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> お問い合わせの種類</v-col>
+                <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> お問い合わせの種類</v-col>
                 <v-col cols="12" md="8">
                   <v-select
                     v-model="syncedUser.ContactType"
@@ -41,7 +41,7 @@
                 name="name"
                 rules="required">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> 氏名</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> 氏名</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.Name"
@@ -60,7 +60,7 @@
                 name="nameKana"
                 rules="max:50">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text secondary px-2 py-1 rounded">任意</span> お名前(カナ)</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span> お名前(カナ)</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.NameKana"
@@ -79,7 +79,7 @@
                 name="email"
                 rules="required|email">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                     メールアドレス
                   </v-col>
                   <v-col cols="12" md="8">
@@ -100,7 +100,7 @@
                 name="orderNo"
                 rules="numeric">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text secondary px-2 py-1 rounded">任意</span> 注文番号</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span> 注文番号</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.OrderNo"
@@ -121,7 +121,7 @@
                 name="Subject"
                 rules="required">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> お問い合わせ件名</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> お問い合わせ件名</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.Subject"
@@ -140,7 +140,7 @@
                 name="Inquiry"
                 rules="required">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> お問い合わせ内容</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> お問い合わせ内容</v-col>
                   <v-col cols="12" md="8">
                     <v-textarea
                       v-model="syncedUser.Inquiry"
@@ -207,21 +207,11 @@ export default {
     this.displayLists = await this.$getDisplayInfo('DISP_2003')
     this.loginInfo = await this.$getLoginInfo()
     this.userInfo = await this.getUserInfo()
-    console.log(this.displayLists)
-    console.log(this.loginInfo)
     if(this.$route.query.id) this.contactInfo = await this.getContactInfo()
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
   computed: {
-    syncedPass: {
-      get(){
-        return this.pass
-      },
-      set(val){
-        this.$emit('update:pass', val)
-      }
-    },
     syncedUser: {
       get(){
         return this.user
@@ -262,7 +252,7 @@ export default {
         this.$set(this.syncedUser, 'Email', member.Email)
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.getUserInfo()
+        return this.getUserInfo()
       }
 
     },
@@ -292,7 +282,7 @@ export default {
         this.$set(this.syncedUser, 'Email', info.Email)
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.getContactInfo()
+        return this.getContactInfo()
       }
     },
     confirm(){
@@ -300,10 +290,10 @@ export default {
       const query = this.$route.query.id ? `?id=${this.$route.query.id}` : ''
       this.$router.push(`/myaccount/other/contact${query}#confirm`)
     },
-    reset() {
-      this.$refs.form.reset()
-      this.$refs.observer.reset()
-    },
+    // reset() {
+    //   this.$refs.form.reset()
+    //   this.$refs.observer.reset()
+    // },
     toNum(e){
       return e.replace(/[０-９]/g, function(m) {
         return "０１２３４５６７８９".indexOf(m)
