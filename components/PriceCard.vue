@@ -6,6 +6,9 @@
     class="ml-auto mt-3">
     <v-card-text>
       <template v-if="itemInfo.Total">
+        <div class="d-flex justify-space-between pb-1">
+          <span>レンタル期間</span><span>{{ useDay }}日</span>
+        </div>
         <p class="d-flex justify-space-between">
           <span>小計</span><span>￥{{itemInfo.SubTotal.toLocaleString()}}</span>
         </p>
@@ -25,16 +28,6 @@
         </p>
       </template>
     </v-card-text>
-    <v-card-actions v-if="calc" tag="div" class="justify-end">
-      <v-btn
-        class="mt-1"
-        dark
-        outlined
-        elevation="0"
-        color="primary"
-        @click="getItemInfo">再計算
-      </v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 
@@ -45,15 +38,11 @@ export default {
       type: Object,
       required: true
     },
-    calc: {
-      type: Boolean,
-      required: true
+    useDay: {
+      type: Number,
+      required: false,
+      default: 1
     },
   },
-  methods:{
-    getItemInfo(){
-      this.$emit('get-item-info')
-    }
-  }
 }
 </script>

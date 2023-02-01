@@ -108,6 +108,13 @@
             hide-details="auto"
             :value=contactLists.ContactResponse>
           </v-textarea>
+          <v-btn
+            v-if="contactLists.AttachFileDownloadURL"
+            class="mt-3"
+            outlined
+            :to="contactLists.AttachFileDownloadURL">
+            資料ダウンロード
+          </v-btn>
         </v-col>
       </v-row>
     </div>

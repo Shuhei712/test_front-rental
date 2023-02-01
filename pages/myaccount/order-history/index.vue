@@ -8,7 +8,7 @@
       @get-new-info="getOrderHistory">
     </cancel-card>
     <top-bar title="注文履歴" :bread-crumbs="breadCrumbs"></top-bar>
-    <div class="sec__inner py-16">
+    <div class="sec__inner py-16 order-hx">
 
       <v-data-table
         v-if="orderHistoryLists"
@@ -67,11 +67,12 @@ export default {
       breadCrumbs: [],
       orderHistoryLists: null,
       headers: [
-        { text: '注文番号', value: 'OrderNo', width: '86px', sortable: false},
-        { text: '申込日', value: 'RegistDate' },
-        { text: 'レンタル開始日', value: 'RentalStartDate' },
+        { text: '注文番号', value: 'OrderNo', width: '70px', sortable: false},
+        { text: '件名', value: 'OrderTitle' },
+        { text: '申込日', value: 'RegistDate', width: '127px' },
+        { text: 'レンタル開始日', value: 'RentalStartDate', width: '127px'},
         { text: '合計金額(円)', value: 'RentalTotal' },
-        { text: '注文状況', value: 'OrderStatusDisp', sortable: false },
+        { text: '注文状況', value: 'OrderStatusDisp', sortable: false, width: '150px' },
         { text: '', value: 'actions', sortable: false },
       ],
       cancelDialog: false,
@@ -81,9 +82,7 @@ export default {
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    // this.orderHistoryLists = await this.getOrderHistory()
-    await this.getOrderHistory()
-    console.log(this.orderHistoryLists)
+    this.orderHistoryLists = await this.getOrderHistory()
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -114,14 +113,11 @@ export default {
         console.log(res)
       }
       if(res.data.Status==='TRUE'){
-        console.log(this.orderHistoryLists)
-        this.orderHistoryLists = res.data.OrderList
+        return res.data.OrderList
       }else if(res.data.ErrorNo===100002){
         // access認証tokenの有効期限が切れています
         const resAccess = await this.$getAccessToken()
-        await this.getOrderHistory()
-        console.log(this.orderHistoryLists)
-
+        return await this.getOrderHistory()
       }
 
     },
@@ -144,14 +140,21 @@ export default {
 
 <style lang="scss" scoped>
 .sec__inner {
-  max-width: 1000px;
+  max-width: 1050px;
   margin: 0 auto;
   width: 95%;
 }
-.order-hx__table-actions{
-  max-width: 75px;
-  @media (min-width:960px) {
-    max-width: 150px;
+.order-hx{
+  &__table-actions{
+    max-width: 75px;
+    padding: 0 !important;
+    @media (min-width:960px) {
+      max-width: 150px;
+    }
+  }
+  &::v-deep th,
+  &::v-deep td{
+    padding: 0 8px !important;
   }
 }
 </style>

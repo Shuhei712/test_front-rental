@@ -210,7 +210,7 @@ export default {
       return this.$store.getters['auth/getAuthToken']
     },
     cartNum(){
-      return this.$store.getters['cart/getCart'].length
+      return this.$store.getters['cart/getCartNum']
     }
   },
   mounted() {
@@ -298,6 +298,7 @@ ul {
   width: 100%;
   position: relative;
   z-index: 500;
+  z-index: 200;
 
   &__inner {
     top: calc(30 / 1920 * 100vw);

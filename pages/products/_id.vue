@@ -141,6 +141,7 @@
                   color="accent"
                   width="100%"
                   class="mb-2"
+                  :loading="loading"
                   @click="addCart(itemNum)">
                   <v-icon class="pe-1" size="21">mdi-cart</v-icon>
                   カートに入れる
@@ -389,7 +390,8 @@ export default {
       itemNum: 1,
       favoriteFlg: false,
       isLogin: false,
-      loginDialog: false
+      loginDialog: false,
+      loading: false
     }
   },
   async fetch() {
@@ -675,16 +677,34 @@ export default {
         })
       }
     },
-    addCart(Qty){
+    async addCart(Qty){
+      this.loading = true
       if(!this.isLogin){
         this.loginDialog = true
+        this.loading = false
         return false
       }
-      this.$store.commit('cart/addCart', {
-        ProductID: this.$route.params.id,
-        Qty
+      const accessToken = this.$store.getters["auth/getAccessToken"]
+      const loginID = this.$store.getters["auth/getUser"]
+      const param = new URLSearchParams()
+      param.append('LoginID', loginID)
+      param.append('Qty', Qty)
+      param.append('ProductID', this.$route.params.id)
+      const res = await this.$memberBaseAxios.put(`order/setCartProduct/${this.$route.params.id}`, param, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
       })
-      this.$router.push('/myaccount/cart')
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
+      this.$setLog('会員商品詳細', '商品追加', res.data.Status)
+      if(res.data.Status === 'TRUE'){
+        this.$router.push('/myaccount/cart')
+      }else if(res.data.ErrorNo === 100002){
+        const res = await this.$getAccessToken()
+        return this.addCart(Qty)
+      }
     },
     async getFavorite(){
       const res = await this.favorite('favorite/getStatus/', 'post')

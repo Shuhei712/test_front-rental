@@ -13,15 +13,31 @@
         <div class="order__status pb-10">
           <dl class="d-flex">
             <dt class="py-0 order__status-title">注文番号</dt>
-            <dd class="py-0">：{{order.OrderNo}}</dd>
+            <dd class="py-0">{{order.OrderNo}}</dd>
           </dl>
           <dl class="d-flex">
             <dt class="py-0 order__status-title">申込日</dt>
-            <dd class="py-0">：{{getDate(order.RegistDate)}}</dd>
+            <dd class="py-0">{{getDate(order.RegistDate)}}</dd>
           </dl>
           <dl class="d-flex">
             <dt class="py-0 order__status-title">注文状況</dt>
-            <dd class="py-0">：{{order.OrderStatusDisp}}</dd>
+            <dd class="py-0">{{order.OrderStatusDisp}}</dd>
+          </dl>
+          <dl v-if="order.OrderResponse" class="d-flex">
+            <dt class="py-0 order__status-title">コメント</dt>
+            <dd class="py-0">
+              {{getDate(order.OrderResponseDate)}}
+              <p>{{order.OrderResponse}}</p>
+              <div>
+                <v-btn
+                  v-if="order.ResponseQuotationURL"
+                  outlined
+                  class="mt-1"
+                  :href="order.ResponseQuotationURL">
+                  資料ダウンロード
+                </v-btn>
+              </div>
+            </dd>
           </dl>
         </div>
         <h2 class="mb-4">商品一覧</h2>
@@ -46,11 +62,16 @@
           <template #[`item.Price`]="{ item }">
             {{ getPrice(item.PriceType, item.Price) }}
           </template>
+          <template #[`item.SubTotal`]="{ item }">
+            {{ getPrice(item.PriceType, item.SubTotal) }}
+          </template>
         </v-data-table>
 
         <v-divider></v-divider>
 
-        <price-card :item-info="order" :calc="false">
+        <price-card
+          :item-info="order"
+          :use-day="order.UseDay">
         </price-card>
 
         <v-card
@@ -76,12 +97,27 @@
           outlined
           class="py-6">
           <v-container>
+            <v-row>
+              <v-col cols="12" md="4" class="pb-0">
+                注文件名
+              </v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-text-field
+                  :value="order.OrderTitle"
+                  outlined
+                  dense
+                  hide-details="auto"
+                  readonly
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-            <v-row class="border-bottom">
+            <v-divider class="my-4"></v-divider>
+            <v-row>
               <v-col cols="12" md="4" class="pb-0">連絡方法
               </v-col>
-              <v-col cols="12" md="8">
-                <p>{{order.ContactTypeDisp}}</p>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <!-- <p>{{order.ContactTypeDisp}}</p> -->
 
                 <v-text-field
                   v-if="order.ContactType"
@@ -89,6 +125,7 @@
                   outlined
                   dense
                   hide-details="auto"
+                  prefix="メール： "
                   readonly>
                 </v-text-field>
                 <v-text-field
@@ -97,6 +134,7 @@
                   outlined
                   dense
                   hide-details="auto"
+                  prefix="お電話： "
                   readonly>
                 </v-text-field>
 
@@ -105,10 +143,10 @@
 
             <v-divider class="my-4"></v-divider>
 
-            <v-row class="border-bottom">
+            <v-row>
               <v-col cols="12" md="4" class="pb-0">お引渡方法
               </v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="order.DeliveryTypeDisp"
                   outlined
@@ -118,10 +156,10 @@
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-row class="border-bottom">
+            <v-row>
               <v-col cols="12" md="4" class="pb-0">お引渡日時
               </v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="getDate(order.DeliveryDate,order.DeliveryTime)"
                   outlined
@@ -131,10 +169,10 @@
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-row class="border-bottom">
+            <v-row v-if="!order.DeliveryType===0">
               <v-col cols="12" md="4" class="pb-0">お引渡場所
               </v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="order.DeliveryZipCode"
                   outlined
@@ -166,35 +204,39 @@
 
             <v-divider class="my-4"></v-divider>
 
-            <v-row class="border-bottom">
+            <v-row>
               <v-col cols="12" md="4" class="pb-0">ご使用日
               </v-col>
-              <v-col cols="12" md="8">
-                <v-text-field
-                  :value="getDate(order.UseStartDate,order.UseStartTime)"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly>
-                </v-text-field>
-                ~
-                <v-text-field
-                  :value="getDate(order.UseEndDate,order.UseEndTime)"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly>
-                </v-text-field>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <div class="d-flex align-center">
+                  <v-text-field
+                    :value="getDate(order.UseStartDate,order.UseStartTime)"
+                    outlined
+                    dense
+                    hide-details="auto"
+                    class="input-short"
+                    readonly>
+                  </v-text-field>
+                  ~
+                  <v-text-field
+                    :value="getDate(order.UseEndDate,order.UseEndTime)"
+                    outlined
+                    dense
+                    hide-details="auto"
+                    class="input-short"
+                    readonly>
+                  </v-text-field>
+                </div>
                 ({{ order.UseDay }}日間)
               </v-col>
             </v-row>
 
             <v-divider class="my-4"></v-divider>
 
-            <v-row class="border-bottom">
+            <v-row>
               <v-col cols="12" md="4" class="pb-0">ご返却方法
               </v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="order.ReturnTypeDisp"
                   outlined
@@ -204,10 +246,10 @@
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-row class="border-bottom">
+            <v-row>
               <v-col cols="12" md="4" class="pb-0">ご返却日時
               </v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="getDate(order.ReturnDate,order.ReturnTime)"
                   outlined
@@ -217,10 +259,10 @@
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-row class="border-bottom">
+            <v-row v-if="order.ReturnType===2">
               <v-col cols="12" md="4" class="pb-0">ご返却場所
               </v-col>
-              <v-col cols="12" md="8">
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="order.ReturnZipCode"
                   outlined
@@ -263,12 +305,13 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      order: null,
+      order: {},
       headers: [
         { text: '商品名', value: 'ProductName', sortable: false, align: 'center'},
-        { text: '価格(円)', value: 'Price', sortable: false },
+        { text: '単価(円)', value: 'Price', sortable: false },
         { text: '日数掛け率', value: 'DayRate', sortable: false, width: '100px' },
         { text: '数量', value: 'Qty', sortable: false, width: '60px' },
+        { text: '小計(円)', value: 'SubTotal', sortable: false },
         { text: '備考', value: 'ProductComment', sortable: false, width: '120px' },
       ],
       cancelDialog:false,
@@ -278,7 +321,6 @@ export default {
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     await this.getHisDetails()
-        console.log(this.order)
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -314,12 +356,10 @@ export default {
       }
       if(res.data.Status === 'TRUE'){
         this.order = res.data
-        console.log(this.order)
         return true
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        console.log(this.order)
-        await this.getHisDetails()
+        return await this.getHisDetails()
       }
     },
     getPrice(priceType, price) {
@@ -359,41 +399,48 @@ export default {
 </script>
 <style lang="scss" scoped>
 .sec__inner {
-  max-width: 1000px;
+  max-width: 1050px;
   margin: 0 auto;
   width: 95%;
 }
 .order__status-title{
   flex-basis: 6rem;
   flex-grow: 0;
-}
-.spImg{
-  @media (min-width:600px) {
-    width: 0;
+  position: relative;
+  &::after{
+    content: '：';
+    display: inline-block;
+    position: absolute;
+    right: 3px;
   }
 }
 .table{
   &__img{
-  width: 140px;
+  width: 120px;
   max-height: 120px;
   object-fit: contain;
   height: 60px;
   }
   &__txt{
     max-width: 220px;
-    @media (min-width:600px) {
-      max-width: unset;
+    @media (min-width: 740px) {
+      max-width: 400px;
     }
   }
   tr{
     margin-bottom: 2rem;
   }
 }
-::v-deep .v-data-table-header{
-  background-color: #f2f2f2;
-}
-::v-deep td{
-  border: 1px solid #f2f2f2;
+::v-deep {
+  .v-data-table-header{
+    background-color: #f2f2f2;
+  }
+  td{
+    border: 1px solid #f2f2f2;
+  }
+  input{
+    cursor: default;
+  }
 }
 
 .input-short{
