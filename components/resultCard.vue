@@ -2,7 +2,14 @@
 
   <div>
     <template v-if="result==='success'">
-      <p class="mb-4">{{action}}を受付いたしました。</p>
+      <p class="text-left text-md-center mb-4">
+        {{action}}を受付いたしました。
+        <span v-if="action==='注文'">
+          <br>
+          申し込みいただいたレンタル商品の空き状況を確認の上、指定いただいた連絡方法にて、レンタルの可否をご連絡させていただきます。<br>
+          <span class="red--text">（※注文は確定しておりません）</span>
+        </span>
+      </p>
       <v-btn
         color="outline"
         class="mx-3 white--text"

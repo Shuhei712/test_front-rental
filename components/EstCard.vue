@@ -8,31 +8,34 @@
           <v-card-text>
             <v-form>
               <v-row>
-                <v-col cols="12" md="3" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span>
-                  担当者名</v-col>
+                <v-col cols="12" md="3" class="pb-0">
+                  <span class="white--text secondary px-2 py-1 rounded">任意</span>
+                  担当者名
+                </v-col>
                 <v-col cols="12" md="9">
                   <v-text-field
-                  v-model="estJson.OwnerName"
-                  dense
-                  outlined
-                  hide-details="auto"
-                  required></v-text-field>
+                    v-model="estJson.OwnerName"
+                    dense
+                    outlined
+                    hide-details="auto"></v-text-field>
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" md="3" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span>
-                  会社名</v-col>
+                <v-col cols="12" md="3" class="pb-0">
+                  <span class="white--text secondary px-2 py-1 rounded">任意</span>
+                  会社名
+                </v-col>
                 <v-col cols="12" md="9">
                   <v-text-field
                   v-model="estJson.Organization"
                   dense
                   outlined
-                  hide-details="auto"
-                  required></v-text-field>
+                  hide-details="auto"></v-text-field>
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" md="3" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                <v-col cols="12" md="3" class="pb-0">
+                  <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                   件名
                 </v-col>
                 <v-col cols="12" md="9">
@@ -43,24 +46,22 @@
                     <v-text-field
                       v-model="estJson.QuotationTitle"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
                     ></v-text-field>
                   </ValidationProvider>
-                  </v-col>
-                </v-row>
+                </v-col>
+              </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
                   <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                   ご使用期間
                 </v-col>
                 <v-col cols="12" md="9">
-
                   <v-menu
-                    ref="datePick2"
-                    v-model="datePick"
+                    ref="datePick"
+                    v-model="datePickFlg"
                     :close-on-click="false"
                     :close-on-content-click="false"
                     :return-value.sync="rentRange"
@@ -74,7 +75,7 @@
                         name="rentRange"
                         rules="required">
                         <v-text-field
-                          v-model="getRentRange"
+                          :value="concatRentRange"
                           outlined
                           dense
                           hide-details="auto"
@@ -92,22 +93,17 @@
                       range
                       locale="jp-ja"
                       :day-format="(date) => new Date(date).getDate()"
-                      :min="rentRangeMin"
-                    >
+                      :min="rentRangeMin">
                       <v-spacer></v-spacer>
                       <v-btn
                         text
                         color="primary"
-                        @click="rentRange=[]"
-                      >
-                        リセット
+                        @click="rentRange=[]">リセット
                       </v-btn>
                       <v-btn
                         text
                         color="primary"
-                        @click="$refs.datePick2.save(rentRange)"
-                      >
-                        作成
+                        @click="setRange">確定
                       </v-btn>
                     </v-date-picker>
                   </v-menu>
@@ -115,15 +111,17 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" md="3" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span>
-                  ご使用場所</v-col>
+                <v-col cols="12" md="3" class="pb-0">
+                  <span class="white--text secondary px-2 py-1 rounded">任意</span>
+                  ご使用場所
+                </v-col>
                 <v-col cols="12" md="9">
                   <v-text-field
-                  v-model="estJson.UsePlase"
-                  dense
-                  outlined
-                  hide-details="auto"
-                  required></v-text-field>
+                    v-model="estJson.UsePlase"
+                    dense
+                    outlined
+                    hide-details="auto">
+                  </v-text-field>
                 </v-col>
               </v-row>
             </v-form>
@@ -170,11 +168,12 @@ export default {
       type: Array,
       required: true,
     },
-    setFormatRange: {
+    concatRentRange: {
       type: String,
-      required: true,
+      required: false,
+      default: null
     },
-    setRentRangeMin: {
+    rentRangeMin: {
       type: String,
       required: false,
       default: ""
@@ -182,7 +181,7 @@ export default {
   },
   data(){
     return {
-      datePick: false,
+      datePickFlg: false,
       loading: false,
       result: null
     }
@@ -220,22 +219,6 @@ export default {
         this.$emit('update:set-rent-range', val)
       }
     },
-    getRentRange: {
-      get(){
-        return this.setFormatRange
-      },
-      set(val){
-        this.$emit('update:set-format-range', val)
-      }
-    },
-    rentRangeMin: {
-      get(){
-        return this.setRentRangeMin
-      },
-      set(val){
-        this.$emit('update:set-rent-range-min', val)
-      }
-    },
   },
   methods:{
     async downloadEst(){
@@ -243,7 +226,6 @@ export default {
       this.loading = true
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
-      const cartItem = this.$store.getters["cart/getCart"]
 
       const now = new Date()
       const nowDate = String(now.getDate()).padStart(2, '0')
@@ -255,8 +237,6 @@ export default {
       this.$set(this.estJson, "UseStartDate", this.rentJson.UseStartDate)
       this.$set(this.estJson, "UseEndDate", this.rentJson.UseEndDate)
       this.$set(this.estJson, "UseDay", this.rentJson.UseDay)
-      this.$set(this.estJson, "ProductListCnt", cartItem.length)
-      this.$set(this.estJson, "ProductList", cartItem)
 
       const param = new URLSearchParams()
       param.append('LoginID', loginID)
@@ -286,10 +266,15 @@ export default {
         this.loading = false
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.downloadEst()
+        return this.downloadEst()
       }else{
         this.result = res.data.ErrorNo
+        this.loading = false
       }
+    },
+    setRange(){
+      this.$refs.datePick.save(this.rentRange)
+      this.$emit('setRange')
     }
   }
 }

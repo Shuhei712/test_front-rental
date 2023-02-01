@@ -6,9 +6,17 @@
       :rent-obj.sync="rentJson"
       :est-obj.sync="estJson"
       :set-rent-range.sync="rentRange"
-      :set-format-range.sync="getRentRange"
-      :set-rent-range-min.sync="rentRangeMin">
+      :concat-rent-range="concatRentRange"
+      :rent-range-min="rentRangeMin"
+      @setRange="setRange">
     </est-card>
+    <cart-confirm-card
+      :dialog.sync="confirmDialog"
+      :rent-json="rentJson"
+      :rent-date="rentDate"
+      :concat-rent-range="concatRentRange"
+      :cart-info="cartInfo">
+    </cart-confirm-card>
     <top-bar title="カート" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 cart">
       <p v-if="msg">{{msg}}</p>
@@ -24,7 +32,7 @@
             hide-default-footer
             mobile-breakpoint="740">
             <template #[`item.ProductName`]="{ item }">
-              <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left">
+              <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row">
                 <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
                 <div class="table__txt text-truncate">
                   {{item.ProductName}}
@@ -45,6 +53,8 @@
                   hide-details="auto"
                   class="d-inline-block"
                   dense
+                  min="1"
+                  max="99"
                   @change="changeQuantity(item.ProductID, $event)">
                 </v-text-field>
                 <v-btn
@@ -62,12 +72,11 @@
               </div>
             </template>
           </v-data-table>
+          <p class="caption pt-2">レンタル期間は下部のレンタル申し込み記入欄「ご使用期間」より変更可能です。</p>
 
-          <v-divider></v-divider>
           <price-card
             :item-info="cartInfo"
-            :calc="true"
-            @get-item-info="getCartInfo">
+            :use-day="rentJson.UseDay">
           </price-card>
 
           <v-card
@@ -95,6 +104,21 @@
             <ValidationObserver v-slot="ObserverProps" ref="observer">
               <v-form>
                 <v-container>
+                  <v-row class="border-bottom">
+                    <v-col cols="12" md="4" class="pb-0">
+                      <span class="white--text secondary px-2 py-1 rounded">任意</span> 注文件名
+                    </v-col>
+                    <v-col cols="12" md="8">
+                      <v-text-field
+                        v-model="rentJson.OrderTitle"
+                        outlined
+                        dense
+                        hide-details="auto"
+                        placeholder="タケナカ内覧会2023"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+
                   <v-row class="border-bottom">
                     <v-col cols="12" md="4" class="pb-0">
                       <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
@@ -158,16 +182,13 @@
                         mandatory
                         row
                         class="mt-0 mb-4">
-                        <v-radio
-                          label="ご来社"
+                        <v-radio label="ご来社"
                           :value="0"
                         ></v-radio>
-                        <v-radio
-                          label="宅配(混載)便"
+                        <v-radio label="宅配(混載)便"
                           :value="1"
                         ></v-radio>
-                        <v-radio
-                          label="チャーター便"
+                        <v-radio label="チャーター便"
                           :value="2"
                         ></v-radio>
                       </v-radio-group>
@@ -176,88 +197,71 @@
                         <p class="note caption">宅配送料及びチャーター費はお客様ご負担となります。</p>
                       </div>
                       <v-divider class="mb-4"></v-divider>
+                      <v-row>
+                        <v-col cols="12" md="3" class="pb-0">
+                          <template v-if="rentJson.DeliveryType===0">
+                            引取日
+                          </template>
+                          <template v-else-if="rentJson.DeliveryType===1">
+                            貴社着日
+                          </template>
+                          <template v-else>搬入日</template>
+                        </v-col>
+                        <v-col cols="12" md="9">
+                          <v-menu
+                            v-model="datePick[0]"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                          >
+                            <template #activator="{ on, attrs }">
+                              <ValidationProvider
+                                v-slot="{ errors }"
+                                name="RentDate0"
+                                rules="required">
+                                <v-text-field
+                                  v-model="rentDate[0]"
+                                  outlined
+                                  dense
+                                  readonly
+                                  hide-details="auto"
+                                  :error-messages="errors"
+                                  v-bind="attrs"
+                                  v-on="on"
+                                ></v-text-field>
+                              </ValidationProvider>
+                            </template>
+                            <v-date-picker
+                              v-model="rentDate[0]"
+                              no-title
+                              scrollable
+                              @input="datePick[0] = false"
+                            ></v-date-picker>
+                          </v-menu>
+                        </v-col>
+                      </v-row>
 
                       <div v-if="rentJson.DeliveryType===0">
-                        <v-row>
-                          <v-col cols="12" md="3" class="pb-0">引取日</v-col>
-                          <v-col cols="12" md="9">
-                            <v-menu
-                              v-model="datePick[0]"
-                              :close-on-content-click="false"
-                              transition="scale-transition"
-                              offset-y
-                              min-width="auto"
-                            >
-                              <template #activator="{ on, attrs }">
-                                <ValidationProvider
-                                  v-slot="{ errors }"
-                                  name="RentDate0"
-                                  rules="required">
-                                  <v-text-field
-                                    v-model="DeliveryDate"
-                                    outlined
-                                    dense
-                                    readonly
-                                    hide-details="auto"
-                                    :error-messages="errors"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </ValidationProvider>
-                              </template>
-                              <v-date-picker
-                                v-model="DeliveryDate"
-                                no-title
-                                scrollable
-                                @input="datePick[0] = false"
-                              ></v-date-picker>
-                            </v-menu>
-                          </v-col>
-                        </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">引取時間</v-col>
                           <v-col cols="12" md="9">
-                            <set-time v-model="rentJson.DeliveryTime" @change-time="rentJson.DeliveryTime = $event"></set-time>
+                            <set-time @change-time="rentJson.DeliveryTime = $event"></set-time>
                           </v-col>
                         </v-row>
                       </div>
 
                       <div v-else-if="rentJson.DeliveryType===1">
+                        <v-divider class="my-4"></v-divider>
                         <v-row>
-                          <v-col cols="12" md="3" class="pb-0">貴社着日</v-col>
+                          <v-col cols="12" md="3" class="pb-0">場所</v-col>
                           <v-col cols="12" md="9">
-                            <v-menu
-                              v-model="datePick[0]"
-                              :close-on-content-click="false"
-                              transition="scale-transition"
-                              offset-y
-                              min-width="auto"
-                            >
-                              <template #activator="{ on, attrs }">
-                                <ValidationProvider
-                                  v-slot="{ errors }"
-                                  name="RentDate1"
-                                  rules="required">
-                                  <v-text-field
-                                    v-model="DeliveryDate"
-                                    outlined
-                                    dense
-                                    hide-details="auto"
-                                    readonly
-                                    :error-messages="errors"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </ValidationProvider>
-                              </template>
-                              <v-date-picker
-                                v-model="DeliveryDate"
-                                no-title
-                                scrollable
-                                @input="datePick[0] = false"
-                              ></v-date-picker>
-                            </v-menu>
+                            <set-address
+                              :set-zip-code.sync="rentJson.DeliveryZipCode"
+                              :set-prefect.sync="rentJson.DeliveryPrefect"
+                              :set-address.sync="rentJson.DeliveryAddress">
+                            </set-address>
                           </v-col>
                         </v-row>
 
@@ -267,43 +271,6 @@
                       </div>
 
                       <div v-else>
-                        <v-row>
-                          <v-col cols="12" md="3" class="pb-0">搬入日</v-col>
-                          <v-col cols="12" md="9">
-                            <v-menu
-                              v-model="datePick[0]"
-                              :close-on-content-click="false"
-                              transition="scale-transition"
-                              offset-y
-                              min-width="auto"
-                            >
-                              <template #activator="{ on, attrs }">
-
-                                <ValidationProvider
-                                  v-slot="{ errors }"
-                                  name="RentDate2"
-                                  rules="required">
-                                  <v-text-field
-                                    v-model="DeliveryDate"
-                                    outlined
-                                    dense
-                                    hide-details="auto"
-                                    readonly
-                                    :error-messages="errors"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </ValidationProvider>
-                              </template>
-                              <v-date-picker
-                                v-model="DeliveryDate"
-                                no-title
-                                scrollable
-                                @input="datePick[0] = false"
-                              ></v-date-picker>
-                            </v-menu>
-                          </v-col>
-                        </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">搬入時間</v-col>
@@ -313,74 +280,13 @@
                         </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
-                          <v-col cols="12" md="3" class="pb-0">場所{{address}}</v-col>
+                          <v-col cols="12" md="3" class="pb-0">場所</v-col>
                           <v-col cols="12" md="9">
-                          <ValidationProvider
-                            v-slot="{ errors }"
-                            name="DeliveryZipCode"
-                            rules="required|num"
-                            class="d-flex mb-1 ">
-                            <v-text-field
-                              v-model="rentJson.DeliveryZipCode"
-                              outlined
-                              required
-                              dense
-                              hide-details="auto"
-                              placeholder="0123456"
-                              prefix="〒"
-                              :error-messages="errors"
-                              class="input-short"
-                              @blur="rentJson.DeliveryZipCode=toNum($event.target.value)"
-                            ></v-text-field>
-                            <v-btn
-                              color="primary"
-                              class="ms-1"
-                              :loading="searchLoading"
-                              @click="checkAddress('Delivery', rentJson.DeliveryZipCode)">
-                              検索
-                            </v-btn>
-                          </ValidationProvider>
-
-                          <ValidationProvider
-                            v-slot="{ errors }"
-                            name="Prefect"
-                            rules="required"
-                            class="d-block mb-1">
-                            <v-autocomplete
-                              ref="country"
-                              v-model="rentJson.DeliveryPrefect"
-                              outlined
-                              :items="prefect"
-                              required
-                              dense
-                              hide-details="auto"
-                              placeholder="都道府県"
-                              :error-messages="errors"
-                              class="input-short"
-                            ></v-autocomplete>
-                          </ValidationProvider>
-                          <ValidationProvider
-                            v-slot="{ errors }"
-                            name="Address"
-                            rules="required">
-                            <v-text-field
-                              v-model="rentJson.DeliveryAddress"
-                              outlined
-                              required
-                              dense
-                              hide-details="auto"
-                              placeholder="大阪市港区築港3-1-43 天保山シンユニティビル"
-                              :error-messages="errors"
-                            ></v-text-field>
-                          </ValidationProvider>
-                            <!-- <v-text-field
-                              v-model="rentJson.rentPlace"
-                              outlined
-                              required
-                              dense
-                              hide-details="auto"
-                              :error-messages="errors"
-                            ></v-text-field> -->
+                            <set-address
+                              :set-zip-code.sync="rentJson.DeliveryZipCode"
+                              :set-prefect.sync="rentJson.DeliveryPrefect"
+                              :set-address.sync="rentJson.DeliveryAddress">
+                            </set-address>
                           </v-col>
                         </v-row>
                       </div>
@@ -410,7 +316,7 @@
                             name="rentRange"
                             rules="required">
                             <v-text-field
-                              v-model="getRentRange"
+                              v-model="concatRentRange"
                               outlined
                               dense
                               hide-details="auto"
@@ -439,8 +345,7 @@
                           <v-btn
                             text
                             color="primary"
-                            @click="$refs.datePick.save(rentRange)"
-                          >
+                            @click="setRange">
                             確定
                           </v-btn>
                         </v-date-picker>
@@ -477,44 +382,52 @@
                         <p class="note caption">ご返送料及びチャーター費はお客様ご負担となります。</p>
                       </div>
                       <v-divider class="mb-4"></v-divider>
+                      <v-row>
+                        <v-col cols="12" md="3" class="pb-0">
+                          <template v-if="rentJson.ReturnType===0">
+                            返却日
+                          </template>
+                          <template v-else-if="rentJson.ReturnType===1">
+                            貴社着日
+                          </template>
+                          <template v-else>搬入日</template>
+                        </v-col>
+                        <v-col cols="12" md="9">
+                          <v-menu
+                            v-model="datePick[2]"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                          >
+                            <template #activator="{ on, attrs }">
+                              <ValidationProvider
+                                v-slot="{ errors }"
+                                name="ReturnDate2"
+                                rules="required">
+                                <v-text-field
+                                  v-model="rentDate[1]"
+                                  outlined
+                                  dense
+                                  hide-details="auto"
+                                  readonly
+                                  :error-messages="errors"
+                                  v-bind="attrs"
+                                  v-on="on"
+                                ></v-text-field>
+                              </ValidationProvider>
+                            </template>
+                            <v-date-picker
+                              v-model="rentDate[1]"
+                              no-title
+                              scrollable
+                              :min="rentRange[1]"
+                              @input="datePick[2] = false"
+                            ></v-date-picker>
+                          </v-menu>
+                        </v-col>
+                      </v-row>
                       <div v-if="rentJson.ReturnType===0">
-                        <v-row>
-                          <v-col cols="12" md="3" class="pb-0">返却日</v-col>
-                          <v-col cols="12" md="9">
-                            <v-menu
-                              v-model="datePick[2]"
-                              :close-on-content-click="false"
-                              transition="scale-transition"
-                              offset-y
-                              min-width="auto"
-                            >
-                              <template #activator="{ on, attrs }">
-
-                                <ValidationProvider
-                                  v-slot="{ errors }"
-                                  name="ReturnDate0"
-                                  rules="required">
-                                  <v-text-field
-                                    v-model="ReturnDate"
-                                    outlined
-                                    dense
-                                    hide-details="auto"
-                                    readonly
-                                    :error-messages="errors"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </ValidationProvider>
-                              </template>
-                              <v-date-picker
-                                v-model="ReturnDate"
-                                no-title
-                                scrollable
-                                @input="datePick[2] = false"
-                              ></v-date-picker>
-                            </v-menu>
-                          </v-col>
-                        </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">返却時間</v-col>
@@ -524,82 +437,7 @@
                         </v-row>
                       </div>
 
-                      <div v-else-if="rentJson.ReturnType===1">
-                        <v-row>
-                          <v-col cols="12" md="3" class="pb-0">貴社着日</v-col>
-                          <v-col cols="12" md="9">
-                            <v-menu
-                              v-model="datePick[2]"
-                              :close-on-content-click="false"
-                              transition="scale-transition"
-                              offset-y
-                              min-width="auto"
-                            >
-                              <template #activator="{ on, attrs }">
-                                <ValidationProvider
-                                  v-slot="{ errors }"
-                                  name="ReturnDate1"
-                                  rules="required">
-                                  <v-text-field
-                                    v-model="ReturnDate"
-                                    outlined
-                                    dense
-                                    hide-details="auto"
-                                    readonly
-                                    :error-messages="errors"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </ValidationProvider>
-                              </template>
-                              <v-date-picker
-                                v-model="ReturnDate"
-                                no-title
-                                scrollable
-                                @input="datePick[2] = false"
-                              ></v-date-picker>
-                            </v-menu>
-                          </v-col>
-                        </v-row>
-                      </div>
-
-                      <div v-else>
-                        <v-row>
-                          <v-col cols="12" md="3" class="pb-0">搬入日</v-col>
-                          <v-col cols="12" md="9">
-                            <v-menu
-                              v-model="datePick[2]"
-                              :close-on-content-click="false"
-                              transition="scale-transition"
-                              offset-y
-                              min-width="auto"
-                            >
-                              <template #activator="{ on, attrs }">
-                                <ValidationProvider
-                                  v-slot="{ errors }"
-                                  name="ReturnDate2"
-                                  rules="required">
-                                  <v-text-field
-                                    v-model="ReturnDate"
-                                    outlined
-                                    dense
-                                    hide-details="auto"
-                                    readonly
-                                    :error-messages="errors"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </ValidationProvider>
-                              </template>
-                              <v-date-picker
-                                v-model="ReturnDate"
-                                no-title
-                                scrollable
-                                @input="datePick[2] = false"
-                              ></v-date-picker>
-                            </v-menu>
-                          </v-col>
-                        </v-row>
+                      <div v-else-if="rentJson.ReturnType===2">
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">搬入時間</v-col>
@@ -609,66 +447,13 @@
                         </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
-                          <v-col cols="12" md="3" class="pb-0">場所{{address}}</v-col>
+                          <v-col cols="12" md="3" class="pb-0">場所</v-col>
                           <v-col cols="12" md="9">
-                          <ValidationProvider
-                            v-slot="{ errors }"
-                            name="ReturnZipCode"
-                            rules="required|num"
-                            class="d-flex mb-1 ">
-                            <v-text-field
-                              v-model="rentJson.ReturnZipCode"
-                              outlined
-                              required
-                              dense
-                              hide-details="auto"
-                              placeholder="0123456"
-                              prefix="〒"
-                              :error-messages="errors"
-                              class="input-short"
-                              @blur="rentJson.ReturnZipCode=toNum($event.target.value)"
-                            ></v-text-field>
-                            <v-btn
-                              color="primary"
-                              class="ms-1"
-                              :loading="searchLoading"
-                              @click="checkAddress('Return',rentJson.ReturnZipCode)">
-                              検索
-                            </v-btn>
-                          </ValidationProvider>
-
-                          <ValidationProvider
-                            v-slot="{ errors }"
-                            name="ReturnPrefect"
-                            rules="required"
-                            class="d-block mb-1">
-                            <v-autocomplete
-                              ref="country"
-                              v-model="rentJson.ReturnPrefect"
-                              outlined
-                              :items="prefect"
-                              required
-                              dense
-                              hide-details="auto"
-                              placeholder="都道府県"
-                              :error-messages="errors"
-                              class="input-short"
-                            ></v-autocomplete>
-                          </ValidationProvider>
-                          <ValidationProvider
-                            v-slot="{ errors }"
-                            name="ReturnAddress"
-                            rules="required">
-                            <v-text-field
-                              v-model="rentJson.ReturnAddress"
-                              outlined
-                              required
-                              dense
-                              hide-details="auto"
-                              placeholder="大阪市港区築港3-1-43 天保山シンユニティビル"
-                              :error-messages="errors"
-                            ></v-text-field>
-                          </ValidationProvider>
+                            <set-address
+                              :set-zip-code.sync="rentJson.ReturnZipCode"
+                              :set-prefect.sync="rentJson.ReturnPrefect"
+                              :set-address.sync="rentJson.ReturnAddress">
+                            </set-address>
                           </v-col>
                         </v-row>
                       </div>
@@ -691,9 +476,8 @@
                   color="primary"
                   large
                   class="ml-0 my-1 text-h6 px-6"
-                  :loading="orderLoading"
                   :disabled="ObserverProps.invalid"
-                  @click="order()">注文する
+                  @click="confirmDialog=true">確認する
                 </v-btn>
               </div>
             </ValidationObserver>
@@ -703,55 +487,26 @@
       </div>
     </div>
 
-
     <v-dialog v-model="dialog"
       width="580"
       persistent>
       <v-card class="pa-5 text-center">
-        <template v-if="!result">
-          <p>選択した商品をカートから消去しますか？</p>
-          <v-card-actions class="justify-center">
-            <v-btn
-              class="mt-4 mx-2"
-              dark
-              color="secondary"
-              @click="dialog=false">戻る
-            </v-btn>
-            <v-btn
-              class="mt-4 mx-2"
-              dark
-              color="feature"
-              :loading="deleteLoading"
-              @click="deleteItem">消去
-            </v-btn>
-          </v-card-actions>
-        </template>
-        <template v-else>
-          <p v-if="result==='success'" class="text-left text-md-center">
-            注文を受け付けいたしました。<br>
-            申し込みいただいたレンタル商品の空き状況を確認の上、指定いただいた連絡方法にて、レンタルの可否をご連絡させていただきます。<br>
-            <span class="red--text">（※注文は確定しておりません）</span>
-          </p>
-          <p v-else class="text-left text-md-center">
-            処理が正常に行われませんでした。<br>
-            しばらくしてもう一度お試しいただくか、お問い合わせ下さい。
-          </p>
-          <v-card-actions class="justify-center mt-3">
-            <v-btn
-              color="primary"
-              class="mx-3 white--text"
-              to="/myaccount">
-              マイページ
-            </v-btn>
-            <v-btn
-              v-if="result!=='success'"
-              color="outline"
-              class="mx-3 white--text"
-              @click="dialog=false">
-              戻る
-            </v-btn>
-          </v-card-actions>
-        </template>
+        <p>選択した商品をカートから消去しますか？</p>
+        <v-card-actions class="justify-center">
+          <v-btn
+            class="mt-4 mx-2"
+            color="secondary"
+            :disabled="deleteLoading"
+            @click="dialog=false">戻る
+          </v-btn>
+          <v-btn
+            class="mt-4 mx-2"
+            dark
+            color="feature"
+            :loading="deleteLoading"
+            @click="deleteItem">消去
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
 
@@ -769,35 +524,29 @@ export default {
       estJson: {},
       userInfo: null,
       headers: [
-        { text: '商品名', value: 'ProductName', sortable: false,align: 'center' },
-        { text: '価格(円)', value: 'Price', sortable: false },
-        { text: '日数掛け率', value: 'DayRate', sortable: false },
+        { text: '商品名', value: 'ProductName', sortable: false, align: 'center' },
+        { text: '単価(円)', value: 'Price', sortable: false },
+        { text: '日数掛け率', value: 'DayRate', sortable: false, width: '100px'  },
         { text: '数量', value: 'Qty', sortable: false, width: '130px' },
-        // { text: '小計', value: 'Qty', sortable: false, width: '130px' },
+        { text: '小計(円)', value: 'SubTotal', sortable: false },
       ],
       estDialog: false,
       dialog: false,
       deleteProductID: null,
       deleteRow: null,
-      searchLoading: false,
       deleteLoading: false,
-      orderLoading: false,
-      prefect: [
-        '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県','その他'
-      ],
-      address: null,
-      datePick: [ false,false,false,false,],
-      DeliveryDate: null,
-      ReturnDate: null,
+      datePick: [ false,false,false],
       rentRange: [],
-      result: null,
+      rentDate: [],
+      concatRentRange: null,
+      confirmDialog: false
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     this.setBreadCrumbs()
     await this.getCartInfo()
-    await this.inputUserInfo()
+    if(!this.msg) await this.inputUserInfo()
     this.$store.commit('loading/changeStatus', false)
   },
   head () {
@@ -809,21 +558,17 @@ export default {
     }
   },
   computed:{
-    getRentRange(){
-      if( this.rentRange.length === 2 ){
-        const StartDate = this.rentRange[0].replace(/-/g,'')
-        const EndDate = this.rentRange[1].replace(/-/g,'')
-        this.$set(this.rentJson, 'UseStartDate', StartDate)
-        this.$set(this.rentJson, 'UseEndDate', EndDate)
-        const dateDiff = this.toDate(this.rentRange[1]).getTime() - this.toDate(this.rentRange[0]).getTime()
-        const days = Math.ceil(dateDiff / (1000 * 3600 * 24)) + 1
-        this.$set(this.rentJson, 'UseDay', days)
-      }
-      return this.rentRange.join(' ~ ')
-    },
     rentRangeMin(){
       return this.rentRange[0]
     },
+  },
+  watch: {
+    'rentJson.UseDay'(newVal, oldVal){
+      if(newVal!== oldVal && oldVal) {
+        this.getCartInfo()
+        this.resetEst()
+      }
+    }
   },
   methods: {
     setBreadCrumbs() {
@@ -835,20 +580,11 @@ export default {
     async getCartInfo(){
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
-      const cartItem = this.$store.getters["cart/getCart"]
-      const obj = {
-        "UseDay": 1,
-        "ProductListCnt": cartItem.length,
-        "ProductList": cartItem
-      }
-      if(cartItem.length===0){
-        this.msg = "カートは空です。"
-        return false
-      }
+      if(!this.rentJson.UseDay) this.$set(this.rentJson, "UseDay", 1)
 
       const param = new URLSearchParams()
       param.append('LoginID', loginID)
-      param.append('JsonData', JSON.stringify(obj) )
+      param.append('UseDay', this.rentJson.UseDay)
       const res = await this.$memberBaseAxios.post(`order/getCartProductInfo`, param, {
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -859,11 +595,14 @@ export default {
         console.log(res)
       }
       if(res.data.Status === 'TRUE'){
+        this.$store.commit('cart/changeCartNum', res.data.ProductListCnt)
         this.cartInfo = res.data
-        return true
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
         return this.getCartInfo()
+      }else{
+        this.msg = "カートは空です。"
+        return {}
       }
     },
     async inputUserInfo(){
@@ -872,6 +611,9 @@ export default {
       this.$set(this.estJson, 'Organization', res.Organization)
       this.$set(this.rentJson, 'ContactEmail', res.Email)
       this.$set(this.rentJson, 'ContactTel', res.Tel)
+      this.$set(this.rentJson, 'DeliveryZipCode', res.ZipCode)
+      this.$set(this.rentJson, 'DeliveryPrefect', res.Prefect)
+      this.$set(this.rentJson, 'DeliveryAddress', res.Address)
     },
     getPrice(priceType, price) {
       switch (priceType) {
@@ -888,56 +630,19 @@ export default {
       }
     },
     setDeleteDialog(ProductID, row){
-      this.result = null
       this.dialog = true
       this.deleteRow = row
       this.deleteProductID = ProductID
     },
-    deleteItem(){
+    async deleteItem(){
       this.deleteLoading = true
-      this.$store.commit('cart/deleteItem', String(this.deleteProductID))
-      this.cartInfo.ProductList.splice( this.deleteRow, 1 )
-      this.dialog = false
-      this.deleteLoading = false
-    },
-    changeQuantity(ProductID, qty){
-      ProductID = String(ProductID)
-      this.$store.commit('cart/changeQuantity', { ProductID, qty })
-    },
-    async checkAddress(target, zipCode){
-      this.searchLoading = true
-      const url = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode='
-      const res = await this.$axios.get(url + zipCode)
-      this.address = this.address !== '' ? '' : null
-      if (res.data.status !== 200 || !res.data.results) {
-      this.$set(this.rentJson, `${target}Prefect`, '')
-      this.$set(this.rentJson, `${target}Address`, '')
-        this.searchLoading = false
-        return
-      }
-      this.$set(this.rentJson, `${target}Prefect`, res.data.results[0].address1)
-      this.$set(this.rentJson, `${target}Address`, res.data.results[0].address2+res.data.results[0].address3)
-      this.searchLoading = false
-    },
-    toNum(e){
-      return e.replace(/[０-９]/g, function(m) {
-        return "０１２３４５６７８９".indexOf(m)
-      }).replace(/-|－|ー/g,'')
-    },
-    async order(){
-      this.orderLoading = true
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
-      const cartItem = this.$store.getters["cart/getCart"]
-      this.$set(this.rentJson, "DeliveryDate", this.DeliveryDate.replace(/-/g,''))
-      this.$set(this.rentJson, "ReturnDate", this.ReturnDate.replace(/-/g,''))
-      this.$set(this.rentJson, "ProductListCnt", cartItem.length)
-      this.$set(this.rentJson, "ProductList", cartItem)
-
       const param = new URLSearchParams()
       param.append('LoginID', loginID)
-      param.append('JsonData', JSON.stringify(this.rentJson) )
-      const res = await this.$memberBaseAxios.post(`order/orderRental`, param, {
+      param.append('UseDay', this.rentJson.UseDay)
+      const res = await this.$memberBaseAxios.delete(`order/deleteCartProduct/${this.deleteProductID}`, {
+        data: param,
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -946,25 +651,72 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
-      this.$setLog('会員カート', '申し込み', res.data.Status)
+      this.$setLog('会員カート', '消去', res.data.Status)
       if(res.data.Status === 'TRUE'){
-        this.orderLoading = false
-        this.result = 'success'
-        this.dialog = true
-        this.$store.commit('cart/resetCart')
+        this.cartInfo = res.data
+        this.resetEst()
+        this.$store.commit('cart/changeCartNum', res.data.ProductListCnt)
+        this.dialog = false
+        this.deleteLoading = false
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.order()
-      }else{
-        this.orderLoading = false
-        this.result = res.data.ErrorNo
-        this.dialog = true
+        return this.deleteItem()
       }
+    },
+    async changeQuantity(ProductID, Qty){
+      if( !Qty || Qty <= 0 ) return false
+      const accessToken = this.$store.getters["auth/getAccessToken"]
+      const loginID = this.$store.getters["auth/getUser"]
+      const param = new URLSearchParams()
+      param.append('LoginID', loginID)
+      param.append('Qty', Qty)
+      param.append('UseDay', this.rentJson.UseDay)
+      const res = await this.$memberBaseAxios.put(`order/changeCartQty/${ProductID}`, param, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
+      this.$setLog('会員カート', '数量変更', res.data.Status)
+      if(res.data.Status === 'TRUE'){
+        this.cartInfo = res.data
+        this.resetEst()
+      }else if(res.data.ErrorNo === 100002){
+        const res = await this.$getAccessToken()
+        return this.changeQuantity()
+      }
+    },
+    resetEst(){
+      this.$set(this.rentJson, "QuotationID", '')
+      this.$set(this.rentJson, "QuotationNo", '')
+      this.$set(this.rentJson, "DocumentNo", '')
+      this.$set(this.rentJson, "QuotationURL", '')
     },
     toDate (str) {
       return new Date(str.split('-')[0], str.split('-')[1] - 1, str.split('-')[2]);
     },
-  },
+    setRange(){
+      if( this.rentRange.length ){
+        if( this.rentRange.length === 1 ) this.rentRange[1] = this.rentRange[0]
+        const StartDate = this.rentRange[0].replace(/-/g,'')
+        const EndDate = this.rentRange[1].replace(/-/g,'')
+        this.$set(this.rentJson, 'UseStartDate', StartDate)
+        this.$set(this.rentJson, 'UseEndDate', EndDate)
+        const dateDiff = this.toDate(this.rentRange[1]).getTime() - this.toDate(this.rentRange[0]).getTime()
+        const days = Math.ceil(dateDiff / (1000 * 3600 * 24)) + 1
+        this.$set(this.rentJson, 'UseDay', days)
+      }else{
+        this.$set(this.rentJson, 'UseDay', 1)
+        this.$set(this.rentJson, 'UseStartDate', '')
+        this.$set(this.rentJson, 'UseEndDate', '')
+      }
+      this.concatRentRange = this.rentRange.join(' ~ ')
+      this.$refs.datePick.save(this.rentRange)
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -976,21 +728,21 @@ export default {
 .cart {
   .table{
     &__img{
-      width: 140px;
+      width: 120px;
       max-height: 120px;
       object-fit: contain;
       height: 60px;
-      }
-      &__txt{
-        max-width: 220px;
-        @media (min-width:600px) {
-          max-width: unset;
-        }
-      }
-      tr{
-        margin-bottom: 2rem;
+    }
+    &__txt{
+      max-width: 220px;
+      @media (min-width: 740px) {
+        max-width: 400px;
       }
     }
+    tr{
+      margin-bottom: 2rem;
+    }
+  }
   ::v-deep .v-data-table-header{
     background-color: #f2f2f2;
   }
