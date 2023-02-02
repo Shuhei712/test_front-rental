@@ -1,40 +1,18 @@
 export const state = () => ({
-  cart: [],
+  cartNum: null,
 })
 
 export const mutations = {
-  addCart(state, {ProductID, Qty}) {
-    const isList = state.cart.some((list) => list.ProductID === ProductID)
-    if (isList){
-      const cartItem = state.cart.find(item => item.ProductID === ProductID)
-      cartItem.Qty+=Qty
-    }else{
-      state.cart.push({ ProductID, Qty})
-    }
+  changeCartNum(state, num) {
+    state.cartNum = num
   },
-  deleteItem(state, ProductID) {
-    const index = state.cart.findIndex(item => item.ProductID === ProductID)
-    state.cart.splice( index, 1 )
-  },
-  changeQuantity(state, {ProductID, qty}){
-    const index = state.cart.findIndex(item => item.ProductID === ProductID)
-    state.cart[index].Qty = qty
-  },
-  resetCart(state) {
-    state.cart = []
+  resetCartNum(state) {
+    state.cartNum = null
   },
 }
 
 export const getters = {
-  getCart(state) {
-    return state.cart
+  getCartNum(state) {
+    return state.cartNum
   },
-}
-export const actions = {
-  addCart({ commit }, lists) {
-    commit('addCart', lists)
-  },
-  // removeCart({ commit }) {
-  //   commit('removeCart')
-  // },
 }
