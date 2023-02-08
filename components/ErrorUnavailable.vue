@@ -1,6 +1,5 @@
 <template>
   <div class="loading">
-    <header-parts></header-parts>
     <div id="hexagon-1" class="hexagon"></div>
     <div id="hexagon-2" class="hexagon"></div>
     <div class="loading__inner">
@@ -49,7 +48,7 @@ export default {
   width: 100%;
   min-height: 100vh;
   background-color: $accent;
-  z-index: 9999;
+  // z-index: 9999;
 
   #hexagon-1 {
     position: absolute;
