@@ -48,7 +48,7 @@ export default {
   width: 100%;
   min-height: 100vh;
   background-color: $accent;
-  // z-index: 9999;
+  z-index: 400;
 
   #hexagon-1 {
     position: absolute;
