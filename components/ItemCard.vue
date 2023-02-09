@@ -2,7 +2,7 @@
   <div :class="[fav ? 'border' : ''] ">
     <div v-if="fav" class="text-right">
       <v-btn
-        v-if="favoriteFlg"
+        v-if="favFlg"
         color="primary"
         icon
         @click="setFavorite(false, productId)">
@@ -85,7 +85,7 @@ export default {
   },
   data() {
     return {
-      favoriteFlg: 1
+      favFlg: 1
     }
   },
   computed: {
@@ -128,22 +128,20 @@ export default {
     async setFavorite(flg, productID){
       let res
       if(flg){
-        res = await this.favorite('favorite/registProduct/', productID)
+        res = await this.favorite(`favorite/registProduct/${productID}`)
       }else{
-        res = await this.favorite('favorite/unregistProduct/', productID)
+        res = await this.favorite(`favorite/unregistProduct/${productID}`)
       }
-      if( !res ){
-        this.setFavorite(flg)
-      }else if(res.data.Status==='TRUE'){
-        this.favoriteFlg = flg ? 1 : 0
+      if( res ){
+        this.favFlg = flg ? 1 : 0
       }
     },
-    async favorite(api, productID){
+    async favorite(api){
       const loginID = this.$store.getters["auth/getUser"]
       const token = this.$store.getters["auth/getAccessToken"]
       const param = new URLSearchParams()
       param.append('LoginID', loginID)
-      const res = await this.$memberBaseAxios.put( api + productID, param,{
+      const res = await this.$memberBaseAxios.put( api, param,{
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -154,8 +152,8 @@ export default {
       if(res.data.Status==='TRUE'){
         return res
       }else if(res.data.ErrorNo===100002){
-        const resAccess = await this.$getAccessToken()
-        return false
+        const res = await this.$getAccessToken()
+        if( res ) return this.favorite(api)
       }
     },
   },

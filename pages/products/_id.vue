@@ -123,18 +123,16 @@
               </div>
             </div>
             <div class="info__status mt-sm-3 mt-md-5 mt-lg-8 pa-4 cushion">
-              <div class="align-center mb-2 info__status-quantity">
+              <div class="mb-2 info__status-qty">
                 数量：
-                <v-text-field
+                <v-autocomplete
                   v-model.number="itemNum"
                   outlined
-                  required
-                  type="number"
-                  hide-details="auto"
+                  :items="qtyArr"
                   dense
-                  class="d-inline-block w-50"
-                  >
-                </v-text-field>
+                  hide-details="auto"
+                  class="d-inline-block w-70"
+                ></v-autocomplete>
               </div>
               <div class="info__status-cart">
                 <v-btn
@@ -391,7 +389,8 @@ export default {
       favoriteFlg: false,
       isLogin: false,
       loginDialog: false,
-      loading: false
+      loading: false,
+      qtyArr: [...Array(99).keys()].map(i => i + 1)
     }
   },
   async fetch() {
@@ -698,19 +697,17 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
-      this.$setLog('会員商品詳細', '商品追加', res.data.Status)
+      this.$setLog('会員商品詳細', 'カート追加', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.$router.push('/myaccount/cart')
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        return this.addCart(Qty)
+        if( res ) return this.addCart(Qty)
       }
     },
     async getFavorite(){
       const res = await this.favorite('favorite/getStatus/', 'post')
-      if( !res ){
-        this.getFavorite()
-      }else if(res.data.Status==='TRUE'){
+      if( res ){
         this.favoriteFlg = res.data.FavoriteStatus
       }
     },
@@ -725,13 +722,7 @@ export default {
       }else{
         res = await this.favorite('favorite/unregistProduct/', 'put')
       }
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
-
-      if( !res ){
-        this.setFavorite(flg)
-      }else if(res.data.Status==='TRUE'){
+      if( res ){
         this.favoriteFlg = flg ? 1 : 0
       }
     },
@@ -752,11 +743,9 @@ export default {
       if(res.data.Status==='TRUE'){
         return res
       }else if(res.data.ErrorNo===100002){
-        // access認証tokenの有効期限が切れています
-        const resAccess = await this.$getAccessToken()
-        if(resAccess.data.Status==='TRUE'){
-          return false
-        }
+        const res = await this.$getAccessToken()
+        console.log('AccessCheck')
+        if( res ) return this.favorite(api, method)
       }
     }
   },
@@ -1015,8 +1004,8 @@ $bp_xs: 362px;
       .info__status{
         max-width: 365px;
       }
-      .w-50{
-        width: 50px;
+      .w-70{
+        width: 70px;
       }
 
       .price {

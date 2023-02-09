@@ -3,8 +3,9 @@
     <to-top-btn></to-top-btn>
     <top-bar title="お気にいり" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 fav">
+      <p v-if="!favLists">お気に入りがございません。</p>
 
-      <v-row class="product__main">
+      <v-row v-else class="product__main">
         <v-col v-for="(list, index) in favLists" :key="index" cols="12" sm="6" md="3">
           <item-card
             :path="list.ProductImage"
@@ -16,7 +17,8 @@
             :price="list.Price"
             :price-type="list.PriceType"
             :product-id="list.ProductID"
-            :fav="true"></item-card>
+            :fav="true"
+          ></item-card>
         </v-col>
       </v-row>
     </div>
@@ -33,7 +35,7 @@ export default {
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    await this.getFavInfo()
+    this.favLists = await this.getFavInfo()
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -65,13 +67,10 @@ export default {
         console.log(res)
       }
       if(res.data.Status==='TRUE'){
-        this.favLists = res.data.FavoriteList.slice().reverse()
+        if( res.data.FavoriteList ) return res.data.FavoriteList.slice().reverse()
       }else if(res.data.ErrorNo===100002){
         const res = await this.$getAccessToken()
-        await this.getFavInfo()
-      }else {
-        this.$store.dispatch('auth/resetUser')
-        this.$router.push('/login');
+        if( res ) return this.getFavInfo()
       }
 
     }
