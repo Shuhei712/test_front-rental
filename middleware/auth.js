@@ -18,9 +18,9 @@ export default ({ store, route, redirect, $memberAxios,$checkToken,$getAccessTok
     console.log('not member')
 
     if (route.path.match(/myaccount/)) {
-      redirect('/login');
+      redirect('/login')
     }
   } else if (route.path.match(/login/)) {
-      redirect('/myaccount');
+    redirect('/myaccount')
   }
 }

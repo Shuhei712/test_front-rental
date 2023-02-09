@@ -744,7 +744,6 @@ export default {
         return res
       }else if(res.data.ErrorNo===100002){
         const res = await this.$getAccessToken()
-        console.log('AccessCheck')
         if( res ) return this.favorite(api, method)
       }
     }

@@ -7,7 +7,7 @@
       <v-container>
         <v-form>
           <p v-if="loginErr" class="red--text pb-4">
-            メールアドレスまたはパスワードが正しくありません。
+            ログインIDまたはパスワードが正しくありません。
           </p>
           <ValidationProvider
             v-slot="{ errors }"
@@ -88,7 +88,6 @@ export default {
       param.append('LoginID', this.id)
       param.append('Password', this.password)
       const res = await this.$memberAxios.post('auth/login', param)
-      console.log(res.data)
       if(res.data.Status === 'TRUE'){
         this.$store.commit('auth/setUser', this.id)
         this.$store.commit('auth/setAuthToken', res.data.AuthToken)
