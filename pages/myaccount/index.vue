@@ -8,8 +8,7 @@
       <v-row>
         <v-col
           v-for="item in menuItem" :key="item.title"
-          cols="12" md="4"
-          class="">
+          cols="12" md="4">
           <div class="px-3">
             <v-btn
               outlined
@@ -26,8 +25,7 @@
       <v-row>
         <v-col
           v-for="item in menuAccount" :key="item.title"
-          cols="12" md="4"
-          class="">
+          cols="12" md="4">
           <div class="px-3">
             <v-btn
               outlined
@@ -86,7 +84,8 @@
     </div>
     <v-dialog
       v-model="logoutDialog"
-      width="500">
+      width="500"
+      persistent>
       <v-card class="pa-5 text-center">
         <p class="mb-4">ログアウトしますか？</p>
         <v-btn
@@ -99,6 +98,7 @@
         <v-btn
           color="outline"
           class="mx-3 white--text"
+          :disabled="loading"
           @click="logoutDialog=false">
           戻る
         </v-btn>
@@ -131,6 +131,7 @@
             <v-btn
               color="outline"
               class="mx-3 white--text"
+              :disabled="loading"
               @click="deleteDialog=false">
               戻る
             </v-btn>
@@ -194,6 +195,9 @@ export default {
       ]
     }
   },
+  updated() {
+    this.$scrollBackButton()
+  },
   methods: {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
@@ -220,13 +224,14 @@ export default {
       }
       if(res.data.Status==='TRUE'){
         this.$store.dispatch('auth/resetUser')
+        if(task==='logout') this.$router.push('/')
         this.result = 'success'
       }else if(res.data.ErrorNo===100002){
         // access認証tokenの有効期限が切れています
         const res = await this.$getAccessToken()
-        if( res ) this.execAction(task)
+        if( res ) return this.execAction(task)
       }else {
-        this.result = res.data.ErrorNo
+        this.result = String(res.data.ErrorNo)
       }
 
     },
