@@ -3,24 +3,22 @@
     <to-top-btn></to-top-btn>
     <cancel-card
       :id="cancelID"
-      :dialog="cancelDialog"
-      @change-cancel-dialog="cancelDialog = $event"
-      @get-new-info="getOrderHistory">
+      :dialog.sync="cancelDialog"
+      @get-new-info="getOrderHx">
     </cancel-card>
     <top-bar title="注文履歴" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 order-hx">
 
       <v-data-table
-        v-if="orderHistoryLists"
+        v-if="orderHxLists"
         dense
         :headers="headers"
-        :items="orderHistoryLists"
+        :items="orderHxLists"
         :sort-by="['OrderNo']"
         :sort-desc="true"
         :items-per-page="30"
         item-key="name"
-        class="elevation-1"
-        mobile-breakpoint="740"
+        mobile-breakpoint="890"
       >
         <template #[`item.RegistDate`]="{ item }">
           {{dateFormat(item.RegistDate)}}
@@ -36,18 +34,16 @@
             <v-btn
               color="outline"
               small
-              :to="`/myaccount/order-history/${item.OrderNo}`"
+              :to="`./order-history/${item.OrderNo}`"
               width="90"
-              class="white--text"> 詳細
+              class="white--text my-1"> 詳細
             </v-btn>
             <v-btn
               v-if="item.OrderStatus===0||item.OrderStatus===1"
               small
-              dark
-              elevation="0"
               color="feature"
               width="90"
-              class="mt-1 mt-md-0"
+              class="white--text my-1"
               @click="setCancelDialog(item.OrderNo)">キャンセル
             </v-btn>
           </td>
@@ -65,24 +61,23 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      orderHistoryLists: null,
+      orderHxLists: null,
       headers: [
         { text: '注文番号', value: 'OrderNo', width: '70px', sortable: false},
-        { text: '件名', value: 'OrderTitle' },
-        { text: '申込日', value: 'RegistDate', width: '127px' },
-        { text: 'レンタル開始日', value: 'RentalStartDate', width: '127px'},
-        { text: '合計金額(円)', value: 'RentalTotal' },
-        { text: '注文状況', value: 'OrderStatusDisp', sortable: false, width: '150px' },
+        { text: '件名', value: 'OrderTitle', sortable: false },
+        { text: '申込日', value: 'RegistDate', width: '124px' },
+        { text: 'レンタル開始日', value: 'RentalStartDate', width: '124px'},
+        { text: '合計金額(円)', value: 'RentalTotal', sortable: false },
+        { text: '注文状況', value: 'OrderStatusDisp', sortable: false, width: '137px' },
         { text: '', value: 'actions', sortable: false },
       ],
       cancelDialog: false,
       cancelID: null,
-      result: false
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    this.orderHistoryLists = await this.getOrderHistory()
+    await this.getOrderHx()
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -94,6 +89,9 @@ export default {
       ]
     }
   },
+  updated() {
+    this.$scrollBackButton()
+  },
   methods: {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
@@ -101,7 +99,7 @@ export default {
       this.$store.commit('breadCrumbs/addList', { name: "注文履歴", path: "/myaccount/" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
-    async getOrderHistory(){
+    async getOrderHx(){
       const loginID = this.$store.getters["auth/getUser"]
       const token = this.$store.getters["auth/getAccessToken"]
       const res = await this.$memberBaseAxios.get( `order/getOrderList/${loginID}` ,{
@@ -113,13 +111,11 @@ export default {
         console.log(res)
       }
       if(res.data.Status==='TRUE'){
-        return res.data.OrderList
+        this.orderHxLists = res.data.OrderList
       }else if(res.data.ErrorNo===100002){
-        // access認証tokenの有効期限が切れています
-        const resAccess = await this.$getAccessToken()
-        return await this.getOrderHistory()
+        const res = await this.$getAccessToken()
+        if( res ) return await this.getOrderHx()
       }
-
     },
     setCancelDialog(orderNo){
       this.cancelDialog = true
@@ -140,21 +136,34 @@ export default {
 
 <style lang="scss" scoped>
 .sec__inner {
-  max-width: 1050px;
+  max-width: 1150px;
   margin: 0 auto;
   width: 95%;
 }
 .order-hx{
   &__table-actions{
-    max-width: 75px;
-    padding: 0 !important;
-    @media (min-width:960px) {
-      max-width: 150px;
+    width: 206px;
+    max-width: unset;
+    @media (min-width:889px)and(max-width:1263.9px) {
+      width: 100px;
     }
   }
-  &::v-deep th,
-  &::v-deep td{
-    padding: 0 8px !important;
+  ::v-deep {
+    .v-data-table-header{
+      background-color: #f2f2f2;
+    }
+    .v-data-table__mobile-row__header{
+      white-space: nowrap;
+    }
+    .v-data-table__mobile-table-row{
+      margin-bottom: 1rem;
+    }
+    th,td{
+      padding: 0 8px !important;
+    }
+    tr>td{
+      border: 1px solid #f2f2f2;
+    }
   }
 }
 </style>

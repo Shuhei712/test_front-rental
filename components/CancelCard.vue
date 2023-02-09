@@ -9,9 +9,9 @@
           注文番号：{{ id }}
           <v-card-actions class="justify-center">
             <v-btn
-              class="mt-4 mx-2"
-              dark
+              class="mt-4 mx-2 white--text"
               color="secondary"
+              :disabled="loading"
               @click="cancelDialog = false">戻る
             </v-btn>
             <v-btn
@@ -24,21 +24,12 @@
           </v-card-actions>
         </template>
         <template v-else>
-          <p v-if="result==='success'" class="text-left text-md-center">
-            申し込みをキャンセルいたしました。
-          </p>
-          <p v-else class="text-left text-md-center">
-            処理が正常に行われませんでした。<br>
-            しばらくしてもう一度お試しいただくか、お問い合わせ下さい。
-          </p>
-          <v-card-actions class="justify-center">
-            <v-btn
-              class="mt-4 mx-2"
-              dark
-              color="secondary"
-              @click="cancelDialog = false">戻る
-            </v-btn>
-          </v-card-actions>
+          <result-card
+            :result="result"
+            :action="'申し込みのキャンセル'"
+            :path="'stay'"
+            :dialog.sync="cancelDialog"
+          ></result-card>
         </template>
       </v-card>
     </v-dialog>
@@ -62,7 +53,7 @@ export default {
   data() {
     return{
       loading: false,
-      result: false
+      result: null
     }
   },
   computed: {
@@ -71,7 +62,12 @@ export default {
         return this.$props.dialog
       },
       set(value){
-        this.$emit('change-cancel-dialog', value)
+        this.$emit('update:dialog', value)
+        if (!value) {
+          setTimeout(() => {
+            this.result = null
+          }, 200)
+        }
       }
     }
   },
@@ -93,17 +89,15 @@ export default {
       }
       this.$setLog('会員申し込み履歴', 'キャンセル', res.data.Status)
       if(res.data.Status === 'TRUE'){
-        this.loading = false
         this.result = 'success'
         this.$emit('get-new-info')
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.cancelItem()
+        if( res ) return this.cancelItem()
       }else{
-        this.loading = false
-        this.result = res.data.ErrorNo
+        this.result = String( res.data.ErrorNo )
       }
-
+      this.loading = false
     },
   }
 }
