@@ -4,12 +4,12 @@
       <div class="text-center py-15">
         <div v-if="activateFlg" class="activate__success">
           <h1 class="py-6 mb-4">登録完了</h1>
-          <p>登録が完了いたしました。</p>
+          <p>本登録が完了いたしました。</p>
           <v-btn large
             class="my-4 text-white"
             color="primary"
-            to="/"
-          >トップページ</v-btn>
+            to="/login"
+          >ログイン</v-btn>
         </div>
         <div v-else class="activate__err red--text">
           <h1 class="py-6">登録失敗</h1>
@@ -18,8 +18,8 @@
             <v-btn large
               class="my-6 text-white"
               color="primary"
-              to="/"
-            >トップページ</v-btn>
+              to="/login"
+            >ログイン</v-btn>
           </div>
           <div v-else>
             <p>登録が正常に行われませんでした。<br>もう一度ご登録いただくか、弊社までお問い合わせください。</p>
@@ -50,24 +50,27 @@ export default {
   },
   async fetch(){
     this.$store.commit('loading/changeStatus', true)
-    const token = this.$route.params.id
-    const res = await this.$memberAxios.get('auth/activation',{
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-
-    if (this.$config.DEBUG_MODE) {
-      console.log(res)
-    }
-    if(res.data.Status==='TRUE'){
-      this.activateFlg = true
-      this.$store.commit('auth/setAuthToken', res.AuthToken)
-      this.$store.commit('auth/setAccessToken', res.AccessToken)
-    }else{
-      this.errFlg = res.data.ErrorNo
-    }
+    await this.checkToken()
     this.$store.commit('loading/changeStatus', false)
+  },
+  methods:{
+    async checkToken(){
+      const token = this.$route.params.id
+      const res = await this.$memberAxios.get('auth/activation',{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
+      if(res.data.Status==='TRUE'){
+        this.activateFlg = true
+      }else{
+        this.errFlg = res.data.ErrorNo
+      }
+    }
   }
 }
 </script>
