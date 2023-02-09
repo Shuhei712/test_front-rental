@@ -3,9 +3,6 @@
     <to-top-btn></to-top-btn>
     <top-bar title="アカウント情報" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="register__inner py-16 px-3 px-lg-0">
-      <p class="pb-3 mx-1 lightGray--text">
-        ログインID：{{loginID}}
-      </p>
       <v-card
         outlined
         class="py-6">
@@ -13,35 +10,17 @@
           <v-form
             ref="form">
             <v-container>
-              <div v-if="doneFlg" class="mb-5 px-1 primary white--text">
-                アカウント情報を変更いたしました。
-              </div>
-              <div v-if="errFlg" class="mb-5 red--text">
-                <p v-if="errFlg===120201">
-                  ご入力のメールアドレスは既に使用されております。
-                </p>
-                <p v-else>
-                  処理が正常に行われませんでした。<br>しばらくして、もう一度お試しいただくか、お問い合わせ下さい。
-                </p>
-              </div>
+              <p v-if="result==='120201'" class="mb-5 red--text">
+                ご入力のメールアドレスは既に使用されております。
+              </p>
               <v-row class="my-1">
-                <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> 会員タイプ</v-col>
-                <v-col cols="12" md="8">
-                  <v-radio-group v-model="userInfo.MemberType"
-                    hide-details="auto"
-                    mandatory
-                    disabled
-                    row
-                    class="mt-0">
-                    <v-radio
-                      label="個人"
-                      :value="0"
-                    ></v-radio>
-                    <v-radio
-                      label="法人"
-                      :value="1"
-                    ></v-radio>
-                  </v-radio-group>
+                <v-col cols="12" md="4" class="pb-0">ログインID</v-col>
+                <v-col cols="12" md="8" class="pt-0 pt-md-3">{{loginID}}
+                </v-col>
+              </v-row>
+              <v-row class="my-1">
+                <v-col cols="12" md="4" class="pb-0">会員タイプ</v-col>
+                <v-col cols="12" md="8" class="pt-0 pt-md-3">{{ userInfo.MemberTypeDisp }}
                 </v-col>
               </v-row>
               <div v-if="userInfo.MemberType===1">
@@ -51,12 +30,11 @@
                   name="company"
                   rules="required">
                   <v-row class="my-1">
-                    <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> 会社名</v-col>
+                    <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 会社名</v-col>
                     <v-col cols="12" md="8">
                       <v-text-field
                         v-model="userInfo.Organization"
                         outlined
-                        required
                         dense
                         hide-details="auto"
                         :error-messages="errors"
@@ -71,12 +49,11 @@
                 name="name"
                 rules="required">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> 氏名</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 氏名</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="userInfo.MemberName"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
@@ -90,12 +67,11 @@
                 name="nameKana"
                 rules="max:50">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text secondary px-2 py-1 rounded">任意</span> お名前(カナ)</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 氏名(カナ)</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
-                      v-model="userInfo.NameKana"
+                      v-model="userInfo.MemberKana"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
@@ -109,12 +85,11 @@
                 name="tel"
                 rules="required|num">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> 連絡先</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 連絡先</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="userInfo.Tel"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       placeholder="0123456789"
@@ -126,66 +101,13 @@
               </ValidationProvider>
 
               <v-row class="my-1">
-                <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> 住所</v-col>
+                <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 住所</v-col>
                 <v-col cols="12" md="8">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="zipCode"
-                    rules="required|num"
-                    class="d-flex mb-1 ">
-                    <v-text-field
-                      v-model="userInfo.ZipCode"
-                      outlined
-                      required
-                      dense
-                      hide-details="auto"
-                      placeholder="0123456"
-                      prefix="〒"
-                      :error-messages="errors"
-                      class="input-short"
-                      @blur="userInfo.ZipCode=toNum($event.target.value)"
-                    ></v-text-field>
-                    <v-btn
-                      color="primary"
-                      class="ms-1"
-                      :loading="loading"
-                      @click="checkAddress">
-                      検索
-                    </v-btn>
-                  </ValidationProvider>
-
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Prefect"
-                    rules="required"
-                    class="d-block mb-1">
-                    <v-autocomplete
-                      ref="country"
-                      v-model="userInfo.Prefect"
-                      outlined
-                      :items="prefect"
-                      required
-                      dense
-                      hide-details="auto"
-                      placeholder="都道府県"
-                      :error-messages="errors"
-                      class="input-short"
-                    ></v-autocomplete>
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Address"
-                    rules="required">
-                    <v-text-field
-                      v-model="userInfo.Address"
-                      outlined
-                      required
-                      dense
-                      hide-details="auto"
-                      placeholder="大阪市港区築港3-1-43 天保山シンユニティビル"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </ValidationProvider>
+                  <set-address
+                    :set-zip-code.sync="userInfo.ZipCode"
+                    :set-prefect.sync="userInfo.Prefect"
+                    :set-address.sync="userInfo.Address">
+                  </set-address>
                 </v-col>
               </v-row>
 
@@ -194,14 +116,13 @@
                 name="email"
                 rules="required|email">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                     メールアドレス
                   </v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="userInfo.Email"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
@@ -211,7 +132,7 @@
               </ValidationProvider>
 
               <v-row class="my-1">
-                <v-col cols="12" md="4"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> メールマガジン</v-col>
+                <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> メールマガジン</v-col>
                 <v-col cols="12" md="8">
                   <v-radio-group v-model="userInfo.DMFlg"
                     hide-details="auto"
@@ -230,23 +151,37 @@
                 </v-col>
               </v-row>
               <div class="text-center mt-6">
-                <v-btn large
+                <!-- <v-btn
                   class="my-4 mx-2 white--text"
                   color="secondary"
                   to="/myaccount"
-                >戻る</v-btn>
-                <v-btn large
+                  :disabled="loading"
+                >マイページへ</v-btn> -->
+                <v-btn
                   :disabled="(ObserverProps.invalid)"
                   class="my-4 mx-2 white--text"
                   color="primary"
+                  :loading="loading"
                   @click="update()"
-                >変更</v-btn>
+                >変更する</v-btn>
               </div>
             </v-container>
           </v-form>
         </ValidationObserver>
       </v-card>
     </div>
+    <v-dialog v-model="resultDialog"
+      width="780"
+      persistent>
+      <v-card class="pa-5 text-center">
+        <result-card
+          :result="result"
+          :action="'アカウント情報の変更'"
+          :path="'/myaccount'"
+          :dialog.sync="resultDialog">
+        </result-card>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 <script>
@@ -256,19 +191,17 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      errFlg: null,
-      doneFlg: null,
       loginID: null,
       userInfo: [],
-      userCopyInfo: {},
-      prefect: ['北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県','その他'],
-      loading:false,
-
+      userUpInfo: {},
+      loading: false,
+      result: null,
+      resultDialog: false
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    const userInfo = await this.getAccountInfo()
+    await this.getAccountInfo()
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -305,38 +238,30 @@ export default {
       }else if(res.data.ErrorNo===100002){
         // access認証token有効期限切れ
         const res = await this.$getAccessToken()
-        this.getAccountInfo()
-      }else {
-        // 認証tokenの有効期限切れ
-        this.$store.dispatch('auth/resetUser')
-        this.$router.push('/login');
+        if( res ) return this.getAccountInfo()
       }
     },
     async update(){
-      this.$store.commit('loading/changeStatus', true)
-      this.$set(this.userCopyInfo, 'MemberName', this.userInfo.MemberName)
-      this.$set(this.userCopyInfo, 'Email', this.userInfo.Email)
-      this.$set(this.userCopyInfo, 'MemberType', this.userInfo.MemberType)
-      this.$set(this.userCopyInfo, 'DMFlg', this.userInfo.DMFlg)
-      this.$set(this.userCopyInfo, 'NecDocFlg','0')
-      this.$set(this.userCopyInfo, 'Organization', this.userInfo.Organization)
-      this.$set(this.userCopyInfo, 'Tel', this.userInfo.Tel)
-      this.$set(this.userCopyInfo, 'ZipCode', this.userInfo.ZipCode)
-      this.$set(this.userCopyInfo, 'Prefect', this.userInfo.Prefect)
-      this.$set(this.userCopyInfo, 'Address', this.userInfo.Address)
-      if(!this.userInfo.NameKana) {
-        this.$set(this.userCopyInfo, 'NameKana', '')
-      }else{
-        this.$set(this.userCopyInfo, 'NameKana', this.userInfo.NameKana)
+      this.loading = true
+      this.$set(this.userUpInfo, 'MemberType', this.userInfo.MemberType)
+      this.$set(this.userUpInfo, 'MemberName', this.userInfo.MemberName)
+      this.$set(this.userUpInfo, 'Tel', this.userInfo.Tel)
+      this.$set(this.userUpInfo, 'ZipCode', this.userInfo.ZipCode)
+      this.$set(this.userUpInfo, 'Prefect', this.userInfo.Prefect)
+      this.$set(this.userUpInfo, 'Address', this.userInfo.Address)
+      this.$set(this.userUpInfo, 'Email', this.userInfo.Email)
+      this.$set(this.userUpInfo, 'DMFlg', this.userInfo.DMFlg)
+      this.$set(this.userUpInfo, 'MemberKana', this.userInfo.MemberKana ? this.userInfo.MemberKana : '')
+      if( this.userInfo.MemberType ){
+        this.$set(this.userUpInfo, 'Organization', this.userInfo.Organization)
       }
-
+      this.$set(this.userUpInfo, 'NecDocFlg', this.userInfo.NecDocFlg)
 
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
-      const userCopyInfo = JSON.stringify(this.userCopyInfo);
-
+      const userUpInfo = JSON.stringify(this.userUpInfo)
       const param = new URLSearchParams()
-      param.append('JsonData',userCopyInfo)
+      param.append('JsonData', userUpInfo)
       const res = await this.$memberAxios.put(`member/${loginID}`,param,{
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -347,39 +272,22 @@ export default {
         console.log(res)
       }
       if(res.data.Status === 'TRUE'){
-        this.doneFlg = true
-        this.errFlg = null
+        this.result = 'success'
+        this.resultDialog = true
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.update()
+        if( res ) return this.update()
       }else{
-        this.errFlg = res.data.ErrorNo
+        this.result = String(res.data.ErrorNo)
+        if( this.result!=='120201' ) this.resultDialog = true
       }
-
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
-      this.$store.commit('loading/changeStatus', false)
-    },
-    async checkAddress(){
-      this.loading = true
-      const url = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode='
-      const res = await this.$axios.get(url + this.userInfo.ZipCode)
-      if (res.data.status !== 200 || !res.data.results) {
-        this.userInfo.Prefect = ''
-        this.userInfo.Address = ''
-        this.loading = false
-        return
-      }
-      this.userInfo.Prefect = res.data.results[0].address1
-      this.userInfo.Address = res.data.results[0].address2+res.data.results[0].address3
+      window.scrollTo({ top: 0, })
       this.loading = false
     },
-    reset() {
-      this.$refs.form.reset()
-      this.$refs.observer.reset()
-    },
+    // reset() {
+    //   this.$refs.form.reset()
+    //   this.$refs.observer.reset()
+    // },
     toNum(e){
       return e.replace(/[０-９]/g, function(m) {
         return "０１２３４５６７８９".indexOf(m)
@@ -395,6 +303,11 @@ export default {
     margin: 0 auto;
     width: 100%;
   }
+}
+.row{
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 0.5rem;
+  padding-top: 0.2rem;
 }
 .input-short{
   max-width: 225px;
