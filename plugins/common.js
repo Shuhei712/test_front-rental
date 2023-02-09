@@ -43,9 +43,13 @@ export default ({store, $config, redirect, route}, inject) => {
       console.log(res)
     }
     if(res.data.Status==='FALSE'){
-      alert('AccessKey Err:' + res.data.ErrorInfo)
       store.dispatch('auth/resetUser')
-      location.reload()
+      if (route.path.match(/myaccount/)) {
+        redirect('/sessionErr')
+      }else{
+        location.reload()
+      }
+      return false
     }
     return res
   }
@@ -67,13 +71,8 @@ export default ({store, $config, redirect, route}, inject) => {
       return res.data.DispSelectItemList
     }else if(res.data.ErrorNo===100002){
       // access認証token有効期限切れ
-      const resToken = await getAccessToken()
-      return getDisplayInfo(num)
-    }else {
-      // 認証tokenの有効期限切れ
-      alert('go login')
-      store.dispatch('auth/resetUser')
-      redirect('/login');
+      const res = await getAccessToken()
+      if( res ) return getDisplayInfo(num)
     }
   }
   inject('getDisplayInfo', getDisplayInfo)
@@ -91,12 +90,8 @@ export default ({store, $config, redirect, route}, inject) => {
       return res.data.AccountInfo
     }else if(res.data.ErrorNo===100002){
       // access認証token有効期限切れ
-      const resToken = await getAccessToken()
-      return getLoginInfo()
-    }else {
-      // 認証tokenの有効期限切れ
-      store.dispatch('auth/resetUser')
-      redirect('/login')
+      const res = await getAccessToken()
+      if( res ) return getLoginInfo()
     }
   }
   inject('getLoginInfo', getLoginInfo)
@@ -116,12 +111,8 @@ export default ({store, $config, redirect, route}, inject) => {
       return res.data.MemberInfo
     }else if(res.data.ErrorNo===100002){
       // access認証token有効期限切れ
-      const resToken = await getAccessToken()
-      return getUserInfo()
-    }else {
-      // 認証tokenの有効期限切れ
-      store.dispatch('auth/resetUser')
-      redirect('/login')
+      const res = await getAccessToken()
+      if( res ) return getUserInfo()
     }
   }
   inject('getUserInfo', getUserInfo)
@@ -146,10 +137,10 @@ export default ({store, $config, redirect, route}, inject) => {
     console.log(res)
     if(res.data.Status==='TRUE'){
       return true
-    }else if(res.data.ErrorNo===100002){
-      // access認証token有効期限切れ
-      const resToken = await getAccessToken()
-      return setLog(display, action, info)
+    // }else if(res.data.ErrorNo===100002){
+    //   // access認証token有効期限切れ
+    //   const resToken = await getAccessToken()
+    //   return setLog(display, action, info)
     }
   }
   inject('setLog', setLog)
