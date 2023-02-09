@@ -17,7 +17,6 @@
                   :value="user.ContactType"
                   readonly
                   outlined
-                  required
                   dense
                   hide-details="auto"
                 ></v-text-field>
@@ -31,7 +30,6 @@
                   :value="user.Name"
                   readonly
                   outlined
-                  required
                   dense
                   hide-details="auto"
                 ></v-text-field>
@@ -39,13 +37,12 @@
             </v-row>
 
             <v-row class="my-1">
-              <v-col cols="12" md="4" class="pb-0">お名前(カナ)</v-col>
+              <v-col cols="12" md="4" class="pb-0">氏名(カナ)</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
                   :value="user.NameKana"
                   readonly
                   outlined
-                  required
                   dense
                   hide-details="auto"
                 ></v-text-field>
@@ -59,7 +56,6 @@
                   :value="user.Email"
                   readonly
                   outlined
-                  required
                   dense
                   hide-details="auto"
                 ></v-text-field>
@@ -73,7 +69,6 @@
                   :value="user.OrderNo"
                   readonly
                   outlined
-                  required
                   dense
                   hide-details="auto"
                   class="input-short"
@@ -88,7 +83,6 @@
                   :value="user.Subject"
                   readonly
                   outlined
-                  required
                   dense
                   hide-details="auto"
                 ></v-text-field>
@@ -102,7 +96,6 @@
                   :value="user.Inquiry"
                   readonly
                   outlined
-                  required
                   dense
                   hide-details="auto"
                 ></v-textarea>
@@ -110,12 +103,13 @@
             </v-row>
 
             <div class="text-center mt-6">
-              <v-btn large
+              <v-btn
                 class="my-4 mx-2 white--text"
                 color="secondary"
+                :disabled="loading"
                 :to="{ query:{id:$route.query.id}, hash: 'input' }"
               >戻る</v-btn>
-              <v-btn large
+              <v-btn
                 class="my-4 mx-2"
                 color="primary"
                 :loading="loading"
@@ -126,6 +120,19 @@
         </v-form>
       </v-card>
     </div>
+
+    <v-dialog v-model="resultDialog"
+      width="780"
+      persistent>
+      <v-card class="pa-5 text-center">
+        <result-card
+          :result="result"
+          :action="'フォームの送信'"
+          :path="'/myaccount/other'"
+          :dialog.sync="resultDialog">
+        </result-card>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -142,7 +149,9 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      loading: false
+      loading: false,
+      result: null,
+      resultDialog: false
     }
   },
 
@@ -185,16 +194,16 @@ export default {
       }
       this.$setLog('会員お問い合わせ', '申し込み', res.data.Status)
       if(res.data.Status === 'TRUE'){
-        this.$router.push('/myaccount/other/contact#complete')
+        this.result = 'success'
+        this.resultDialog = true
       }else if(res.data.ErrorNo===100002){
-        // access認証tokenの有効期限が切れています
         const res = await this.$getAccessToken()
-        this.register()
+        if( res ) return this.register()
       }else{
-        this.$emit('update:registerErr', String(res.data.ErrorNo))
-        const query = this.$route.query.id ? `?id=${this.$route.query.id}` : ''
-        this.$router.push(`/myaccount/other/contact${query}#input`)
+        this.result = String(res.data.ErrorNo)
+        this.resultDialog = true
       }
+      this.loading = false
     },
 
   }
@@ -213,8 +222,10 @@ export default {
   padding-bottom: 0.5rem;
   padding-top: 0.2rem;
 }
-.confirm ::v-deep input{
-  cursor: default;
+.confirm ::v-deep {
+  input,textarea{
+    cursor: default;
+  }
 }
 .input-short{
   max-width: 225px;

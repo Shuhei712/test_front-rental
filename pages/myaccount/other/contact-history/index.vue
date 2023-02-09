@@ -8,25 +8,22 @@
         dense
         :headers="headers"
         :items="contactLists"
-        :sort-by="'ContactDate'"
+        :sort-by="'ContactNo'"
         :sort-desc="true"
         :items-per-page="30"
         item-key="name"
-        class="elevation-1"
-        mobile-breakpoint="740"
+        mobile-breakpoint="900"
       >
         <template #[`item.ContactDate`]="{ item }">
           {{dateFormat(item.ContactDate)}}
         </template>
         <template #[`item.details`]="{ item }">
-          <td class="px-0">
-            <v-btn
-              color="outline"
-              small
-              :to="`/myaccount/other/contact-history/${item.ContactNo}`"
-              class="white--text"> 詳細
-            </v-btn>
-          </td>
+          <v-btn
+            color="outline"
+            small
+            :to="`./contact-history/${item.ContactNo}`"
+            class="white--text px-4 my-1"> 詳細
+          </v-btn>
         </template>
       </v-data-table>
       <p v-else>お問い合わせの履歴がございません。</p>
@@ -40,9 +37,9 @@ export default {
       breadCrumbs: [],
       contactLists:null,
       headers: [
-        { text: '問い合わせ番号', value: 'ContactNo', width: '140px'},
+        { text: '問合せ番号', value: 'ContactNo', width: '96px',sortable: false },
         { text: '日付', value: 'ContactDate', width: '130px', },
-        { text: '件名', value: 'ContactSubject' },
+        { text: '件名', value: 'ContactSubject',sortable: false },
         { text: '状況', value: 'ContactStatusDisp', width: '120px',sortable: false},
         { text: '', value: 'details' , width: '80px', sortable: false},
       ],
@@ -50,7 +47,7 @@ export default {
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    this.contactLists = await this.getContactHistory()
+    this.contactLists = await this.getContactHx()
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -70,7 +67,7 @@ export default {
       this.$store.commit('breadCrumbs/addList', { name: 'お問い合わせ履歴', path: '/myaccount/other/contact-history' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
-    async getContactHistory(){
+    async getContactHx(){
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
       const res = await this.$memberBaseAxios.get(`contact/inquiryList/${loginID}`,{
@@ -86,12 +83,8 @@ export default {
         return res.data.ContactList
       }else if(res.data.ErrorNo===100002){
         // accessToken有効期限切れ
-        const resAccess = await this.$getAccessToken()
-        return this.getContactHistory()
-      }else if(res.data.ErrorNo===100001) {
-        // 認証token有効期限切れ
-        this.$store.dispatch('auth/resetUser')
-        this.$router.push('/login');
+        const res = await this.$getAccessToken()
+        if( res ) return this.getContactHx()
       }
     },
     dateFormat(num){
@@ -113,4 +106,22 @@ export default {
   margin: 0 auto;
   width: 95%;
 }
+
+::v-deep {
+    .v-data-table-header{
+      background-color: #f2f2f2;
+    }
+    .v-data-table__mobile-row__header{
+      white-space: nowrap;
+    }
+    .v-data-table__mobile-table-row{
+      margin-bottom: 1rem;
+    }
+    // th,td{
+    //   padding: 0 8px !important;
+    // }
+    tr>td{
+      border: 1px solid #f2f2f2;
+    }
+  }
 </style>

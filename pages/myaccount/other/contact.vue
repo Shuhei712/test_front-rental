@@ -1,7 +1,7 @@
 <template>
   <section>
     <to-top-btn></to-top-btn>
-    <component :is="child" :user.sync="user" :register-err.sync="registerErr"></component>
+    <component :is="child" :user.sync="user"></component>
   </section>
 </template>
 <script>
@@ -9,8 +9,7 @@ export default {
   data() {
     return {
       user: {},
-      registerErr: ''
-    };
+    }
   },
   head() {
     return {

@@ -4,8 +4,6 @@
     <top-bar title="ヘルプ・その他" :bread-crumbs="breadCrumbs"></top-bar>
 
     <div class="sec__inner py-16">
-      <!-- <h2 class="pt-12 pb-1 headingText--text">その他</h2> -->
-      <!-- <v-divider class="mb-4"></v-divider> -->
       <v-row>
         <v-col
           cols="12" md="4">

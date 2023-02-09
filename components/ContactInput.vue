@@ -2,28 +2,18 @@
   <div v-if="!$fetchState.pending && !$fetchState.error">
     <top-bar title="お問い合わせ 入力" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="register__inner py-16 px-3 px-lg-0">
-      <dl class="d-flex">
+      <!-- <dl class="d-flex">
         <dt>会員番号</dt>
         <dd>：{{ loginInfo.MemberID }}</dd>
-      </dl>
+      </dl> -->
       <v-card
         outlined
         class="py-6">
         <ValidationObserver v-slot="ObserverProps" ref="observer">
-          <v-form
-            ref="form">
+          <v-form ref="form">
             <v-container>
-              <div v-if="registerErr" class="err mb-5 red--text">
-                <p v-if="registerErr==='120107'||registerErr==='120108'">
-                  ご記入のメールアドレスで既に登録されております。
-                </p>
-                <p v-else>
-                  処理が正常に行われませんでした。<br>しばらくして、もう一度お試しいただくか、お問い合わせ下さい。
-                </p>
-              </div>
-
               <v-row class="my-1">
-                <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> お問い合わせの種類</v-col>
+                <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お問い合わせの種類</v-col>
                 <v-col cols="12" md="8">
                   <v-select
                     v-model="syncedUser.ContactType"
@@ -41,12 +31,11 @@
                 name="name"
                 rules="required">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> 氏名</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 氏名</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.Name"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
@@ -60,12 +49,11 @@
                 name="nameKana"
                 rules="max:50">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span> お名前(カナ)</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> お名前(カナ)</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.NameKana"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
@@ -79,14 +67,13 @@
                 name="email"
                 rules="required|email">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                     メールアドレス
                   </v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.Email"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
@@ -100,12 +87,11 @@
                 name="orderNo"
                 rules="numeric">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded">任意</span> 注文番号</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 注文番号</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.OrderNo"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
@@ -121,12 +107,11 @@
                 name="Subject"
                 rules="required">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> お問い合わせ件名</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お問い合わせ件名</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.Subject"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
@@ -140,12 +125,11 @@
                 name="Inquiry"
                 rules="required">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded">必須</span> お問い合わせ内容</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お問い合わせ内容</v-col>
                   <v-col cols="12" md="8">
                     <v-textarea
                       v-model="syncedUser.Inquiry"
                       outlined
-                      required
                       dense
                       hide-details="auto"
                       :error-messages="errors"
@@ -160,7 +144,7 @@
                   color="secondary"
                   @click="reset()"
                 >リセット</v-btn> -->
-                <v-btn large
+                <v-btn
                   :disabled="ObserverProps.invalid"
                   class="my-4 mx-2 white--text"
                   color="primary"
@@ -183,19 +167,12 @@ export default {
       type: Object,
       required: true
     },
-    registerErr:{
-      type: String,
-      required: true
-    },
   },
 
   data() {
     return {
       breadCrumbs: [],
       displayLists: {},
-      loginInfo: null,
-      userInfo: {},
-      contactInfo: {},
     }
   },
 
@@ -205,9 +182,14 @@ export default {
       top: 0,
     })
     this.displayLists = await this.$getDisplayInfo('DISP_2003')
-    this.loginInfo = await this.$getLoginInfo()
-    this.userInfo = await this.getUserInfo()
-    if(this.$route.query.id) this.contactInfo = await this.getContactInfo()
+    if( !this.syncedUser.Inquiry ) {
+      this.$set(this.syncedUser, 'ContactType', '未選択')
+      if(this.$route.query.id) {
+        await this.getContactInfo()
+      }else{
+        await this.getUserInfo()
+      }
+    }
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -233,10 +215,10 @@ export default {
     async getUserInfo(){
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
-
+      const loginInfo = await this.$getLoginInfo()
       const param = new URLSearchParams()
       param.append('LoginID', loginID)
-      const res = await this.$memberBaseAxios.post(`member/getInfo/${this.loginInfo.MemberID}`, param, {
+      const res = await this.$memberBaseAxios.post(`member/getInfo/${loginInfo.MemberID}`, param, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -252,7 +234,7 @@ export default {
         this.$set(this.syncedUser, 'Email', member.Email)
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        return this.getUserInfo()
+        if( res ) return this.getUserInfo()
       }
 
     },
@@ -282,11 +264,10 @@ export default {
         this.$set(this.syncedUser, 'Email', info.Email)
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        return this.getContactInfo()
+        if( res ) return this.getContactInfo()
       }
     },
     confirm(){
-      this.$emit('update:registerErr', '')
       const query = this.$route.query.id ? `?id=${this.$route.query.id}` : ''
       this.$router.push(`/myaccount/other/contact${query}#confirm`)
     },

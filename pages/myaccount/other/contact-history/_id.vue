@@ -112,7 +112,7 @@
             v-if="contactLists.AttachFileDownloadURL"
             class="mt-3"
             outlined
-            :to="contactLists.AttachFileDownloadURL">
+            :href="contactLists.AttachFileDownloadURL">
             資料ダウンロード
           </v-btn>
         </v-col>
@@ -171,7 +171,7 @@ export default {
         return res.data
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        return this.getContactDetails()
+        if( res ) return this.getContactDetails()
       }
     },
     dateFormat(num){
@@ -191,5 +191,10 @@ export default {
   max-width: 800px;
   margin: 0 auto;
   width: 95%;
+}
+::v-deep {
+  input, textarea{
+    cursor: default;
+  }
 }
 </style>
