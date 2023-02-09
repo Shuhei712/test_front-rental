@@ -9,7 +9,7 @@
             <v-form>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text secondary px-2 py-1 rounded">任意</span>
+                  <span class="white--text secondary px-2 py-1 rounded body-2">任意</span>
                   担当者名
                 </v-col>
                 <v-col cols="12" md="9">
@@ -22,7 +22,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text secondary px-2 py-1 rounded">任意</span>
+                  <span class="white--text secondary px-2 py-1 rounded body-2">任意</span>
                   会社名
                 </v-col>
                 <v-col cols="12" md="9">
@@ -35,7 +35,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                  <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                   件名
                 </v-col>
                 <v-col cols="12" md="9">
@@ -55,7 +55,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                  <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                   ご使用期間
                 </v-col>
                 <v-col cols="12" md="9">
@@ -112,7 +112,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text secondary px-2 py-1 rounded">任意</span>
+                  <span class="white--text secondary px-2 py-1 rounded body-2">任意</span>
                   ご使用場所
                 </v-col>
                 <v-col cols="12" md="9">

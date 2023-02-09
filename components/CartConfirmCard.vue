@@ -6,7 +6,7 @@
       scrollable
       hide-overlay>
       <v-card>
-        <v-card-text class="pa-10 cart-confirm">
+        <v-card-text class="py-10 px-2 px-sm-5 cart-confirm">
           <div class="cart-confirm__inner">
             <div class="order__item">
               <h2 class="mb-4">商品一覧</h2>
@@ -18,7 +18,7 @@
                 :items-per-page="30"
                 item-key="ProductID"
                 hide-default-footer
-                mobile-breakpoint="740">
+                mobile-breakpoint="890">
                 <template #[`item.ProductName`]="{ item }">
                   <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row">
                     <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
@@ -284,7 +284,7 @@
             :result="result"
             :action="'注文'"
             :path="'/myaccount'"
-            :dialog="resultDialog">
+            :dialog.sync="resultDialog">
           </result-card>
         </v-card>
       </v-dialog>
@@ -327,7 +327,7 @@ export default {
       headers: [
         { text: '商品名', value: 'ProductName', sortable: false, align: 'center' },
         { text: '単価(円)', value: 'Price', sortable: false },
-        { text: '日数掛け率', value: 'DayRate', sortable: false, width: '100px'  },
+        { text: '日数掛率', value: 'DayRate', sortable: false, width: '84px' },
         { text: '数量', value: 'Qty', sortable: false },
         { text: '小計(円)', value: 'SubTotal', sortable: false },
       ],
@@ -361,7 +361,6 @@ export default {
       const loginID = this.$store.getters["auth/getUser"]
       this.$set(this.rentJson, "DeliveryDate", this.rentDate[0].replace(/-/g,''))
       this.$set(this.rentJson, "ReturnDate", this.rentDate[1].replace(/-/g,''))
-      // this.$set(this.rentJson, "ProductListCnt", this.cartInfo.ProductListCnt)
 
       const param = new URLSearchParams()
       param.append('LoginID', loginID)
@@ -386,7 +385,7 @@ export default {
         this.order()
       }else{
         this.loading = false
-        this.result = res.data.ErrorNo
+        this.result = String(res.data.ErrorNo)
         this.resultDialog = true
       }
     },
@@ -425,18 +424,21 @@ export default {
     height: 60px;
   }
   &__txt{
-    max-width: 220px;
-    @media (min-width: 740px) {
+    max-width: 260px;
+    @media (min-width: 700px) and (max-width: 888px) {
+      max-width: 430px;
+    }
+    @media (min-width: 1050px) {
       max-width: 400px;
     }
-  }
-  tr{
-    margin-bottom: 2rem;
   }
 }
 ::v-deep {
   .v-data-table-header{
     background-color: #f2f2f2;
+  }
+  .v-data-table__mobile-table-row{
+    margin-bottom: 1rem;
   }
   td{
     border: 1px solid #f2f2f2;

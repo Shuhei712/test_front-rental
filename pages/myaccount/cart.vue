@@ -30,7 +30,7 @@
             :items-per-page="30"
             item-key="ProductID"
             hide-default-footer
-            mobile-breakpoint="740">
+            mobile-breakpoint="890">
             <template #[`item.ProductName`]="{ item }">
               <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row">
                 <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
@@ -45,31 +45,31 @@
               {{ getPrice(item.PriceType, item.Price) }}
             </template>
             <template #[`item.Qty`]="{ item }">
-              <div class="d-flex align-center">
-                <v-text-field
-                  v-model.number="item.Qty"
-                  type="number"
-                  outlined
-                  hide-details="auto"
-                  class="d-inline-block"
-                  dense
-                  min="1"
-                  max="99"
-                  @change="changeQuantity(item.ProductID, $event)">
-                </v-text-field>
-                <v-btn
-                  class="ml-2"
-                  fab
-                  dark
-                  x-small
-                  elevation="0"
-                  color="feature"
-                  @click="setDeleteDialog(item.ProductID, item)">
-                  <v-icon dark>
-                    mdi-close
-                  </v-icon>
-                </v-btn>
-              </div>
+              <td class="px-2 table__qty">
+                <div class="d-flex align-center">
+                  <v-autocomplete
+                    v-model.number="item.Qty"
+                    outlined
+                    :items="qtyArr"
+                    dense
+                    hide-details="auto"
+                    class="d-inline-block"
+                    @change="changeQuantity(item.ProductID, $event)"
+                  ></v-autocomplete>
+                  <v-btn
+                    class="ml-2"
+                    fab
+                    dark
+                    x-small
+                    elevation="0"
+                    color="feature"
+                    @click="setDeleteDialog(item.ProductID, item)">
+                    <v-icon dark>
+                      mdi-close
+                    </v-icon>
+                  </v-btn>
+                </div>
+              </td>
             </template>
           </v-data-table>
           <p class="caption pt-2">レンタル期間は下部のレンタル申し込み記入欄「ご使用期間」より変更可能です。</p>
@@ -106,7 +106,7 @@
                 <v-container>
                   <v-row class="border-bottom">
                     <v-col cols="12" md="4" class="pb-0">
-                      <span class="white--text secondary px-2 py-1 rounded">任意</span> 注文件名
+                      <span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 注文件名
                     </v-col>
                     <v-col cols="12" md="8">
                       <v-text-field
@@ -115,13 +115,14 @@
                         dense
                         hide-details="auto"
                         placeholder="タケナカ内覧会2023"
+                        counter="50"
                       ></v-text-field>
                     </v-col>
                   </v-row>
 
                   <v-row class="border-bottom">
                     <v-col cols="12" md="4" class="pb-0">
-                      <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                      <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                       連絡方法
                     </v-col>
                     <v-col cols="12" md="8">
@@ -144,13 +145,14 @@
                         <ValidationProvider
                           v-slot="{ errors }"
                           name="tel"
-                          rules="required">
+                          rules="required|num">
                           <v-text-field
-                            v-model="rentJson.ContactTel"
+                            v-model.number="rentJson.ContactTel"
                             outlined
                             dense
                             hide-details="auto"
-                            :error-messages="errors">
+                            :error-messages="errors"
+                            @blur="rentJson.ContactTel=toNum($event.target.value)">
                           </v-text-field>
                         </ValidationProvider>
                       </div>
@@ -173,7 +175,7 @@
                   </v-row>
                   <v-row class="border-bottom">
                     <v-col cols="12" md="4" class="pb-0">
-                      <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                      <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                       お引渡
                     </v-col>
                     <v-col cols="12" md="8">
@@ -207,7 +209,7 @@
                           </template>
                           <template v-else>搬入日</template>
                         </v-col>
-                        <v-col cols="12" md="9">
+                        <v-col cols="12" md="9" class="pt-0 pt-md-3">
                           <v-menu
                             v-model="datePick[0]"
                             :close-on-content-click="false"
@@ -246,7 +248,7 @@
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">引取時間</v-col>
-                          <v-col cols="12" md="9">
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time @change-time="rentJson.DeliveryTime = $event"></set-time>
                           </v-col>
                         </v-row>
@@ -256,7 +258,7 @@
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">場所</v-col>
-                          <v-col cols="12" md="9">
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-address
                               :set-zip-code.sync="rentJson.DeliveryZipCode"
                               :set-prefect.sync="rentJson.DeliveryPrefect"
@@ -274,14 +276,14 @@
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">搬入時間</v-col>
-                          <v-col cols="12" md="9">
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time @change-time="rentJson.DeliveryTime = $event"></set-time>
                           </v-col>
                         </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">場所</v-col>
-                          <v-col cols="12" md="9">
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-address
                               :set-zip-code.sync="rentJson.DeliveryZipCode"
                               :set-prefect.sync="rentJson.DeliveryPrefect"
@@ -295,7 +297,7 @@
 
                   <v-row class="border-bottom">
                     <v-col cols="12" md="4" class="pb-0">
-                      <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                      <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                       ご使用期間(リハーサル含む)
                     </v-col>
                     <v-col cols="12" md="8">
@@ -356,7 +358,7 @@
 
                   <v-row class="border-bottom">
                     <v-col cols="12" md="4" class="pb-0">
-                      <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
+                      <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                       ご返却
                     </v-col>
                     <v-col cols="12" md="8">
@@ -392,7 +394,7 @@
                           </template>
                           <template v-else>搬入日</template>
                         </v-col>
-                        <v-col cols="12" md="9">
+                        <v-col cols="12" md="9" class="pt-0 pt-md-3">
                           <v-menu
                             v-model="datePick[2]"
                             :close-on-content-click="false"
@@ -431,7 +433,7 @@
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">返却時間</v-col>
-                          <v-col cols="12" md="9">
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time @change-time="rentJson.ReturnTime = $event"></set-time>
                           </v-col>
                         </v-row>
@@ -441,14 +443,14 @@
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">搬入時間</v-col>
-                          <v-col cols="12" md="9">
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time @change-time="rentJson.ReturnTime = $event"></set-time>
                           </v-col>
                         </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">場所</v-col>
-                          <v-col cols="12" md="9">
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-address
                               :set-zip-code.sync="rentJson.ReturnZipCode"
                               :set-prefect.sync="rentJson.ReturnPrefect"
@@ -526,7 +528,7 @@ export default {
       headers: [
         { text: '商品名', value: 'ProductName', sortable: false, align: 'center' },
         { text: '単価(円)', value: 'Price', sortable: false },
-        { text: '日数掛け率', value: 'DayRate', sortable: false, width: '100px'  },
+        { text: '日数掛率', value: 'DayRate', sortable: false, width: '84px' },
         { text: '数量', value: 'Qty', sortable: false, width: '130px' },
         { text: '小計(円)', value: 'SubTotal', sortable: false },
       ],
@@ -539,7 +541,8 @@ export default {
       rentRange: [],
       rentDate: [],
       concatRentRange: null,
-      confirmDialog: false
+      confirmDialog: false,
+      qtyArr: [...Array(99).keys()].map(i => i + 1)
     }
   },
   async fetch() {
@@ -602,7 +605,8 @@ export default {
         return this.getCartInfo()
       }else{
         this.msg = "カートは空です。"
-        return {}
+        this.$store.commit('cart/changeCartNum', 0)
+        this.cartInfo = {}
       }
     },
     async inputUserInfo(){
@@ -614,6 +618,9 @@ export default {
       this.$set(this.rentJson, 'DeliveryZipCode', res.ZipCode)
       this.$set(this.rentJson, 'DeliveryPrefect', res.Prefect)
       this.$set(this.rentJson, 'DeliveryAddress', res.Address)
+      this.$set(this.rentJson, 'ReturnZipCode', res.ZipCode)
+      this.$set(this.rentJson, 'ReturnPrefect', res.Prefect)
+      this.$set(this.rentJson, 'ReturnAddress', res.Address)
     },
     getPrice(priceType, price) {
       switch (priceType) {
@@ -698,6 +705,11 @@ export default {
     toDate (str) {
       return new Date(str.split('-')[0], str.split('-')[1] - 1, str.split('-')[2]);
     },
+    toNum(e){
+      return e.replace(/[０-９]/g, function(m) {
+        return "０１２３４５６７８９".indexOf(m)
+      }).replace(/-|－|ー/g,'')
+    },
     setRange(){
       if( this.rentRange.length ){
         if( this.rentRange.length === 1 ) this.rentRange[1] = this.rentRange[0]
@@ -734,20 +746,31 @@ export default {
       height: 60px;
     }
     &__txt{
-      max-width: 220px;
-      @media (min-width: 740px) {
+      max-width: 260px;
+      @media (min-width: 700px) and (max-width: 888px) {
+        max-width: 430px;
+      }
+      @media (min-width: 1050px) {
         max-width: 400px;
       }
     }
-    tr{
-      margin-bottom: 2rem;
+    &__qty{
+      max-width: 140px;
     }
   }
-  ::v-deep .v-data-table-header{
-    background-color: #f2f2f2;
-  }
-  ::v-deep td{
-    border: 1px solid #f2f2f2;
+  ::v-deep {
+    .v-data-table-header{
+      background-color: #f2f2f2;
+    }
+    .v-data-table__mobile-table-row{
+      margin-bottom: 1rem;
+    }
+    td{
+      border: 1px solid #f2f2f2;
+    }
+    .v-autocomplete.v-select.v-input--is-focused input{
+      min-width: auto;
+    }
   }
 }
 .border-bottom{
