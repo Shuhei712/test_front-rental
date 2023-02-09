@@ -10,7 +10,7 @@
             <v-row>
               <v-col cols="12" md="4" class="pb-0">会員タイプ</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <div v-if="user.MemberType==='0'">
+                <div v-if="syncedUser.MemberType===0">
                   個人
                 </div>
                 <div v-else>
@@ -18,11 +18,11 @@
                 </div>
               </v-col>
             </v-row>
-            <v-row v-if="user.MemberType==='1'">
+            <v-row v-if="syncedUser.MemberType===1">
               <v-col cols="12" md="4" class="pb-0">会社名</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
-                  :value="user.Organization"
+                  :value="syncedUser.Organization"
                   readonly
                   outlined
                   dense
@@ -34,7 +34,7 @@
               <v-col cols="12" md="4" class="pb-0">氏名</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
-                  :value="user.MemberName"
+                  :value="syncedUser.MemberName"
                   readonly
                   outlined
                   dense
@@ -43,10 +43,10 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">お名前(カナ)</v-col>
+              <v-col cols="12" md="4" class="pb-0">氏名(カナ)</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
-                  :value="user.NameKana"
+                  :value="syncedUser.MemberKana"
                   readonly
                   outlined
                   dense
@@ -55,10 +55,10 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">連絡先</v-col>
+              <v-col cols="12" md="4" class="pb-0">電話番号</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
-                  :value="user.Tel"
+                  :value="syncedUser.Tel"
                   readonly
                   outlined
                   dense
@@ -70,7 +70,7 @@
               <v-col cols="12" md="4" class="pb-0">メールアドレス</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
-                  :value="user.Email"
+                  :value="syncedUser.Email"
                   readonly
                   outlined
                   dense
@@ -82,7 +82,7 @@
               <v-col cols="12" md="4" class="pb-0">住所</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
-                  :value="user.ZipCode"
+                  :value="syncedUser.ZipCode"
                   readonly
                   outlined
                   dense
@@ -91,7 +91,7 @@
                   class="input-short mb-1"
                 ></v-text-field>
                 <v-text-field
-                  :value="user.Prefect"
+                  :value="syncedUser.Prefect"
                   readonly
                   outlined
                   dense
@@ -99,7 +99,7 @@
                   class="input-short mb-1"
                 ></v-text-field>
                 <v-text-field
-                  :value="user.Address"
+                  :value="syncedUser.Address"
                   readonly
                   outlined
                   dense
@@ -128,7 +128,7 @@
             <v-row>
               <v-col cols="12" md="4" class="pb-0">メールマガジン</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <div v-if="user.DMFlg==='0'">
+                <div v-if="syncedUser.DMFlg==='0'">
                   受け取る
                 </div>
                 <div v-else>
@@ -136,10 +136,29 @@
                 </div>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12" md="4" class="pb-0">本人確認</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <div v-if="syncedUser.NecDocFlg">
+                  登録する
+                </div>
+                <div v-else>
+                  登録しない
+                </div>
+              </v-col>
+              <v-col v-if="syncedUser.NecDocFlg" cols="12" class="mt-4">
+                <v-card outlined class="pa-4">
+                  <id-card ref="id"
+                    :user.sync="syncedUser" :file.sync="file" :read="true"
+                  ></id-card>
+                </v-card>
+              </v-col>
+            </v-row>
             <div class="text-center mt-6">
               <v-btn large
                 class="my-4 mx-2 white--text"
                 color="secondary"
+                :disabled="loading"
                 :to="{ hash: '#input' }"
               >戻る</v-btn>
               <v-btn large
@@ -153,6 +172,18 @@
         </v-form>
       </v-card>
     </div>
+    <v-dialog v-model="resultDialog"
+      width="780"
+      persistent>
+      <v-card class="pa-5 text-center">
+        <result-card
+          :result="syncedResult"
+          :action="'新規登録'"
+          :path="'/login'"
+          :dialog.sync="resultDialog">
+        </result-card>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -169,12 +200,24 @@ export default {
       required: true,
       default: () => {},
     },
+    result:{
+      type: String,
+      required: true
+    },
+    file:{
+      type: Array,
+      // required: true
+      required: false,
+      default: () => ([])
+    }
   },
   data() {
     return {
       breadCrumbs: [],
       show: false,
-      loading: false
+      loading: false,
+      resultDialog: false,
+      // result: null,
     }
   },
 
@@ -186,6 +229,24 @@ export default {
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
+  computed: {
+    syncedUser: {
+      get(){
+        return this.user
+      },
+      set(val){
+        this.$emit('update:user', val)
+      }
+    },
+    syncedResult: {
+      get(){
+        return this.result
+      },
+      set(val){
+        this.$emit('update:result', val)
+      }
+    },
+  },
   methods: {
 
     setBreadCrumbs() {
@@ -195,10 +256,18 @@ export default {
     },
     async register(){
       this.loading = true
-      this.$set(this.user, 'NecDocFlg', '0')
-      const userInfo = JSON.stringify(this.user);
+      if(this.syncedUser.NecDocFlg){
+        const id = await this.$refs.id.register()
+        if( !id ) return false
+      }else{
+        this.$set(this.syncedUser, 'UploadKey', '')
+        this.$set(this.syncedUser, 'DocFileName1', '')
+        this.$set(this.syncedUser, 'DocFileName2', '')
+        this.$set(this.syncedUser, 'DocFileName3', '')
+      }
+      const userInfo = JSON.stringify(this.syncedUser);
       const param = new URLSearchParams()
-      param.append('LoginID', this.user.Email)
+      param.append('LoginID', this.syncedUser.Email)
       param.append('Password', this.pass)
       param.append('JsonData', userInfo)
       const res = await this.$memberAxios.post('member/', param)
@@ -207,14 +276,15 @@ export default {
         console.log(res)
       }
       if(res.data.Status === 'TRUE'){
-        this.$store.commit('user/setUser', this.user.Email)
-        this.$store.commit('auth/setAuthToken', res.AuthToken)
-        this.$store.commit('auth/setAccessToken', res.AccessToken)
-        this.$router.push('/register#complete')
+        this.syncedResult = 'success'
       }else{
-        this.$emit('update:registerErr', String(res.data.ErrorNo))
-        this.$router.push('/register#input')
+        this.syncedResult = String( res.data.ErrorNo )
+        if(res.data.ErrorNo===120107){
+          this.$router.push('/register#input')
+          return
+        }
       }
+      this.resultDialog = true
       this.loading = false
     },
 
@@ -224,7 +294,7 @@ export default {
 <style lang="scss" scoped>
 .register{
   &__inner{
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     width: 100%;
   }

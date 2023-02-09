@@ -1,7 +1,7 @@
 <template>
   <section>
     <to-top-btn></to-top-btn>
-    <component :is="child" :pass.sync="pass" :user.sync="user" :register-err.sync="registerErr"></component>
+    <component :is="child" :pass.sync="pass" :user.sync="user" :result.sync="result" :file.sync="file"></component>
   </section>
 </template>
 <script>
@@ -11,7 +11,8 @@ export default {
     return {
       user: {},
       pass: '',
-      registerErr: ''
+      result: '',
+      file: [null,null,null]
     };
   },
   head() {
