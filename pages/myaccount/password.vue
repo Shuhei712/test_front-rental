@@ -2,48 +2,37 @@
   <section v-if="!$fetchState.pending && !$fetchState.error">
     <to-top-btn></to-top-btn>
     <top-bar title="パスワード変更" :bread-crumbs="breadCrumbs"></top-bar>
-      <div class="sec__inner py-16 text-center">
-        <div v-if="doneFlg">
-          <p class="mb-4 text-left text-md-center">
-            パスワード変更を承りました。<br>
-            登録されているメールアドレスに、通知メールを送信しましたので、
-            <span class="d-inline-block">メールに記載されているURLにアクセスし、パスワードの変更をお願いいたします。</span>
-          </p>
-          <v-btn
-            color="outline"
-            class="mx-3 white--text"
-            to="/myaccount">
-            マイページに戻る
-          </v-btn>
-        </div>
-        <div v-else>
+    <div class="sec__inner py-16 text-center">
+      <p class="mb-4 text-left text-md-center">
+        パスワード変更を選択いただくと、登録されているメールアドレスに、通知メールを送信いたします。<br>
+        通知メールでお知らせするURLにアクセスいただくことで、パスワードの変更が可能となります。
+      </p>
+      <v-btn
+        color="primary"
+        class="mx-3"
+        @click="passChange">
+        パスワード変更
+      </v-btn>
+      <v-btn
+        color="outline"
+        class="mx-3 white--text"
+        to="/myaccount">
+        マイページに戻る
+      </v-btn>
+    </div>
 
-          <div v-if="errFlg">
-            <p class="mb-4 red--text text-left text-md-center">
-              処理が正常に行われませんでした。<br>
-              しばらくして、もう一度お試しいただくか、弊社までお問い合わせ下さい。
-            </p>
-          </div>
-          <div v-else>
-            <p class="mb-4 text-left text-md-center">
-              パスワード変更を選択いただくと、通知メールを送信いたします。<br>
-              通知メールでお知らせするURLにアクセスいただくことでパスワードの変更が可能となります。
-            </p>
-          </div>
-          <v-btn
-            color="primary"
-            class="mx-3"
-            @click="passChange">
-            パスワード変更
-          </v-btn>
-          <v-btn
-            color="outline"
-            class="mx-3 white--text"
-            to="/myaccount">
-            マイページに戻る
-          </v-btn>
-        </div>
-      </div>
+    <v-dialog v-model="resultDialog"
+      width="780"
+      persistent>
+      <v-card class="pa-5 text-center">
+        <result-card
+          :result="result"
+          :action="'パスワード変更依頼'"
+          :path="'/myaccount'"
+          :dialog.sync="resultDialog">
+        </result-card>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 <script>
@@ -52,8 +41,8 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      doneFlg: false,
-      errFlg: false,
+      resultDialog: false,
+      result: null,
     }
   },
   fetch() {
@@ -77,7 +66,6 @@ export default {
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async passChange(){
-
       this.$store.commit('loading/changeStatus', true)
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
@@ -88,18 +76,14 @@ export default {
       })
       console.log(res)
       if(res.data.Status==='TRUE'){
-        this.doneFlg = true
-      }else if(res.data.ErrorNo===100001){
-        // 認証tokenの有効期限が切れています
-        this.$store.dispatch('auth/resetUser')
-        this.$router.push('/login');
+        this.result = 'success'
+        this.resultDialog = true
       }else if(res.data.ErrorNo===100002){
-        // access認証tokenの有効期限が切れています
         const res = await this.$getAccessToken()
-        console.log(res)
-        this.passChange()
+        if( res ) return this.passChange()
       }else{
-        this.errFlg = true
+        this.result = String( res.data.ErrorNo )
+        this.resultDialog = true
       }
 
       this.$store.commit('loading/changeStatus', false)

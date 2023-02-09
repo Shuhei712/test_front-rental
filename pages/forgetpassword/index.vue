@@ -1,73 +1,68 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error">
-    <!-- <top-bar title="パスワード変更" :bread-crumbs="breadCrumbs"></top-bar> -->
+  <section>
     <div class="sec__inner py-16 text-center">
       <div class="text-center py-15">
         <h1 class="py-6 mb-4">パスワードをお忘れですか？</h1>
-        <div v-if="doneFlg">
-          <p class="mb-4 text-left text-md-center">
-            パスワード変更を承りました。<br>
-            登録されているメールアドレスに、通知メールを送信しましたので、
-            <span class="d-inline-block">メールに記載されているURLにアクセスし、パスワードの変更をお願いいたします。</span>
+        <p class="mb-8 text-left text-md-center">
+          ご登録のアドレスに、通知メールを送信いたします。<br>
+          通知メールでお知らせするURLにアクセスいただくことで、パスワードの変更が可能となります。
+        </p>
+        <div v-if="errFlg">
+          <p class="mb-4 red--text text-left">
+            ご指定のメールアドレスのアカウントが見つかりません。
           </p>
-          <v-btn
-            color="outline"
-            class="mx-3 white--text"
-            to="/login">
-            ログイン画面
-          </v-btn>
         </div>
-        <div v-else>
-          <p class="mb-8 text-left text-md-center">
-            ご登録のアドレスに、通知メールを送信いたします。<br>
-            通知メールでお知らせするURLにアクセスいただくことで、パスワードの変更が可能となります。
-          </p>
-          <div v-if="errFlg">
-            <p class="mb-4 red--text text-left">
-              ご指定のメールアドレスのアカウントが見つかりません。
-            </p>
+        <ValidationObserver v-slot="ObserverProps">
+          <ValidationProvider
+            v-slot="{ errors }"
+            name="メールアドレス"
+            rules="required|email">
+            <v-row>
+              <v-col sm="3" cols="12" class="text-left pb-0">
+                メールアドレス
+              </v-col>
+              <v-col sm="9" cols="12" class="pt-0 pt-sm-3">
+                <v-text-field
+                  v-model="mail"
+                  outlined
+                  dense
+                  hide-details="auto"
+                  :error-messages="errors"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </ValidationProvider>
+          <div class="mt-9">
+            <v-btn
+              :disabled="ObserverProps.invalid || !ObserverProps.validated"
+              color="primary"
+              class="mx-3"
+              :loading="loading"
+              @click="passChange">
+              パスワード変更
+            </v-btn>
+            <v-btn
+              color="outline"
+              class="mx-3 white--text"
+              to="/login">
+              ログイン画面へ
+            </v-btn>
           </div>
-          <ValidationObserver v-slot="ObserverProps">
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="メールアドレス"
-              rules="required|email">
-              <v-row>
-                <v-col sm="3" cols="12" class="text-left pb-0">
-                  メールアドレス
-                </v-col>
-                <v-col sm="9" cols="12" class="pt-0 pt-sm-3">
-                  <v-text-field
-                    v-model="mail"
-                    outlined
-                    required
-                    dense
-                    hide-details="auto"
-                    :error-messages="errors"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </ValidationProvider>
-            <div class="mt-9">
-              <v-btn
-                :disabled="ObserverProps.invalid || !ObserverProps.validated"
-                color="primary"
-                class="mx-3"
-                :loading="loading"
-                @click="passChange">
-                パスワード変更
-              </v-btn>
-              <v-btn
-                color="outline"
-                class="mx-3 white--text"
-                to="/login">
-                ログイン画面
-              </v-btn>
-            </div>
-          </ValidationObserver>
-        </div>
+        </ValidationObserver>
       </div>
     </div>
+    <v-dialog v-model="resultDialog"
+      width="780"
+      persistent>
+      <v-card class="pa-5 text-center">
+        <result-card
+          :result="result"
+          :action="'パスワード変更依頼'"
+          :path="'./'"
+          :dialog.sync="resultDialog">
+        </result-card>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 <script>
@@ -75,11 +70,11 @@
 export default {
   data() {
     return {
-      // breadCrumbs: [],
-      doneFlg: false,
       errFlg: false,
       mail: null,
-      loading: false
+      loading: false,
+      resultDialog: false,
+      result: null,
     }
   },
   head () {
@@ -91,10 +86,6 @@ export default {
     }
   },
   methods: {
-    // setBreadCrumbs() {
-    //   this.$store.commit('breadCrumbs/addList', { name: "パスワード変更", path: "/forgetpassword" });
-    //   this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
-    // },
     async passChange(){
       this.loading = true
       const res = await this.$memberAxios.get(`/auth/forgetRequest/${this.mail}`)
@@ -102,7 +93,8 @@ export default {
         console.log(res)
       }
       if(res.data.Status==='TRUE'){
-        this.doneFlg = true
+        this.result = 'success'
+        this.resultDialog = true
       }else{
         this.errFlg = true
       }
