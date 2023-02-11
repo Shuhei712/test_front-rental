@@ -65,6 +65,7 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
+      this.$setLog('新規登録', 'アクティベーション', res.data.Status)
       if(res.data.Status==='TRUE'){
         this.activateFlg = true
       }else{

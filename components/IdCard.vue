@@ -143,6 +143,7 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
+      this.$setLog('会員情報', '本人確認ファイル登録', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.$set(this.userJson, 'UploadKey', res.data.FileUploadKey)
         this.$set(this.userJson, 'DocFileName1', this.fileJson[0].name)
@@ -173,6 +174,7 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
+      this.$setLog('会員情報', '更新', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.result = 'success'
         this.resultDialog = true

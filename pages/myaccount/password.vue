@@ -75,6 +75,7 @@ export default {
         }
       })
       console.log(res)
+      this.$setLog('会員パス', '変更依頼', res.data.Status)
       if(res.data.Status==='TRUE'){
         this.result = 'success'
         this.resultDialog = true

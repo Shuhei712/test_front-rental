@@ -271,6 +271,7 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
+      this.$setLog('会員情報', '更新', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.result = 'success'
         this.resultDialog = true

@@ -271,7 +271,7 @@ export default {
       param.append('Password', this.pass)
       param.append('JsonData', userInfo)
       const res = await this.$memberAxios.post('member/', param)
-
+      this.$setLog('新規登録', '仮登録', res.data.Status)
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }

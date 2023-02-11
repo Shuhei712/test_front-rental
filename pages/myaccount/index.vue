@@ -215,8 +215,10 @@ export default {
       }
       if(task==='logout'){
         res = await this.$memberAxios.get(`auth/logout/${loginID}`, headers)
+        this.$setLog('会員', 'ログアウト', res.data.Status)
       }else if(task==='delete'){
         res = await this.$memberAxios.delete(`member/${loginID}`, headers)
+        this.$setLog('会員', '退会', res.data.Status)
       }
 
       if (this.$config.DEBUG_MODE) {
