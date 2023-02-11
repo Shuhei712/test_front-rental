@@ -2,16 +2,15 @@
   <div v-if="!$fetchState.pending && !$fetchState.error">
     <top-bar title="お問い合わせ 入力" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="register__inner py-16 px-3 px-lg-0">
-      <!-- <dl class="d-flex">
-        <dt>会員番号</dt>
-        <dd>：{{ loginInfo.MemberID }}</dd>
-      </dl> -->
       <v-card
         outlined
         class="py-6">
         <ValidationObserver v-slot="ObserverProps" ref="observer">
           <v-form ref="form">
             <v-container>
+              <v-row class="my-1">
+                <v-col>会員番号 {{loginInfo.MemberID}}</v-col>
+              </v-row>
               <v-row class="my-1">
                 <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お問い合わせの種類</v-col>
                 <v-col cols="12" md="8">
@@ -49,7 +48,7 @@
                 name="nameKana"
                 rules="max:50">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> お名前(カナ)</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 氏名(カナ)</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.NameKana"
@@ -173,6 +172,7 @@ export default {
     return {
       breadCrumbs: [],
       displayLists: {},
+      loginInfo: null
     }
   },
 
@@ -215,10 +215,10 @@ export default {
     async getUserInfo(){
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
-      const loginInfo = await this.$getLoginInfo()
+      this.loginInfo = await this.$getLoginInfo()
       const param = new URLSearchParams()
       param.append('LoginID', loginID)
-      const res = await this.$memberBaseAxios.post(`member/getInfo/${loginInfo.MemberID}`, param, {
+      const res = await this.$memberBaseAxios.post(`member/getInfo/${this.loginInfo.MemberID}`, param, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

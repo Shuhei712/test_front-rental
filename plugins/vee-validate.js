@@ -8,7 +8,7 @@ const errMessage = {
     "email": "有効なフォーマットではありません",
     "min": "{length}文字以上にしてください",
     "max": "{length}文字以内にしてください",
-    "numeric": "半角数字のみにしてください"
+    "numeric": "半角数字のみ"
   }
 }
 localize('ja', errMessage);

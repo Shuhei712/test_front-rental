@@ -9,20 +9,27 @@
             <v-form>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text secondary px-2 py-1 rounded body-2">任意</span>
+                  <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                   担当者名
                 </v-col>
                 <v-col cols="12" md="9">
-                  <v-text-field
-                    v-model="estJson.OwnerName"
-                    dense
-                    outlined
-                    hide-details="auto"></v-text-field>
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    name="name"
+                    rules="required">
+                    <v-text-field
+                      v-model="estJson.OwnerName"
+                      outlined
+                      dense
+                      hide-details="auto"
+                      :error-messages="errors"
+                    ></v-text-field>
+                  </ValidationProvider>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text secondary px-2 py-1 rounded body-2">任意</span>
+                  <span class="white--text secondary px-2 py-1 rounded">任意</span>
                   会社名
                 </v-col>
                 <v-col cols="12" md="9">
@@ -35,7 +42,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
+                  <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                   件名
                 </v-col>
                 <v-col cols="12" md="9">
@@ -55,7 +62,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
+                  <span class="white--text red darken-1 px-2 py-1 rounded">必須</span>
                   ご使用期間
                 </v-col>
                 <v-col cols="12" md="9">
@@ -112,7 +119,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text secondary px-2 py-1 rounded body-2">任意</span>
+                  <span class="white--text secondary px-2 py-1 rounded">任意</span>
                   ご使用場所
                 </v-col>
                 <v-col cols="12" md="9">
@@ -266,7 +273,7 @@ export default {
         this.loading = false
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        return this.downloadEst()
+        if( res ) return this.downloadEst()
       }else{
         this.result = res.data.ErrorNo
         this.loading = false

@@ -67,7 +67,6 @@
         <v-col cols="12" md="4" class="pb-0">お問い合わせ内容</v-col>
         <v-col cols="12" md="8" class="pt-0 pt-md-1">
           <v-textarea
-            name="inquiry"
             dense
             outlined
             readonly
@@ -85,38 +84,39 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="12" md="4" class="pb-0">回答日</v-col>
-        <v-col cols="12" md="8" class="pt-0 pt-md-1">
-          <v-text-field
-            dense
-            outlined
-            readonly
-            hide-details="auto"
-            :value=dateFormat(contactLists.ContactResponseDate)>
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" md="4" class="pb-0">回答内容</v-col>
-        <v-col cols="12" md="8" class="pt-0 pt-md-1">
-          <v-textarea
-            name="staffInquiry"
-            dense
-            outlined
-            readonly
-            hide-details="auto"
-            :value=contactLists.ContactResponse>
-          </v-textarea>
-          <v-btn
-            v-if="contactLists.AttachFileDownloadURL"
-            class="mt-3"
-            outlined
-            :href="contactLists.AttachFileDownloadURL">
-            資料ダウンロード
-          </v-btn>
-        </v-col>
-      </v-row>
+      <div v-if="contactLists.ContactStatus">
+        <v-row>
+          <v-col cols="12" md="4" class="pb-0">回答日</v-col>
+          <v-col cols="12" md="8" class="pt-0 pt-md-1">
+            <v-text-field
+              dense
+              outlined
+              readonly
+              hide-details="auto"
+              :value=dateFormat(contactLists.ContactResponseDate)>
+            </v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" md="4" class="pb-0">回答内容</v-col>
+          <v-col cols="12" md="8" class="pt-0 pt-md-1">
+            <v-textarea
+              dense
+              outlined
+              readonly
+              hide-details="auto"
+              :value=contactLists.ContactResponse>
+            </v-textarea>
+            <v-btn
+              v-if="contactLists.AttachFileDownloadURL"
+              class="mt-3"
+              outlined
+              :href="contactLists.AttachFileDownloadURL">
+              資料ダウンロード
+            </v-btn>
+          </v-col>
+        </v-row>
+      </div>
     </div>
   </section>
 </template>
