@@ -545,6 +545,11 @@ export default {
       const res = await this.$axios.$post('get_product_info_master.php', param)
       // console.log(res)
       this.productInfoList = res.ProductInfo
+      if (this.productInfoList.ProductName === null) {
+        this.$nuxt.error({
+          statusCode: 999
+        });
+      }
     },
     async getProductItemInfo() {
       const param = new URLSearchParams()
