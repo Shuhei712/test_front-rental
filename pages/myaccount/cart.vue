@@ -87,7 +87,7 @@
               <v-btn
                 dark
                 elevation="0"
-                color="outline"
+                color="accent"
                 width="100%"
                 @click="estDialog=true">見積書ダウンロード
               </v-btn>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="cart__user mt-10">
-          <h2 class="my-4 text-h6 accent white--text pa-2 rounded-sm">レンタル申し込み記入欄</h2>
+          <h2 class="my-4 text-h6 outline white--text pa-2 rounded-sm">レンタル申し込み記入欄</h2>
           <v-card
             outlined
             class="py-6">
@@ -602,7 +602,7 @@ export default {
         this.cartInfo = res.data
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        return this.getCartInfo()
+        if( res ) return this.getCartInfo()
       }else{
         this.msg = "カートは空です。"
         this.$store.commit('cart/changeCartNum', 0)
@@ -667,7 +667,7 @@ export default {
         this.deleteLoading = false
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        return this.deleteItem()
+        if( res ) return this.deleteItem()
       }
     },
     async changeQuantity(ProductID, Qty){
@@ -693,7 +693,7 @@ export default {
         this.resetEst()
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        return this.changeQuantity()
+        if( res ) return this.changeQuantity()
       }
     },
     resetEst(){
@@ -771,6 +771,10 @@ export default {
     .v-autocomplete.v-select.v-input--is-focused input{
       min-width: auto;
     }
+    .v-autocomplete.v-input .v-input__slot,
+    .v-autocomplete.v-input input{
+        cursor: pointer;
+      }
   }
 }
 .border-bottom{

@@ -26,7 +26,7 @@
             <dt class="order__status-title">コメント</dt>
             <dd>
               {{getDate(order.OrderResponseDate)}}
-              <p>{{order.OrderResponse}}</p>
+              <p class="pre-wrap">{{order.OrderResponse}}</p>
               <v-btn
                 v-if="order.ResponseQuotationURL"
                 outlined
@@ -75,12 +75,12 @@
           v-if="order.OrderStatus===0||order.OrderStatus===1"
           max-width="320"
           elevation="0"
-          class="ml-auto mt-1">
+          class="ml-auto mt-1 pb-3">
           <v-card-actions tag="div" class="px-0">
             <v-btn
               dark
               elevation="0"
-              color="outline"
+              color="feature"
               width="100%"
               @click="setCancelDialog()">申し込みキャンセル
             </v-btn>
@@ -89,7 +89,7 @@
       </div>
 
       <div class="order__details">
-        <h2 class="my-4 text-h6 accent white--text pa-2 rounded-sm">レンタル申し込み詳細</h2>
+        <h2 class="my-4 text-h6 outline white--text pa-2 rounded-sm">レンタル申し込み詳細</h2>
         <v-card
           outlined
           class="py-6">
@@ -387,15 +387,20 @@ export default {
   margin: 0 auto;
   width: 95%;
 }
-.order__status-title{
-  flex-basis: 6rem;
-  flex-grow: 0;
-  position: relative;
-  &::after{
-    content: '：';
-    display: inline-block;
-    position: absolute;
-    right: 3px;
+.order__status{
+  &-title{
+    flex-basis: 6rem;
+    flex-grow: 0;
+    position: relative;
+    &::after{
+      content: '：';
+      display: inline-block;
+      position: absolute;
+      right: 3px;
+    }
+  }
+  .pre-wrap{
+    white-space: pre-wrap;
   }
 }
 .table{

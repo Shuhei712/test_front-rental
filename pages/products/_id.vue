@@ -131,7 +131,7 @@
                   :items="qtyArr"
                   dense
                   hide-details="auto"
-                  class="d-inline-block w-70"
+                  class="d-inline-block w-70 pointer"
                 ></v-autocomplete>
               </div>
               <div class="info__status-cart">
@@ -677,12 +677,11 @@ export default {
       }
     },
     async addCart(Qty){
-      this.loading = true
       if(!this.isLogin){
         this.loginDialog = true
-        this.loading = false
         return false
       }
+      this.loading = true
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
       const param = new URLSearchParams()
@@ -1005,6 +1004,10 @@ $bp_xs: 362px;
       }
       .w-70{
         width: 70px;
+      }
+      ::v-deep .v-autocomplete.v-input .v-input__slot,
+      ::v-deep .v-autocomplete.v-input input{
+        cursor: pointer;
       }
 
       .price {

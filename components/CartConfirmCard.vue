@@ -382,7 +382,7 @@ export default {
         this.$store.commit('cart/resetCartNum')
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        this.order()
+        if( res ) return this.order()
       }else{
         this.loading = false
         this.result = String(res.data.ErrorNo)
