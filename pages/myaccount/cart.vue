@@ -19,7 +19,7 @@
     </cart-confirm-card>
     <top-bar title="カート" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 cart">
-      <p v-if="msg">{{msg}}</p>
+      <p v-if="!cartInfo">カートは空です。</p>
       <div v-else>
         <div class="cart__item">
           <h2 class="mb-4">商品一覧</h2>
@@ -520,7 +520,6 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      msg: null,
       cartInfo: null,
       rentJson: {},
       estJson: {},
@@ -549,7 +548,7 @@ export default {
     this.$store.commit('loading/changeStatus', true)
     this.setBreadCrumbs()
     await this.getCartInfo()
-    if(!this.msg) await this.inputUserInfo()
+    if(!this.cartInfo) await this.inputUserInfo()
     this.$store.commit('loading/changeStatus', false)
   },
   head () {
@@ -604,9 +603,8 @@ export default {
         const res = await this.$getAccessToken()
         if( res ) return this.getCartInfo()
       }else{
-        this.msg = "カートは空です。"
         this.$store.commit('cart/changeCartNum', 0)
-        this.cartInfo = {}
+        this.cartInfo = null
       }
     },
     async inputUserInfo(){
@@ -663,12 +661,15 @@ export default {
         this.cartInfo = res.data
         this.resetEst()
         this.$store.commit('cart/changeCartNum', res.data.ProductListCnt)
-        this.dialog = false
-        this.deleteLoading = false
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        if( res ) return this.deleteItem()
+        if( res ) return await this.deleteItem()
+      }else if(res.data.ErrorNo === 130902){
+        this.$store.commit('cart/changeCartNum', 0)
+        this.cartInfo = null
       }
+      this.dialog = false
+      this.deleteLoading = false
     },
     async changeQuantity(ProductID, Qty){
       if( !Qty || Qty <= 0 ) return false
