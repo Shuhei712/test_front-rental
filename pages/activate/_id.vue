@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-if="!$fetchState.pending && !$fetchState.error">
     <div class="sec__inner py-16 activate__inner">
       <div class="text-center py-15">
         <div v-if="activateFlg" class="activate__success">

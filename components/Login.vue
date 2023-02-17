@@ -93,29 +93,12 @@ export default {
         this.$store.commit('auth/setUser', this.id)
         this.$store.commit('auth/setAuthToken', res.data.AuthToken)
         this.$store.commit('auth/setAccessToken', res.data.AccessToken)
-        await this.getCartNum(res.data.AccessToken, this.id)
+        await this.$getCartNum()
         location.reload()
       }else{
         this.loginErr = true
       }
       this.loading = false
-    },
-    async getCartNum(token,id){
-      const res = await this.$memberBaseAxios.get(`order/getCartProductCount/${id}`,{
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
-      if(res.data.Status==='TRUE'){
-        this.$store.commit('cart/changeCartNum', res.data.Count)
-      }else if(res.data.ErrorNo===100002){
-        const res = await this.$getAccessToken()
-        if( res ) return this.getCartNum(token,id)
-      }
     },
   }
 }

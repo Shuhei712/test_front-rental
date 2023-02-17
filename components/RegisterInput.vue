@@ -31,7 +31,19 @@
                 </v-col>
               </v-row>
               <div v-if="syncedUser.MemberType===0">
-
+                <v-row class="my-1">
+                  <v-col cols="12" md="4" class="pb-0">
+                    <span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 所属先
+                  </v-col>
+                  <v-col cols="12" md="8">
+                    <v-text-field
+                      v-model="syncedUser.Organization"
+                      outlined
+                      dense
+                      hide-details="auto"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
               </div>
               <div v-else>
 

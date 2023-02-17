@@ -34,7 +34,7 @@
                 </v-col>
                 <v-col cols="12" md="9">
                   <v-text-field
-                  v-model="estJson.Organization"
+                  v-model="estJson.CompanyName"
                   dense
                   outlined
                   hide-details="auto"></v-text-field>

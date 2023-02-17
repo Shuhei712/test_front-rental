@@ -16,7 +16,7 @@
         <v-icon>mdi-heart</v-icon>
       </v-btn>
     </div>
-    <v-card class="item-card px-2 py-3" elevation="0" link :to="link">
+    <v-card class="item-card px-2 py-3" elevation="0" link :href="link">
       <div class="item__img">
         <img :src="isNullCheckImageURL" />
       </div>

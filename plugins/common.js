@@ -117,6 +117,26 @@ export default ({store, $config, redirect, route}, inject) => {
   }
   inject('getUserInfo', getUserInfo)
 
+  const getCartNum = async()=>{
+    const token = store.getters["auth/getAccessToken"]
+    const loginID = store.getters["auth/getUser"]
+    const res = await memberBaseAxios.get(`order/getCartProductCount/${loginID}`,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if ($config.DEBUG_MODE) {
+      console.log(res)
+    }
+    if(res.data.Status==='TRUE'){
+      store.commit('cart/changeCartNum', res.data.Count)
+    }else if(res.data.ErrorNo===100002){
+      const res = await getAccessToken()
+      if( res ) return getCartNum()
+    }
+  }
+  inject('getCartNum', getCartNum)
   // ('会員お問い合わせ', '登録', res.data.Status)
   const setLog = async(display, action, info)=>{
     const token = store.getters["auth/getAccessToken"]

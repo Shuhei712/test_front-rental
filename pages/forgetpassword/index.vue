@@ -41,12 +41,12 @@
               @click="passChange">
               パスワード変更
             </v-btn>
-            <v-btn
+            <!-- <v-btn
               color="outline"
               class="mx-3 white--text"
               to="/login">
               ログイン画面へ
-            </v-btn>
+            </v-btn> -->
           </div>
         </ValidationObserver>
       </div>
@@ -92,7 +92,6 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
-      this.$setLog('会員パス忘れ', '変更依頼', res.data.Status)
       if(res.data.Status==='TRUE'){
         this.result = 'success'
         this.resultDialog = true

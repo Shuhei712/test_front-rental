@@ -49,7 +49,11 @@
           </td>
         </template>
       </v-data-table>
-      <p v-else>申し込みの履歴がございません。</p>
+      <v-card v-else class="text-center pa-4" outlined>
+        <v-icon color="lightGray">mdi-cart-outline</v-icon><br>
+        <p class="mt-3">申し込みの履歴がございません。
+        </p>
+      </v-card>
     </div>
 
   </section>

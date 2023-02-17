@@ -347,6 +347,25 @@
       </div>
     </div>
     <v-dialog
+      v-model="addCartDialog"
+      width="400">
+      <v-card class="pa-5 text-center">
+        <p class="mb-4">商品をカートに追加しました。</p>
+        <v-btn
+          color="primary"
+          class="mt-4 mx-1 white--text"
+          :to="'/myaccount/cart'">
+          カートを見る
+        </v-btn>
+        <v-btn
+          color="outline"
+          class="mt-4 mx-1 white--text"
+          @click="addCartDialog=false">
+          戻る
+        </v-btn>
+      </v-card>
+    </v-dialog>
+    <v-dialog
       v-model="loginDialog"
       width="700">
       <v-card class="pa-5 text-center">
@@ -389,6 +408,7 @@ export default {
       favoriteFlg: false,
       isLogin: false,
       loginDialog: false,
+      addCartDialog: false,
       loading: false,
       qtyArr: [...Array(99).keys()].map(i => i + 1)
     }
@@ -703,11 +723,13 @@ export default {
       }
       this.$setLog('会員商品詳細', 'カート追加', res.data.Status)
       if(res.data.Status === 'TRUE'){
-        this.$router.push('/myaccount/cart')
+        this.addCartDialog = true
+        await this.$getCartNum()
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
         if( res ) return this.addCart(Qty)
       }
+      this.loading = false
     },
     async getFavorite(){
       const res = await this.favorite('favorite/getStatus/', 'post')

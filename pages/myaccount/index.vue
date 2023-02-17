@@ -36,6 +36,22 @@
             </v-btn>
           </div>
         </v-col>
+        <v-col cols="12" md="4">
+          <div class="px-3">
+            <v-btn
+              outlined
+              block
+              x-large
+              :disabled="user.NecDocFlg?true:false"
+              :to="'/myaccount/identification'">本人確認
+                <v-badge
+                  :color="user.NecDocFlg?'grey':'red'"
+                  :content="user.NecDocFlgDisp"
+                  inline
+                ></v-badge>
+            </v-btn>
+          </div>
+        </v-col>
       </v-row>
       <h2 class="pt-12 pb-1 headingText--text">その他</h2>
       <v-divider class="mb-4"></v-divider>
@@ -150,7 +166,7 @@ export default {
       breadCrumbs: [],
       menuItem: [
         {
-          title: 'お気にいり',
+          title: 'お気に入り',
           path: '/myaccount/favorite'
         },
         {
@@ -167,23 +183,25 @@ export default {
           title: 'アカウント情報',
           path: '/myaccount/info'
         },
-        {
-          title: '本人確認',
-          path: '/myaccount/identification'
-        },
+        // {
+        //   title: '本人確認',
+        //   path: '/myaccount/identification'
+        // },
         {
           title: 'パスワード変更',
           path: '/myaccount/password'
         },
       ],
+      user: null,
       logoutDialog: false,
       deleteDialog: false,
       loading: false,
       result: null
     }
   },
-  fetch() {
+  async fetch() {
     this.$store.commit('loading/changeStatus', true)
+    this.user = await this.$getLoginInfo()
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },

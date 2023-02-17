@@ -276,6 +276,19 @@
                 </v-text-field>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12" md="4" class="pb-0">備考
+              </v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-textarea
+                  :value="order.OrderComment"
+                  outlined
+                  dense
+                  hide-details="auto"
+                  readonly>
+                </v-textarea>
+              </v-col>
+            </v-row>
           </v-container>
 
         </v-card>
@@ -431,7 +444,7 @@ export default {
   td{
     border: 1px solid #f2f2f2;
   }
-  input{
+  input,textarea{
     cursor: default;
   }
   .v-data-table__mobile-row__header{

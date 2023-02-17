@@ -19,7 +19,16 @@
     </cart-confirm-card>
     <top-bar title="カート" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 cart">
-      <p v-if="!cartInfo">カートは空です。</p>
+      <v-card v-if="!cartInfo" class="text-center pa-4" outlined>
+        <v-icon color="lightGray">mdi-cart-outline</v-icon><br>
+        <p class="mt-3">カートに入っている商品はございません。
+        </p>
+        <v-btn
+          color="primary"
+          class="white--text mt-4"
+          :to="'/'">トップページへ
+        </v-btn>
+      </v-card>
       <div v-else>
         <div class="cart__item">
           <h2 class="mb-4">商品一覧</h2>
@@ -462,6 +471,20 @@
 
                     </v-col>
                   </v-row>
+
+                  <v-row class="border-bottom">
+                    <v-col cols="12" md="4" class="pb-0">
+                      <span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 備考
+                    </v-col>
+                    <v-col cols="12" md="8">
+                      <v-textarea
+                        v-model="rentJson.OrderComment"
+                        outlined
+                        dense
+                        hide-details="auto"
+                      ></v-textarea>
+                    </v-col>
+                  </v-row>
                 </v-container>
               </v-form>
               <!-- {{ObserverProps.fields}} -->
@@ -548,7 +571,7 @@ export default {
     this.$store.commit('loading/changeStatus', true)
     this.setBreadCrumbs()
     await this.getCartInfo()
-    if(!this.cartInfo) await this.inputUserInfo()
+    if(this.cartInfo) await this.inputUserInfo()
     this.$store.commit('loading/changeStatus', false)
   },
   head () {
@@ -597,7 +620,6 @@ export default {
         console.log(res)
       }
       if(res.data.Status === 'TRUE'){
-        this.$store.commit('cart/changeCartNum', res.data.ProductListCnt)
         this.cartInfo = res.data
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
@@ -660,7 +682,7 @@ export default {
       if(res.data.Status === 'TRUE'){
         this.cartInfo = res.data
         this.resetEst()
-        this.$store.commit('cart/changeCartNum', res.data.ProductListCnt)
+        this.$getCartNum()
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
         if( res ) return await this.deleteItem()
@@ -690,11 +712,12 @@ export default {
       }
       this.$setLog('会員カート', '数量変更', res.data.Status)
       if(res.data.Status === 'TRUE'){
+        this.$getCartNum()
         this.cartInfo = res.data
         this.resetEst()
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        if( res ) return this.changeQuantity()
+        if( res ) return this.changeQuantity(ProductID, Qty)
       }
     },
     resetEst(){

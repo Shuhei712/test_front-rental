@@ -1,9 +1,14 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error">
     <to-top-btn></to-top-btn>
-    <top-bar title="お気にいり" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="お気に入り" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 fav">
-      <p v-if="!favLists">お気に入りがございません。</p>
+      <v-card v-if="!favLists" class="text-center pa-4" outlined>
+        <v-icon color="lightGray">mdi-heart</v-icon><br>
+        <p class="mt-3">お気に入り商品がございません。<br>
+          気になる商品をお気に入りに登録しましょう。
+        </p>
+      </v-card>
 
       <v-row v-else class="product__main">
         <v-col v-for="(list, index) in favLists" :key="index" cols="12" sm="6" md="3">
@@ -41,7 +46,7 @@ export default {
   },
   head () {
     return {
-      title: "お気にいり",
+      title: "お気に入り",
       meta: [
         { hid: "robots", name: "robots", content: "noindex" }
       ]
@@ -51,7 +56,7 @@ export default {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
       this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" });
-      this.$store.commit('breadCrumbs/addList', { name: "お気にいり", path: "/myaccount/" });
+      this.$store.commit('breadCrumbs/addList', { name: "お気に入り", path: "/myaccount/" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async getFavInfo(){

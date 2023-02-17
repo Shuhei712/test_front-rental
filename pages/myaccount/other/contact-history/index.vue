@@ -26,7 +26,11 @@
           </v-btn>
         </template>
       </v-data-table>
-      <p v-else>お問い合わせの履歴がございません。</p>
+      <v-card v-else class="text-center pa-4" outlined>
+        <v-icon color="lightGray">mdi-email-outline</v-icon><br>
+        <p class="mt-3">お問い合わせの履歴がございません。
+        </p>
+      </v-card>
     </div>
   </section>
 </template>

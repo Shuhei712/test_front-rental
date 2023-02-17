@@ -18,7 +18,19 @@
                 </div>
               </v-col>
             </v-row>
-            <v-row v-if="syncedUser.MemberType===1">
+            <v-row v-if="syncedUser.MemberType===0">
+              <v-col cols="12" md="4" class="pb-0">所属先</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-text-field
+                  :value="syncedUser.Organization"
+                  readonly
+                  outlined
+                  dense
+                  hide-details="auto"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row v-else>
               <v-col cols="12" md="4" class="pb-0">会社名</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-text-field
@@ -271,7 +283,6 @@ export default {
       param.append('Password', this.pass)
       param.append('JsonData', userInfo)
       const res = await this.$memberAxios.post('member/', param)
-      this.$setLog('新規登録', '仮登録', res.data.Status)
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }

@@ -43,6 +43,22 @@
                   </v-row>
                 </ValidationProvider>
               </div>
+              <div v-else>
+                <v-row class="my-1">
+                  <v-col cols="12" md="4" class="pb-0">
+                    <span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 所属先
+                  </v-col>
+                  <v-col cols="12" md="8">
+                    <v-text-field
+                      v-model="userInfo.Organization"
+                      outlined
+                      dense
+                      hide-details="auto"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+
+              </div>
 
               <ValidationProvider
                 v-slot="{ errors }"
@@ -252,9 +268,7 @@ export default {
       this.$set(this.userUpInfo, 'Email', this.userInfo.Email)
       this.$set(this.userUpInfo, 'DMFlg', this.userInfo.DMFlg)
       this.$set(this.userUpInfo, 'MemberKana', this.userInfo.MemberKana ? this.userInfo.MemberKana : '')
-      if( this.userInfo.MemberType ){
-        this.$set(this.userUpInfo, 'Organization', this.userInfo.Organization)
-      }
+      this.$set(this.userUpInfo, 'Organization', this.userInfo.Organization)
       this.$set(this.userUpInfo, 'NecDocFlg', this.userInfo.NecDocFlg)
 
       const accessToken = this.$store.getters["auth/getAccessToken"]
