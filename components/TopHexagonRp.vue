@@ -80,6 +80,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 200;
+    z-index: 199;
     object-fit: contain;
   }
 

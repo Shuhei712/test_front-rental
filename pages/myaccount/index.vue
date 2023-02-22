@@ -100,6 +100,7 @@
     </div>
     <v-dialog
       v-model="logoutDialog"
+      class="popup"
       width="500"
       persistent>
       <v-card class="pa-5 text-center">

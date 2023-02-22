@@ -298,7 +298,7 @@ ul {
   width: 100%;
   position: relative;
   z-index: 500;
-  z-index: 300;
+  z-index: 200;
 
   &__inner {
     top: calc(30 / 1920 * 100vw);
