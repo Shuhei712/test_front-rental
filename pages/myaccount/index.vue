@@ -47,6 +47,7 @@
                 <v-badge
                   :color="user.NecDocFlg?'grey':'red'"
                   :content="user.NecDocFlgDisp"
+                  class="font-weight-regular"
                   inline
                 ></v-badge>
             </v-btn>

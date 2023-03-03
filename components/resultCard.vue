@@ -20,6 +20,9 @@
           <br>ご登録いただいたメールアドレスに受付完了メールを送信いたしました。<br>
           メールが届かない場合は、しばらくしてもう一度お試しいただくか、<span class="d-inline-block">弊社までお問い合わせ下さい。</span>
         </template>
+        <template v-if="action==='退会'">
+          <br>またのご利用をお待ちしております。
+        </template>
       </p>
       <v-btn
         v-if="path==='stay'"
