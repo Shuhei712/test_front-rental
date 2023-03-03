@@ -52,7 +52,7 @@ export default {
       required: true,
     },
     fileObj:{
-      type: String,
+      type: null,
       required: false,
       default: null
     },

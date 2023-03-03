@@ -89,11 +89,9 @@ export default {
     user: {
       type: Object,
       required: true,
-      // default: () => ({})
     },
     file: {
-      type: Array,
-      // required: true
+      type: null,
       required: false,
       default: () => ([])
     },
@@ -130,13 +128,14 @@ export default {
   methods: {
     async register(){
       const formData = new FormData()
-      formData.append('File_01', this.fileJson[0] )
-      formData.append('File_02', this.fileJson[1] )
-      if(this.fileJson[2]) formData.append('File_03', this.fileJson[2] )
+      formData.append('File_01', this.fileJson[0], encodeURIComponent(this.fileJson[0].name) )
+      formData.append('File_02', this.fileJson[1], encodeURIComponent(this.fileJson[1].name) )
+      if(this.fileJson[2]) formData.append('File_03', this.fileJson[2], encodeURIComponent(this.fileJson[2].name) )
       formData.append('FileCnt', this.fileJson[2] ? 3:2 )
+      console.log(this.fileJson[2])
       const res = await this.$memberAxios.post(`comm/uploadFile/`, formData, {
-      header: {
-          "Content-Type": "multipart/form-data",
+      headers: {
+          "Content-Type": "multipart/form-data;charset=UTF-8",
         }
       })
 

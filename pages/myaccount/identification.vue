@@ -78,7 +78,7 @@ export default {
     async setID(){
       this.loading = true
       const id = await this.$refs.id.register()
-      if( id ) this.$refs.id.updateUser()
+      if( id ) await this.$refs.id.updateUser()
       this.loading = false
     }
   },
