@@ -182,11 +182,12 @@ export default {
       top: 0,
     })
     this.displayLists = await this.$getDisplayInfo('DISP_2003')
+    this.loginInfo = await this.$getLoginInfo()
     if( !this.syncedUser.Inquiry ) {
-      this.$set(this.syncedUser, 'ContactType', '未選択')
       if(this.$route.query.id) {
         await this.getContactInfo()
       }else{
+        this.$set(this.syncedUser, 'ContactType', '未選択')
         await this.getUserInfo()
       }
     }
@@ -215,7 +216,6 @@ export default {
     async getUserInfo(){
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
-      this.loginInfo = await this.$getLoginInfo()
       const param = new URLSearchParams()
       param.append('LoginID', loginID)
       const res = await this.$memberBaseAxios.post(`member/getInfo/${this.loginInfo.MemberID}`, param, {
