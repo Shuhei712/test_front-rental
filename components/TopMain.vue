@@ -1,10 +1,10 @@
 <template>
-  <section class="top__main">
-    <v-row class="">
+  <section class="top__main accent">
+    <v-row>
       <v-col order-md="2" cols="12" md="6" class="main__pickup">
         <top-main-pickup :pickup-lists="pickupLists"></top-main-pickup>
       </v-col>
-      <v-col order-md="1" cols="12" md="6" class="main__txt accent">
+      <v-col order-md="1" cols="12" md="6" class="main__txt">
         <v-container class="top__inner py-2">
           <p class="d-none d-md-block white--text text-caption letter-space-02em mt-5">映像 / 音響機材のレンタルサービス</p>
           <v-row class="main__catch" no-gutters>

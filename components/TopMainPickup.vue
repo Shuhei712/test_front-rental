@@ -1,5 +1,5 @@
 <template>
-  <div class="top__slide-rp">
+  <div class="top__slide">
     <div class="item__container">
       <hooper ref="carousel" class="slide__hooper" :settings="hooperSettings" group="pick">
         <slide v-for="(list, index) in pickupLists" :key="index">
@@ -20,7 +20,7 @@
               </div>
               <div class="item__info">
                 <div class="info__maker">
-                  <div class="info__maker-txt px-2 d-flex align-center justify-center">{{ list.PickupHeader }}</div>
+                  <div class="info__maker-txt px-5 d-flex align-center justify-center">{{ list.PickupHeader }}</div>
                 </div>
                 <div class="info__box d-flex align-center ps-10 px-xl-10 py-2 justify-space-between">
                   <div class="info__name text-h6 letter-space-015em">
@@ -33,9 +33,6 @@
                 </div>
                 <div class="info__number text-right letter-space-015em">
                   <span v-if="list.PickupTypeNumber">{{ list.PickupTypeNumber }}</span>
-                  <span v-else>
-                    PandorasBox JogShuttle Board
-                  </span>
                 </div>
               </div>
             </div>
@@ -127,15 +124,13 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
 
-.top__slide-rp {
+.top__slide {
   width: 110%;
   transform: translateX(-8.8%);
   height: 100%;
   margin: auto;
   position: relative;
   z-index: 2;
-
-  $hexagon-width: calc(1000 * 100vw / 1920);
   @include mq(md) {
     width: 100%;
     transform: unset;
@@ -148,11 +143,10 @@ export default {
     left: -1px;
     top: 0;
     pointer-events: none;
-    background-image: linear-gradient(79deg, $accent 5%, transparent 5.1%), linear-gradient(-79deg, transparent calc(81.9% + 3.7vw), $accent calc(82% + 3.7vw));
+    background-image: linear-gradient(79deg, $accent 4%, transparent 4.1%), linear-gradient(-79deg, transparent calc(81.9% + 3.7vw), $accent calc(82% + 3.7vw));
     z-index: 1;
     @include mq(lg) {
-      background-image: linear-gradient(79deg, $accent 7%, transparent 7.1%), linear-gradient(-79deg, transparent calc(81.9% + 2.7vw), $accent calc(82% + 2.7vw));
-
+      background-image: linear-gradient(79deg, $accent 6%, transparent 6.1%), linear-gradient(-79deg, transparent calc(80.9% + 2.7vw), $accent calc(81% + 2.7vw));
     }
     @include mq(md) {
       bottom: 0;
@@ -160,89 +154,15 @@ export default {
       background-image: linear-gradient(5deg, $accent 12%, transparent 12.1%);
     }
   }
-
-  .catch-copy-1--hidden,
-  .catch-copy-2--hidden{
-    background: $primary;
-    color: #fff;
-  }
-
-  .hexagon__pickup {
-    position: absolute;
-    width: 80%;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 200;
-    object-fit: contain;
-  }
-
-  .hexagon__top-image {
-    display: none;
-
-    @include mq(sm) {
-      display: block;
-      width: calc(#{$hexagon-width} + 10%);
-      object-fit: contain;
-      z-index: 50;
-    }
-  }
-
-  .hexagon {
-    z-index: 100;
-    position: relative;
-    width: $hexagon-width;
-    overflow: hidden;
-    transform: rotate(10deg);
-  }
-  .hexagon::before {
-    display: block;
-    padding-top: calc(#{$hexagon-width} * 2 / 1.732); /*  2√3 / 4 x 100  */
-    content: '';
-  }
-
-  .hexagon__inner-1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    transform: rotate(60deg);
-  }
-  .hexagon__inner-2 {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    transform: rotate(60deg);
-  }
-  .hexagon__inner-3 {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-120deg);
-  }
-
-  .hexagon__content {
-    width: 100%;
-    height: 100%;
-    background-color: $accent;
-    position: relative;
-  }
-
-  .content__bg {
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(10deg);
-    background-color: rgba($color: #fff57d, $alpha: 0.18);
-    clip-path: polygon(0 25%, 100% 15%, 100% 100%);
-    width: 200%;
-    height: 120%;
-  }
+  $pick-img-width: calc(1000 * 100vw / 1920);
   $sns-space: 11%;
   $thumb-space: 6rem;
   $thumb-space-s: 7rem;
-  .content__item,.content__feature  {
+  .item__container{
+    position: relative;
+    height: 100%;
+  }
+  .content__item {
     width: 100%;
     height: 100%;
     position: relative;
@@ -270,12 +190,6 @@ export default {
       padding-bottom: 5rem;
       padding-left: 8%;
     }
-  }
-  .item__container{
-    position: relative;
-    height: 100%;
-  }
-  .content__item{
     .item__image {
       position: relative;
       width: 100%;
@@ -292,7 +206,7 @@ export default {
         position: absolute;
         left: -8%;
         top: 0;
-        width: calc(#{$hexagon-width});
+        width: calc(#{$pick-img-width});
         width: 100%;
         max-height: 100%;
         object-fit: contain;
@@ -378,8 +292,7 @@ export default {
           display: none;
         }
       }
-  }
-
+    }
     .item__info {
       position: relative;
       margin-bottom: 2rem;
@@ -404,7 +317,8 @@ export default {
         left: -0.5rem;
       }
       @include mq(md) {
-        margin-left: 0;
+        margin-left: auto;
+        max-width: 600px;
       }
     }
     .info__maker {
@@ -416,7 +330,7 @@ export default {
       min-width: 100px;
       z-index: 3;
       top: 50%;
-      transform: translate(-77%,-50%);
+      transform: translate(-85%,-50%);
       &::before{
         position: absolute;
         width: 100%;
@@ -441,7 +355,14 @@ export default {
       &-txt {
         position: relative;
         height: 100%;
-        min-height: 2.6rem;
+        min-height: 2.8rem;
+        width: 7.5rem;
+        line-height: 1.2;
+        padding: 0.6rem;
+        word-break: break-word;
+        @include mq(md) {
+          width: auto;
+        }
       }
     }
 
