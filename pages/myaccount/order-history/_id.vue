@@ -72,7 +72,7 @@
         </price-card>
 
         <v-card
-          v-if="order.OrderStatus===0||order.OrderStatus===1"
+          v-if="order.OrderStatus!==5&&order.OrderStatus!==9"
           max-width="320"
           elevation="0"
           class="ml-auto mt-1 pb-3">
@@ -99,13 +99,7 @@
                 注文件名
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="order.OrderTitle"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly
-                ></v-text-field>
+                <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{order.OrderTitle}}</v-card>
               </v-col>
             </v-row>
 
@@ -114,24 +108,8 @@
               <v-col cols="12" md="4" class="pb-0">連絡方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  v-if="order.ContactType"
-                  :value="order.ContactEmail"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  prefix="メール： "
-                  readonly>
-                </v-text-field>
-                <v-text-field
-                  v-else
-                  :value="order.ContactTel"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  prefix="お電話： "
-                  readonly>
-                </v-text-field>
+                <v-card v-if="order.ContactType" elevation="0" class="px-2 py-1 border">メール： {{order.ContactEmail}}</v-card>
+                <v-card v-else elevation="0" class="px-2 py-1 border">お電話： {{order.ContactTel}}</v-card>
 
               </v-col>
             </v-row>
@@ -142,58 +120,23 @@
               <v-col cols="12" md="4" class="pb-0">お引渡方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="order.DeliveryTypeDisp"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly>
-                </v-text-field>
+                <v-card elevation="0" class="px-2 py-1 border">{{order.DeliveryTypeDisp}}</v-card>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="4" class="pb-0">お引渡日時
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="getDate(order.DeliveryDate,order.DeliveryTime)"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly>
-                </v-text-field>
+                <v-card elevation="0" class="px-2 py-1 border">{{getDate(order.DeliveryDate,order.DeliveryTime)}}</v-card>
               </v-col>
             </v-row>
             <v-row v-if="order.DeliveryType!==0">
               <v-col cols="12" md="4" class="pb-0">お引渡場所
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="order.DeliveryZipCode"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  prefix="〒"
-                  class="input-short"
-                  readonly>
-                </v-text-field>
-                <v-text-field
-                  v-if="order.DeliveryPrefect"
-                  :value="order.DeliveryPrefect"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  class="my-1"
-                  readonly>
-                </v-text-field>
-                <v-text-field
-                  v-if="order.DeliveryAddress"
-                  :value="order.DeliveryAddress"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly>
-                </v-text-field>
+                <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">〒{{order.DeliveryZipCode}}</v-card>
+                <v-card v-if="order.DeliveryPrefect" elevation="0" class="px-2 py-1 border mb-1">{{order.DeliveryPrefect}}</v-card>
+                <v-card v-if="order.DeliveryAddress" elevation="0" class="px-2 py-1 border">{{order.DeliveryAddress}}</v-card>
               </v-col>
             </v-row>
 
@@ -203,15 +146,7 @@
               <v-col cols="12" md="4" class="pb-0">ご使用日
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <div class="d-flex align-center">
-                  <v-text-field
-                    :value="`${getDate(order.UseStartDate,order.UseStartTime)} ~ ${getDate(order.UseEndDate,order.UseEndTime)}`"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly>
-                  </v-text-field>
-                </div>
+                <v-card elevation="0" class="px-2 py-1 border">{{`${getDate(order.UseStartDate,order.UseStartTime)} ~ ${getDate(order.UseEndDate,order.UseEndTime)}`}}</v-card>
                 ({{ order.UseDay }}日間)
               </v-col>
             </v-row>
@@ -222,71 +157,31 @@
               <v-col cols="12" md="4" class="pb-0">ご返却方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="order.ReturnTypeDisp"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly>
-                </v-text-field>
+                <v-card elevation="0" class="px-2 py-1 border">{{order.ReturnTypeDisp}}</v-card>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="4" class="pb-0">ご返却日時
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="getDate(order.ReturnDate,order.ReturnTime)"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly>
-                </v-text-field>
+                <v-card elevation="0" class="px-2 py-1 border">{{getDate(order.ReturnDate,order.ReturnTime)}}</v-card>
               </v-col>
             </v-row>
             <v-row v-if="order.ReturnType===2">
               <v-col cols="12" md="4" class="pb-0">ご返却場所
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="order.ReturnZipCode"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  prefix="〒"
-                  class="input-short"
-                  readonly>
-                </v-text-field>
-                <v-text-field
-                  v-if="order.ReturnPrefect"
-                  :value="order.ReturnPrefect"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  class="my-1"
-                  readonly>
-                </v-text-field>
-                <v-text-field
-                  v-if="order.ReturnAddress"
-                  :value="order.ReturnAddress"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly>
-                </v-text-field>
+                <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">〒{{order.ReturnZipCode}}</v-card>
+                <v-card v-if="order.ReturnPrefect" elevation="0" class="px-2 py-1 border mb-1">{{order.ReturnPrefect}}</v-card>
+                <v-card v-if="order.ReturnAddress" elevation="0" class="px-2 py-1 border">{{order.ReturnAddress}}</v-card>
               </v-col>
             </v-row>
+            <v-divider class="my-4"></v-divider>
             <v-row>
               <v-col cols="12" md="4" class="pb-0">備考
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-textarea
-                  :value="order.OrderComment"
-                  outlined
-                  dense
-                  hide-details="auto"
-                  readonly>
-                </v-textarea>
+                <v-card elevation="0" min-height="2rem" class="pa-2 border pre-wrap">{{ order.OrderComment }}</v-card>
               </v-col>
             </v-row>
           </v-container>
@@ -395,15 +290,23 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 .sec__inner {
   max-width: 1050px;
   margin: 0 auto;
   width: 95%;
 }
+.border{
+  border: 1px solid $line;
+}
+.pre-wrap{
+  white-space: pre-wrap;
+}
 .order__status{
   &-title{
     flex-basis: 6rem;
     flex-grow: 0;
+    flex-shrink: 0;
     position: relative;
     &::after{
       content: '：';
@@ -411,9 +314,6 @@ export default {
       position: absolute;
       right: 3px;
     }
-  }
-  .pre-wrap{
-    white-space: pre-wrap;
   }
 }
 .table{
@@ -434,7 +334,7 @@ export default {
   }
 }
 
-.input-short{
+.width-s{
   max-width: 225px;
 }
 ::v-deep {

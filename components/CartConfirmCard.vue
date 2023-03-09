@@ -8,8 +8,9 @@
       <v-card>
         <v-card-text class="py-10 px-2 px-sm-5 cart-confirm">
           <div class="cart-confirm__inner">
+            <h1 class="pb-10 accent--text">レンタル申し込み 確認画面</h1>
             <div class="order__item">
-              <h2 class="mb-4">商品一覧</h2>
+              <h2 class="text-h6 outline white--text py-1 px-3 rounded-sm">商品一覧</h2>
               <v-data-table
                 v-if="cartInfo"
                 dense
@@ -47,226 +48,110 @@
             </div>
 
             <div class="order__detail mt-10">
-              <h2>レンタル申し込み記入欄</h2>
-              <v-divider class="my-4"></v-divider>
+              <h2 class="text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み記入欄</h2>
+              <v-card
+                outlined
+                class="py-12 px-10">
 
-              <v-row>
-                <v-col cols="12" md="4" class="pb-0">
-                  注文件名
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-text-field
-                    :value="rentJson.OrderTitle"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly
-                  ></v-text-field>
-                </v-col>
-              </v-row>
+                <v-row>
+                  <v-col cols="12" md="4" class="pb-0">
+                    注文件名
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" min-height="2rem" class="pa-2 border">{{ rentJson.OrderTitle }}</v-card>
+                  </v-col>
+                </v-row>
 
-              <v-divider class="my-4"></v-divider>
-              <v-row>
-                <v-col cols="12" md="4" class="pb-0">連絡方法
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-text-field
-                    v-if="rentJson.ContactType"
-                    :value="rentJson.ContactEmail"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    prefix="メール： "
-                    readonly>
-                  </v-text-field>
-                  <v-text-field
-                    v-else
-                    :value="rentJson.ContactTel"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    prefix="お電話： "
-                    readonly>
-                  </v-text-field>
+                <v-divider class="my-4"></v-divider>
+                <v-row>
+                  <v-col cols="12" md="4" class="pb-0">連絡方法
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card v-if="rentJson.ContactType" elevation="0" class="pa-2 border">メール：{{ rentJson.ContactEmail }}</v-card>
+                    <v-card v-else elevation="0" class="pa-2 border">お電話：{{ rentJson.ContactTel }}</v-card>
 
-                </v-col>
-              </v-row>
+                  </v-col>
+                </v-row>
 
-              <v-divider class="my-4"></v-divider>
+                <v-divider class="my-4"></v-divider>
 
-              <v-row>
-                <v-col cols="12" md="4" class="pb-0">お引渡方法
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-text-field
-                    v-if="rentJson.DeliveryType===0"
-                    :value="'ご来社'"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly></v-text-field>
-                  <v-text-field
-                    v-else-if="rentJson.DeliveryType===1"
-                    :value="'宅配(混載)便'"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly></v-text-field>
-                  <v-text-field
-                    v-else
-                    :value="'チャーター便'"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" md="4" class="pb-0">お引渡日時
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-text-field
-                    :value="getDate(rentDate[0],rentJson.DeliveryTime)"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly>
-                  </v-text-field>
-                </v-col>
-              </v-row>
-              <v-row v-if="!rentJson.DeliveryType===0">
-                <v-col cols="12" md="4" class="pb-0">お引渡場所
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-text-field
-                    :value="rentJson.DeliveryZipCode"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    prefix="〒"
-                    class="input-short mb-1"
-                    readonly>
-                  </v-text-field>
-                  <v-text-field
-                    :value="rentJson.DeliveryPrefect"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    class="mb-1"
-                    readonly>
-                  </v-text-field>
-                  <v-text-field
-                    :value="rentJson.DeliveryAddress"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly>
-                  </v-text-field>
-                </v-col>
-              </v-row>
+                <v-row>
+                  <v-col cols="12" md="4" class="pb-0">お引渡方法
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border">
+                      <template v-if="rentJson.DeliveryType===0">ご来社</template>
+                      <template v-else-if="rentJson.DeliveryType===1">宅配(混載)便</template>
+                      <template v-else>チャーター便</template>
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" md="4" class="pb-0">お引渡日時
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border">{{ getDate(rentDate[0],rentJson.DeliveryTime) }}</v-card>
+                  </v-col>
+                </v-row>
+                <v-row v-if="rentJson.DeliveryType!==0">
+                  <v-col cols="12" md="4" class="pb-0">お引渡場所
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border mb-1 width-s">〒{{ rentJson.DeliveryZipCode }}</v-card>
+                    <v-card elevation="0" class="pa-2 border mb-1">{{ rentJson.DeliveryPrefect }}</v-card>
+                    <v-card elevation="0" class="pa-2 border mb-1">{{ rentJson.DeliveryAddress }}</v-card>
+                  </v-col>
+                </v-row>
 
-              <v-divider class="my-4"></v-divider>
+                <v-divider class="my-4"></v-divider>
 
-              <v-row>
-                <v-col cols="12" md="4" class="pb-0">ご使用期間(リハーサル含む)
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-text-field
-                    :value="concatRentRange"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly>
-                  </v-text-field>
-                  ({{ rentJson.UseDay }}日間)
-                </v-col>
-              </v-row>
+                <v-row>
+                  <v-col cols="12" md="4" class="pb-0">ご使用期間(リハーサル含む)
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border">{{ concatRentRange }}</v-card>
+                    ({{ rentJson.UseDay }}日間)
+                  </v-col>
+                </v-row>
 
-              <v-divider class="my-4"></v-divider>
+                <v-divider class="my-4"></v-divider>
 
-              <v-row>
-                <v-col cols="12" md="4" class="pb-0">ご返却方法
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-text-field
-                    v-if="rentJson.ReturnType===0"
-                    :value="'ご来社'"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly></v-text-field>
-                  <v-text-field
-                    v-else-if="rentJson.ReturnType===1"
-                    :value="'宅配(混載)便'"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly></v-text-field>
-                  <v-text-field
-                    v-else
-                    :value="'チャーター便'"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" md="4" class="pb-0">ご返却日時
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-text-field
-                    :value="getDate(rentDate[1],rentJson.ReturnTime)"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly>
-                  </v-text-field>
-                </v-col>
-              </v-row>
-              <v-row v-if="rentJson.ReturnType===2">
-                <v-col cols="12" md="4" class="pb-0">ご返却場所
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-text-field
-                    :value="rentJson.ReturnZipCode"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    prefix="〒"
-                    class="input-short mb-1"
-                    readonly>
-                  </v-text-field>
-                  <v-text-field
-                    :value="rentJson.ReturnPrefect"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    class="mb-1"
-                    readonly>
-                  </v-text-field>
-                  <v-text-field
-                    :value="rentJson.ReturnAddress"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly>
-                  </v-text-field>
-                </v-col>
-              </v-row>
-              <v-row class="border-bottom">
-                <v-col cols="12" md="4" class="pb-0">備考
-                </v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                  <v-textarea
-                    :value="rentJson.OrderComment"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly
-                  ></v-textarea>
-                </v-col>
-              </v-row>
+                <v-row>
+                  <v-col cols="12" md="4" class="pb-0">ご返却方法
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border">
+                      <template v-if="rentJson.ReturnType===0">ご来社</template>
+                      <template v-else-if="rentJson.ReturnType===1">宅配(混載)便</template>
+                      <template v-else>チャーター便</template>
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" md="4" class="pb-0">ご返却日時
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border">{{ getDate(rentDate[1],rentJson.ReturnTime) }}</v-card>
+                  </v-col>
+                </v-row>
+                <v-row v-if="rentJson.ReturnType===2">
+                  <v-col cols="12" md="4" class="pb-0">ご返却場所
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border width-s mb-1">〒{{ rentJson.ReturnZipCode }}</v-card>
+                    <v-card elevation="0" class="pa-2 border mb-1">{{rentJson.ReturnPrefect}}</v-card>
+                    <v-card elevation="0" class="pa-2 border mb-1">{{rentJson.ReturnAddress}}</v-card>
+                  </v-col>
+                </v-row>
+                <v-divider class="my-4"></v-divider>
+                <v-row class="border-bottom">
+                  <v-col cols="12" md="4" class="pb-0">備考
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" min-height="2rem" class="pa-2 border pre-wrap">{{ rentJson.OrderComment }}</v-card>
+                  </v-col>
+                </v-row>
+              </v-card>
             </div>
           </div>
 
@@ -422,12 +307,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 .cart-confirm__inner{
   max-width: 900px;
   margin: auto;
 }
-.input-short{
+.width-s{
   max-width: 225px;
+}
+.border{
+  border: 1px solid $line;
+}
+.pre-wrap{
+  white-space: pre-wrap;
 }
 .table{
   &__img{
@@ -455,9 +347,6 @@ export default {
   }
   td{
     border: 1px solid #f2f2f2;
-  }
-  input,textarea{
-    cursor: default;
   }
 }
 </style>

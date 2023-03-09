@@ -6,118 +6,71 @@
       <v-card
         outlined
         class="py-6">
-        <v-form
-          ref="form"
-          class="confirm">
-          <v-container>
-            <v-row class="my-1">
-              <v-col cols="12" md="4" class="pb-0">お問い合わせの種類</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="user.ContactType"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
+        <v-container>
+          <v-row class="my-1">
+            <v-col cols="12" md="4" class="pb-0">お問い合わせの種類</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">{{ user.ContactType }}</v-card>
+            </v-col>
+          </v-row>
 
-            <v-row class="my-1">
-              <v-col cols="12" md="4" class="pb-0">氏名</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="user.Name"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
+          <v-row class="my-1">
+            <v-col cols="12" md="4" class="pb-0">氏名</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">{{ user.Name }}</v-card>
+            </v-col>
+          </v-row>
 
-            <v-row class="my-1">
-              <v-col cols="12" md="4" class="pb-0">氏名(カナ)</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="user.NameKana"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
+          <v-row class="my-1">
+            <v-col cols="12" md="4" class="pb-0">氏名(カナ)</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{ user.NameKana }}</v-card>
+            </v-col>
+          </v-row>
 
-            <v-row class="my-1">
-              <v-col cols="12" md="4" class="pb-0">メールアドレス</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="user.Email"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
+          <v-row class="my-1">
+            <v-col cols="12" md="4" class="pb-0">メールアドレス</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">{{ user.Email }}</v-card>
+            </v-col>
+          </v-row>
 
-            <v-row class="my-1">
-              <v-col cols="12" md="4" class="pb-0">注文番号</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="user.OrderNo"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                  class="input-short"
-                ></v-text-field>
-              </v-col>
-            </v-row>
+          <v-row class="my-1">
+            <v-col cols="12" md="4" class="pb-0">注文番号</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" min-height="2rem" class="px-2 py-1 border width-s">{{ user.OrderNo }}</v-card>
+            </v-col>
+          </v-row>
 
-            <v-row class="my-1">
-              <v-col cols="12" md="4" class="pb-0">お問い合わせ件名</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="user.Subject"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
+          <v-row class="my-1">
+            <v-col cols="12" md="4" class="pb-0">お問い合わせ件名</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">{{ user.Subject }}</v-card>
+            </v-col>
+          </v-row>
 
-            <v-row class="my-1">
-              <v-col cols="12" md="4" class="pb-0">お問い合わせ内容</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-textarea
-                  :value="user.Inquiry"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-textarea>
-              </v-col>
-            </v-row>
+          <v-row class="my-1">
+            <v-col cols="12" md="4" class="pb-0">お問い合わせ内容</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border pre-wrap">{{ user.Inquiry }}</v-card>
+            </v-col>
+          </v-row>
 
-            <div class="text-center mt-6">
-              <v-btn
-                class="my-4 mx-2 white--text"
-                color="secondary"
-                :disabled="loading"
-                :to="{ query:{id:$route.query.id}, hash: 'input' }"
-              >戻る</v-btn>
-              <v-btn
-                class="my-4 mx-2"
-                color="primary"
-                :loading="loading"
-                @click="register()"
-              >送信</v-btn>
-            </div>
-          </v-container>
-        </v-form>
+          <div class="text-center mt-6">
+            <v-btn
+              class="my-4 mx-2 white--text"
+              color="secondary"
+              :disabled="loading"
+              :to="{ query:{id:$route.query.id}, hash: 'input' }"
+            >戻る</v-btn>
+            <v-btn
+              class="my-4 mx-2"
+              color="primary"
+              :loading="loading"
+              @click="register()"
+            >送信</v-btn>
+          </div>
+        </v-container>
       </v-card>
     </div>
 
@@ -169,7 +122,7 @@ export default {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
       this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" })
-      this.$store.commit('breadCrumbs/addList', { name: "ヘルプ・その他", path: "/myaccount/other" })
+      this.$store.commit('breadCrumbs/addList', { name: "ヘルプ・お問い合わせ", path: "/myaccount/other" })
       this.$store.commit('breadCrumbs/addList', { name: 'お問い合わせ 確認', path: '/myaccount/other/contact#confirm' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
@@ -210,6 +163,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 .register{
   &__inner{
     max-width: 1000px;
@@ -222,12 +176,14 @@ export default {
   padding-bottom: 0.5rem;
   padding-top: 0.2rem;
 }
-.confirm ::v-deep {
-  input,textarea{
-    cursor: default;
-  }
+.border{
+  border: 1px solid $line;
 }
-.input-short{
+.pre-wrap{
+  white-space: pre-wrap;
+}
+
+.width-s{
   max-width: 225px;
 }
 </style>

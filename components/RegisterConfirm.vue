@@ -4,184 +4,130 @@
     <div class="register__inner py-16 px-3 px-lg-0">
       <v-card
         outlined
-        class="py-6">
-        <v-form class="confirm">
-          <v-container>
-            <v-row>
-              <v-col cols="12" md="4" class="pb-0">会員タイプ</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <div v-if="syncedUser.MemberType===0">
+        class="py-6 confirm">
+        <v-container>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">会員タイプ</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">
+                <template v-if="syncedUser.MemberType===0">
                   個人
-                </div>
-                <div v-else>
+                </template>
+                <template v-else>
                   法人
-                </div>
-              </v-col>
-            </v-row>
-            <v-row v-if="syncedUser.MemberType===0">
-              <v-col cols="12" md="4" class="pb-0">所属先</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="syncedUser.Organization"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row v-else>
-              <v-col cols="12" md="4" class="pb-0">会社名</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="syncedUser.Organization"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4" class="pb-0">氏名</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="syncedUser.MemberName"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4" class="pb-0">氏名(カナ)</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="syncedUser.MemberKana"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4" class="pb-0">電話番号</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="syncedUser.Tel"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4" class="pb-0">メールアドレス</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="syncedUser.Email"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4" class="pb-0">住所</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="syncedUser.ZipCode"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                  prefix="〒"
-                  class="input-short mb-1"
-                ></v-text-field>
-                <v-text-field
-                  :value="syncedUser.Prefect"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                  class="input-short mb-1"
-                ></v-text-field>
-                <v-text-field
-                  :value="syncedUser.Address"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4" class="pb-0">
-                パスワード
-              </v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-text-field
-                  :value="pass"
-                  readonly
-                  outlined
-                  dense
-                  hide-details="auto"
-                  :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
-                  :type="show ? 'text':'password'"
-                  @click:append="show=!show"
-                ></v-text-field>
+                </template>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row v-if="syncedUser.MemberType===0">
+            <v-col cols="12" md="4" class="pb-0">所属先</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{ syncedUser.Organization }}</v-card>
+            </v-col>
+          </v-row>
+          <v-row v-else>
+            <v-col cols="12" md="4" class="pb-0">会社名</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Organization}}</v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">氏名</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.MemberName}}</v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">氏名(カナ)</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.MemberKana}}</v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">電話番号</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Tel}}</v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">メールアドレス</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Email}}</v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">住所</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border width-s mb-1">〒{{syncedUser.ZipCode}}</v-card>
+              <v-card elevation="0" class="px-2 py-1 border mb-1">{{syncedUser.Prefect}} {{syncedUser.Address}}</v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">
+              パスワード
+            </v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-text-field
+                :value="pass"
+                readonly
+                outlined
+                dense
+                hide-details="auto"
+                :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
+                :type="show ? 'text':'password'"
+                @click:append="show=!show"
+              ></v-text-field>
 
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4" class="pb-0">メールマガジン</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <div v-if="syncedUser.DMFlg==='0'">
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">メールマガジン</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">
+                <template v-if="syncedUser.DMFlg==='0'">
                   受け取る
-                </div>
-                <div v-else>
+                </template>
+                <template v-else>
                   受け取らない
-                </div>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4" class="pb-0">本人確認</v-col>
-              <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <div v-if="syncedUser.NecDocFlg">
+                </template>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">本人確認</v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border">
+                <template v-if="syncedUser.NecDocFlg">
                   登録する
-                </div>
-                <div v-else>
+                </template>
+                <template v-else>
                   登録しない
-                </div>
-              </v-col>
-              <v-col v-if="syncedUser.NecDocFlg" cols="12" class="mt-4">
-                <v-card outlined class="pa-4">
-                  <id-card ref="id"
-                    :user.sync="syncedUser" :file.sync="file" :read="true"
-                  ></id-card>
-                </v-card>
-              </v-col>
-            </v-row>
-            <div class="text-center mt-6">
-              <v-btn large
-                class="my-4 mx-2 white--text"
-                color="secondary"
-                :disabled="loading"
-                :to="{ hash: '#input' }"
-              >戻る</v-btn>
-              <v-btn large
-                class="my-4 mx-2"
-                color="primary"
-                :loading="loading"
-                @click="register()"
-              >登録</v-btn>
-            </div>
-          </v-container>
-        </v-form>
+                </template>
+              </v-card>
+            </v-col>
+            <v-col v-if="syncedUser.NecDocFlg" cols="12" class="mt-4">
+              <v-card outlined class="pa-4">
+                <id-card ref="id"
+                  :user.sync="syncedUser" :file.sync="file" :read="true"
+                ></id-card>
+              </v-card>
+            </v-col>
+          </v-row>
+          <div class="text-center mt-6">
+            <v-btn large
+              class="my-4 mx-2 white--text"
+              color="secondary"
+              :disabled="loading"
+              :to="{ hash: '#input' }"
+            >戻る</v-btn>
+            <v-btn large
+              class="my-4 mx-2"
+              color="primary"
+              :loading="loading"
+              @click="register()"
+            >登録</v-btn>
+          </div>
+        </v-container>
       </v-card>
     </div>
     <v-dialog v-model="resultDialog"
@@ -303,6 +249,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 .register{
   &__inner{
     max-width: 1000px;
@@ -315,10 +262,10 @@ export default {
   padding-bottom: 0.5rem;
   padding-top: 0.2rem;
 }
-.confirm ::v-deep input{
-  cursor: default;
+.border{
+  border: 1px solid $line;
 }
-.input-short{
+.width-s{
   max-width: 225px;
 }
 </style>

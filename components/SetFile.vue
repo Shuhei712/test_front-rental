@@ -27,14 +27,7 @@
       </ValidationProvider>
     </template>
     <template v-else>
-
-      <v-text-field
-        :value="fileObj.name"
-        readonly
-        outlined
-        dense
-        hide-details="auto"
-      ></v-text-field>
+      <v-card elevation="0" class="px-2 py-1 border">{{ fileObj.name }}</v-card>
     </template>
   </div>
 </template>
@@ -100,6 +93,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 .image-area{
   position: relative;
   &__img{
@@ -107,5 +101,8 @@ export default {
     width: 50px;
     object-fit: contain;
   }
+}
+.border{
+  border: 1px solid $line;
 }
 </style>
