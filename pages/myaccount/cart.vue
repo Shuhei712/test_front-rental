@@ -31,7 +31,7 @@
       </v-card>
       <div v-else>
         <div class="cart__item">
-          <h2 class="mb-4">商品一覧</h2>
+          <h2 class="mb-2 text-h6 outline white--text py-1 px-3 rounded-sm">商品一覧</h2>
           <v-data-table
             dense
             :headers="headers"
@@ -81,7 +81,7 @@
               </td>
             </template>
           </v-data-table>
-          <p class="caption pt-2">レンタル期間は下部のレンタル申し込み記入欄「ご使用期間」より変更可能です。</p>
+          <p class="pt-2 text-subtitle-2">※レンタル期間は下部のレンタル申し込み記入欄「ご使用期間」より変更可能です。</p>
 
           <price-card
             :item-info="cartInfo"
@@ -106,7 +106,7 @@
         </div>
 
         <div class="cart__user mt-10">
-          <h2 class="my-4 text-h6 outline white--text pa-2 rounded-sm">レンタル申し込み記入欄</h2>
+          <h2 class="mt-4 text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み記入欄</h2>
           <v-card
             outlined
             class="py-6">
@@ -502,7 +502,7 @@
                   large
                   class="ml-0 my-1 text-h6 px-6"
                   :disabled="ObserverProps.invalid"
-                  @click="confirmDialog=true">確認する
+                  @click="checkID()">確認する
                 </v-btn>
               </div>
             </ValidationObserver>
@@ -530,6 +530,26 @@
             color="feature"
             :loading="deleteLoading"
             @click="deleteItem">消去
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="idDialog"
+      width="580">
+      <v-card class="pa-5 text-center">
+        <p>レンタルのお申込みには本人確認の登録が必要になります。</p>
+        <v-card-actions class="justify-center">
+          <v-btn
+            class="mt-4 mx-2 white--text"
+            dark
+            color="primary"
+            :to="'/myaccount/identification'">本人確認の登録
+          </v-btn>
+          <v-btn
+            class="mt-4 mx-2"
+            color="secondary"
+            @click="idDialog=false">戻る
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -564,7 +584,8 @@ export default {
       rentDate: [],
       concatRentRange: null,
       confirmDialog: false,
-      qtyArr: [...Array(99).keys()].map(i => i + 1)
+      qtyArr: [...Array(99).keys()].map(i => i + 1),
+      idDialog: false,
     }
   },
   async fetch() {
@@ -631,6 +652,10 @@ export default {
     },
     async inputUserInfo(){
       const res = await this.$getUserInfo()
+      this.userInfo = res
+      if(res.NecDocFlg===0){
+        this.idDialog = true
+      }
       this.$set(this.estJson, 'OwnerName', res.MemberName)
       this.$set(this.estJson, 'Organization', res.Organization)
       this.$set(this.rentJson, 'ContactEmail', res.Email)
@@ -645,9 +670,9 @@ export default {
     getPrice(priceType, price) {
       switch (priceType) {
         case 0:
-          return price.toLocaleString()
+          return price
         case 1:
-          return price.toLocaleString()
+          return price
         case 2:
           return '本体に含む'
         case 9:
@@ -751,6 +776,13 @@ export default {
       }
       this.concatRentRange = this.rentRange.join(' ~ ')
       this.$refs.datePick.save(this.rentRange)
+    },
+    checkID(){
+      if(this.userInfo.NecDocFlg===0){
+        this.idDialog = true
+      }else{
+        this.confirmDialog = true
+      }
     }
   }
 }
@@ -806,7 +838,7 @@ export default {
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
 }
-.input-short{
+.width-s{
   max-width: 225px;
 }
 .note{
