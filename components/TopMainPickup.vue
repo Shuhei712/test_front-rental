@@ -245,14 +245,16 @@ export default {
         }
         &:nth-child(2){
           bottom: -0.8rem;
-          right: 2.8rem;
+          right: 2.6rem;
         }
         span{
+          font-family: "Noto Sans JP", sans-serif;
           font-size: 1.3rem;
           line-height: 1.5rem;
           writing-mode: vertical-rl;
           text-orientation: upright;
-          padding: 0.8rem 0.4rem 0.8rem 0.1rem;
+          letter-spacing: 0.15em;
+          padding: 0.8rem 0.3rem 0.8rem 0.2rem;
           display: inline-block;
           background-color: $primary;
           @include mq(xl){
@@ -260,11 +262,11 @@ export default {
           }
           @include mq(md) {
             writing-mode: initial;
-            padding: 0.2rem 0.4rem;
+            padding: 0.2rem 0.6rem 0.3rem;
           }
           @include mq(sm){
             font-size: 1rem;
-            padding: 0.1rem 0.4rem 0;
+            padding: 0.05rem 0.4rem 0.1rem;
           }
         }
       }
