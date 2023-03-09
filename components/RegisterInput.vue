@@ -490,7 +490,7 @@ export default {
   padding-bottom: 0.5rem;
   padding-top: 0.2rem;
 }
-.input-short{
+.width-s{
   max-width: 225px;
 }
 </style>

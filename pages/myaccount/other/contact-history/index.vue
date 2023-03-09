@@ -67,7 +67,7 @@ export default {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
       this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" })
-      this.$store.commit('breadCrumbs/addList', { name: "ヘルプ・その他", path: "/myaccount/other" })
+      this.$store.commit('breadCrumbs/addList', { name: "ヘルプ・お問い合わせ", path: "/myaccount/other" })
       this.$store.commit('breadCrumbs/addList', { name: 'お問い合わせ履歴', path: '/myaccount/other/contact-history' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },

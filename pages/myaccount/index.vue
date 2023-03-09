@@ -65,7 +65,7 @@
               block
               x-large
               to="myaccount/other">
-              ヘルプ・ガイド
+              ヘルプ・お問い合わせ
             </v-btn>
           </div>
         </v-col>

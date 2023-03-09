@@ -94,7 +94,7 @@
                       dense
                       hide-details="auto"
                       :error-messages="errors"
-                      class="input-short"
+                      class="width-s"
                       @blur="syncedUser.OrderNo=toNum($event.target.value)"
                     ></v-text-field>
                   </v-col>
@@ -209,7 +209,7 @@ export default {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
       this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" })
-      this.$store.commit('breadCrumbs/addList', { name: "ヘルプ・その他", path: "/myaccount/other" })
+      this.$store.commit('breadCrumbs/addList', { name: "ヘルプ・お問い合わせ", path: "/myaccount/other" })
       this.$store.commit('breadCrumbs/addList', { name: 'お問い合わせ 入力', path: '/myaccount/other/contact#input' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
@@ -296,7 +296,7 @@ export default {
   padding-bottom: 0.5rem;
   padding-top: 0.2rem;
 }
-.input-short{
+.width-s{
   max-width: 225px;
 }
 </style>

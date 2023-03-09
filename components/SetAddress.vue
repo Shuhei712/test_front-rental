@@ -14,7 +14,7 @@
         placeholder="0123456"
         prefix="〒"
         :error-messages="errors"
-        class="input-short"
+        class="width-s"
         @blur="zipCode=toNum($event.target.value)"
       ></v-text-field>
       <v-btn
@@ -41,7 +41,7 @@
         hide-details="auto"
         placeholder="都道府県"
         :error-messages="errors"
-        class="input-short"
+        class="width-s"
       ></v-autocomplete>
     </ValidationProvider>
     <ValidationProvider
@@ -140,7 +140,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-.input-short{
+.width-s{
   max-width: 225px;
 }
 </style>

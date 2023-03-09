@@ -1,7 +1,7 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error">
     <to-top-btn></to-top-btn>
-    <top-bar title="ヘルプ・その他" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="ヘルプ・お問い合わせ" :bread-crumbs="breadCrumbs"></top-bar>
 
     <div class="sec__inner py-16">
       <v-row>
@@ -59,7 +59,7 @@ export default {
   },
   head () {
     return {
-      title: "ヘルプ・その他",
+      title: "ヘルプ・お問い合わせ",
       meta: [
         { hid: "robots", name: "robots", content: "noindex" }
       ]
@@ -69,7 +69,7 @@ export default {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
       this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" })
-      this.$store.commit('breadCrumbs/addList', { name: "ヘルプ・その他", path: "/other" })
+      this.$store.commit('breadCrumbs/addList', { name: "ヘルプ・お問い合わせ", path: "/other" })
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"]
     },
   },
