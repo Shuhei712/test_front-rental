@@ -6,7 +6,7 @@
       </v-col>
       <v-col order-md="1" cols="12" md="6" class="main__txt">
         <v-container class="top__inner py-2">
-          <p class="d-none d-md-block white--text text-caption letter-space-02em mt-5">映像 / 音響機材のレンタルサービス</p>
+          <p class="d-none d-md-block white--text text-h6 letter-space-02em mt-5">映像 / 音響機材のレンタルサービス</p>
           <v-row class="main__catch" no-gutters>
             <v-col cols="12" class="mt-sm-5 text-white">
               <h2

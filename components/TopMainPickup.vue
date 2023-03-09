@@ -407,7 +407,7 @@ export default {
       word-break: break-word;
       @include mq(md){
         width: calc(100% + 2rem);
-        font-size: clamp(28px, 6vw, 45px);
+        font-size: clamp(28px, 8vw, 45px);
       }
 
       svg{
