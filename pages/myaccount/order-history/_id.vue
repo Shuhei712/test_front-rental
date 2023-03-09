@@ -37,7 +37,7 @@
             </dd>
           </dl>
         </div>
-        <h2 class="mb-4">商品一覧</h2>
+        <h2 class="mb-2 text-h6 outline white--text py-1 px-3 rounded-sm">商品一覧</h2>
         <v-data-table
           dense
           :headers="headers"
@@ -75,7 +75,7 @@
           v-if="order.OrderStatus!==5&&order.OrderStatus!==9"
           max-width="320"
           elevation="0"
-          class="ml-auto mt-1 pb-3">
+          class="ml-auto mt-1">
           <v-card-actions tag="div" class="px-0">
             <v-btn
               dark
@@ -88,8 +88,8 @@
         </v-card>
       </div>
 
-      <div class="order__details">
-        <h2 class="my-4 text-h6 outline white--text pa-2 rounded-sm">レンタル申し込み詳細</h2>
+      <div class="order__details mt-15">
+        <h2 class="mt-4 text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み詳細</h2>
         <v-card
           outlined
           class="py-6">

@@ -10,7 +10,7 @@
           <div class="cart-confirm__inner">
             <h1 class="pb-10 accent--text">レンタル申し込み 確認画面</h1>
             <div class="order__item">
-              <h2 class="text-h6 outline white--text py-1 px-3 rounded-sm">商品一覧</h2>
+              <h2 class="mb-2 text-h6 outline white--text py-1 px-3 rounded-sm">商品一覧</h2>
               <v-data-table
                 v-if="cartInfo"
                 dense
@@ -47,7 +47,7 @@
 
             </div>
 
-            <div class="order__detail mt-10">
+            <div class="order__detail mt-15">
               <h2 class="text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み記入欄</h2>
               <v-card
                 outlined

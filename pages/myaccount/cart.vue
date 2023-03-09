@@ -105,7 +105,7 @@
           </v-card>
         </div>
 
-        <div class="cart__user mt-10">
+        <div class="cart__user mt-15">
           <h2 class="mt-4 text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み記入欄</h2>
           <v-card
             outlined
