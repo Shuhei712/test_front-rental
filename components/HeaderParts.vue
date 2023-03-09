@@ -80,24 +80,21 @@
               </v-btn>
             </v-form>
             <div v-if="isLogin" class="header__member d-flex text-center py-6 py-lg-0 ms-2">
-              <router-link
-                tag="a"
-                class="d-flex flex-column px-1"
-                to="/myaccount" exact>
+              <a
+                class="d-flex flex-column px-1 hover-opacity"
+                href="/myaccount">
                 <v-icon color="secondary">mdi-account</v-icon>
                 <span class="caption">マイページ</span>
-              </router-link>
-              <router-link
-                tag="a"
-                class="d-flex flex-column px-1"
-                to="/myaccount/favorite" exact>
+              </a>
+              <a
+                class="d-flex flex-column px-1 hover-opacity"
+                href="/myaccount/favorite">
                 <v-icon color="secondary">mdi-heart</v-icon>
                 <span class="caption">お気に入り</span>
-              </router-link>
-              <router-link
-                tag="a"
-                class="d-flex flex-column px-1"
-                to="/myaccount/cart" exact>
+              </a>
+              <a
+                class="d-flex flex-column px-1 hover-opacity"
+                href="/myaccount/cart">
                 <!-- offset-x -->
                 <!-- <span class="cartNum">{{cartNum}}</span> -->
                 <v-badge
@@ -109,7 +106,7 @@
                   <v-icon color="secondary">mdi-cart</v-icon>
                 </v-badge>
                 <span class="caption">カート</span>
-              </router-link>
+              </a>
             </div>
             <div v-else class="header__signIn ms-3 py-6 py-lg-0">
               <v-btn outlined small to="/login"> ログイン </v-btn>
