@@ -31,6 +31,7 @@
                 v-if="order.ResponseQuotationURL"
                 outlined
                 class="mt-1"
+                color=primary
                 :href="order.ResponseQuotationURL">
                 資料ダウンロード
               </v-btn>

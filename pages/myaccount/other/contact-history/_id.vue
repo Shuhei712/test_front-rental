@@ -27,12 +27,13 @@
             </dl>
             <dl class="mx-4 my-6">
               <dt class="font-weight-bold">回答内容</dt>
-              <dd class="pre-wrap ">
+              <dd>
                 <v-divider class="my-1"></v-divider>
-                {{ contactLists.ContactResponse }}
+                <p class="pre-wrap">{{ contactLists.ContactResponse }}</p>
                 <v-btn
                   v-if="contactLists.AttachFileDownloadURL"
                   class="mt-3"
+                  color=primary
                   outlined
                   :href="contactLists.AttachFileDownloadURL">
                   資料ダウンロード
