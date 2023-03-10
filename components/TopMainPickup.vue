@@ -18,14 +18,14 @@
                   </div>
                 </div>
               </div>
-              <div class="item__info">
+              <a :href="'/products/' + list.ProductID + '?name=' + list.PickupTitle" class="item__info d-block hover-opacity">
                 <div class="info__maker">
                   <div class="info__maker-txt px-5 d-flex align-center justify-center">{{ list.PickupHeader }}</div>
                 </div>
                 <div class="info__box d-flex align-center ps-10 px-xl-10 py-2 justify-space-between">
-                  <div class="info__name text-h6 letter-space-015em">
-                    <div v-if="list.PickupType === TYPE_FEATURE" class="text-subtitle-1 name__sub pb-1">{{ list.PickupDescription }}</div>
-                    {{ list.PickupTitle }}
+                  <div class="info__name letter-space-015em">
+                    <div v-if="list.PickupType === TYPE_FEATURE" class="name__sub">{{ list.PickupDescription }}</div>
+                    <span class="name__main font-weight-bold letter-space-015em">{{ list.PickupTitle }}</span>
                   </div>
                   <div class="item__btn">
                     <v-btn :href="'/products/' + list.ProductID + '?name=' + list.PickupTitle" min-width="40" text class="pa-0 px-md-5"><span class="item__btn-arrow"></span></v-btn>
@@ -34,7 +34,7 @@
                 <div class="info__number text-right letter-space-015em">
                   <span v-if="list.PickupTypeNumber">{{ list.PickupTypeNumber }}</span>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </slide>
@@ -187,7 +187,6 @@ export default {
       padding-top: 5rem;
     }
     @include mq(sm) {
-      padding-bottom: 5rem;
       padding-left: 8%;
     }
     .item__image {
@@ -240,11 +239,11 @@ export default {
           margin: 1px 0;
         }
         &:nth-child(1){
-          bottom: 0rem;
+          bottom: 0.3rem;
           right: 0;
         }
         &:nth-child(2){
-          bottom: -0.8rem;
+          bottom: -0.5rem;
           right: 2.6rem;
         }
         span{
@@ -315,7 +314,7 @@ export default {
       }
       &::after{
         border: 1px solid $primary;
-        top: -0.25rem;
+        top: -0.35rem;
         left: -0.5rem;
       }
       @include mq(md) {
@@ -326,7 +325,6 @@ export default {
     .info__maker {
       color: #ffffff;
       font-size: 0.8rem;
-      position: relative;
       position: absolute;
       display: inline-block;
       min-width: 100px;
@@ -358,9 +356,10 @@ export default {
         position: relative;
         height: 100%;
         min-height: 2.8rem;
-        width: 7.5rem;
+        width: 7.8rem;
         line-height: 1.2;
-        padding: 0.6rem;
+        letter-spacing: 0.15em;
+        padding: 0.5rem;
         word-break: break-word;
         @include mq(md) {
           width: auto;
@@ -374,12 +373,25 @@ export default {
     }
 
     .info__name {
-      font-weight: 600;
-      line-height: 1.2;
       position: relative;
-    }
-    .name__sub{
       line-height: 1.2;
+      > *{
+        font-family:"Montserrat","Zen Kaku Gothic Antique", sans-serif !important;
+      }
+      .name__main{
+        font-size: 1.45rem;
+        @include mq(sm){
+          font-size: 1.3rem;
+        }
+      }
+      .name__sub{
+        font-weight: 500;
+        font-size: 1rem;
+        padding-bottom: 0.5rem;
+        @include mq(sm){
+          font-size: 0.9rem;
+        }
+      }
     }
     .item__btn {
       height: auto;
@@ -393,7 +405,6 @@ export default {
     }
 
     .info__number {
-      position: relative;
       position: absolute;
       bottom: 0;
       right: 0;
@@ -412,21 +423,6 @@ export default {
         font-size: clamp(28px, 8vw, 45px);
       }
 
-      svg{
-        z-index: 4;
-        position: relative;
-        text{
-          font-size: 0.7rem;
-          fill: white;
-          stroke: $outline;
-          stroke-width: 0.5;
-          paint-order: stroke;
-          stroke-miterlimit: 3;
-          font-weight: 100;
-          line-height: 1;
-          font-style: italic;
-        }
-      }
     }
     .item__feature {
       .item__info::after,
