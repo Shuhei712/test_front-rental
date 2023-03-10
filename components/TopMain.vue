@@ -12,7 +12,7 @@
               <h2
                 class="catch__font text-md-h4 text-lg-h3 zen-kaku-gothic bold letter-space-015em line-height-normal">
                 <span class="d-block">
-                  必要<span class="catch__font--small">な</span>機材<span class="catch__font--small">が</span
+                  必要<span class="catch__font--small">な</span>機材<span class="catch__font--small">は</span
                   >
                 </span>
                 <span class="d-inline-block">
