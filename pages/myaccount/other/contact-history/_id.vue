@@ -33,7 +33,7 @@
                 <v-btn
                   v-if="contactLists.AttachFileDownloadURL"
                   class="mt-3"
-                  color=primary
+                  color="primary"
                   outlined
                   :href="contactLists.AttachFileDownloadURL">
                   資料ダウンロード

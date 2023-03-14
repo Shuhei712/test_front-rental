@@ -96,7 +96,6 @@
                 class="d-flex flex-column px-1 hover-opacity"
                 href="/myaccount/cart">
                 <!-- offset-x -->
-                <!-- <span class="cartNum">{{cartNum}}</span> -->
                 <v-badge
                   color="green"
                   overlap
@@ -202,7 +201,7 @@ export default {
       menuFlg: false,
       subMenuFlg: [],
       searchWindowFlg: false,
-      memberNav: null
+      memberNav: null,
     }
   },
   computed: {
@@ -220,9 +219,9 @@ export default {
     isLogin() {
       return this.$store.getters['auth/getAuthToken']
     },
-    cartNum(){
+    cartNum() {
       return this.$store.getters['cart/getCartNum']
-    }
+    },
   },
   mounted() {
     this.$store.dispatch('menu/getLists')
@@ -508,9 +507,8 @@ ul {
     transform-origin: right top;
     display: flex;
     align-items: center;
-    @include mq(xl){
+    @include mq(xl) {
       right: 0.3%;
-
     }
     @include mq(lg) {
       display: none;
@@ -520,12 +518,12 @@ ul {
       transform: rotate(-90deg);
     }
   }
-  .corporate__su-logo{
-    .brand-blue{
-      fill:#00225c;
+  .corporate__su-logo {
+    .brand-blue {
+      fill: #00225c;
     }
-    .brand-gold{
-      fill:#c0994c;
+    .brand-gold {
+      fill: #c0994c;
     }
     height: 0.8rem;
     fill: #fff;
@@ -634,10 +632,10 @@ ul {
     transition: top 0.4s;
   }
 }
-.nuxt-link-exact-active{
+.nuxt-link-exact-active {
   color: $primary !important;
 }
-.nuxt-link-exact-active .v-icon{
+.nuxt-link-exact-active .v-icon {
   color: $primary !important;
 }
 </style>
