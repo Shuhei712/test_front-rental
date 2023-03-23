@@ -54,6 +54,7 @@
             <v-col cols="6" md="8">
               <div class="btn-wrap keyword-search pe-2">
                 <v-text-field
+                  v-model="keyword"
                   class="bg-white text-caption"
                   color="primary"
                   placeholder="キーワード検索"
@@ -112,7 +113,7 @@ export default {
   },
   data() {
     return {
-      keyword: '',
+      keyword: undefined,
     }
   },
   computed:{
