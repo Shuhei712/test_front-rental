@@ -18,7 +18,9 @@
                   </div>
                 </div>
               </div>
-              <a :href="'/products/' + list.ProductID + '?name=' + list.PickupTitle" class="item__info d-block hover-opacity">
+              <a class="item__info d-block hover-opacity"
+                :href="list.PageURL ? list.PageURL : '/products/' + list.ProductID + '?name=' + list.PickupTitle"
+                :target="list.PageURL ? '_blank' : '_self'">
                 <div class="info__maker">
                   <div class="info__maker-txt px-5 d-flex align-center justify-center">{{ list.PickupHeader }}</div>
                 </div>
