@@ -30,7 +30,10 @@
                     <span class="name__main font-weight-bold letter-space-015em">{{ list.PickupTitle }}</span>
                   </div>
                   <div class="item__btn">
-                    <v-btn :href="'/products/' + list.ProductID + '?name=' + list.PickupTitle" min-width="40" text class="pa-0 px-md-5"><span class="item__btn-arrow"></span></v-btn>
+                    <v-btn
+                      :href="list.PageURL ? list.PageURL : '/products/' + list.ProductID + '?name=' + list.PickupTitle"
+                      :target="list.PageURL ? '_blank' : '_self'"
+                       min-width="40" text class="pa-0 px-md-5"><span class="item__btn-arrow"></span></v-btn>
                   </div>
                 </div>
                 <div class="info__number text-right letter-space-015em">
