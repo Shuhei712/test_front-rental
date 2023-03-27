@@ -23,8 +23,7 @@
       <div class="hexagon"></div>
       <div class="hexagon"></div>
     </div>
-    <top-main :pickup-lists="pickupLists" class="hidden-md-and-down"></top-main>
-    <top-main-rp :pickup-lists="pickupLists" class="hidden-lg-and-up"></top-main-rp>
+    <top-main :pickup-lists="pickupLists"></top-main>
     <top-notice :news-lists="newsLists"></top-notice>
     <div class="top__inner d-flex pt-16">
       <category-lists></category-lists>
