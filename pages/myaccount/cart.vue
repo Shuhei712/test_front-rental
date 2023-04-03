@@ -8,6 +8,7 @@
       :set-rent-range.sync="rentRange"
       :concat-rent-range="concatRentRange"
       :rent-range-min="rentRangeMin"
+      :rent-range-max="rentRangeMax"
       @setRange="setRange">
     </est-card>
     <cart-confirm-card
@@ -247,6 +248,7 @@
                               v-model="rentDate[0]"
                               no-title
                               scrollable
+                              :max="deliverMax"
                               @input="datePick[0] = false"
                             ></v-date-picker>
                           </v-menu>
@@ -344,6 +346,7 @@
                           scrollable
                           range
                           :min="rentRangeMin"
+                          :max="rentRangeMax"
                         >
                           <v-spacer></v-spacer>
                           <v-btn
@@ -432,7 +435,7 @@
                               v-model="rentDate[1]"
                               no-title
                               scrollable
-                              :min="rentRange[1]"
+                              :min="returnMin"
                               @input="datePick[2] = false"
                             ></v-date-picker>
                           </v-menu>
@@ -538,7 +541,7 @@
     <v-dialog v-model="idDialog"
       width="580">
       <v-card class="pa-5 text-center">
-        <p>レンタルのお申込みには本人確認の登録が必要になります。</p>
+        <p class="red--text">レンタルのお申込みには、本人確認の登録が必要になります。</p>
         <v-card-actions class="justify-center">
           <v-btn
             class="mt-4 mx-2 white--text"
@@ -582,6 +585,10 @@ export default {
       datePick: [ false,false,false],
       rentRange: [],
       rentDate: [],
+      rentRangeMin: null,
+      rentRangeMax: null,
+      deliverMax: null,
+      returnMin: null,
       concatRentRange: null,
       confirmDialog: false,
       qtyArr: [...Array(99).keys()].map(i => i + 1),
@@ -603,16 +610,35 @@ export default {
       ]
     }
   },
-  computed:{
-    rentRangeMin(){
-      return this.rentRange[0]
-    },
-  },
   watch: {
     'rentJson.UseDay'(newVal, oldVal){
       if(newVal!== oldVal && oldVal) {
         this.getCartInfo()
         this.resetEst()
+      }
+    },
+    'rentDate.0'(value){
+        this.rentRangeMin = value
+        if(!this.rentRange.length){
+          this.returnMin = value
+        }
+    },
+    'rentDate.1'(value){
+        this.rentRangeMax = value
+        if(!this.rentRange.length){
+          this.deliverMax = value
+        }
+    },
+    'rentRange'(value){
+      if( value.length === 1 ){
+        this.rentRangeMin = value[0]
+        this.concatRentRange = value[0]
+      }else if( value.length === 2 ){
+        this.concatRentRange = this.rentRange.join(' ~ ')
+        this.rentRangeMin = this.rentDate[0]
+        this.rentRangeMax = this.rentDate[1]
+      }else{
+        this.concatRentRange = null
       }
     }
   },
@@ -762,19 +788,23 @@ export default {
     setRange(){
       if( this.rentRange.length ){
         if( this.rentRange.length === 1 ) this.rentRange[1] = this.rentRange[0]
+        // API用にフォーマット変更
         const StartDate = this.rentRange[0].replace(/-/g,'')
         const EndDate = this.rentRange[1].replace(/-/g,'')
         this.$set(this.rentJson, 'UseStartDate', StartDate)
         this.$set(this.rentJson, 'UseEndDate', EndDate)
+        // 使用期間抽出
         const dateDiff = this.toDate(this.rentRange[1]).getTime() - this.toDate(this.rentRange[0]).getTime()
         const days = Math.ceil(dateDiff / (1000 * 3600 * 24)) + 1
         this.$set(this.rentJson, 'UseDay', days)
       }else{
+        // 初期設定
         this.$set(this.rentJson, 'UseDay', 1)
         this.$set(this.rentJson, 'UseStartDate', '')
         this.$set(this.rentJson, 'UseEndDate', '')
       }
-      this.concatRentRange = this.rentRange.join(' ~ ')
+      this.deliverMax = this.rentRange[0]
+      this.returnMin = this.rentRange[1]
       this.$refs.datePick.save(this.rentRange)
     },
     checkID(){
