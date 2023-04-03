@@ -100,7 +100,8 @@
                       range
                       locale="jp-ja"
                       :day-format="(date) => new Date(date).getDate()"
-                      :min="rentRangeMin">
+                      :min="rentRangeMin"
+                      :max="rentRangeMax">
                       <v-spacer></v-spacer>
                       <v-btn
                         text
@@ -181,6 +182,11 @@ export default {
       default: null
     },
     rentRangeMin: {
+      type: String,
+      required: false,
+      default: ""
+    },
+    rentRangeMax: {
       type: String,
       required: false,
       default: ""

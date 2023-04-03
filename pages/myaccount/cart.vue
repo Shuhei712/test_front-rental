@@ -632,12 +632,13 @@ export default {
     'rentRange'(value){
       if( value.length === 1 ){
         this.rentRangeMin = value[0]
-        this.concatRentRange = value[0]
+        this.concatRentRange = `${value[0]}~${value[0]}`
       }else if( value.length === 2 ){
         this.concatRentRange = this.rentRange.join(' ~ ')
         this.rentRangeMin = this.rentDate[0]
         this.rentRangeMax = this.rentDate[1]
       }else{
+        this.rentRangeMin = this.rentDate[0]
         this.concatRentRange = null
       }
     }
@@ -803,8 +804,8 @@ export default {
         this.$set(this.rentJson, 'UseStartDate', '')
         this.$set(this.rentJson, 'UseEndDate', '')
       }
-      this.deliverMax = this.rentRange[0]
-      this.returnMin = this.rentRange[1]
+      this.deliverMax = this.rentRange[0] ? this.rentRange[0] : this.rentDate[1]
+      this.returnMin = this.rentRange[1] ? this.rentRange[1] : this.rentDate[0]
       this.$refs.datePick.save(this.rentRange)
     },
     checkID(){
