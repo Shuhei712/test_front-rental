@@ -118,7 +118,7 @@
               class="my-4 mx-2 white--text"
               color="secondary"
               :disabled="loading"
-              :to="{ hash: '#input' }"
+              @click="$router.go(-2)"
             >戻る</v-btn>
             <v-btn large
               class="my-4 mx-2"
@@ -184,6 +184,7 @@ export default {
     if(!this.pass){
       this.$router.push('/register#input')
     }
+    history.pushState(null, '', null)
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -204,6 +205,12 @@ export default {
         this.$emit('update:result', val)
       }
     },
+  },
+  mounted(){
+    window.addEventListener('popstate', this.popstateHook)
+  },
+  beforeDestroy(){
+    window.removeEventListener('popstate', this.popstateHook)
   },
   methods: {
 
@@ -244,6 +251,9 @@ export default {
       this.resultDialog = true
       this.loading = false
     },
+    popstateHook(){
+      history.pushState(null, '', null)
+    }
 
   }
 }

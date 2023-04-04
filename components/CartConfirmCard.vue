@@ -2,9 +2,9 @@
   <div class="popup text-center">
     <v-dialog
       v-model="confirmDialog"
-      fullscreen
+      width="90%"
       scrollable
-      hide-overlay>
+      persistent>
       <v-card>
         <v-card-text class="py-10 px-2 px-sm-5 cart-confirm">
           <div class="cart-confirm__inner">
@@ -162,7 +162,7 @@
             color="outline"
             class="ma-2 px-6 white--text"
             :disabled="loading"
-            @click="confirmDialog=false">戻る
+            @click="backInput()">戻る
           </v-btn>
           <v-btn
             elevation="0"
@@ -241,6 +241,12 @@ export default {
       }
     },
   },
+  mounted(){
+    window.addEventListener('popstate', this.popstateHook)
+  },
+  beforeDestroy(){
+    window.removeEventListener('popstate', this.popstateHook)
+  },
   methods: {
     getDate(date, time){
       let t;
@@ -301,6 +307,15 @@ export default {
           return 'ASK'
       }
     },
+    popstateHook(){
+      if(this.confirmDialog){
+        history.pushState(null, '', null)
+      }
+    },
+    backInput(){
+      this.confirmDialog = false
+      this.$router.go(-1)
+    }
   }
 }
 

@@ -178,9 +178,6 @@ export default {
 
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
-    window.scrollTo({
-      top: 0,
-    })
     this.displayLists = await this.$getDisplayInfo('DISP_2003')
     this.loginInfo = await this.$getLoginInfo()
     if( !this.syncedUser.Inquiry ) {
@@ -192,6 +189,9 @@ export default {
       }
     }
     this.setBreadCrumbs()
+    window.scrollTo({
+      top: 0,
+    })
     this.$store.commit('loading/changeStatus', false)
   },
   computed: {

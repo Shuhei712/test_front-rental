@@ -813,6 +813,7 @@ export default {
         this.idDialog = true
       }else{
         this.confirmDialog = true
+        history.pushState(null, '', null)
       }
     }
   }
