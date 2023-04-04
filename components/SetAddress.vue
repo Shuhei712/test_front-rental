@@ -123,15 +123,20 @@ export default {
     async checkAddress(zipCode){
       this.loading = true
       const url = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode='
-      const res = await this.$axios.get(url + zipCode)
-      if (res.data.status !== 200 || !res.data.results) {
-        this.prefect = ''
-        this.address = ''
-        this.loading = false
-        return
-      }
-      this.prefect = res.data.results[0].address1
-      this.address = res.data.results[0].address2+res.data.results[0].address3
+      await this.$axios.get(url + zipCode).then(res => {
+        if (res.data.status !== 200 || !res.data.results) {
+          this.prefect = ''
+          this.address = ''
+          this.loading = false
+          return
+        }
+        this.prefect = res.data.results[0].address1
+        this.address = res.data.results[0].address2+res.data.results[0].address3
+      }).catch(() => {
+        // console.log(err)
+        return false
+      })
+
       this.loading = false
     },
 
