@@ -262,7 +262,6 @@
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time
                               ref="deliveryTime"
-                              name="deliveryTime0"
                               :min-h="10"
                               :max-h="18"
                               :max-m="0"
@@ -341,7 +340,6 @@
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time
                               ref="deliveryTime"
-                              name="deliveryTime2"
                               @change-time="rentJson.DeliveryTime = $event"
                             ></set-time>
                           </v-col>
@@ -503,7 +501,6 @@
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time
                               ref="returnTime"
-                              name="returnTime0"
                               :min-h="10"
                               :max-h="18"
                               :max-m="0"
@@ -520,7 +517,6 @@
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time
                               ref="returnTime"
-                              name="returnTime2"
                               @change-time="rentJson.ReturnTime = $event"
                               ></set-time>
                           </v-col>
@@ -714,15 +710,19 @@ export default {
   watch: {
     'rentJson.DeliveryType'(){ // 時間リセット
       if(this.$refs.deliveryTime){
-        if(this.$refs.deliveryTime.time) this.$refs.deliveryTime.reset()
+        if(this.$refs.deliveryTime.time) {
+          this.$refs.deliveryTime.reset()
+          this.$set(this.rentJson, "DeliveryTime", '')
+        }
       }
-      this.$set(this.rentJson, "DeliveryTime", '')
     },
     'rentJson.ReturnType'(){ // 時間リセット
       if(this.$refs.returnTime){
-        if(this.$refs.returnTime.time) this.$refs.returnTime.reset()
+        if(this.$refs.returnTime.time) {
+          this.$refs.returnTime.reset()
+          this.$set(this.rentJson, "ReturnTime", '')
+        }
       }
-      this.$set(this.rentJson, "ReturnTime", '')
     },
     'rentJson.UseDay'(newVal, oldVal){
       if(newVal!== oldVal && oldVal) {

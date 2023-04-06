@@ -13,10 +13,6 @@
 <script>
 export default {
   props: {
-    name:{
-      type: String,
-      required: true,
-    },
     minH: {
       type: Number,
       required: false,
