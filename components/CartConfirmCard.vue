@@ -8,7 +8,7 @@
       <v-card>
         <v-card-text class="py-10 px-2 px-sm-5 cart-confirm">
           <div class="cart-confirm__inner">
-            <h1 class="pb-10 accent--text">レンタル申し込み 確認画面</h1>
+            <h1 class="pb-10 accent--text text-h5 text-md-h4 font-weight-bold">レンタル申し込み 確認画面</h1>
             <div class="order__item">
               <h2 class="mb-2 text-h6 outline white--text py-1 px-3 rounded-sm">商品一覧</h2>
               <v-data-table
@@ -21,7 +21,7 @@
                 hide-default-footer
                 mobile-breakpoint="890">
                 <template #[`item.ProductName`]="{ item }">
-                  <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row">
+                  <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" target="_blank" class="d-flex align-center text-left flex-column flex-sm-row">
                     <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
                     <div class="table__txt text-truncate">
                       {{item.ProductName}}
@@ -51,7 +51,7 @@
               <h2 class="text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み記入欄</h2>
               <v-card
                 outlined
-                class="py-12 px-10">
+                class="py-12 px-md-10 px-5">
 
                 <v-row>
                   <v-col cols="12" md="4" class="pb-0">
@@ -76,10 +76,10 @@
                 <v-divider class="my-4"></v-divider>
 
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">お引渡方法
+                  <v-col cols="12" md="4" class="pb-0">お引渡し方法
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                    <v-card elevation="0" class="pa-2 border">
+                    <v-card elevation="0" class="pa-2 border width-s">
                       <template v-if="rentJson.DeliveryType===0">ご来社</template>
                       <template v-else-if="rentJson.DeliveryType===1">宅配(混載)便</template>
                       <template v-else>チャーター便</template>
@@ -87,19 +87,43 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">お引渡日時
+                  <v-col cols="12" md="4" class="pb-0">
+                    <template v-if="rentJson.DeliveryType===0">
+                      お引取り日時
+                    </template>
+                    <template v-else-if="rentJson.DeliveryType===1">
+                      商品到着日
+                    </template>
+                    <template v-else>搬入日時</template>
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border">{{ getDate(rentDate[0],rentJson.DeliveryTime) }}</v-card>
                   </v-col>
                 </v-row>
-                <v-row v-if="rentJson.DeliveryType!==0">
-                  <v-col cols="12" md="4" class="pb-0">お引渡場所
+                <v-row v-if="rentJson.DeliveryType===0">
+                  <v-col cols="12" md="4" class="pb-0">お引取り店舗
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" min-height="2rem" class="pa-2 border width-s">{{ rentJson.DeliveryShop }}</v-card>
+                  </v-col>
+                </v-row>
+                <v-row v-else>
+                  <v-col cols="12" md="4" class="pb-0">
+                    <template v-if="rentJson.DeliveryType===1">発送先 住所</template>
+                    <template v-else>搬入場所</template>
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border mb-1 width-s">〒{{ rentJson.DeliveryZipCode }}</v-card>
                     <v-card elevation="0" class="pa-2 border mb-1">{{ rentJson.DeliveryPrefect }}</v-card>
                     <v-card elevation="0" class="pa-2 border mb-1">{{ rentJson.DeliveryAddress }}</v-card>
+                  </v-col>
+                </v-row>
+
+                <v-row v-if="rentJson.DeliveryType===1">
+                  <v-col cols="12" md="4" class="pb-0">発送先 電話番号
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border">{{ rentJson.DeliveryTel }}</v-card>
                   </v-col>
                 </v-row>
 
@@ -120,7 +144,7 @@
                   <v-col cols="12" md="4" class="pb-0">ご返却方法
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                    <v-card elevation="0" class="pa-2 border">
+                    <v-card elevation="0" class="pa-2 border width-s">
                       <template v-if="rentJson.ReturnType===0">ご来社</template>
                       <template v-else-if="rentJson.ReturnType===1">宅配(混載)便</template>
                       <template v-else>チャーター便</template>
@@ -128,14 +152,28 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">ご返却日時
+                  <v-col cols="12" md="4" class="pb-0">
+                    <template v-if="rentJson.ReturnType===0">
+                      ご返却日時
+                    </template>
+                    <template v-else-if="rentJson.ReturnType===1">
+                      商品到着日
+                    </template>
+                    <template v-else>搬出日時</template>
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border">{{ getDate(rentDate[1],rentJson.ReturnTime) }}</v-card>
                   </v-col>
                 </v-row>
-                <v-row v-if="rentJson.ReturnType===2">
-                  <v-col cols="12" md="4" class="pb-0">ご返却場所
+                <v-row v-if="rentJson.ReturnType!==2">
+                  <v-col cols="12" md="4" class="pb-0">ご返却店舗
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" min-height="2rem" class="pa-2 border width-s">{{ rentJson.ReturnShop }}</v-card>
+                  </v-col>
+                </v-row>
+                <v-row v-else>
+                  <v-col cols="12" md="4" class="pb-0">搬出場所
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border width-s mb-1">〒{{ rentJson.ReturnZipCode }}</v-card>
@@ -344,7 +382,7 @@ export default {
     height: 60px;
   }
   &__txt{
-    max-width: 260px;
+    max-width: 230px;
     @media (min-width: 700px) and (max-width: 888px) {
       max-width: 430px;
     }
@@ -362,6 +400,9 @@ export default {
   }
   td{
     border: 1px solid #f2f2f2;
+  }
+  .v-data-table__mobile-row__header{
+    white-space: nowrap;
   }
 }
 </style>

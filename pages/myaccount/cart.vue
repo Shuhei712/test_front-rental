@@ -186,7 +186,7 @@
                   <v-row class="border-bottom">
                     <v-col cols="12" md="4" class="pb-0">
                       <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
-                      お引渡
+                      お引渡し
                     </v-col>
                     <v-col cols="12" md="8">
                       <v-radio-group v-model.number="rentJson.DeliveryType"
@@ -212,10 +212,10 @@
                       <v-row>
                         <v-col cols="12" md="3" class="pb-0">
                           <template v-if="rentJson.DeliveryType===0">
-                            引取日
+                            お引取り日
                           </template>
                           <template v-else-if="rentJson.DeliveryType===1">
-                            貴社着日
+                            商品到着日
                           </template>
                           <template v-else>搬入日</template>
                         </v-col>
@@ -258,9 +258,41 @@
                       <div v-if="rentJson.DeliveryType===0">
                         <v-divider class="my-4"></v-divider>
                         <v-row>
-                          <v-col cols="12" md="3" class="pb-0">引取時間</v-col>
+                          <v-col cols="12" md="3" class="pb-0">お引取り時間</v-col>
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
-                            <set-time @change-time="rentJson.DeliveryTime = $event"></set-time>
+                            <set-time
+                              ref="deliveryTime"
+                              name="deliveryTime0"
+                              :min-h="10"
+                              :max-h="18"
+                              :max-m="0"
+                              @change-time="rentJson.DeliveryTime = $event"
+                            ></set-time>
+                          </v-col>
+                        </v-row>
+                        <v-divider class="my-4"></v-divider>
+                        <v-row>
+                          <v-col cols="12" md="3" class="pb-0">お引取り店舗</v-col>
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
+                            <ValidationProvider
+                              v-slot="{ errors }"
+                              name="deliveryBranch"
+                              rules="required">
+                              <v-select
+                                v-model="rentJson.DeliveryShop"
+                                item-text="ShopName"
+                                :items="branchList"
+                                :error-messages="errors"
+                                hide-details="false"
+                                outlined
+                                dense
+                              ></v-select>
+                            </ValidationProvider>
+                            <v-btn
+                              small outlined
+                              class="mt-1"
+                              @click="branchDialog=true"
+                            >店舗一覧</v-btn>
                           </v-col>
                         </v-row>
                       </div>
@@ -268,13 +300,32 @@
                       <div v-else-if="rentJson.DeliveryType===1">
                         <v-divider class="my-4"></v-divider>
                         <v-row>
-                          <v-col cols="12" md="3" class="pb-0">場所</v-col>
+                          <v-col cols="12" md="3" class="pb-0">発送先 住所</v-col>
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-address
                               :set-zip-code.sync="rentJson.DeliveryZipCode"
                               :set-prefect.sync="rentJson.DeliveryPrefect"
                               :set-address.sync="rentJson.DeliveryAddress">
                             </set-address>
+                          </v-col>
+                        </v-row>
+                        <v-divider class="my-4"></v-divider>
+                        <v-row>
+                          <v-col cols="12" md="3" class="pb-0">発送先 電話番号</v-col>
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
+                            <ValidationProvider
+                              v-slot="{ errors }"
+                              name="deliveryTel"
+                              rules="required|num">
+                              <v-text-field
+                                v-model.number="rentJson.DeliveryTel"
+                                outlined
+                                dense
+                                hide-details="auto"
+                                :error-messages="errors"
+                                @blur="rentJson.DeliveryTel=toNum($event.target.value)">
+                              </v-text-field>
+                            </ValidationProvider>
                           </v-col>
                         </v-row>
 
@@ -288,12 +339,16 @@
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">搬入時間</v-col>
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
-                            <set-time @change-time="rentJson.DeliveryTime = $event"></set-time>
+                            <set-time
+                              ref="deliveryTime"
+                              name="deliveryTime2"
+                              @change-time="rentJson.DeliveryTime = $event"
+                            ></set-time>
                           </v-col>
                         </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
-                          <v-col cols="12" md="3" class="pb-0">場所</v-col>
+                          <v-col cols="12" md="3" class="pb-0">搬入場所</v-col>
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-address
                               :set-zip-code.sync="rentJson.DeliveryZipCode"
@@ -399,12 +454,12 @@
                       <v-row>
                         <v-col cols="12" md="3" class="pb-0">
                           <template v-if="rentJson.ReturnType===0">
-                            返却日
+                            ご返却日
                           </template>
                           <template v-else-if="rentJson.ReturnType===1">
-                            貴社着日
+                            商品到着日
                           </template>
-                          <template v-else>搬入日</template>
+                          <template v-else>搬出日</template>
                         </v-col>
                         <v-col cols="12" md="9" class="pt-0 pt-md-3">
                           <v-menu
@@ -444,9 +499,16 @@
                       <div v-if="rentJson.ReturnType===0">
                         <v-divider class="my-4"></v-divider>
                         <v-row>
-                          <v-col cols="12" md="3" class="pb-0">返却時間</v-col>
+                          <v-col cols="12" md="3" class="pb-0">ご返却時間</v-col>
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
-                            <set-time @change-time="rentJson.ReturnTime = $event"></set-time>
+                            <set-time
+                              ref="returnTime"
+                              name="returnTime0"
+                              :min-h="10"
+                              :max-h="18"
+                              :max-m="0"
+                              @change-time="rentJson.ReturnTime = $event"
+                            ></set-time>
                           </v-col>
                         </v-row>
                       </div>
@@ -454,14 +516,18 @@
                       <div v-else-if="rentJson.ReturnType===2">
                         <v-divider class="my-4"></v-divider>
                         <v-row>
-                          <v-col cols="12" md="3" class="pb-0">搬入時間</v-col>
+                          <v-col cols="12" md="3" class="pb-0">搬出時間</v-col>
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
-                            <set-time @change-time="rentJson.ReturnTime = $event"></set-time>
+                            <set-time
+                              ref="returnTime"
+                              name="returnTime2"
+                              @change-time="rentJson.ReturnTime = $event"
+                              ></set-time>
                           </v-col>
                         </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
-                          <v-col cols="12" md="3" class="pb-0">場所</v-col>
+                          <v-col cols="12" md="3" class="pb-0">搬出場所</v-col>
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-address
                               :set-zip-code.sync="rentJson.ReturnZipCode"
@@ -471,8 +537,33 @@
                           </v-col>
                         </v-row>
                       </div>
-
+                      <v-divider class="my-4"></v-divider>
+                      <v-row v-if="rentJson.ReturnType!==2">
+                        <v-col cols="12" md="3" class="pb-0">ご返却店舗</v-col>
+                        <v-col cols="12" md="9" class="pt-0 pt-md-3">
+                          <ValidationProvider
+                            v-slot="{ errors }"
+                            name="returnBranch"
+                            rules="required">
+                            <v-select
+                              v-model="rentJson.ReturnShop"
+                              item-text="ShopName"
+                              :items="branchList"
+                              :error-messages="errors"
+                              hide-details="false"
+                              outlined
+                              dense
+                            ></v-select>
+                          </ValidationProvider>
+                          <v-btn
+                            small outlined
+                            class="mt-1"
+                            @click="branchDialog=true"
+                          >店舗一覧</v-btn>
+                        </v-col>
+                      </v-row>
                     </v-col>
+
                   </v-row>
 
                   <v-row class="border-bottom">
@@ -558,6 +649,11 @@
       </v-card>
     </v-dialog>
 
+    <branch-address
+      :dialog.sync="branchDialog"
+      @get-branch="getBranch"
+    ></branch-address>
+
   </section>
 </template>
 <script>
@@ -567,7 +663,10 @@ export default {
     return {
       breadCrumbs: [],
       cartInfo: null,
-      rentJson: {},
+      rentJson: {
+        DeliveryType:0,
+        ReturnType:0,
+      },
       estJson: {},
       userInfo: null,
       headers: [
@@ -593,6 +692,8 @@ export default {
       confirmDialog: false,
       qtyArr: [...Array(99).keys()].map(i => i + 1),
       idDialog: false,
+      branchDialog: false,
+      branchList: null
     }
   },
   async fetch() {
@@ -611,6 +712,18 @@ export default {
     }
   },
   watch: {
+    'rentJson.DeliveryType'(){ // 時間リセット
+      if(this.$refs.deliveryTime){
+        if(this.$refs.deliveryTime.time) this.$refs.deliveryTime.reset()
+      }
+      this.$set(this.rentJson, "DeliveryTime", '')
+    },
+    'rentJson.ReturnType'(){ // 時間リセット
+      if(this.$refs.returnTime){
+        if(this.$refs.returnTime.time) this.$refs.returnTime.reset()
+      }
+      this.$set(this.rentJson, "ReturnTime", '')
+    },
     'rentJson.UseDay'(newVal, oldVal){
       if(newVal!== oldVal && oldVal) {
         this.getCartInfo()
@@ -815,11 +928,17 @@ export default {
         this.confirmDialog = true
         history.pushState(null, '', null)
       }
+    },
+    getBranch(obj){
+      this.branchList = obj
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+li{
+  list-style: none;
+}
 .sec__inner {
   max-width: 1050px;
   margin: 0 auto;

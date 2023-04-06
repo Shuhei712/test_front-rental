@@ -1,16 +1,8 @@
 <template>
-  <div class="d-flex align-center">
+  <div>
     <v-select
-      v-model="hours"
-      :items='hoursArr'
-      outlined
-      dense
-      hide-details="auto"
-      @change="setTime"></v-select>
-    ：
-    <v-select
-      v-model="mins"
-      :items='minsArr'
+      v-model="time"
+      :items='timeNum()'
       outlined
       dense
       hide-details="auto"
@@ -20,30 +12,74 @@
 </template>
 <script>
 export default {
-  data(){
+  props: {
+    name:{
+      type: String,
+      required: true,
+    },
+    minH: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+     minM: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+     maxH: {
+      type: Number,
+      required: false,
+      default: 23
+    },
+     maxM: {
+      type: Number,
+      required: false,
+      default: 45
+    },
+     minute: {
+      type: Number,
+      required: false,
+      default: 15
+    },
+  },
+  data() {
     return{
-      hoursArr: this.timeNum(24),
-      minsArr: this.timeNum(60,5),
-      hours: null,
-      mins: null
+      time: null,
     }
   },
-  methods:{
+  methods: {
     setTime(){
-      // console.log(arr)
-      if( this.hours && this.mins ){
-        const time = this.hours + this.mins + '00'
-        this.$emit('change-time', time)
+      if( this.time ){
+        const timeNum = this.time.replace(/:/g, '') + '00'
+        this.$emit('change-time', timeNum)
       }
     },
-    timeNum(num, mult=1){
+    timeNum(){
+      console.log(this.minH)
       const arr = []
-      for(let i = 0 ; i < num ; i++) {
-        if (i % mult === 0) {
-          arr.push(String(i).padStart(2, '0'))
+      for(let i = this.minH ; i <= this.maxH ; i++) {
+        let time = null
+        time = String(i).padStart(2, '0')
+        for(let j = 0 ; j < 60 ; j++) {
+          let min = j * this.minute
+          if(this.minH === i && min < this.minM){
+            continue
+          }else if(this.maxH === i && this.maxM < min){
+            break
+          }else if( min < 60 ){
+            min = String(min).padStart(2, '0')
+            arr.push(time + ':' + min)
+          }else{
+            break
+          }
         }
       }
       return arr
+    },
+    reset(){
+      this.time = ''
+      this.$emit( 'change-time', '')
     }
   }
 }

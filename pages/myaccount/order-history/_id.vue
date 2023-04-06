@@ -6,6 +6,9 @@
       :dialog.sync="cancelDialog"
       @get-new-info="getHxDetails">
     </cancel-card>
+    <branch-address
+      :dialog.sync="branchDialog"
+    ></branch-address>
     <top-bar title="詳細" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 order">
       <div class="order__item">
@@ -73,7 +76,7 @@
         </price-card>
 
         <v-card
-          v-if="order.OrderStatus!==5&&order.OrderStatus!==9"
+          v-if="!order.CancelEnableFlg && (order.OrderStatus === 0 || order.OrderStatus === 1)"
           max-width="320"
           elevation="0"
           class="ml-auto mt-1">
@@ -118,26 +121,52 @@
             <v-divider class="my-4"></v-divider>
 
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">お引渡方法
+              <v-col cols="12" md="4" class="pb-0">お引渡し方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border">{{order.DeliveryTypeDisp}}</v-card>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">お引渡日時
+              <v-col cols="12" md="4" class="pb-0">
+                <template v-if="order.DeliveryType===0">
+                  お引取り日時
+                </template>
+                <template v-else-if="order.DeliveryType===1">
+                  商品到着日
+                </template>
+                <template v-else>搬入日時</template>
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border">{{getDate(order.DeliveryDate,order.DeliveryTime)}}</v-card>
               </v-col>
             </v-row>
-            <v-row v-if="order.DeliveryType!==0">
-              <v-col cols="12" md="4" class="pb-0">お引渡場所
+            <v-row v-if="order.DeliveryType===0">
+              <v-col cols="12" md="4" class="pb-0">お引取り店舗</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" min-height="2rem" class="px-2 py-1 border mb-1 width-s">{{order.DeliveryShop}}</v-card>
+                <v-btn
+                  small outlined
+                  class="mt-1"
+                  @click="branchDialog=true"
+                >店舗一覧</v-btn>
+              </v-col>
+            </v-row>
+            <v-row v-else>
+              <v-col cols="12" md="4" class="pb-0">
+                <template v-if="order.DeliveryType===1">発送先 住所</template>
+                <template v-else>搬入場所</template>
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">〒{{order.DeliveryZipCode}}</v-card>
                 <v-card v-if="order.DeliveryPrefect" elevation="0" class="px-2 py-1 border mb-1">{{order.DeliveryPrefect}}</v-card>
                 <v-card v-if="order.DeliveryAddress" elevation="0" class="px-2 py-1 border">{{order.DeliveryAddress}}</v-card>
+              </v-col>
+            </v-row>
+            <v-row v-if="order.DeliveryType===1">
+              <v-col cols="12" md="4" class="pb-0">発送先 電話番号</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">{{order.DeliveryTel}}</v-card>
               </v-col>
             </v-row>
 
@@ -162,15 +191,32 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">ご返却日時
+              <v-col cols="12" md="4" class="pb-0">
+                <template v-if="order.ReturnType===0">
+                  ご返却日時
+                </template>
+                <template v-else-if="order.ReturnType===1">
+                  商品到着日
+                </template>
+                <template v-else>搬出日時</template>
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border">{{getDate(order.ReturnDate,order.ReturnTime)}}</v-card>
               </v-col>
             </v-row>
-            <v-row v-if="order.ReturnType===2">
-              <v-col cols="12" md="4" class="pb-0">ご返却場所
+            <v-row v-if="order.ReturnType!==2">
+              <v-col cols="12" md="4" class="pb-0">ご返却店舗</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" min-height="2rem" class="px-2 py-1 border pre-wrap width-s">{{ order.ReturnShop }}</v-card>
+                <v-btn
+                  small outlined
+                  class="mt-1"
+                  @click="branchDialog=true"
+                >店舗一覧</v-btn>
               </v-col>
+            </v-row>
+            <v-row v-else>
+              <v-col cols="12" md="4" class="pb-0">搬出場所</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">〒{{order.ReturnZipCode}}</v-card>
                 <v-card v-if="order.ReturnPrefect" elevation="0" class="px-2 py-1 border mb-1">{{order.ReturnPrefect}}</v-card>
@@ -208,6 +254,7 @@ export default {
       ],
       cancelDialog:false,
       cancelID: null,
+      branchDialog: false,
     }
   },
   async fetch() {

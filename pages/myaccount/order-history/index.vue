@@ -8,6 +8,10 @@
     </cancel-card>
     <top-bar title="注文履歴" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 order-hx">
+      <!-- <v-card outlined class="mb-5 pa-3">
+        ご注文の変更は<br>
+        「キャンセル」ボタンを押していただくことで、ご注文のキャンセルが可能です。
+      </v-card> -->
 
       <v-data-table
         v-if="orderHxLists"
@@ -39,7 +43,7 @@
               class="white--text my-1"> 詳細
             </v-btn>
             <v-btn
-              v-if="item.OrderStatus!==5&&item.OrderStatus!==9"
+              v-if="!item.CancelEnableFlg && (item.OrderStatus === 0 || item.OrderStatus === 1)"
               small
               color="feature"
               width="90"
