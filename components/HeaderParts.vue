@@ -108,8 +108,8 @@
               </a>
             </div>
             <div v-else class="header__signIn ms-3 py-6 py-lg-0">
-              <v-btn outlined small to="/login"> ログイン </v-btn>
-              <v-btn small color="accent" class="text-white" to="/register"> 新規登録 </v-btn>
+              <v-btn outlined small href="/login"> ログイン </v-btn>
+              <v-btn small color="accent" class="text-white" href="/register"> 新規登録 </v-btn>
             </div>
             <div class="header__corporate--sp">
               <a
