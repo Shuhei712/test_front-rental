@@ -43,7 +43,7 @@
               class="white--text my-1"> 詳細
             </v-btn>
             <v-btn
-              v-if="!item.CancelEnableFlg && (item.OrderStatus === 0 || item.OrderStatus === 1)"
+              v-if="!item.CancelEnableFlg && (item.OrderStatus !== 5 && item.OrderStatus !== 9)"
               small
               color="feature"
               width="90"

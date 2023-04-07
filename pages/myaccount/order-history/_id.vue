@@ -76,7 +76,7 @@
         </price-card>
 
         <v-card
-          v-if="!order.CancelEnableFlg && (order.OrderStatus === 0 || order.OrderStatus === 1)"
+          v-if="!order.CancelEnableFlg && (order.OrderStatus !== 5 && order.OrderStatus !== 9)"
           max-width="320"
           elevation="0"
           class="ml-auto mt-1">
