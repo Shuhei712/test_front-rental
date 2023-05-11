@@ -1,7 +1,5 @@
 <template>
   <div>
-    <top-bar title="新規登録 確認" :bread-crumbs="breadCrumbs"></top-bar>
-    <div class="register__inner py-16 px-3 px-lg-0">
       <v-card
         outlined
         class="py-6 confirm">
@@ -11,26 +9,37 @@
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" class="px-2 py-1 border">
                 <template v-if="syncedUser.MemberType===0">
-                  個人
+                  一般 Web会員登録
                 </template>
                 <template v-else>
-                  法人
+                  法人 Web会員登録
                 </template>
               </v-card>
             </v-col>
           </v-row>
-          <v-row v-if="syncedUser.MemberType===0">
-            <v-col cols="12" md="4" class="pb-0">所属先</v-col>
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">
+              <template v-if="syncedUser.MemberType===0">所属先</template>
+              <template v-else>会社名</template>
+            </v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{ syncedUser.Organization }}</v-card>
             </v-col>
           </v-row>
-          <v-row v-else>
-            <v-col cols="12" md="4" class="pb-0">会社名</v-col>
-            <v-col cols="12" md="8" class="pt-0 pt-md-3">
-              <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Organization}}</v-card>
-            </v-col>
-          </v-row>
+          <template v-if="syncedUser.MemberType===1">
+            <v-row>
+              <v-col cols="12" md="4" class="pb-0">会社名(カナ)</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.OrganizationKana}}</v-card>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="4" class="pb-0">所属部署</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Department}}</v-card>
+              </v-col>
+            </v-row>
+          </template>
           <v-row>
             <v-col cols="12" md="4" class="pb-0">氏名</v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
@@ -43,10 +52,40 @@
               <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.MemberKana}}</v-card>
             </v-col>
           </v-row>
+          <template v-if="syncedUser.MemberType===1">
+            <v-row>
+              <v-col cols="12" md="4" class="pb-0">勤務先事業所名</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.OfficeName}}</v-card>
+              </v-col>
+            </v-row>
+          </template>
           <v-row>
-            <v-col cols="12" md="4" class="pb-0">電話番号</v-col>
+            <v-col cols="12" md="4" class="pb-0">
+              <template v-if="syncedUser.MemberType===1">勤務先</template>電話番号
+            </v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Tel}}</v-card>
+            </v-col>
+          </v-row>
+          <template v-if="syncedUser.MemberType===1">
+            <v-row>
+              <v-col cols="12" md="4" class="pb-0">
+                <template v-if="syncedUser.MemberType===1">勤務先</template>FAX番号
+              </v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.Fax}}</v-card>
+              </v-col>
+            </v-row>
+          </template>
+
+          <v-row>
+            <v-col cols="12" md="4" class="pb-0">
+              <template v-if="syncedUser.MemberType===1">勤務先</template>住所
+            </v-col>
+            <v-col cols="12" md="8" class="pt-0 pt-md-3">
+              <v-card elevation="0" class="px-2 py-1 border width-s mb-1">〒{{syncedUser.ZipCode}}</v-card>
+              <v-card elevation="0" class="px-2 py-1 border mb-1">{{syncedUser.Prefect}} {{syncedUser.Address}}</v-card>
             </v-col>
           </v-row>
           <v-row>
@@ -56,10 +95,9 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="4" class="pb-0">住所</v-col>
+            <v-col cols="12" md="4" class="pb-0">タケナカ担当者名</v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
-              <v-card elevation="0" class="px-2 py-1 border width-s mb-1">〒{{syncedUser.ZipCode}}</v-card>
-              <v-card elevation="0" class="px-2 py-1 border mb-1">{{syncedUser.Prefect}} {{syncedUser.Address}}</v-card>
+              <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.SalesStaff}}</v-card>
             </v-col>
           </v-row>
           <v-row>
@@ -77,7 +115,6 @@
                 :type="show ? 'text':'password'"
                 @click:append="show=!show"
               ></v-text-field>
-
             </v-col>
           </v-row>
           <v-row>
@@ -110,7 +147,88 @@
                 <id-card ref="id"
                   :user.sync="syncedUser" :file.sync="file" :read="true"
                 ></id-card>
+                <template v-if="syncedUser.MemberType===1">
+                  <v-row class="mt-3">
+                    <v-col cols="12" md="4" class="pb-0">本社住所</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" class="px-2 py-1 border width-s mb-1">〒{{syncedUser.HOfficeZipCode}}</v-card>
+                      <v-card elevation="0" class="px-2 py-1 border mb-1">{{syncedUser.HOfficePrefect}} {{syncedUser.HOfficeAddress}}</v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="4" class="pb-0">本社電話番号</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.HOfficeTel}}</v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="4" class="pb-0">本社FAX番号</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.HOfficeFax}}</v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="4" class="pb-0">代表者名</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Representative}}</v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="4" class="pb-0">設立年月</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Incorporation}}</v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="4" class="pb-0">法人番号</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.CorpNumber}}</v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="4" class="pb-0">法人区分</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" class="px-2 py-1 border">
+                        <template v-if="syncedUser.CorpType==='1'">
+                          上場
+                        </template>
+                        <template v-else-if="syncedUser.CorpType==='2'">
+                          非上場
+                        </template>
+                        <template v-else>
+                          公共団体ほか
+                        </template>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="4" class="pb-0">お支払い方法</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" class="px-2 py-1 border">
+                        <template v-if="syncedUser.PaymentMethod==='0'">
+                          事前お振込
+                        </template>
+                        <template v-else>
+                          店頭お支払い(現金)
+                        </template>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="4" class="pb-0">お振込名義</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.PayeeName}}</v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row class="last-row">
+                    <v-col cols="12" md="4" class="pb-0">請求書送付先メールアドレス</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.BillingEmail}}</v-card>
+                    </v-col>
+                  </v-row>
+                </template>
               </v-card>
+
             </v-col>
           </v-row>
           <div class="text-center mt-6">
@@ -119,7 +237,7 @@
               color="secondary"
               :disabled="loading"
               @click="$router.go(-2)"
-            >戻る</v-btn>
+            >入力画面に戻る</v-btn>
             <v-btn large
               class="my-4 mx-2"
               color="primary"
@@ -129,7 +247,6 @@
           </div>
         </v-container>
       </v-card>
-    </div>
     <v-dialog v-model="resultDialog"
       width="780"
       persistent>
@@ -164,18 +281,15 @@ export default {
     },
     file:{
       type: Array,
-      // required: true
       required: false,
       default: () => ([])
     }
   },
   data() {
     return {
-      breadCrumbs: [],
       show: false,
       loading: false,
       resultDialog: false,
-      // result: null,
     }
   },
 
@@ -185,7 +299,6 @@ export default {
       this.$router.push('/register#input')
     }
     history.pushState(null, '', null)
-    this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
   computed: {
@@ -213,12 +326,6 @@ export default {
     window.removeEventListener('popstate', this.popstateHook)
   },
   methods: {
-
-    setBreadCrumbs() {
-      this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: '新規登録 確認', path: '/register#confirm' })
-      this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
-    },
     async register(){
       this.loading = true
       if(this.syncedUser.NecDocFlg){
@@ -230,7 +337,8 @@ export default {
         this.$set(this.syncedUser, 'DocFileName2', '')
         this.$set(this.syncedUser, 'DocFileName3', '')
       }
-      const userInfo = JSON.stringify(this.syncedUser);
+      if(this.syncedUser.Incorporation) this.dateFormat()
+      const userInfo = JSON.stringify(this.syncedUser)
       const param = new URLSearchParams()
       param.append('LoginID', this.syncedUser.Email)
       param.append('Password', this.pass)
@@ -251,6 +359,10 @@ export default {
       this.resultDialog = true
       this.loading = false
     },
+    dateFormat(){
+      const date = this.syncedUser.Incorporation.replace(/-/g,'')
+      this.$set(this.syncedUser, 'Incorporation', date)
+    },
     popstateHook(){
       history.pushState(null, '', null)
     }
@@ -267,7 +379,7 @@ export default {
     width: 100%;
   }
 }
-.row{
+.row:not(.last-row){
   border-bottom: 1px solid #dddddd;
   padding-bottom: 0.5rem;
   padding-top: 0.2rem;

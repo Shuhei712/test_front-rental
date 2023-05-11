@@ -3,188 +3,29 @@
     <to-top-btn></to-top-btn>
     <top-bar title="アカウント情報" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="register__inner py-16 px-3 px-lg-0">
-      <v-card
-        outlined
-        class="py-6">
-        <ValidationObserver v-slot="ObserverProps" ref="observer">
-          <v-form
-            ref="form">
-            <v-container>
-              <p v-if="result==='120201'" class="mb-5 red--text">
-                ご入力のメールアドレスは既に使用されております。
-              </p>
-              <v-row class="my-1">
-                <v-col cols="12" md="4" class="pb-0">ログインID</v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">{{loginID}}
-                </v-col>
-              </v-row>
-              <v-row class="my-1">
-                <v-col cols="12" md="4" class="pb-0">会員タイプ</v-col>
-                <v-col cols="12" md="8" class="pt-0 pt-md-3">{{ userInfo.MemberTypeDisp }}
-                </v-col>
-              </v-row>
-              <div v-if="userInfo.MemberType===1">
-
-                <ValidationProvider
-                  v-slot="{ errors }"
-                  name="company"
-                  rules="required">
-                  <v-row class="my-1">
-                    <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 会社名</v-col>
-                    <v-col cols="12" md="8">
-                      <v-text-field
-                        v-model="userInfo.Organization"
-                        outlined
-                        dense
-                        hide-details="auto"
-                        :error-messages="errors"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </ValidationProvider>
-              </div>
-              <div v-else>
-                <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0">
-                    <span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 所属先
-                  </v-col>
-                  <v-col cols="12" md="8">
-                    <v-text-field
-                      v-model="userInfo.Organization"
-                      outlined
-                      dense
-                      hide-details="auto"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-
-              </div>
-
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="name"
-                rules="required">
-                <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 氏名</v-col>
-                  <v-col cols="12" md="8">
-                    <v-text-field
-                      v-model="userInfo.MemberName"
-                      outlined
-                      dense
-                      hide-details="auto"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </ValidationProvider>
-
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="nameKana"
-                rules="max:50">
-                <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 氏名(カナ)</v-col>
-                  <v-col cols="12" md="8">
-                    <v-text-field
-                      v-model="userInfo.MemberKana"
-                      outlined
-                      dense
-                      hide-details="auto"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </ValidationProvider>
-
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="tel"
-                rules="required|num">
-                <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 連絡先</v-col>
-                  <v-col cols="12" md="8">
-                    <v-text-field
-                      v-model="userInfo.Tel"
-                      outlined
-                      dense
-                      hide-details="auto"
-                      placeholder="0123456789"
-                      :error-messages="errors"
-                      @blur="userInfo.Tel=toNum($event.target.value)"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </ValidationProvider>
-
-              <v-row class="my-1">
-                <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 住所</v-col>
-                <v-col cols="12" md="8">
-                  <set-address
-                    :set-zip-code.sync="userInfo.ZipCode"
-                    :set-prefect.sync="userInfo.Prefect"
-                    :set-address.sync="userInfo.Address">
-                  </set-address>
-                </v-col>
-              </v-row>
-
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="email"
-                rules="required|email">
-                <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
-                    メールアドレス
-                  </v-col>
-                  <v-col cols="12" md="8">
-                    <v-text-field
-                      v-model="userInfo.Email"
-                      outlined
-                      dense
-                      hide-details="auto"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </ValidationProvider>
-
-              <v-row class="my-1">
-                <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> メールマガジン</v-col>
-                <v-col cols="12" md="8">
-                  <v-radio-group v-model="userInfo.DMFlg"
-                    hide-details="auto"
-                    mandatory
-                    row
-                    class="mt-0">
-                    <v-radio
-                      label="受け取る"
-                      :value="0"
-                    ></v-radio>
-                    <v-radio
-                      label="受け取らない"
-                      :value="1"
-                    ></v-radio>
-                  </v-radio-group>
-                </v-col>
-              </v-row>
-              <div class="text-center mt-6">
-                <!-- <v-btn
-                  class="my-4 mx-2 white--text"
-                  color="secondary"
-                  to="/myaccount"
-                  :disabled="loading"
-                >マイページへ</v-btn> -->
-                <v-btn
-                  :disabled="(ObserverProps.invalid)"
-                  class="my-4 mx-2 white--text"
-                  color="primary"
-                  :loading="loading"
-                  @click="update()"
-                >変更する</v-btn>
-              </div>
-            </v-container>
-          </v-form>
-        </ValidationObserver>
-      </v-card>
+      <ValidationObserver v-slot="ObserverProps" ref="observer">
+        <v-form
+          ref="form">
+          <v-container>
+            <register-input :user.sync="userUpInfo" :result.sync="result" :login-id="loginID"></register-input>
+            <div class="text-center mt-6">
+              <v-btn
+                class="my-4 mx-2 white--text"
+                color="secondary"
+                to="/myaccount"
+                :disabled="loading"
+              >マイページ</v-btn>
+              <v-btn
+                :disabled="(ObserverProps.invalid)"
+                class="my-4 mx-2 white--text"
+                color="primary"
+                :loading="loading"
+                @click="update()"
+              >変更する</v-btn>
+            </div>
+          </v-container>
+        </v-form>
+      </ValidationObserver>
     </div>
     <v-dialog v-model="resultDialog"
       width="780"
@@ -211,7 +52,7 @@ export default {
       userInfo: [],
       userUpInfo: {},
       loading: false,
-      result: null,
+      result: '',
       resultDialog: false
     }
   },
@@ -250,6 +91,10 @@ export default {
       }
       if(res.data.Status==='TRUE'){
         this.userInfo = res.data.MemberInfo
+        const arr = ['MemberType','MemberName','Organization','OrganizationKana','Department','OfficeName','SalesStaff','Tel','Fax','ZipCode','Prefect','Address','Email','DMFlg','MemberKana']
+        arr.forEach((item) => {
+          this.$set(this.userUpInfo, item, this.userInfo[item])
+        })
         this.loginID = res.data.LoginID
       }else if(res.data.ErrorNo===100002){
         // access認証token有効期限切れ
@@ -259,18 +104,6 @@ export default {
     },
     async update(){
       this.loading = true
-      this.$set(this.userUpInfo, 'MemberType', this.userInfo.MemberType)
-      this.$set(this.userUpInfo, 'MemberName', this.userInfo.MemberName)
-      this.$set(this.userUpInfo, 'Tel', this.userInfo.Tel)
-      this.$set(this.userUpInfo, 'ZipCode', this.userInfo.ZipCode)
-      this.$set(this.userUpInfo, 'Prefect', this.userInfo.Prefect)
-      this.$set(this.userUpInfo, 'Address', this.userInfo.Address)
-      this.$set(this.userUpInfo, 'Email', this.userInfo.Email)
-      this.$set(this.userUpInfo, 'DMFlg', this.userInfo.DMFlg)
-      this.$set(this.userUpInfo, 'MemberKana', this.userInfo.MemberKana ? this.userInfo.MemberKana : '')
-      this.$set(this.userUpInfo, 'Organization', this.userInfo.Organization)
-      this.$set(this.userUpInfo, 'NecDocFlg', this.userInfo.NecDocFlg)
-
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
       const userUpInfo = JSON.stringify(this.userUpInfo)
@@ -318,11 +151,6 @@ export default {
     margin: 0 auto;
     width: 100%;
   }
-}
-.row{
-  border-bottom: 1px solid #dddddd;
-  padding-bottom: 0.5rem;
-  padding-top: 0.2rem;
 }
 .width-s{
   max-width: 225px;

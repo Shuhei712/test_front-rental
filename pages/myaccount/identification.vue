@@ -4,8 +4,11 @@
     <top-bar title="本人確認" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
       <div class="id__status pb-8">
+        <span class="text-h6" :class="idStatusColor+'--text'">
+          {{ idStatus }}
+        </span>
         <span v-if="userInfo.NecDocFlg===1">
-          <div class="green--text text-h6">登録済みファイル</div>
+          <div class="mt-6 font-weight-bold">登録済みファイル</div>
           <v-divider class="mb-3"></v-divider>
           <ul class="pl-5">
             <template v-if="userInfo.MemberType">
@@ -21,7 +24,6 @@
           </ul>
           <v-divider class="mt-3"></v-divider>
         </span>
-        <span v-else class="red--text text-h6">未登録</span>
       </div>
       <ValidationObserver v-slot="ObserverProps" ref="observer">
         <id-card ref="id"
@@ -57,7 +59,10 @@ export default {
     this.$store.commit('loading/changeStatus', true)
     this.setBreadCrumbs()
     this.userInfo = await this.$getUserInfo()
-    this.$set(this.user, 'MemberType', this.userInfo.MemberType)
+    const arr = ['MemberType','Representative','HOfficeTel','HOfficeFax','HOfficeZipCode','HOfficePrefect','HOfficeAddress','Incorporation','CorpNumber','CorpType','PaymentMethod','PayeeName','BillingEmail']
+    arr.forEach((item) => {
+      this.$set(this.user, item, this.userInfo[item])
+    })
     this.$store.commit('loading/changeStatus', false)
   },
   head () {
@@ -67,6 +72,34 @@ export default {
         { hid: "robots", name: "robots", content: "noindex" }
       ]
     }
+  },
+  computed:{
+    idStatus(){
+      switch(this.userInfo.RentalFlg){
+        case 0:
+          return '未登録'
+        case 1:
+          return '登録済み'
+        case 5:
+          return '申請中'
+        case 9:
+          return '不備あり（再登録が必要です）'
+        default:
+          return '未登録'
+      }
+    },
+    idStatusColor(){
+      switch(this.userInfo.RentalFlg){
+        case 0:
+          return 'red'
+        case 1:
+          return 'green'
+        case 5:
+          return 'blue'
+        default:
+          return 'red'
+      }
+    },
   },
   methods: {
     setBreadCrumbs() {
