@@ -181,6 +181,19 @@
                     <v-card elevation="0" class="pa-2 border mb-1">{{rentJson.ReturnAddress}}</v-card>
                   </v-col>
                 </v-row>
+
+                <v-divider class="my-4"></v-divider>
+                <v-row>
+                  <v-col cols="12" md="4" class="pb-0">お支払い方法
+                  </v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border width-s">
+                      <template v-if="rentJson.PayMethod===0">事前お振込</template>
+                      <template v-else-if="rentJson.PayMethod===1">店頭お支払い(現金)</template>
+                    </v-card>
+                  </v-col>
+                </v-row>
+
                 <v-divider class="my-4"></v-divider>
                 <v-row class="border-bottom">
                   <v-col cols="12" md="4" class="pb-0">備考
@@ -287,14 +300,17 @@ export default {
   },
   methods: {
     getDate(date, time){
-      let t;
+      let t
       if(time){
-        const h = time.substring(0, 2)
-        const min = time.substring(2, 4)
-        t = "  " + h + ":" + min
+        t = time
+        if(time.length < 7){
+          const h = time.substring(0, 2)
+          const min = time.substring(2, 4)
+          t = h + ":" + min
+        }
       }
       let dateTime = date
-      if(t) dateTime += t
+      if(t) dateTime += "  " + t
       return dateTime
     },
     async order(){

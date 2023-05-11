@@ -263,8 +263,9 @@
                             <set-time
                               ref="deliveryTime"
                               :min-h="10"
-                              :max-h="18"
+                              :max-h="17"
                               :max-m="0"
+                              :period="true"
                               @change-time="rentJson.DeliveryTime = $event"
                             ></set-time>
                           </v-col>
@@ -340,6 +341,7 @@
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time
                               ref="deliveryTime"
+                              :minute="15"
                               @change-time="rentJson.DeliveryTime = $event"
                             ></set-time>
                           </v-col>
@@ -502,8 +504,9 @@
                             <set-time
                               ref="returnTime"
                               :min-h="10"
-                              :max-h="18"
+                              :max-h="17"
                               :max-m="0"
+                              :period="true"
                               @change-time="rentJson.ReturnTime = $event"
                             ></set-time>
                           </v-col>
@@ -517,6 +520,7 @@
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-time
                               ref="returnTime"
+                              :minute="15"
                               @change-time="rentJson.ReturnTime = $event"
                               ></set-time>
                           </v-col>
@@ -560,6 +564,28 @@
                       </v-row>
                     </v-col>
 
+                  </v-row>
+                  <v-row class="border-bottom">
+                    <v-col cols="12" md="4" class="pb-0">
+                      <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お支払い方法
+                    </v-col>
+                    <v-col cols="12" md="8">
+                      <v-radio-group v-model.number="rentJson.PayMethod"
+                        hide-details="auto"
+                        mandatory
+                        row
+                        class="mt-0 mb-4">
+                        <v-radio label="事前お振込"
+                          :value="0"
+                        ></v-radio>
+                        <v-radio v-if="userInfo.MemberType"
+                          label="店頭お支払い(現金)"
+                          :disabled="rentJson.DeliveryType!==0"
+                          :value="1"
+                        ></v-radio>
+                      </v-radio-group>
+                      <p v-if="userInfo.MemberType" class="caption">※来社お引取りの方のみ店頭お支払いが可能です。</p>
+                    </v-col>
                   </v-row>
 
                   <v-row class="border-bottom">
@@ -627,10 +653,20 @@
 
     <v-dialog v-model="idDialog"
       width="580">
-      <v-card class="pa-5 text-center">
-        <p class="red--text">レンタルのお申込みには、本人確認の登録が必要になります。</p>
+      <v-card class="pa-5 text-md-center">
+        <p>
+          ※レンタルのお申込みには、本人確認の登録が必要になります。<br>
+          <template v-if="rentalFlg===0">
+            <span class="red--text">本人確認の登録をお願いいたします。</span>
+          </template>
+          <template v-else-if="rentalFlg===5">
+            <span class="red--text">現在、本人確認の登録申請中でございます。</span><br>
+            申請が通るまで、もうしばらくお待ちください。
+          </template>
+        </p>
         <v-card-actions class="justify-center">
           <v-btn
+            v-if="rentalFlg===0"
             class="mt-4 mx-2 white--text"
             dark
             color="primary"
@@ -688,6 +724,7 @@ export default {
       confirmDialog: false,
       qtyArr: [...Array(99).keys()].map(i => i + 1),
       idDialog: false,
+      rentalFlg: null,
       branchDialog: false,
       branchList: null
     }
@@ -708,12 +745,15 @@ export default {
     }
   },
   watch: {
-    'rentJson.DeliveryType'(){ // 時間リセット
+    'rentJson.DeliveryType'(value){ // 時間リセット
       if(this.$refs.deliveryTime){
         if(this.$refs.deliveryTime.time) {
           this.$refs.deliveryTime.reset()
           this.$set(this.rentJson, "DeliveryTime", '')
         }
+      }
+      if(value!==0){
+        this.$set(this.rentJson, "PayMethod", 0)
       }
     },
     'rentJson.ReturnType'(){ // 時間リセット
@@ -793,7 +833,8 @@ export default {
     async inputUserInfo(){
       const res = await this.$getUserInfo()
       this.userInfo = res
-      if(res.NecDocFlg===0){
+      if(res.RentalFlg!==1){
+        this.rentalFlg = res.RentalFlg
         this.idDialog = true
       }
       this.$set(this.estJson, 'OwnerName', res.MemberName)
@@ -922,7 +963,7 @@ export default {
       this.$refs.datePick.save(this.rentRange)
     },
     checkID(){
-      if(this.userInfo.NecDocFlg===0){
+      if(this.userInfo.RentalFlg!==1){
         this.idDialog = true
       }else{
         this.confirmDialog = true

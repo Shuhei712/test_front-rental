@@ -13,6 +13,8 @@
           dense
           hide-details="auto"
           prepend-icon=""
+          prepend-inner-icon="mdi-paperclip"
+          class="pointer"
           :error-messages="errors"
           @change="setImage($event)"
         >
@@ -104,5 +106,13 @@ export default {
 }
 .border{
   border: 1px solid $line;
+}
+.pointer{
+  cursor: pointer;
+}
+::v-deep {
+  .v-text-field > .v-input__control > .v-input__slot{
+    cursor: pointer;
+  }
 }
 </style>

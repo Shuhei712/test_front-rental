@@ -42,14 +42,14 @@
               outlined
               block
               x-large
-              :disabled="user.NecDocFlg?true:false"
+              :disabled="user.RentalFlg!==0&&user.RentalFlg!==9"
               :to="'/myaccount/identification'">本人確認
-                <v-badge
-                  :color="user.NecDocFlg?'grey':'red'"
-                  :content="user.NecDocFlgDisp"
-                  class="font-weight-regular"
-                  inline
-                ></v-badge>
+              <v-badge
+                :color="idStatusColor"
+                :content="idStatus"
+                class="font-weight-regular pointer-none"
+                inline
+              ></v-badge>
             </v-btn>
           </div>
         </v-col>
@@ -215,6 +215,34 @@ export default {
       ]
     }
   },
+  computed:{
+    idStatus(){
+      switch(this.user.RentalFlg){
+        case 0:
+          return '未提出'
+        case 1:
+          return '確認済み'
+        case 5:
+          return '申請中'
+        case 9:
+          return '不備あり'
+        default:
+          return '未提出'
+      }
+    },
+    idStatusColor(){
+      switch(this.user.RentalFlg){
+        case 0:
+          return 'red'
+        case 1:
+          return 'green'
+        case 5:
+          return 'blue'
+        default:
+          return 'red'
+      }
+    },
+  },
   updated() {
     this.$scrollBackButton()
   },
@@ -275,5 +303,10 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   width: 95%;
+}
+.pointer-none{
+  ::v-deep.v-badge__badge{
+    pointer-events: none;
+  }
 }
 </style>
