@@ -1,7 +1,7 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error">
+  <section>
     <div class="sec__inner py-16 activate__inner">
-      <div class="text-center py-15">
+      <div v-if="!$fetchState.pending && !$fetchState.error" class="text-center py-15">
         <div v-if="activateFlg" class="activate__success">
           <h1 class="py-6 mb-4">登録完了</h1>
           <p>本登録が完了いたしました。</p>
@@ -35,6 +35,12 @@
             >お問い合わせ</v-btn>
           </div>
         </div>
+      </div>
+      <div v-else class="text-center py-15">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+        ></v-progress-circular>
       </div>
     </div>
   </section>

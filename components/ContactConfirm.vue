@@ -110,7 +110,7 @@ export default {
 
   fetch() {
     this.$store.commit('loading/changeStatus', true)
-    if(!this.user.Name){
+    if(!this.user.Inquiry){
       this.$router.push('/myaccount/other/contact#input')
     }
     history.pushState(null, '', null)
