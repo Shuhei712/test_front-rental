@@ -6,7 +6,14 @@
         {{action}}を承りました。
         <template v-if="action==='注文'">
           <br>申し込みいただいたレンタル商品の空き状況を確認の上、指定いただいた連絡方法にて、レンタルの可否をご連絡させていただきます。<br>
-          <span class="red--text">（※注文は確定しておりません）</span>
+          <span class="red--text">（※注文はまだ確定しておりません）</span>
+        </template>
+        <template v-if="action==='注文依頼'">
+          <br>登録されているメールアドレスに、確認メールを送信しました。<br>
+          メールが届かない場合は、しばらくしてもう一度お試しいただくか、<span class="d-inline-block">弊社までお問い合わせ下さい。</span><br>
+          <v-divider class="my-3"></v-divider>
+          ご注文の内容を確認後、注文完了メールを送信いたします。<br>
+          注文完了メールが届きましたら、注文確定となります。
         </template>
         <template v-else-if="action==='パスワード変更依頼'">
           <br>登録されているメールアドレスに、通知メールを送信しましたので、
@@ -14,7 +21,7 @@
         </template>
         <template v-else-if="action==='新規登録'"><br>
           ご登録いただいたメールアドレスに確認メールを送信しました。<br>メールに記載されているURLにアクセスすると本登録が完了いたします。<br>
-          （<span class="red--text">※まだ仮登録の段階になります</span>）
+          （<span class="red--text">※まだ仮登録の状態となります</span>）
         </template>
         <template v-else-if="action==='フォームの送信'">
           <br>ご登録いただいたメールアドレスに受付完了メールを送信いたしました。<br>

@@ -76,7 +76,7 @@ export default {
         { text: '申込日', value: 'RegistDate', width: '124px' },
         { text: 'レンタル開始日', value: 'RentalStartDate', width: '124px'},
         { text: '合計金額(円)', value: 'RentalTotal', sortable: false },
-        { text: '注文状況', value: 'OrderStatusDisp', sortable: false, width: '137px' },
+        { text: '注文状況', value: 'OrderStatusDisp', sortable: false, width: '153px' },
         { text: '', value: 'actions', sortable: false },
       ],
       cancelDialog: false,

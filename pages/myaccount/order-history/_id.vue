@@ -9,91 +9,88 @@
     <branch-address
       :dialog.sync="branchDialog"
     ></branch-address>
+    <order-card
+      :dialog.sync="orderDialog"
+      :pay-method="order.PayMethod"
+      :delivery-type="order.DeliveryType"
+      @update-data="getHxDetails"
+    ></order-card>
     <top-bar title="詳細" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 order">
-      <div class="order__item">
-        <div class="order__status pb-10">
+      <div class="order__status">
+        <h2 class="mb-2 text-h6 outline white--text py-2 px-3 rounded-sm d-flex justify-space-between">
+          申し込み状況
+          <v-chip color="#707776" class="order__status-status white--text px-4">{{order.OrderStatusDisp}}</v-chip>
+        </h2>
+        <div class="pa-2">
           <dl class="d-flex">
             <dt class="order__status-title">注文番号</dt>
             <dd>{{order.OrderNo}}</dd>
           </dl>
           <dl class="d-flex">
-            <dt class="order__status-title">申込日</dt>
-            <dd>{{getDate(order.RegistDate)}}</dd>
-          </dl>
-          <dl class="d-flex">
-            <dt class="order__status-title">注文状況</dt>
+            <dt class="order__status-title">ステータス</dt>
             <dd>{{order.OrderStatusDisp}}</dd>
           </dl>
-          <dl v-if="order.OrderResponse" class="d-flex">
-            <dt class="order__status-title">コメント</dt>
-            <dd>
-              {{getDate(order.OrderResponseDate)}}
-              <p class="pre-wrap">{{order.OrderResponse}}</p>
-              <v-btn
-                v-if="order.ResponseQuotationURL"
-                outlined
-                class="mt-1"
-                color=primary
-                :href="order.ResponseQuotationURL">
-                資料ダウンロード
-              </v-btn>
+          <dl class="d-flex">
+            <dt class="order__status-title">申し込み日</dt>
+            <dd>{{getDate(order.RegistDate)}}</dd>
+          </dl>
+          <dl v-if="order.OrderRequestDate" class="d-flex mt-3">
+            <dt class="order__status-title">注文依頼日</dt>
+            <dd>{{getDate(order.OrderRequestDate)}}</dd>
+          </dl>
+          <dl v-if="order.OrderCommitDate" class="d-flex">
+            <dt class="order__status-title">注文確定日</dt>
+            <dd>{{getDate(order.OrderCommitDate)}}</dd>
+          </dl>
+          <dl v-if="order.OrderCancelReqDate" class="d-flex mt-3">
+            <dt class="order__status-title">キャンセル依頼日</dt>
+            <dd>{{getDate(order.OrderCancelReqDate)}}</dd>
+          </dl>
+          <dl v-if="order.OrderCancelCommitDate" class="d-flex">
+            <dt class="order__status-title">キャンセル確定日</dt>
+            <dd>{{getDate(order.OrderCancelCommitDate)}}</dd>
+          </dl>
+          <!-- //「レンタル申込中」の場合は表示しない -->
+          <dl v-if="order.OrderStatus!==0 && order.OrderResponse" class="mt-3">
+            <dt class="font-weight-bold">回答内容</dt>
+            <dd class="flex-grow-1">
+              <v-card outlined color="cushion" min-width="100%">
+                <v-card-text class="text--text">
+                  {{getDate(order.OrderResponseDate)}}
+                  <p class="pre-wrap">{{order.OrderResponse}}</p>
+                </v-card-text>
+                <v-card-actions class="flex-wrap">
+                  <v-btn
+                    v-if="order.ResponseQuotationURL"
+                    outlined
+                    color=primary
+                    class="letter-space-005em"
+                    :href="order.ResponseQuotationURL">
+                    回答見積書ダウンロード
+                  </v-btn>
+                  <!-- {{getDate(order.ResQuotationLimit)}} -->
+                  <span v-if="order.ResQuotationLimit" class="caption">&emsp;( 見積有効期限：{{getDate(order.ResQuotationLimit)}} )</span>
+                </v-card-actions>
+              </v-card>
+              <div v-if="order.OrderStatus===1 && orderDate(order.ResQuotationLimit)" class="text-right">
+                <v-btn
+                  color="accent"
+                  height="3.8rem"
+                  min-width="220px"
+                  class="text-white mt-1 btn-column text-h6"
+                  @click="orderDialog=true">
+                  <span class="caption">回答見積書の内容で</span>注文を進める
+                </v-btn>
+              </div>
             </dd>
           </dl>
         </div>
-        <h2 class="mb-2 text-h6 outline white--text py-1 px-3 rounded-sm">商品一覧</h2>
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="order.ProductList"
-          :items-per-page="30"
-          item-key="ProductID"
-          hide-default-footer
-          mobile-breakpoint="890">
-          <template #[`item.ProductName`]="{ item }">
-            <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row">
-              <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
-              <div class="table__txt text-truncate">
-                {{item.ProductName}}
-                <p class="font-weight-bold text-truncate">{{item.TypeNumber}}</p>
-              </div>
-            </a>
-          </template>
 
-          <template #[`item.Price`]="{ item }">
-            {{ getPrice(item.PriceType, item.Price) }}
-          </template>
-          <template #[`item.SubTotal`]="{ item }">
-            {{ getPrice(item.PriceType, item.SubTotal) }}
-          </template>
-        </v-data-table>
-
-        <v-divider></v-divider>
-
-        <price-card
-          :item-info="order"
-          :use-day="order.UseDay">
-        </price-card>
-
-        <v-card
-          v-if="!order.CancelEnableFlg && (order.OrderStatus !== 5 && order.OrderStatus !== 9)"
-          max-width="320"
-          elevation="0"
-          class="ml-auto mt-1">
-          <v-card-actions tag="div" class="px-0">
-            <v-btn
-              dark
-              elevation="0"
-              color="feature"
-              width="100%"
-              @click="setCancelDialog()">申し込みキャンセル
-            </v-btn>
-          </v-card-actions>
-        </v-card>
       </div>
 
       <div class="order__details mt-15">
-        <h2 class="mt-4 text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み詳細</h2>
+        <h2 class="mt-4 text-h6 outline white--text py-2 px-3 rounded-sm">申し込み詳細</h2>
         <v-card
           outlined
           class="py-6">
@@ -225,6 +222,16 @@
             </v-row>
             <v-divider class="my-4"></v-divider>
             <v-row>
+              <v-col cols="12" md="4" class="pb-0">お支払い方法
+              </v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" class="px-2 py-1 border width-s">
+                  {{ order.PayMethodDisp }}
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-divider class="my-4"></v-divider>
+            <v-row>
               <v-col cols="12" md="4" class="pb-0">備考
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
@@ -233,6 +240,57 @@
             </v-row>
           </v-container>
 
+        </v-card>
+      </div>
+      <div class="order__item mt-15">
+        <h2 class="mb-2 text-h6 outline white--text py-2 px-3 rounded-sm">商品一覧 ( レンタル申し込み時 )</h2>
+        <v-data-table
+          dense
+          :headers="headers"
+          :items="order.ProductList"
+          :items-per-page="30"
+          item-key="ProductID"
+          hide-default-footer
+          mobile-breakpoint="890">
+          <template #[`item.ProductName`]="{ item }">
+            <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row">
+              <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
+              <div class="table__txt text-truncate">
+                {{item.ProductName}}
+                <p class="font-weight-bold text-truncate">{{item.TypeNumber}}</p>
+              </div>
+            </a>
+          </template>
+
+          <template #[`item.Price`]="{ item }">
+            {{ getPrice(item.PriceType, item.Price) }}
+          </template>
+          <template #[`item.SubTotal`]="{ item }">
+            {{ getPrice(item.PriceType, item.SubTotal) }}
+          </template>
+        </v-data-table>
+
+        <v-divider></v-divider>
+
+        <price-card
+          :item-info="order"
+          :use-day="order.UseDay">
+        </price-card>
+
+        <v-card
+          v-if="!order.CancelEnableFlg && (order.OrderStatus !== 5 && order.OrderStatus !== 9)"
+          max-width="320"
+          elevation="0"
+          class="ml-auto mt-1">
+          <v-card-actions tag="div" class="px-0">
+            <v-btn
+              dark
+              elevation="0"
+              color="feature"
+              width="100%"
+              @click="setCancelDialog()">申し込みキャンセル
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </div>
     </div>
@@ -250,11 +308,12 @@ export default {
         { text: '日数掛率', value: 'DayRate', sortable: false, width: '84px' },
         { text: '数量', value: 'Qty', sortable: false, width: '60px' },
         { text: '小計(円)', value: 'SubTotal', sortable: false },
-        { text: '備考', value: 'ProductComment', sortable: false, width: '120px' },
+        { text: '回答コメント', value: 'ProductComment', sortable: false, width: '120px' },
       ],
-      cancelDialog:false,
+      cancelDialog: false,
       cancelID: null,
       branchDialog: false,
+      orderDialog: false
     }
   },
   async fetch() {
@@ -318,22 +377,37 @@ export default {
       }
     },
     getDate(date, time){
+      if(!date) return
       const year = date.substring(0, 4)
       const month = date.substring(4, 6)
       const day = date.substring(6, 8)
-      let t;
+      let t
       if(time){
-        const h = time.substring(0, 2)
-        const min = time.substring(2, 4)
-        t = "  " + h + ":" + min
+        t = time
+        if(time.length < 7){
+          const h = time.substring(0, 2)
+          const min = time.substring(2, 4)
+          t = h + ":" + min
+        }
       }
       let dateTime = year + "-" + month + "-" + day
-      if(t) dateTime += t
+      if(t) dateTime += "  " + t
       return dateTime
     },
     setCancelDialog(){
       this.cancelDialog = true
     },
+    orderDate(date){
+      if(!date) return false
+      const now = new Date()
+      const limitY = date.substr(0, 4)
+      const limitM = date.substr(4, 2)
+      const limitD = date.substr(6, 2)
+      const limit = new Date(limitY, limitM - 1, limitD)
+      const diffMmSec = limit.getTime() - now.getTime()
+      const diffDays = parseInt(diffMmSec / 1000 / 60 / 60 / 24)
+      return diffDays >= 0
+    }
   }
 }
 </script>
@@ -351,8 +425,11 @@ export default {
   white-space: pre-wrap;
 }
 .order__status{
+  &-status{
+    letter-spacing: 0.1em;
+  }
   &-title{
-    flex-basis: 6rem;
+    flex-basis: 9.5rem;
     flex-grow: 0;
     flex-shrink: 0;
     position: relative;
@@ -400,6 +477,10 @@ export default {
   }
   .v-data-table__mobile-table-row{
     margin-bottom: 1rem;
+  }
+  .btn-column .v-btn__content{
+    flex-wrap: wrap;
+    flex-direction: column;
   }
 }
 </style>
