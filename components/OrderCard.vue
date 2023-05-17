@@ -101,7 +101,6 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <!-- <p v-if="result && result!=='success'" class="red--text text-center mt-6">処理に失敗いたしました。</p> -->
           <v-card-actions class="justify-center">
             <v-btn
               class="mx-2"

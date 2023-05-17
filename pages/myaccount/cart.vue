@@ -157,7 +157,7 @@
                           name="tel"
                           rules="required|num">
                           <v-text-field
-                            v-model.number="rentJson.ContactTel"
+                            v-model="rentJson.ContactTel"
                             outlined
                             dense
                             hide-details="auto"
@@ -318,7 +318,7 @@
                               name="deliveryTel"
                               rules="required|num">
                               <v-text-field
-                                v-model.number="rentJson.DeliveryTel"
+                                v-model="rentJson.DeliveryTel"
                                 outlined
                                 dense
                                 hide-details="auto"
@@ -832,21 +832,24 @@ export default {
     },
     async inputUserInfo(){
       const res = await this.$getUserInfo()
-      this.userInfo = res
-      if(res.RentalFlg!==1){
-        this.rentalFlg = res.RentalFlg
-        this.idDialog = true
+      if(res) {
+        this.userInfo = res
+        if(res.RentalFlg!==1){
+          this.rentalFlg = res.RentalFlg
+          this.idDialog = true
+        }
+        this.$set(this.estJson, 'OwnerName', res.MemberName)
+        this.$set(this.estJson, 'Organization', res.Organization)
+        this.$set(this.rentJson, 'ContactEmail', res.Email)
+        this.$set(this.rentJson, 'ContactTel', res.Tel)
+        this.$set(this.rentJson, 'DeliveryZipCode', res.ZipCode)
+        this.$set(this.rentJson, 'DeliveryPrefect', res.Prefect)
+        this.$set(this.rentJson, 'DeliveryAddress', res.Address)
+        this.$set(this.rentJson, 'ReturnZipCode', res.ZipCode)
+        this.$set(this.rentJson, 'ReturnPrefect', res.Prefect)
+        this.$set(this.rentJson, 'ReturnAddress', res.Address)
+        this.$set(this.rentJson, 'PayMethod', res.PaymentMethod)
       }
-      this.$set(this.estJson, 'OwnerName', res.MemberName)
-      this.$set(this.estJson, 'Organization', res.Organization)
-      this.$set(this.rentJson, 'ContactEmail', res.Email)
-      this.$set(this.rentJson, 'ContactTel', res.Tel)
-      this.$set(this.rentJson, 'DeliveryZipCode', res.ZipCode)
-      this.$set(this.rentJson, 'DeliveryPrefect', res.Prefect)
-      this.$set(this.rentJson, 'DeliveryAddress', res.Address)
-      this.$set(this.rentJson, 'ReturnZipCode', res.ZipCode)
-      this.$set(this.rentJson, 'ReturnPrefect', res.Prefect)
-      this.$set(this.rentJson, 'ReturnAddress', res.Address)
     },
     getPrice(priceType, price) {
       switch (priceType) {

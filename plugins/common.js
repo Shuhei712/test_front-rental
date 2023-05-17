@@ -98,7 +98,10 @@ export default ({ store, $config, redirect, route }, inject) => {
   const getUserInfo = async () => {
     const accessToken = store.getters['auth/getAccessToken']
     const loginID = store.getters['auth/getUser']
-    const res = await memberAxios.get(`member/${loginID}`, {
+    const loginInfo = await getLoginInfo()
+    const param = new URLSearchParams()
+    param.append('LoginID', loginID)
+    const res = await memberBaseAxios.post(`/member/getInfo/${loginInfo.MemberID}`, param, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

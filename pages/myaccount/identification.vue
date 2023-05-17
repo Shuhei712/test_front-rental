@@ -58,11 +58,7 @@ export default {
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     this.setBreadCrumbs()
-    this.userInfo = await this.$getUserInfo()
-    const arr = ['MemberType','Representative','HOfficeTel','HOfficeFax','HOfficeZipCode','HOfficePrefect','HOfficeAddress','Incorporation','CorpNumber','CorpType','PaymentMethod','PayeeName','BillingEmail']
-    arr.forEach((item) => {
-      this.$set(this.user, item, this.userInfo[item])
-    })
+    await this.getUserInfo()
     this.$store.commit('loading/changeStatus', false)
   },
   head () {
@@ -107,6 +103,16 @@ export default {
       this.$store.commit('breadCrumbs/addList', { name: "マイページ", path: "/myaccount" });
       this.$store.commit('breadCrumbs/addList', { name: "本人確認", path: "/myaccount/" });
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
+    },
+    async getUserInfo(){
+      const res = await this.$getUserInfo()
+      if(res) {
+        this.userInfo = res
+        const arr = ['MemberType','Representative','HOfficeTel','HOfficeFax','HOfficeZipCode','HOfficePrefect','HOfficeAddress','Incorporation','CorpNumber','CorpType','PaymentMethod','PayeeName','BillingEmail']
+        arr.forEach((item) => {
+          this.$set(this.user, item, this.userInfo[item])
+        })
+      }
     },
     async setID(){
       this.loading = true

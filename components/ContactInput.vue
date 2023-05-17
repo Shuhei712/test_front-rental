@@ -214,29 +214,12 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async getUserInfo(){
-      const accessToken = this.$store.getters["auth/getAccessToken"]
-      const loginID = this.$store.getters["auth/getUser"]
-      const param = new URLSearchParams()
-      param.append('LoginID', loginID)
-      const res = await this.$memberBaseAxios.post(`member/getInfo/${this.loginInfo.MemberID}`, param, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
+      const res = await this.$getUserInfo()
+      if(res){
+        this.$set(this.syncedUser, 'Name', res.MemberName)
+        this.$set(this.syncedUser, 'NameKana', res.MemberKana)
+        this.$set(this.syncedUser, 'Email', res.Email)
       }
-      if(res.data.Status === 'TRUE'){
-        const member = res.data.MemberInfo
-        this.$set(this.syncedUser, 'Name', member.MemberName)
-        this.$set(this.syncedUser, 'NameKana', member.MemberKana)
-        this.$set(this.syncedUser, 'Email', member.Email)
-      }else if(res.data.ErrorNo === 100002){
-        const res = await this.$getAccessToken()
-        if( res ) return this.getUserInfo()
-      }
-
     },
     async getContactInfo(){
       const accessToken = this.$store.getters["auth/getAccessToken"]
