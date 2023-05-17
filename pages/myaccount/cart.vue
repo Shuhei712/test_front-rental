@@ -82,7 +82,7 @@
               </td>
             </template>
           </v-data-table>
-          <p class="pt-2 text-subtitle-2">※レンタル期間は下部のレンタル申し込み記入欄「ご使用期間」より変更可能です。</p>
+          <p class="pt-2 text-subtitle-2 note">レンタル期間は下部のレンタル申し込み記入欄「ご使用期間」より変更可能です。</p>
 
           <price-card
             :item-info="cartInfo"
@@ -330,7 +330,7 @@
                         </v-row>
 
                         <p class="note caption mt-2">
-                          弊社機材出庫日は基本的に前営業日となります
+                          弊社機材出庫日は基本的に前営業日となります。
                         </p>
                       </div>
 
@@ -447,7 +447,7 @@
                           :value="2"
                         ></v-radio>
                       </v-radio-group>
-                      <div class="notes my-4">
+                      <div class="my-4">
                         <p class="note caption">ご返送料及びチャーター費はお客様ご負担となります。</p>
                       </div>
                       <v-divider class="mb-4"></v-divider>
@@ -584,7 +584,7 @@
                           :value="1"
                         ></v-radio>
                       </v-radio-group>
-                      <p v-if="userInfo.MemberType" class="caption">※来社お引取りの方のみ店頭お支払いが可能です。</p>
+                      <p v-if="userInfo.MemberType" class="caption note">来社お引取りの方のみ店頭お支払いが可能です。</p>
                     </v-col>
                   </v-row>
 
@@ -655,7 +655,7 @@
       width="580">
       <v-card class="pa-5 text-md-center">
         <p>
-          ※レンタルのお申込みには、本人確認の登録が必要になります。<br>
+          <span class="note">レンタルのお申込みには、本人確認の登録が必要になります。</span><br>
           <template v-if="rentalFlg===0">
             <span class="red--text">本人確認の登録をお願いいたします。</span>
           </template>
@@ -980,6 +980,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 li{
   list-style: none;
 }
@@ -1013,9 +1014,6 @@ li{
     .v-data-table-header{
       background-color: #f2f2f2;
     }
-    .v-data-table__mobile-table-row{
-      margin-bottom: 1rem;
-    }
     td{
       border: 1px solid #f2f2f2;
     }
@@ -1038,12 +1036,7 @@ li{
 }
 .note{
   margin-bottom: 0;
-  padding-left: 1rem;
-  position: relative;
-  &::before{
-    content: "※";
-    left: 0;
-    position: absolute;
-  }
+  padding-left: 1.2rem;
+  @include wordSymbol('※')
 }
 </style>

@@ -438,18 +438,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 .line-height-sm{
   line-height: 1.5rem !important;
 }
 .note{
   padding-left: 1.4rem;
-  position: relative;
   list-style: none;
-  &::before{
-    content: "※";
-    left: 3px;
-    position: absolute;
-  }
+  @include wordSymbol('※')
 }
 .row:not(.last-row){
   border-bottom: 1px solid #dddddd;

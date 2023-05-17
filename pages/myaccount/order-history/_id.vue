@@ -433,12 +433,7 @@ export default {
     flex-grow: 0;
     flex-shrink: 0;
     position: relative;
-    &::after{
-      content: '：';
-      display: inline-block;
-      position: absolute;
-      right: 3px;
-    }
+    @include wordSymbol('：', false)
   }
 }
 .table{
