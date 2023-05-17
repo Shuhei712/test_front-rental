@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <top-bar title="新規登録" :bread-crumbs="breadCrumbs"></top-bar> -->
-    <div class="pb-16 px-3 px-lg-0">
+    <div class="pb-16">
       <v-container>
         <p>
           会員登録の前に、必ず「<nuxt-link to="/guide" class="sns--text text-decoration-underline">利用方法、サービスの内容</nuxt-link>」をご確認ください。
@@ -9,33 +9,33 @@
         <v-card class="mt-3 overflow-y-auto" height="40vh" min-height="280">
           <v-card-title>レンタル規約（2017年6月改定）</v-card-title>
           <v-card-text>
-            <ul class="px-2">
+            <ul>
               <li class="list-style-none">
                 <v-divider class="mb-3"></v-divider>
                 <h3 class="pb-1">お申し込み内容</h3>
                 <div>
-                  <ul class="ps-5">
+                  <ul class="ps-4">
                     <li class="rental-rule__entry-list">ご希望の機材名、数量</li>
                     <li class="rental-rule__entry-list">ご使用日時、場所</li>
                     <li class="rental-rule__entry-list">
                       機材お渡し方法
-                      <ul class="ps-5">
-                        <li><dl class="d-flex">
-                          <dt class="table-dt-s">ご来社：</dt>
-                          <dd class="table-dd">お引き取り / ご返却日</dd>
+                      <ul>
+                        <li class="list-style-none"><dl class="d-flex">
+                          <dt class="flex-shrink-0">ご来社：</dt>
+                          <dd>お引き取り / ご返却日</dd>
                         </dl></li>
-                        <li><dl class="d-flex">
-                          <dt class="table-dt-s">ご郵送：</dt>
-                          <dd class="table-dd">貴社着日 / 弊社戻り着日（送料はご負担となります。）</dd>
+                        <li class="list-style-none"><dl class="d-flex">
+                          <dt class="flex-shrink-0">ご郵送：</dt>
+                          <dd>貴社着日 / 弊社戻り着日（送料はご負担となります。）</dd>
                         </dl></li>
-                        <li><dl class="d-flex">
-                          <dt class="table-dt-s">搬入出：</dt>
-                          <dd class="table-dd">搬入 / 搬出ご希望日時（別途料金となります。）</dd>
+                        <li class="list-style-none"><dl class="d-flex">
+                          <dt class="flex-shrink-0">搬入出：</dt>
+                          <dd>搬入 / 搬出ご希望日時（別途料金となります。）</dd>
                         </dl></li>
                       </ul>
                     </li>
                   </ul>
-                  <p class="space-top-1">上記と合わせて機材ご使用期間をお知らせ下さい。</p>
+                  <p class="pt-1">上記と合わせて機材ご使用期間をお知らせ下さい。</p>
                   <p>また、設営・撤去および当日オペレート（別途料金）も承っております。</p>
                 </div>
                 <v-divider class="my-3"></v-divider>
@@ -43,38 +43,46 @@
               <li class="list-style-none">
                 <h3 class="pb-1">レンタル期間および料金</h3>
                 <div>
-                  <ul class="ps-5">
-                    <li class="rental-rule__entry-list">期間 ： 弊社渡しより、弊社戻りまでとさせて頂きます。</li>
-                    <li class="rental-rule__entry-list">
-                      料金 ： 基本的に機材ご使用日数とさせて頂きます。
-                      <p>※お渡し日・ご返却日によっては拘束期間料金が発生致します。</p>
+                  <ul>
+                    <li class="list-style-none">
+                      <dl class="d-flex">
+                        <dt class="flex-shrink-0">期間：</dt>
+                        <dd>弊社渡しより、弊社戻りまでとさせて頂きます。</dd>
+                      </dl>
+                    </li>
+                    <li class="list-style-none">
+                      <dl class="d-flex">
+                        <dt class="flex-shrink-0">料金：</dt>
+                        <dd>基本的に機材ご使用日数とさせて頂きます。</dd>
+                      </dl>
+                      <p class="pt-2">※お渡し日・ご返却日によっては拘束期間料金が発生致します。</p>
                       <p>地方など遠距離の場合はご相談下さい。</p>
                     </li>
                   </ul>
-                  <div class="mt-2 ps-1">
+                  <div class="mt-2">
                     <h4 class="color-title fw-m">期日・期間の変更</h4>
-                    <p class="space-top-1 space-left-2">御申し込み後の機材変更・期日変更につきましては、お渡し日の3営業日前までにご連絡下さい。</p>
+                    <p>御申し込み後の機材変更・期日変更につきましては、お渡し日の3営業日前までにご連絡下さい。</p>
                   </div>
-                  <div class="mt-2 ps-1">
+                  <div class="mt-2">
                     <h4 class="color-title fw-m">キャンセル料金</h4>
-                    <div class="space-top-1 space-left-2">
+                    <div>
                       原則として、次の相当額をキャンセル料として申し受けます。
-                      <ul class="ps-5">
-                        <li><dl class="d-flex">
-                          <dt class="table-dt">当日キャンセル：</dt>
-                          <dd class="table-dd">レンタル料金の80%</dd>
+                      <ul class="pt-2">
+                        <li class="list-style-none"><dl class="d-flex">
+                          <dt class="flex-shrink-0">当日：</dt>
+                          <dd>レンタル料金の80%</dd>
                         </dl></li>
-                        <li><dl class="d-flex">
-                          <dt class="table-dt">前日キャンセル：</dt>
-                          <dd class="table-dd">レンタル料金の50%</dd>
+                        <li class="list-style-none"><dl class="d-flex">
+                          <dt class="flex-shrink-0">前日：</dt>
+                          <dd>レンタル料金の50%</dd>
                         </dl></li>
-                        <li><dl class="d-flex">
-                          <dt class="table-dt">2日～3日前キャンセル：</dt>
-                          <dd class="table-dd">レンタル料金の40%</dd>
+                        <li class="list-style-none"><dl class="d-flex">
+                          <dt class="flex-shrink-0">2日～3日前：</dt>
+                          <dd>レンタル料金の40%</dd>
                         </dl></li>
-                        <li><dl class="d-flex">
-                          <dt class="table-dt">4日～5日前キャンセル：</dt>
-                          <dd class="table-dd">レンタル料金の20%</dd>
+                        <li class="list-style-none"><dl class="d-flex">
+                          <dt class="flex-shrink-0">4日～5日前：</dt>
+                          <dd>レンタル料金の20%</dd>
                         </dl></li>
                       </ul>
                     </div>
@@ -125,7 +133,7 @@
           v-model="checkbox"
           label="サービス内容を理解し、利用規約に同意します。"
         ></v-checkbox>
-        <div class=" text-center">
+        <div class="d-flex flex-wrap justify-center">
           <v-btn color="primary"
             class="white--text ma-1"
             :disabled="!checkbox"
