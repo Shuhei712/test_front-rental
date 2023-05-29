@@ -78,28 +78,14 @@ export default {
       this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
     },
     async getAccountInfo(){
-      const accessToken = this.$store.getters["auth/getAccessToken"]
-      const loginID = this.$store.getters["auth/getUser"]
-      const res = await this.$memberAxios.get(`member/${loginID}`,{
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
-      if(res.data.Status==='TRUE'){
-        this.userInfo = res.data.MemberInfo
+      const res = await this.$getUserInfo()
+      if(res){
+        this.userInfo = res
         const arr = ['MemberType','MemberName','Organization','OrganizationKana','Department','OfficeName','SalesStaff','Tel','Fax','ZipCode','Prefect','Address','Email','DMFlg','MemberKana']
         arr.forEach((item) => {
           this.$set(this.userUpInfo, item, this.userInfo[item])
         })
-        this.loginID = res.data.LoginID
-      }else if(res.data.ErrorNo===100002){
-        // access認証token有効期限切れ
-        const res = await this.$getAccessToken()
-        if( res ) return this.getAccountInfo()
+        this.loginID = this.$store.getters['auth/getUser']
       }
     },
     async update(){
