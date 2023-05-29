@@ -384,11 +384,6 @@ export default {
       let t
       if(time){
         t = time
-        if(time.length < 7){
-          const h = time.substring(0, 2)
-          const min = time.substring(2, 4)
-          t = h + ":" + min
-        }
       }
       let dateTime = year + "-" + month + "-" + day
       if(t) dateTime += "  " + t

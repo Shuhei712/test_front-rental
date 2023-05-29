@@ -4,7 +4,7 @@
     <template v-if="result==='success'">
       <p class="text-left text-md-center mb-4">
         {{action}}を承りました。
-        <template v-if="action==='注文'">
+        <template v-if="action==='レンタル申し込み'">
           <br>申し込みいただいたレンタル商品の空き状況を確認の上、指定いただいた連絡方法にて、レンタルの可否をご連絡させていただきます。<br>
           <span class="red--text">（※注文はまだ確定しておりません）</span>
         </template>

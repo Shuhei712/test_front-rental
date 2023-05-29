@@ -220,7 +220,7 @@
             color="primary"
             class="ma-2 px-6"
             :loading="loading"
-            @click="order()">注文する
+            @click="order()">レンタル申し込み
           </v-btn>
 
         </v-card-actions>
@@ -231,7 +231,7 @@
         <v-card class="pa-5 text-center">
           <result-card
             :result="result"
-            :action="'注文'"
+            :action="'レンタル申し込み'"
             :path="'/myaccount'"
             :dialog.sync="resultDialog">
           </result-card>
@@ -303,11 +303,6 @@ export default {
       let t
       if(time){
         t = time
-        if(time.length < 7){
-          const h = time.substring(0, 2)
-          const min = time.substring(2, 4)
-          t = h + ":" + min
-        }
       }
       let dateTime = date
       if(t) dateTime += "  " + t

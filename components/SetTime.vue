@@ -53,13 +53,7 @@ export default {
   methods: {
     setTime(){
       if( this.time ){
-        let timeNum
-        if(!this.period){
-          timeNum = this.time.replace(/:/g, '') + '00'
-        }else{
-          timeNum = this.time
-        }
-        this.$emit('change-time', timeNum)
+        this.$emit('change-time', this.time)
       }
     },
     timeNum(){
