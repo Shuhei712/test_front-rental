@@ -149,7 +149,6 @@
               <v-text-field
                 v-model="userJson.Representative"
                 outlined
-                required
                 dense
                 hide-details="auto"
                 :error-messages="errors"
@@ -163,38 +162,39 @@
             <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
             設立年月
           </v-col>
-          <v-col cols="12" md="8">
-            <v-menu
-              v-model="datePick"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              min-width="auto"
-            >
-              <template #activator="{ on, attrs }">
-                <ValidationProvider
-                  v-slot="{ errors }"
-                  name="incorporation"
-                  rules="required">
-                  <v-text-field
-                    v-model="userJson.Incorporation"
-                    outlined
-                    dense
-                    hide-details="auto"
-                    readonly
-                    :error-messages="errors"
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </ValidationProvider>
-              </template>
-              <v-date-picker
-                v-model="userJson.Incorporation"
-                no-title
-                scrollable
-                @input="datePick = false"
-              ></v-date-picker>
-            </v-menu>
+          <v-col cols="12" md="8" class="d-flex align-end">
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="incorporationY"
+              rules="required|min:4|max:4">
+              <v-text-field
+                v-model="incorporation[0]"
+                type="number"
+                outlined
+                dense
+                hide-details="auto"
+                class="width-s"
+                placeholder="1996"
+                :error-messages="errors"
+              ></v-text-field>
+            </ValidationProvider>
+            &nbsp;年&nbsp;
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="incorporationM"
+              rules="required|max:2">
+              <v-text-field
+                v-model="incorporation[1]"
+                type="number"
+                outlined
+                dense
+                hide-details="auto"
+                class="width-s"
+                placeholder="05"
+                :error-messages="errors"
+              ></v-text-field>
+            </ValidationProvider>
+            &nbsp;月
           </v-col>
         </v-row>
 
@@ -346,7 +346,15 @@ export default {
     return {
       result: null,
       resultDialog: false,
-      datePick: false
+      incorporation: []
+    }
+  },
+  fetch(){
+    if(this.userJson.Incorporation&&!this.read){
+      const num = this.userJson.Incorporation
+      const year = num.substring(0, 4)
+      const month = num.substring(4, 6)
+      this.incorporation = [year,month]
     }
   },
   computed: {
@@ -364,6 +372,18 @@ export default {
       },
       set(val){
         this.$emit('update:file', val)
+      }
+    },
+  },
+  watch: {
+    'incorporation'(){
+      if(this.incorporation.length > 1) {
+        let result = ''
+        this.incorporation.forEach((item,index)=>{
+          if (index!==0) item = String(item).padStart(2, '0')
+          result += String(item)
+        })
+        this.$set(this.userJson, 'Incorporation', result)
       }
     }
   },
@@ -451,5 +471,8 @@ export default {
   border-bottom: 1px solid #dddddd;
   padding-bottom: 0.5rem;
   padding-top: 0.2rem;
+}
+.width-s{
+  max-width: 6rem;
 }
 </style>

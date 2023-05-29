@@ -176,7 +176,7 @@
                   <v-row>
                     <v-col cols="12" md="4" class="pb-0">設立年月</v-col>
                     <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                      <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Incorporation}}</v-card>
+                      <v-card elevation="0" class="px-2 py-1 border">{{dateFormat(syncedUser.Incorporation)}}</v-card>
                     </v-col>
                   </v-row>
                   <v-row>
@@ -337,7 +337,6 @@ export default {
         this.$set(this.syncedUser, 'DocFileName2', '')
         this.$set(this.syncedUser, 'DocFileName3', '')
       }
-      if(this.syncedUser.Incorporation) this.dateFormat()
       const userInfo = JSON.stringify(this.syncedUser)
       const param = new URLSearchParams()
       param.append('LoginID', this.syncedUser.Email)
@@ -359,9 +358,13 @@ export default {
       this.resultDialog = true
       this.loading = false
     },
-    dateFormat(){
-      const date = this.syncedUser.Incorporation.replace(/-/g,'')
-      this.$set(this.syncedUser, 'Incorporation', date)
+    dateFormat(num){
+      if(num){
+        const year = num.substring(0, 4)
+        const month = num.substring(4, 6)
+        const entryDate = year+"-"+month
+        return entryDate
+      }
     },
     popstateHook(){
       history.pushState(null, '', null)
