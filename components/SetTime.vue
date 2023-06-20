@@ -58,27 +58,31 @@ export default {
     },
     timeNum(){
       // console.log(this.minH)
-      const arr = []
-      for(let i = this.minH ; i <= this.maxH ; i++) {
-        let time = null
-        time = String(i).padStart(2, '0')
-        let finishTime = String(i+1).padStart(2, '0')
-        for(let j = 0 ; j < 60 ; j++) {
-          let min = j * this.minute
-          if(this.minH === i && min < this.minM){
-            continue
-          }else if(this.maxH === i && this.maxM < min){
-            break
-          }else if( min < 60 ){
-            min = String(min).padStart(2, '0')
-            if(this.period){
-              finishTime = `-${finishTime}:${min}`
+      const arr = ['時間未定']
+      if(this.period){
+        arr.push('10:00-12:00','12:00-15:00','15:00-18:00')
+      }else{
+        for(let i = this.minH ; i <= this.maxH ; i++) {
+          let time = null
+          time = String(i).padStart(2, '0')
+          // let finishTime = String(i+1).padStart(2, '0')
+          for(let j = 0 ; j < 60 ; j++) {
+            let min = j * this.minute
+            if(this.minH === i && min < this.minM){
+              continue
+            }else if(this.maxH === i && this.maxM < min){
+              break
+            }else if( min < 60 ){
+              min = String(min).padStart(2, '0')
+              // if(this.period){
+              //   finishTime = `-${finishTime}:${min}`
+              // }else{
+              //   finishTime = ''
+              // }
+              arr.push(`${time}:${min}`)
             }else{
-              finishTime = ''
+              break
             }
-            arr.push(`${time}:${min}${finishTime}`)
-          }else{
-            break
           }
         }
       }

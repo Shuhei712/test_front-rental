@@ -20,6 +20,7 @@
           参考金額 合計&emsp;
           <span class="text-h5">￥{{itemInfo.Total.toLocaleString()}}</span> (税込)
         </p>
+        <p class="text-right caption">※送料、作業費等は除く</p>
       </template>
       <template v-else>
         <p class="font-weight-bold text-right mt-2 red--text">

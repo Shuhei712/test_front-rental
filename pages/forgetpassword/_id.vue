@@ -106,7 +106,7 @@ export default {
       const param = new URLSearchParams()
       param.append('MailAddress', this.mail)
       param.append('NewPasswd', this.newPass)
-      const res = await this.$memberAxios.post('/auth/forgetPasswd', param,{
+      const res = await this.$memberAxios.post('auth/forgetPasswd', param,{
         headers: {
           Authorization: `Bearer ${token}`
         }

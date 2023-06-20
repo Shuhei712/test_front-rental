@@ -89,7 +89,7 @@
             :use-day="rentJson.UseDay">
           </price-card>
 
-          <v-card
+          <!-- <v-card
             max-width="320"
             elevation="0"
             class="ml-auto mt-1">
@@ -103,7 +103,7 @@
               </v-btn>
             </v-card-actions>
 
-          </v-card>
+          </v-card> -->
         </div>
 
         <div class="cart__user mt-15">
@@ -578,13 +578,13 @@
                         <v-radio label="事前お振込"
                           :value="0"
                         ></v-radio>
-                        <v-radio v-if="userInfo.MemberType"
+                        <!-- <v-radio v-if="userInfo.MemberType"
                           label="店頭お支払い(現金)"
                           :disabled="rentJson.DeliveryType!==0"
                           :value="1"
-                        ></v-radio>
+                        ></v-radio> -->
                       </v-radio-group>
-                      <p v-if="userInfo.MemberType" class="caption note">来社お引取りの方のみ店頭お支払いが可能です。</p>
+                      <!-- <p v-if="userInfo.MemberType" class="caption note">来社お引取りの方のみ店頭お支払いが可能です。</p> -->
                     </v-col>
                   </v-row>
 

@@ -29,7 +29,7 @@ extend('num', {
     if( String(value).match( /^[0-9０-９]{7,11}$/) ) return true
     return false
   },
-  message: '正しい形式でお願いします(数字のみ)'
+  message: '正しい形式でお願いします'
 })
 extend('file', {
   validate(value) {

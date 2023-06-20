@@ -44,23 +44,23 @@
                     <v-radio label="事前お振込"
                       :value="0"
                     ></v-radio>
-                    <v-radio v-if="userType"
+                    <!-- <v-radio v-if="userType"
                       label="店頭お支払い(現金)"
                       :disabled="deliveryType!==0"
                       :value="1"
-                    ></v-radio>
+                    ></v-radio> -->
                   </v-radio-group>
-                  <p v-if="userType" class="caption note">来社お引取りの方のみ店頭お支払いが可能です。</p>
+                  <!-- <p v-if="userType" class="caption note">来社お引取りの方のみ店頭お支払いが可能です。</p> -->
                   <v-card color="cushion" elevation="0">
                     <v-card-text>
                       <dl class="d-flex flex-column flex-md-row align-start">
                         <dt class="font-weight-bold colon">事前お振込</dt>
                         <dd class="ps-md-4">お引き取り予定３営業日前までにお振り込み</dd>
                       </dl>
-                      <dl v-if="userType" class="d-flex flex-column flex-md-row align-start pt-1">
+                      <!-- <dl v-if="userType" class="d-flex flex-column flex-md-row align-start pt-1">
                         <dt class="font-weight-bold colon">店頭お支払い</dt>
                         <dd class="ps-md-4">お引き取り時に現金でご精算</dd>
-                      </dl>
+                      </dl> -->
 
                     </v-card-text>
                   </v-card>

@@ -258,9 +258,9 @@
               <v-radio label="事前お振込"
                 :value="0"
               ></v-radio>
-              <v-radio label="店頭お支払い(現金)"
+              <!-- <v-radio label="店頭お支払い(現金)"
                 :value="1"
-              ></v-radio>
+              ></v-radio> -->
             </v-radio-group>
           </v-col>
         </v-row>
