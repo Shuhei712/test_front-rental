@@ -408,18 +408,23 @@ export default {
         transform: rotate(45deg);
       }
     }
+    .item__feature {
+      .info__number{
+        color: $accent;
+      }
+    }
 
     .info__number {
       position: absolute;
       bottom: 0;
       right: 0;
-      color: #ffffff;
+      color: $primary;
       font-weight: 900;
       font-size: clamp(28px, 3vw, 45px);
       line-height: 0.9;
       font-style: italic;
-      transform: translateY(50%);
-      text-shadow: 0 0 2px $outline, 0 0 2px $outline, 0 0 2px $outline, 0 0 2px $outline;
+      transform: translateY(48%);
+      text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
       z-index: 3;
       width: calc(100% + 3rem);
       word-break: break-word;
