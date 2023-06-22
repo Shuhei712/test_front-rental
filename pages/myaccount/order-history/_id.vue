@@ -83,6 +83,9 @@
                   <span class="caption">回答見積書の内容で</span>注文を進める
                 </v-btn>
               </div>
+              <p v-if="order.OrderStatus===1 && !orderDate(order.ResQuotationLimit)" class="red--text mt-3">
+                回答見積書の有効期限が過ぎており、ご注文を確定することができません。<br>あたらめてご注文をお申し込みいただくか、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/" class="blued" target="_blank">お問い合わせ</a>ください。
+              </p>
             </dd>
           </dl>
         </div>
@@ -276,22 +279,24 @@
           :item-info="order"
           :use-day="order.UseDay">
         </price-card>
-
         <v-card
-          v-if="!order.CancelEnableFlg && (order.OrderStatus !== 5 && order.OrderStatus !== 9)"
-          max-width="320"
+          max-width="360"
+          width="100%"
           elevation="0"
           class="ml-auto mt-1">
           <v-card-actions tag="div" class="px-0">
             <v-btn
-              dark
               elevation="0"
               color="feature"
               width="100%"
-              @click="setCancelDialog()">申し込みキャンセル
+              class="white--text"
+              :disabled="!order.CancelEnableFlg && (order.OrderStatus !== 5 && order.OrderStatus !== 9)"
+              @click="setCancelDialog()">申し込みキャンセル*
             </v-btn>
           </v-card-actions>
         </v-card>
+        <h3 class="text-subtitle-1 red--text mt-3 font-weight-bold">* 5営業日前以降のキャンセルについて</h3>
+        <p>本システムでは、レンタルお引渡し日の5営業日前以降のキャンセルを受け付けておりません。<br>注文をキャンセルする場合は、<NuxtLink :to="{ path: '/guide', hash: '#item' }" class="blued">ご利用方法 レンタル規約</NuxtLink>から「レンタル期間及び料金内容」をご確認いただき、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/" class="blued" target="_blank">お問い合わせ</a>ください。</p>
       </div>
     </div>
   </section>
@@ -393,7 +398,7 @@ export default {
       this.cancelDialog = true
     },
     orderDate(date){
-      if(!date) return false
+      if(!date) return
       const now = new Date()
       const limitY = date.substr(0, 4)
       const limitM = date.substr(4, 2)

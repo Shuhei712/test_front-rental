@@ -43,11 +43,11 @@
               class="white--text my-1"> 詳細
             </v-btn>
             <v-btn
-              v-if="!item.CancelEnableFlg && (item.OrderStatus !== 5 && item.OrderStatus !== 9)"
               small
               color="feature"
               width="90"
               class="white--text my-1"
+              :disabled="!item.CancelEnableFlg && (item.OrderStatus !== 5 && item.OrderStatus !== 9)"
               @click="setCancelDialog(item.OrderNo)">キャンセル
             </v-btn>
           </td>

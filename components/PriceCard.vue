@@ -1,6 +1,7 @@
 <template>
   <v-card
-    max-width="320"
+    max-width="360"
+    width="100%"
     color="cushion"
     elevation="0"
     class="ml-auto mt-3">
@@ -17,10 +18,10 @@
         </p>
         <v-divider></v-divider>
         <p class="font-weight-bold text-right mt-2 red--text">
-          参考金額 合計&emsp;
-          <span class="text-h5">￥{{itemInfo.Total.toLocaleString()}}</span> (税込)
+          <span class="text-h7">参考金額 合計</span>&emsp;
+          <span class="text-h6 text-md-h5">￥{{itemInfo.Total.toLocaleString()}}</span> (税込)
         </p>
-        <p class="text-right caption">※送料、作業費等は除く</p>
+        <p class="font-weight-bold text-right red--text">※送料、作業費等は除く</p>
       </template>
       <template v-else>
         <p class="font-weight-bold text-right mt-2 red--text">
@@ -47,3 +48,8 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.text-h7{
+  font-size: 1.1rem
+}
+</style>
