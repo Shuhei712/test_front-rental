@@ -24,7 +24,7 @@
                 <div class="info__maker">
                   <div class="info__maker-txt px-5 d-flex align-center justify-center">{{ list.PickupHeader }}</div>
                 </div>
-                <div class="info__box d-flex align-center ps-10 px-xl-10 py-2 justify-space-between">
+                <div class="info__box d-flex align-center ps-10 ps-lg-13 justify-space-between">
                   <div class="info__name letter-space-015em">
                     <div v-if="list.PickupType === TYPE_FEATURE" class="name__sub">{{ list.PickupDescription }}</div>
                     <span class="name__main font-weight-bold letter-space-015em">{{ list.PickupTitle }}</span>
@@ -36,7 +36,7 @@
                        min-width="40" text class="pa-0 px-md-5"><span class="item__btn-arrow"></span></v-btn>
                   </div>
                 </div>
-                <div class="info__number text-right letter-space-015em">
+                <div class="info__number letter-space-015em ps-11 ps-lg-13">
                   <span v-if="list.PickupTypeNumber">{{ list.PickupTypeNumber }}</span>
                 </div>
               </a>
@@ -76,7 +76,7 @@ export default {
         autoPlay: true,
         infiniteScroll: true,
         wheelControl: false,
-        playSpeed: 10000,
+        playSpeed: 100000,
         transition: 500,
       },
       thumbHooper: {
@@ -84,7 +84,7 @@ export default {
         autoPlay: true,
         infiniteScroll: true,
         wheelControl: false,
-        playSpeed: 10000,
+        playSpeed: 100000,
         transition: 500,
         breakpoints: {
           600: {
@@ -171,9 +171,9 @@ export default {
     width: 100%;
     height: 100%;
     position: relative;
-    padding-left: calc(#{$sns-space} + 1.5vw);
+    padding-left: calc(#{$sns-space} + 1vw);
     padding-right: $sns-space;
-    padding-bottom: calc(#{$thumb-space} + 3%);
+    padding-bottom: calc(#{$thumb-space} + 4%);
     padding-top: 10rem;
     overflow: hidden;
     background-position: center;
@@ -188,7 +188,7 @@ export default {
     }
     @include mq(md) {
       padding-right: 3%;
-      padding-bottom: 5rem;
+      padding-bottom: 6rem;
       padding-top: 5rem;
     }
     @include mq(sm) {
@@ -304,6 +304,7 @@ export default {
       margin-bottom: 2rem;
       margin-left: 4rem;
       margin-top: -2rem;
+      // max-width: 650px;
       &::before,&::after{
         position: absolute;
         width: 120%;
@@ -373,8 +374,18 @@ export default {
     }
 
     .info__box{
-      min-height: 10rem;
+      // min-height: 9.8rem;
       color: $primary;
+      padding-top: 2rem;
+      padding-bottom: clamp(1rem, 6vw, 5rem);
+      @include mq(lg) {
+        // min-height: 8.4rem;
+        padding-bottom: clamp(3.8rem, 8vw, 4.8rem);
+      }
+      @include mq(md){
+        padding-bottom: clamp(3.8rem, 17vw, 5rem);
+        padding-top: 2.6rem;
+      }
     }
 
     .info__name {
@@ -386,7 +397,7 @@ export default {
       .name__main{
         font-size: 1.45rem;
         @include mq(sm){
-          font-size: 1.3rem;
+          font-size: 1.2rem;
         }
       }
       .name__sub{
@@ -416,21 +427,24 @@ export default {
 
     .info__number {
       position: absolute;
-      bottom: 0;
-      right: 0;
       color: $primary;
       font-weight: 900;
-      font-size: clamp(28px, 3vw, 45px);
+      font-size: clamp(28px, 2.8vw, 40px);
       line-height: 0.9;
       font-style: italic;
-      transform: translateY(48%);
+      transform: translateY(clamp(-4.8rem, -5.5vw, -3.6rem));
       text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
       z-index: 3;
-      width: calc(100% + 3rem);
+      width: calc(100% + 1rem);
       word-break: break-word;
-      @include mq(md){
+      @include mq(lg){
+        transform: translateY(clamp(-4.5rem, -6.7vw, -3.6rem));
         width: calc(100% + 2rem);
-        font-size: clamp(28px, 8vw, 45px);
+        font-size: clamp(28px, 7.4vw, 38px);
+      }
+      @include mq(md){
+        transform: translateY(clamp(-4.8rem, -15vw, -3.6rem));
+        width: calc(100% + 0rem);
       }
 
     }
