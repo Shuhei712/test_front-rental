@@ -76,7 +76,7 @@ export default {
         autoPlay: true,
         infiniteScroll: true,
         wheelControl: false,
-        playSpeed: 100000,
+        playSpeed: 10000,
         transition: 500,
       },
       thumbHooper: {
@@ -84,7 +84,7 @@ export default {
         autoPlay: true,
         infiniteScroll: true,
         wheelControl: false,
-        playSpeed: 100000,
+        playSpeed: 10000,
         transition: 500,
         breakpoints: {
           600: {
