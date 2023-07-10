@@ -286,11 +286,12 @@
           class="ml-auto mt-1">
           <v-card-actions tag="div" class="px-0">
             <v-btn
+              v-if="order.OrderStatus !== 5 && order.OrderStatus !== 9"
               elevation="0"
               color="feature"
               width="100%"
               class="white--text"
-              :disabled="!order.CancelEnableFlg && (order.OrderStatus !== 5 && order.OrderStatus !== 9)"
+              :disabled="order.CancelEnableFlg===1"
               @click="setCancelDialog()">申し込みキャンセル*
             </v-btn>
           </v-card-actions>
