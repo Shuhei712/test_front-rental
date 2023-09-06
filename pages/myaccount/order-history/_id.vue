@@ -79,7 +79,7 @@
                   height="3.8rem"
                   min-width="220px"
                   class="text-white mt-1 btn-column text-h6"
-                  @click="orderDialog=true">
+                  @click="checkID">
                   <span class="caption">回答見積書の内容で</span>注文を進める
                 </v-btn>
               </div>
@@ -300,6 +300,36 @@
         <p>本システムでは、レンタルお引渡し日の5営業日前以降のキャンセルを受け付けておりません。<br>注文をキャンセルする場合は、<NuxtLink :to="{ path: '/guide', hash: '#item' }" class="blued">ご利用方法 レンタル規約</NuxtLink>から「レンタル期間及び料金内容」をご確認いただき、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/" class="blued" target="_blank">お問い合わせ</a>ください。</p>
       </div>
     </div>
+
+    <v-dialog v-model="idDialog"
+      width="580">
+      <v-card class="pa-5 text-md-center">
+        <p>
+          <span class="note">レンタルのお申込みには、本人確認の登録が必要になります。</span><br>
+          <template v-if="rentalFlg===0">
+            <span class="red--text">本人確認の登録をお願いいたします。</span>
+          </template>
+          <template v-else-if="rentalFlg===5">
+            <span class="red--text">現在、本人確認の登録申請中でございます。</span><br>
+            申請が通るまで、もうしばらくお待ちください。
+          </template>
+        </p>
+        <v-card-actions class="justify-center">
+          <v-btn
+            v-if="rentalFlg===0"
+            class="mt-4 mx-2 white--text"
+            dark
+            color="primary"
+            :to="'/myaccount/identification'">本人確認の登録
+          </v-btn>
+          <v-btn
+            class="mt-4 mx-2"
+            color="secondary"
+            @click="idDialog=false">戻る
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 <script>
@@ -319,12 +349,16 @@ export default {
       cancelDialog: false,
       cancelID: null,
       branchDialog: false,
-      orderDialog: false
+      orderDialog: false,
+      idDialog: false,
+      rentalFlg: null,
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     await this.getHxDetails()
+    const res = await this.$getUserInfo()
+    if(res) this.rentalFlg = res.RentalFlg
     this.setBreadCrumbs()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -408,7 +442,14 @@ export default {
       const diffMmSec = limit.getTime() - now.getTime()
       const diffDays = parseInt(diffMmSec / 1000 / 60 / 60 / 24)
       return diffDays >= 0
-    }
+    },
+    checkID(){
+      if(this.rentalFlg!==1){
+        this.idDialog = true
+      }else{
+        this.orderDialog = true
+      }
+    },
   }
 }
 </script>

@@ -618,7 +618,7 @@
                   large
                   class="ml-0 my-1 text-h6 px-6"
                   :disabled="ObserverProps.invalid"
-                  @click="checkID()">確認する
+                  @click="confirm()">確認する
                 </v-btn>
               </div>
             </ValidationObserver>
@@ -651,35 +651,6 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="idDialog"
-      width="580">
-      <v-card class="pa-5 text-md-center">
-        <p>
-          <span class="note">レンタルのお申込みには、本人確認の登録が必要になります。</span><br>
-          <template v-if="rentalFlg===0">
-            <span class="red--text">本人確認の登録をお願いいたします。</span>
-          </template>
-          <template v-else-if="rentalFlg===5">
-            <span class="red--text">現在、本人確認の登録申請中でございます。</span><br>
-            申請が通るまで、もうしばらくお待ちください。
-          </template>
-        </p>
-        <v-card-actions class="justify-center">
-          <v-btn
-            v-if="rentalFlg===0"
-            class="mt-4 mx-2 white--text"
-            dark
-            color="primary"
-            :to="'/myaccount/identification'">本人確認の登録
-          </v-btn>
-          <v-btn
-            class="mt-4 mx-2"
-            color="secondary"
-            @click="idDialog=false">戻る
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
 
     <branch-address
       :dialog.sync="branchDialog"
@@ -723,8 +694,6 @@ export default {
       concatRentRange: null,
       confirmDialog: false,
       qtyArr: [...Array(99).keys()].map(i => i + 1),
-      idDialog: false,
-      rentalFlg: null,
       branchDialog: false,
       branchList: null
     }
@@ -834,10 +803,6 @@ export default {
       const res = await this.$getUserInfo()
       if(res) {
         this.userInfo = res
-        if(res.RentalFlg!==1){
-          this.rentalFlg = res.RentalFlg
-          this.idDialog = true
-        }
         this.$set(this.estJson, 'OwnerName', res.MemberName)
         this.$set(this.estJson, 'Organization', res.Organization)
         this.$set(this.rentJson, 'ContactEmail', res.Email)
@@ -965,13 +930,9 @@ export default {
       this.returnMin = this.rentRange[1] ? this.rentRange[1] : this.rentDate[0]
       this.$refs.datePick.save(this.rentRange)
     },
-    checkID(){
-      if(this.userInfo.RentalFlg!==1){
-        this.idDialog = true
-      }else{
-        this.confirmDialog = true
-        history.pushState(null, '', null)
-      }
+    confirm(){
+      this.confirmDialog = true
+      history.pushState(null, '', null)
     },
     getBranch(obj){
       this.branchList = obj
