@@ -46,7 +46,8 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 440px;
   background-color: $accent;
   z-index: 400;
 
@@ -56,7 +57,8 @@ export default {
     height: calc(500px * 1.732 / 2);
     top: -50px;
     left: -50px;
-    animation: 15s linear infinite rotation;
+    // animation: 15s linear infinite rotation;
+    transform: rotate(25deg);
   }
 
   #hexagon-1::before {
@@ -86,7 +88,8 @@ export default {
     height: calc(300px * 1.732 / 2);
     bottom: 0;
     right: -25px;
-    animation: 5s linear infinite rotation;
+    // animation: 5s linear infinite rotation;
+    transform: rotate(45deg);
   }
 
   #hexagon-2::before {
