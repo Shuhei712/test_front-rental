@@ -61,7 +61,8 @@
                   outlined
                   dense
                   prepend-inner-icon="mdi-magnify"
-                  hide-details="auto"></v-text-field>
+                  hide-details="auto"
+                  @keyup.enter="$router.push('/products?type=3&keyword=' + keyword)"></v-text-field>
               </div>
             </v-col>
             <v-col cols="6" md="4">
