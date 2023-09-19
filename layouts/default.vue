@@ -2,13 +2,12 @@
   <v-app>
       <header-parts></header-parts>
       <v-main>
-        <div v-if="loading">
+        <!-- <div v-if="loading">
           <loading></loading>
-        </div>
+        </div> -->
         <Nuxt />
       </v-main>
       <footer-parts></footer-parts>
-    </div>
   </v-app>
 </template>
 
@@ -22,3 +21,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+main {
+  min-height: 100vh;
+}
+</style>
