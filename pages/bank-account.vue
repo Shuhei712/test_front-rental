@@ -36,6 +36,25 @@ export default {
       ]
     }
   },
+  mounted() {
+    const urlHash = window.location.hash
+    if (urlHash) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'auto'
+      });
+      setTimeout(function() {
+        const target = document.querySelector(urlHash);
+        const rect = target.getBoundingClientRect().top;
+        const offset = window.pageYOffset;
+        const position = rect + offset;
+        window.scrollTo({
+          top: position,
+          behavior: 'auto'
+        });
+      }, 100);
+    }
+  },
   methods: {
     setBreadCrumbs() {
       // this.$store.commit('breadCrumbs/deleteList')
