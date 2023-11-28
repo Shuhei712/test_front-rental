@@ -332,6 +332,7 @@ export default {
     .info__maker {
       color: #ffffff;
       font-size: 0.9rem;
+      font-weight: 500;
       position: absolute;
       display: inline-block;
       min-width: 100px;
@@ -365,8 +366,8 @@ export default {
         min-height: 2.8rem;
         width: 7.8rem;
         line-height: 1.2;
-        letter-spacing: 0.15em;
-        padding: 0.5rem;
+        letter-spacing: 0.13em;
+        padding: 0.5rem 0.4rem;
         word-break: break-word;
         @include mq(md) {
           width: auto;
@@ -402,10 +403,8 @@ export default {
         }
       }
       .name__sub{
-        font-weight: 500;
-        font-size: 1rem;
-        // font-weight: 700;
-        // font-size: 1.1rem;
+        font-weight: 700;
+        font-size: 1.1rem;
         padding-bottom: 0.5rem;
         @include mq(sm){
           font-size: 0.9rem;
@@ -425,6 +424,10 @@ export default {
     .item__feature {
       .info__number{
         color: $accent;
+      }
+      .info__name .name__sub{
+        font-weight: 500;
+        font-size: 1rem;
       }
     }
 
