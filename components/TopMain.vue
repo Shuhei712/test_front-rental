@@ -32,7 +32,7 @@
           <v-row class="main__menu pb-5 pr-md-16" no-gutters>
             <v-col cols="6">
               <div class="btn-wrap pr-2">
-                <v-btn color="#fff" to="/guide#enrty" block v-bind="size" class=" letter-space-02em">
+                <v-btn color="#fff" to="/guide#enrty" block v-bind="size" class=" letter-space-02em" max-height="40">
                   <img class="icon mr-1" src="/img/top/beginner-icon.png" /><span class="btn-text lh-crop-12"
                     >はじめての方へ</span
                   >
@@ -42,8 +42,8 @@
             </v-col>
             <v-col cols="6">
               <div class="btn-wrap ps-2">
-                <v-btn color="#fff" to="/faq" block v-bind="size" class=" letter-space-02em">
-                  <v-icon class="mr-1" color="primary" v-bind="size">mdi-help-circle-outline</v-icon
+                <v-btn color="#fff" to="/faq" block v-bind="size" class=" letter-space-02em" max-height="40">
+                  <v-icon class="mr-1" color="primary">mdi-help-circle-outline</v-icon
                   ><span class="btn-text lh-crop-12">よくある質問</span>
                   <v-icon color="primary" class="mr-n2">mdi-chevron-right</v-icon>
                 </v-btn>
@@ -67,9 +67,8 @@
             </v-col>
             <v-col cols="6" md="4">
               <div class="btn-wrap">
-                <v-btn class="text-white" color="primary" :href="'/products?type=3&keyword=' + keyword" block
-                v-bind="size">
-                  <v-icon class="mr-1" color="#ffffff" v-bind="size">mdi-text-search</v-icon
+                <v-btn class="text-white" color="primary" :href="'/products?type=3&keyword=' + keyword" block v-bind="size" max-height="40">
+                  <v-icon class="mr-1" color="#ffffff">mdi-text-search</v-icon
                   ><span class="lh-crop-12">詳細検索</span>
                 </v-btn>
               </div>
@@ -120,9 +119,9 @@ export default {
   computed:{
     size(){
       switch(this.$vuetify.breakpoint.name){
-        case 'xl': return ''
-        case 'lg': return ''
-        default: return {'small':true}
+        case 'xl': return {'x-large':true}
+        case 'lg': return {'x-large':true}
+        default: return {'medium':true}
       }
     }
   }
@@ -189,8 +188,10 @@ export default {
   }
   &__menu {
     .icon {
+      height: 18px;
+      object-fit: contain;
       @include mq(md) {
-        width: 16px !important;
+        width: 18px !important;
       }
     }
     .btn-text {

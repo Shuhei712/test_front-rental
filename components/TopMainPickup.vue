@@ -331,7 +331,7 @@ export default {
     }
     .info__maker {
       color: #ffffff;
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 500;
       position: absolute;
       display: inline-block;
@@ -435,7 +435,7 @@ export default {
       position: absolute;
       color: $primary;
       font-weight: 900;
-      font-size: clamp(28px, 2.8vw, 40px);
+      font-size: clamp(28px, 2.8vw, 34px);
       line-height: 0.9;
       font-style: italic;
       transform: translateY(clamp(-4.8rem, -5.5vw, -3.6rem));
