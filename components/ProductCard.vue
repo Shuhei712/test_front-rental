@@ -13,7 +13,7 @@
         <div class="img__inner">
           <span v-if="isComingsoon(releaseDate)" class="product-comingsoon">Coming soon</span>
           <span v-else-if="isNew(releaseDate)" class="product-new">New</span>
-          <a :href="'/products/' + id + '?name=' + name"><img :src="image" :alt="name" class="pa-1" /></a>
+          <nuxt-link :to="'/products/' + id + '?name=' + name"><img :src="image" :alt="name" class="pa-1" /></nuxt-link>
         </div>
       </div>
       <div class="info__details flex-grow-1 d-flex flex-column">
@@ -29,10 +29,10 @@
           <div class="name__maker text-caption text-sm-body-2">{{ maker }}</div>
           <div class="name__product mt-1">
             <div class="text-subtitle-2 text-sm-subtitle-1 letter-space-015em font-weight-medium">
-              <a :href="'/products/' + id + '?name=' + name">{{ name }}</a>
+              <nuxt-link :to="'/products/' + id + '?name=' + name">{{ name }}</nuxt-link>
             </div>
             <div class="text-subtitle-1 text-sm-h6 letter-space-015em font-weight-bold">
-              <a :href="'/products/' + id + '?name=' + name">{{ typeNumber }}</a>
+              <nuxt-link :to="'/products/' + id + '?name=' + name">{{ typeNumber }}</nuxt-link>
             </div>
           </div>
         </div>

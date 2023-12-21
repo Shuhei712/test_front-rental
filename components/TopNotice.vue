@@ -10,19 +10,19 @@
                   {{ list.NewsCategory }}
                 </span>
               </div>
-              <a href="/notice" class="pickup__link d-flex align-center">
+              <nuxt-link to="/notice" class="pickup__link d-flex align-center">
                 <p class="text-body-2 text-sm-body-1">
                   {{ list.NewsTitle }}
                 </p>
-              </a>
+              </nuxt-link>
             </div>
           </slide>
         </hooper>
       </div>
       <div class="notice__lists d-flex align-center justify-center justify-lg-start px-3 pl-lg-10 py-2">
-        <a class="text-white text-caption text-sm-body-2" href="/notice">
+        <nuxt-link class="text-white text-caption text-sm-body-2" to="/notice">
           お知らせ一覧へ<v-icon color="primary">mdi-chevron-right</v-icon>
-        </a>
+        </nuxt-link>
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@
         </div> -->
         <Nuxt />
       </v-main>
-      <footer-parts></footer-parts>
+      <footer-parts v-if="!loading"></footer-parts>
   </v-app>
 </template>
 
