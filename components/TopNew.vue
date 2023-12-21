@@ -8,7 +8,7 @@
       <v-divider color="line" class="heading__line"></v-divider>
       <v-btn
         class="ml-4 ml-md-5"
-        href="/products?type=1&tagID=1116&tagName=新着機材"
+        to="/products?type=1&tagID=1116&tagName=新着機材"
         outlined
         color="headingText"
         elevation="2"

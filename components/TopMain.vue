@@ -67,7 +67,7 @@
             </v-col>
             <v-col cols="6" md="4">
               <div class="btn-wrap">
-                <v-btn class="text-white" color="primary" :href="'/products?type=3&keyword=' + keyword" block v-bind="size" max-height="40">
+                <v-btn class="text-white" color="primary" :to="'/products?type=3&keyword=' + keyword" block v-bind="size" max-height="40">
                   <v-icon class="mr-1" color="#ffffff">mdi-text-search</v-icon
                   ><span class="lh-crop-12">詳細検索</span>
                 </v-btn>
