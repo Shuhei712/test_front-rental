@@ -41,7 +41,15 @@
           </dl>
           <dl v-if="order.OrderCommitDate" class="d-flex">
             <dt class="order__status-title">注文確定日</dt>
-            <dd>{{getDate(order.OrderCommitDate)}}</dd>
+            <dd>
+              {{getDate(order.OrderCommitDate)}}
+              <a
+                v-if="order.InvoiceFlg&&order.InvoiceURL"
+                class="ms-1 link text-body-2"
+                :href="order.InvoiceURL">
+                ( 請求書ダウンロード )
+              </a>
+            </dd>
           </dl>
           <dl v-if="order.OrderCancelReqDate" class="d-flex mt-3">
             <dt class="order__status-title">キャンセル依頼日</dt>
@@ -52,7 +60,7 @@
             <dd>{{getDate(order.OrderCancelCommitDate)}}</dd>
           </dl>
           <!-- //「レンタル申込中」の場合は表示しない -->
-          <dl v-if="order.OrderStatus!==0 && order.OrderResponse" class="mt-3">
+          <dl v-if="order.OrderStatus!==0 && order.OrderResponse" class="mt-4">
             <dt class="font-weight-bold">回答内容</dt>
             <dd class="flex-grow-1">
               <v-card outlined color="cushion" min-width="100%">
@@ -84,7 +92,7 @@
                 </v-btn>
               </div>
               <p v-if="order.OrderStatus===1 && !orderDate(order.ResQuotationLimit)" class="red--text mt-3">
-                回答見積書の有効期限が過ぎており、ご注文を確定することができません。<br>あたらめてご注文をお申し込みいただくか、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/" class="blued" target="_blank">お問い合わせ</a>ください。
+                回答見積書の有効期限が過ぎており、ご注文を確定することができません。<br>あたらめてご注文をお申し込みいただくか、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/" class="link" target="_blank">お問い合わせ</a>ください。
               </p>
             </dd>
           </dl>
@@ -297,7 +305,7 @@
           </v-card-actions>
         </v-card>
         <h3 class="text-subtitle-1 red--text mt-3 font-weight-bold">* 5営業日前以降のキャンセルについて</h3>
-        <p>本システムでは、レンタルお引渡し日の5営業日前以降のキャンセルを受け付けておりません。<br>注文をキャンセルする場合は、<NuxtLink :to="{ path: '/guide', hash: '#item' }" class="blued">ご利用方法 レンタル規約</NuxtLink>から「レンタル期間及び料金内容」をご確認いただき、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/" class="blued" target="_blank">お問い合わせ</a>ください。</p>
+        <p>本システムでは、レンタルお引渡し日の5営業日前以降のキャンセルを受け付けておりません。<br>注文をキャンセルする場合は、<NuxtLink :to="{ path: '/guide', hash: '#item' }" class="link">ご利用方法 レンタル規約</NuxtLink>から「レンタル期間及び料金内容」をご確認いただき、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/" class="link" target="_blank">お問い合わせ</a>ください。</p>
       </div>
     </div>
 
