@@ -15,7 +15,7 @@
           <v-list-item
             v-for="grandChild in child.SubCategoryList"
             :key="grandChild.CategoryName"
-            :to="'/products?type=2&categoryID=' + grandChild.CategoryID + '&categoryName=' + grandChild.CategoryName">
+            :href="'/products?type=2&categoryID=' + grandChild.CategoryID + '&categoryName=' + grandChild.CategoryName">
             <v-list-item-title class="text-body-2">{{ grandChild.CategoryName }}</v-list-item-title>
           </v-list-item>
         </v-list-group>
