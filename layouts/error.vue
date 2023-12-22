@@ -3,6 +3,9 @@
     <div v-if="error.statusCode === 404">
       <error404></error404>
     </div>
+    <div v-else-if="error.statusCode === 999">
+      <error-unavailable></error-unavailable>
+    </div>
     <div v-else>
       <error-other></error-other>
     </div>
@@ -21,11 +24,15 @@ export default {
   data() {
     return {
       pageNotFound: '404 Not Found',
+      unavailableError: 'Not Found',
       otherError: 'An error occurred',
     }
   },
   head() {
-    const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+    const title =
+            this.error.statusCode === 404 ? this.pageNotFound
+            : this.error.statusCode === 999 ? this.unavailableError
+            : this.otherError
     return {
       title,
     }

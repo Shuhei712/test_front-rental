@@ -22,11 +22,12 @@
                 :href="list.PageURL ? list.PageURL : '/products/' + list.ProductID + '?name=' + list.PickupTitle"
                 :target="list.PageURL ? '_blank' : '_self'">
                 <div class="info__maker">
-                  <div class="info__maker-txt px-5 d-flex align-center justify-center">{{ list.PickupHeader }}</div>
+                  <div class="info__maker-txt px-5 d-flex align-center justify-center">{{ list.PickupType === TYPE_PRODUCT ? 'RENTAL' : 'SPECIAL' }}</div>
                 </div>
                 <div class="info__box d-flex align-center ps-10 ps-lg-13 justify-space-between">
                   <div class="info__name letter-space-015em">
                     <div v-if="list.PickupType === TYPE_FEATURE" class="name__sub">{{ list.PickupDescription }}</div>
+                    <div v-else class="name__sub">{{ list.PickupHeader }}</div>
                     <span class="name__main font-weight-bold letter-space-015em">{{ list.PickupTitle }}</span>
                   </div>
                   <div class="item__btn">
@@ -330,7 +331,8 @@ export default {
     }
     .info__maker {
       color: #ffffff;
-      font-size: 0.8rem;
+      font-size: 1rem;
+      font-weight: 500;
       position: absolute;
       display: inline-block;
       min-width: 100px;
@@ -364,8 +366,8 @@ export default {
         min-height: 2.8rem;
         width: 7.8rem;
         line-height: 1.2;
-        letter-spacing: 0.15em;
-        padding: 0.5rem;
+        letter-spacing: 0.13em;
+        padding: 0.5rem 0.4rem;
         word-break: break-word;
         @include mq(md) {
           width: auto;
@@ -401,8 +403,8 @@ export default {
         }
       }
       .name__sub{
-        font-weight: 500;
-        font-size: 1rem;
+        font-weight: 700;
+        font-size: 1.1rem;
         padding-bottom: 0.5rem;
         @include mq(sm){
           font-size: 0.9rem;
@@ -423,16 +425,21 @@ export default {
       .info__number{
         color: $accent;
       }
+      .info__name .name__sub{
+        font-weight: 500;
+        font-size: 1rem;
+      }
     }
 
     .info__number {
       position: absolute;
       color: $primary;
       font-weight: 900;
-      font-size: clamp(28px, 2.8vw, 40px);
+      font-size: clamp(28px, 2.8vw, 34px);
       line-height: 0.9;
       font-style: italic;
       transform: translateY(clamp(-4.8rem, -5.5vw, -3.6rem));
+      transform: translateY(clamp(-4.8rem, -4.8vw, -3.6rem));
       text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
       z-index: 3;
       width: calc(100% + 1rem);
@@ -443,7 +450,7 @@ export default {
         font-size: clamp(28px, 7.4vw, 38px);
       }
       @include mq(md){
-        transform: translateY(clamp(-4.8rem, -15vw, -3.6rem));
+        transform: translateY(clamp(-4.8rem, -8vw, -3.8rem));
         width: calc(100% + 0rem);
       }
 

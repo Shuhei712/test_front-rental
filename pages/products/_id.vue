@@ -106,7 +106,7 @@
                   v-for="(list, index) in productInfoList.FeatureTagList"
                   :key="index"
                   class="product-tag text-lg-body-1 px-3 py-1 mr-2 mb-2"
-                  :href="'/products?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
+                  :to="'/products?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
                   elevation="0"
                   tile
                   small>
@@ -476,6 +476,11 @@ export default {
       const res = await this.$axios.$post('get_product_info_master.php', param)
       // console.log(res)
       this.productInfoList = res.ProductInfo
+      if (this.productInfoList.ProductName === null) {
+        this.$nuxt.error({
+          statusCode: 999
+        });
+      }
     },
     async getProductItemInfo() {
       const param = new URLSearchParams()
