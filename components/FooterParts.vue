@@ -133,10 +133,10 @@ export default {
         },
         {
           branchName: 'Nagoya',
-          postCode: '〒454-0034',
-          address: '愛知県名古屋市中川区五女子町2-25',
-          phone: '052-354-5559',
-          fax: '052-354-5119',
+          postCode: '〒453-0013',
+          address: '愛知県名古屋市中村区亀島2丁目30-28',
+          phone: '052-526-2871',
+          fax: '052-526-2872',
           email: 'C_NagoyaSales@takenaka-co.co.jp',
         },
         {
