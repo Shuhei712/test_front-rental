@@ -74,7 +74,20 @@ $leading-loose: 2 !default;
     scrollbar-color: $primary $bg; // つまみの色 軌道の色
   }
 }
-
+@mixin wordSymbol( $symbol:'・', $left: true, $width: 3px) {
+  position: relative;
+  display: inline-block;
+  &::before{
+    content: $symbol;
+    position: absolute;
+    @if($left){
+      left: $width;
+     }
+     @else {
+      right: $width;
+     }
+  }
+}
 body,
 html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique', sans-serif !important;
