@@ -87,13 +87,17 @@
                 :required="false" :read="read">
               </set-address>
             </div>
-            <template v-else-if="item.type === 'textarea'">
+
+            <ValidationProvider v-else-if="item.type === 'textarea'"
+              v-slot="{ errors }"
+              :name="item.val"
+              :rules="'max:1500'">
               <v-textarea
                 v-model="userJson[item.val]"
                 outlined dense auto-grow rows="1"
-                hide-details="auto" :read="read"
+                :error-messages="errors" hide-details="auto" :read="read"
               ></v-textarea>
-            </template>
+            </ValidationProvider>
 
             <ul v-else-if="item.val === 'FILE'&&!read" class="pa-4 mt-1 cushion">
               <li class="note">
@@ -151,7 +155,7 @@
                       <ValidationProvider v-if="subItem.type === 'text'"
                         v-slot="{ errors }"
                         :name="subItem.val"
-                        :rules="subItem.rule?subItem.rule:''">
+                        :rules="subItem.rule?subItem.rule:'max:50'">
                         <v-text-field
                           v-model="userJson[subItem.val]" outlined dense
                           :error-messages="errors" hide-details="auto"
