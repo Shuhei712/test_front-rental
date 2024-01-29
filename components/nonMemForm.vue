@@ -12,7 +12,20 @@
           {{ item.title }}
         </dt>
         <dd class="mb-6">
-          <div v-if="read&&item.type" class="form__read-wrap" v-text="userJson[item.val]"></div>
+          <div v-if="read&&item.type" class="form__read-wrap">
+
+            <template v-if="item.type === 'addressHQ'">
+              <span>〒</span><span v-text="userJson.HQ_ZIP_CODE"></span>
+              <span v-text="userJson.HQ_PREFECT"></span>
+              <span v-text="userJson.HQ_ADDRESS"></span>
+            </template>
+            <template v-else-if="item.type === 'address'">
+              <span>〒</span><span v-text="userJson.ZIP_CODE"></span>
+              <span v-text="userJson.PREFECT"></span>
+              <span v-text="userJson.ADDRESS"></span>
+            </template>
+            <span v-else v-text="userJson[item.val]"></span>
+          </div>
           <div v-else>
             <ValidationProvider v-if="item.type === 'text'"
               v-slot="{ errors }"
@@ -121,7 +134,7 @@
               </li>
               <li class="note">
                 書類の提出等で対応できない場合は、
-                <a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="link">お問合せ</a>からご相談ください。
+                <a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="link">お問い合わせ</a>からご相談ください。
               </li>
             </ul>
           </div>
@@ -149,6 +162,11 @@
                       v-text="fileArr[index].name"></span>
                       <span v-else-if="subItem.type === 'checkbox'"
                       v-text="arrVal(userJson[subItem.val])"></span>
+                      <template v-else-if="subItem.type === 'addressLiaison'">
+                        <span>〒</span><span v-text="userJson.OFFICE_ZIP_CODE"></span>
+                        <span v-text="userJson.OFFICE_PREFECT"></span>
+                        <span v-text="userJson.OFFICE_ADDRESS"></span>
+                      </template>
                       <span v-else v-text="userJson[subItem.val]"></span>
                     </div>
                     <div v-else>
@@ -217,7 +235,7 @@
     </template>
     <v-checkbox v-if="!read" v-model="isAgree">
       <template #label>
-        当社の<a target="_blank" href="https://www.takenaka-co.co.jp/form/rental/privacypolicy.html" class="link" @click.stop>個人情報の取り扱い</a>について同意する
+        当社の<a target="_blank" href="https://www.takenaka-co.co.jp/form/rental/privacypolicy.html" class="link" @click.stop>個人情報の取扱い</a>について同意する
       </template>
     </v-checkbox>
   </div>
@@ -462,6 +480,7 @@ export default {
   background-color: rgba($outline,0.1);
   padding-left: 5px;
   line-height: 1.8em;
+  word-break: break-word;
 }
 dt{
   font-weight: 500;

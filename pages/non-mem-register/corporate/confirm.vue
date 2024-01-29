@@ -39,7 +39,6 @@ export default {
   fetch() {
     this.$store.commit('loading/changeStatus', true)
     this.setBreadCrumbs()
-    this.$store.commit('register/deleteErr', true)
     this.userJson = this.$store.getters['register/getFormInfo']
     this.fileArr = this.$store.getters['register/getFormFile']
     if(!this.userJson.NAME) this.$router.push('/non-mem-register/corporate/input')
@@ -84,14 +83,10 @@ export default {
     async registerFile(accessKey){
       const formData = new FormData()
       let fileCnt = 0
-      this.fileArr.forEach((file,index)=>{
+      this.fileArr.forEach((file)=>{
         if(!file) return
         fileCnt++
-        formData.append(
-          `File0${fileCnt}`,
-          this.fileArr[index],
-          encodeURIComponent(this.fileArr[index].name)
-        )
+        formData.append(`File0${fileCnt}`, file)
       })
       formData.append('ContentsKey', this.contentKey)
       formData.append('AccessKey', accessKey )
@@ -122,7 +117,7 @@ export default {
         param.append(key, this.paramVal(key))
       }
       let fileCnt = 0
-      this.fileArr.forEach((file,index)=>{
+      this.fileArr.forEach((file)=>{
         if(!file) return
         fileCnt++
         param.append(`UPLOAD_FILE_NAME_${fileCnt}`, file.name)

@@ -86,11 +86,7 @@ export default {
       this.fileArr.forEach((file)=>{
         if(!file) return
         fileCnt++
-        formData.append(
-          `File0${fileCnt}`,
-          file,
-          encodeURIComponent(file.name)
-        )
+        formData.append(`File0${fileCnt}`, file)
       })
       formData.append('ContentsKey', this.contentKey)
       formData.append('AccessKey', accessKey )

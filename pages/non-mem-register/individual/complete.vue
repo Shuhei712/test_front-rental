@@ -11,12 +11,13 @@
         <v-card-text class="text--text text-body-1">
           <p v-if="err" class="red--text mb-4">
             登録に失敗いたしました。<br>
-            大変申し訳ございませんが、再度お試しいただくか、<a href="https://www.takenaka-co.co.jp/contact/" class="link">お問い合わせ</a>ください。
+            大変申し訳ございませんが、再度お試しいただくか、<a href="https://www.takenaka-co.co.jp/contact/" class="link">お問い合わせ</a>ください。<br>
+            <v-btn color="primary" class="mt-4" @click="$router.push('/non-mem-register/individual/input')">フォームに戻る</v-btn>
           </p>
           <p v-else>
             内容を確認次第、担当者よりご返信させていただきますので、しばらくお待ち下さい。<br>
             なお、ご入力いただいたメールアドレス宛に受付完了メールを配信しております。<br>
-            完了メールが届かない場合、処理が正常に行われていない可能性があります。<br>
+            完了メールが届かない場合、迷惑メールフォルダに届いているか、処理が正常に行われていない可能性があります。<br>
             大変お手数ですが、再度お試しいただくか、<a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="link">お問い合わせ</a>ください。
           </p>
         </v-card-text>

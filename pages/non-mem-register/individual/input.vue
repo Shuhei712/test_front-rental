@@ -24,7 +24,6 @@
 export default {
   middleware({from,store}){
     if (from.path !== '/non-mem-register/individual/confirm') {
-      console.log('clear')
       store.commit('register/deleteInfo')
     }
   },
@@ -32,7 +31,7 @@ export default {
     return {
       breadCrumbs: [],
       userJson: {},
-      fileArr: [null,null,null],
+      fileArr: [],
       read: false,
       isValid: false
     }

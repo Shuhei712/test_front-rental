@@ -33,10 +33,10 @@ extend('num', {
 })
 extend('file', {
   validate(value) {
-    if( value.size < 3000000 ) return true
+    if( value.size <= 3145728 ) return true
     return false
   },
-  message: '3MG以内でお願いします'
+  message: '3MB以内でお願いします'
 })
 extend('kana', {
   validate(value) {
