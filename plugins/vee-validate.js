@@ -24,9 +24,9 @@ extend('pass', {
   },
   message: '半角英数字でお願いします'
 })
-extend('num', {
+extend('zipCode', {
   validate(value) {
-    if( String(value).match( /^[0-9０-９]{7,11}$/) ) return true
+    if( String(value).match( /^[0-9０-９]{7,8}$/) ) return true
     return false
   },
   message: '正しい形式でお願いします'

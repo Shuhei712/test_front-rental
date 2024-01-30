@@ -4,7 +4,7 @@
     <ValidationProvider
       v-slot="{ errors }"
       name="ZipCode"
-      :rules="required?'num|required':'num'"
+      :rules="required?'zipCode|required':'zipCode'"
       class="d-flex mb-1 ">
       <v-text-field
         v-model="zipCode"
@@ -12,7 +12,7 @@
         required
         dense
         hide-details="auto"
-        placeholder="0123456"
+        placeholder="5520021"
         prefix="〒"
         :error-messages="errors"
         class="width-s"
@@ -45,6 +45,7 @@
         :error-messages="errors"
         class="width-s"
         :readonly="read"
+        no-data-text="該当する選択肢がありません"
       ></v-autocomplete>
     </ValidationProvider>
     <ValidationProvider
