@@ -1,0 +1,52 @@
+<template>
+  <div :id="sectionId" class="guide__section">
+    <div class="mt-5">
+      <div class="guide__background pa-10 mb-16">
+        <h2 class="guideTitle__background d-flex justify-center py-2">{{ sectionTitle }}</h2>
+        <slot></slot>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    sectionTitle: {
+      type: String,
+      default: '',
+    },
+    sectionId: {
+      type: String,
+      default: '',
+    },
+
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import 'assets/css/common.scss';
+.guide{
+  &__section {
+    padding-top: 100px;
+    margin-top: -100px;
+  }
+  &__background {
+    background-color: $cushion;
+    color: $headingText;
+    border-radius: 5px;
+  }
+  &Title__background {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.15);
+    position: relative;
+    top: -45px;
+    margin-top: -10px;
+  }
+}
+
+</style>
