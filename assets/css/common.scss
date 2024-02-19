@@ -141,6 +141,9 @@ p {
 .letter-space-015em {
   letter-spacing: 0.15em !important;
 }
+.letter-space-01em {
+  letter-spacing: 0.1em !important;
+}
 .letter-space-02em {
   letter-spacing: 0.2em !important;
 }
@@ -316,4 +319,29 @@ p {
 .link:visited {
   color: #00007b !important;
   border-bottom: 1px solid #00007b !important;
+}
+
+// ガイドライン
+.guide-table {
+  tr:not(:last-child) .guide-table__td {
+    border-bottom: 1px solid #afbab8 !important;
+  }
+
+  tr:hover {
+    background: transparent !important;
+  }
+
+  &--default {
+    thead {
+      background-color: rgba(#afbab8, 0.5);
+    }
+
+    thead th:not(:last-child) {
+      border-right: 1px solid #afbab8;
+    }
+
+    tr .guide-table__td:not(:last-child) {
+      border-right: 1px solid #afbab8 !important;
+    }
+  }
 }
