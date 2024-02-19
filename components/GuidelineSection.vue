@@ -2,7 +2,7 @@
   <div :id="sectionId" class="guide__section">
     <div class="mt-5">
       <div class="guide__background pa-10 mb-16">
-        <h4 class="guideTitle__background d-flex justify-center text-h6 text-sm-h5 font-weight-bold py-2">{{ sectionTitle }}</h4>
+        <h4 class="guideTitle__background d-flex justify-center text-h6 text-sm-h5 font-weight-medium letter-space-01em py-2">{{ sectionTitle }}</h4>
         <slot></slot>
       </div>
     </div>
@@ -43,7 +43,6 @@ export default {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.15);
-    letter-spacing: 0.1em !important;
     position: relative;
     top: -45px;
     margin-top: -10px;
