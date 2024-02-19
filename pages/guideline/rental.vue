@@ -8,61 +8,102 @@
       <Guideline-lists></Guideline-lists>
       <div class="content ml-lg-10">
         <!-- 各セクションのコンポーネント -->
-        <guideline-section section-title="レンタルのご利用について" section-id="about-rental">
-          <p>映像・音響・ネットワーク通信機器や、その関連機材が充実。
-            イベント（リアル/オンライン）や会議・発表会、体感できるインタラクティブ
-            な試みなどに必要な機材は一式揃えられます。
-          </p>
-          <!-- 注釈コンポーネント -->
-          <guideline-footnote footnote-text="送料はお客様負担になります。"></guideline-footnote>
+        <guideline-section
+          v-for="guideItem in guideSections"
+          :key="guideItem.id"
+          :section-title="guideItem.title"
+          :section-id="guideItem.id">
 
-          <!-- 詳細ボタンのコンポーネント（サイズはv-colで調整） -->
-          <v-row class="mt-10">
-            <v-col cols="12">
-              <guideline-btn link-text="レンタルのご利用についての詳細を見る" link-url=""></guideline-btn>
-            </v-col>
-            <v-col cols="6">
-              <guideline-btn link-text="レンタルのご利用についての詳細を見る" link-url=""></guideline-btn>
-            </v-col>
-            <v-col cols="6">
-              <guideline-btn link-text="レンタルのご利用についての詳細を見る" link-url=""></guideline-btn>
-            </v-col>
-          </v-row>
-        </guideline-section>
+          <guideline-content
+            :content-list="guideItem.contents">
 
-        <guideline-section section-title="見積もり後の注文依頼について" section-id="">
-          <p>映像・音響・ネットワーク通信機器や、その関連機材が充実。
-            イベント（リアル/オンライン）や会議・発表会、体感できるインタラクティブ
-            な試みなどに必要な機材は一式揃えられます。
-          </p>
-        </guideline-section>
+            <template #rental-1__item2>
+              <p>
+                カート画面からのレンタルのお申し込みについては、受付の段階です。<br>
+                お申し込み後、正式なレンタルの見積書と商品の在庫情報をスタッフより回答いたします。<br>
+                お客様には回答内容を確認の上、正式に注文いただく流れになります。
+              </p>
+            </template>
 
-        <guideline-section section-title="レンタル利用の手順" section-id="">
-          <p>映像・音響・ネットワーク通信機器や、その関連機材が充実。
-            イベント（リアル/オンライン）や会議・発表会、体感できるインタラクティブ
-            な試みなどに必要な機材は一式揃えられます。
-          </p>
-        </guideline-section>
+            <template #rental-1__item3>
+              <v-list-item class="px-0">
+                <v-list-item-content>
+                  <v-list-item-title>ご希望のレンタル商品（機材または、型番名）・数量</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider class="white-border"></v-divider>
+              <v-list-item class="px-0">
+                <v-list-item-content>
+                  <v-list-item-title>レンタル日数（商品の使用開始日時・期間）・使用場所</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider class="white-border"></v-divider>
+              <v-list-item class="px-0">
+                <v-list-item-content>
+                  <v-list-item-title>機材引渡し/返却方法と日付の指定</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
 
-        <guideline-section section-title="レンタル利用の手順" section-id="">
-          <p>映像・音響・ネットワーク通信機器や、その関連機材が充実。
-            イベント（リアル/オンライン）や会議・発表会、体感できるインタラクティブ
-            な試みなどに必要な機材は一式揃えられます。
-          </p>
-        </guideline-section>
+              <v-simple-table class="guide-table guide-table--default transparent">
+                <template #default>
+                  <thead class="text-body-1">
+                    <tr>
+                      <th class="headingText--text text-center text-body-2 font-weight-bold">引き渡し/返却方法</th>
+                      <th class="headingText--text text-center text-body-2 font-weight-bold">引渡し日</th>
+                      <th class="headingText--text text-center text-body-2 font-weight-bold">返却日</th>
+                    </tr>
+                  </thead>
+                  <tbody class="headingText--text text-center">
+                    <tr>
+                      <td class="guide-table__td text-body-1">直接来社</td>
+                      <td class="guide-table__td text-body-1">来社引き渡し日</td>
+                      <td class="guide-table__td text-body-1">来社返却日</td>
+                    </tr>
+                    <tr>
+                      <td class="guide-table__td text-body-1">宅配便（郵送）<span class="accent--text">※</span></td>
+                      <td class="guide-table__td text-body-1">お客様着日</td>
+                      <td class="guide-table__td text-body-1">弊社戻り着日</td>
+                    </tr>
+                    <tr>
+                      <td class="guide-table__td text-body-1">チャーター便</td>
+                      <td class="guide-table__td text-body-1" colspan="2">搬入/搬出希望日時・指定場所（別途料金）</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
 
-        <guideline-section section-title="レンタル商品の引き渡し・返却について" section-id="">
-          <p>映像・音響・ネットワーク通信機器や、その関連機材が充実。
-            イベント（リアル/オンライン）や会議・発表会、体感できるインタラクティブ
-            な試みなどに必要な機材は一式揃えられます。
-          </p>
-        </guideline-section>
+              <guideline-footnote
+                :note-list="{
+                  type: 'bold-note',
+                  items: ['送料はお客様負担になります。']
+                }"
+                class="text-body-2 mt-3"
+              ></guideline-footnote>
+            </template>
 
-        <guideline-section section-title="設営 / 撤去 / オペレートのご依頼について" section-id="test">
-          <p>映像・音響・ネットワーク通信機器や、その関連機材が充実。
-            イベント（リアル/オンライン）や会議・発表会、体感できるインタラクティブ
-            な試みなどに必要な機材は一式揃えられます。
-          </p>
+            <template #rental-1__item4>
+              <v-divider class="content-divider mb-13"></v-divider>
+            </template>
+
+            <template #rental-4__item3>
+              <div>
+                <v-img
+                  src="/img/guideline/cancel/example-02.svg"
+                  alt="例：レンタル日数の計算の仕方"
+                  contain></v-img>
+              </div>
+            </template>
+
+            <template #rental-5__item1>
+              <div>
+                <v-img
+                  src="/img/guideline/cancel/example-02.svg"
+                  alt="例：レンタル日数の計算の仕方"
+                  contain></v-img>
+              </div>
+            </template>
+
+          </guideline-content>
         </guideline-section>
 
       </div>
@@ -72,10 +113,13 @@
   </section>
 </template>
 <script>
+import items from '@/assets/json/guideline.json'
 export default {
   data() {
     return {
       breadCrumbs: [],
+      guideList: items.rental,
+      guideSections: items.rental.sections,
     }
   },
   fetch() {
@@ -114,5 +158,21 @@ export default {
   max-width: 800px !important;
   padding: 0 5%;
   position: relative;
+}
+
+.white-border {
+  border-color: #fff;
+}
+
+.content-divider {
+  border-color: #afbab8;
+}
+
+::v-deep {
+  .rental-line-table {
+    td:first-child {
+      width: 18%;
+    }
+  }
 }
 </style>
