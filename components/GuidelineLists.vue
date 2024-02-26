@@ -3,7 +3,7 @@
     <div class="d-flex align-center justify-center guidelineList__heading text-h6 font-weight-regular px-12 text-center letter-space-015em">
       <v-icon class="mr-2" color="accent">mdi-menu</v-icon>目次
     </div>
-    <div class="guidelineList__lists mt-5">
+    <div class="guidelineList__lists v-list__color mt-5">
 
       <v-list nav dense>
         <v-list-group
@@ -34,7 +34,7 @@
                 </div>
                 <v-icon class="ml-1" color="primary">mdi-chevron-right</v-icon>
               </v-list-item-title>
-              
+
             </v-list-item-content>
           </v-list-item>
         </v-list-group>

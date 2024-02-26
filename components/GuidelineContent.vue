@@ -3,14 +3,14 @@
     <template v-for="(content, contentIndex) in contentList">
       <div
         :key="contentIndex"
-        :class="contentList.length - 1 !== contentIndex ? 'mb-16' : ''">
+        :class="contentList.length - 1 !== contentIndex ? 'mb-8 mb-sm-16' : ''">
 
         <!-- コンテンツ内見出し -->
         <div
           v-if="content.title"
           :class="[
             content.titleTagType ? 'd-flex align-center' : '',
-            'mb-4'
+            'mb-2 mb-sm-4'
           ]"
         >
           <h5
@@ -33,14 +33,15 @@
           <div
             :key="itemIndex"
             :class="[
-              content.items.length - 1 !== itemIndex ? 'mb-8' : '',
+              content.items.length - 1 !== itemIndex ? 'mb-4 mb-sm-8' : '',
               item.layoutType === 1 || item.layoutType === 2 ? 'guide__sub pa-8' : '',
-              item.layoutType === 1 ? 'guide__sub--note mt-14' : '']"
+              item.layoutType === 1 ? 'guide__sub--note mt-8 mt-sm-14' : '',
+              'text-body-2 text-sm-body-1']"
           >
             <template v-if="item.childTitle">
               <!-- eslint-disable vue/no-v-html -->
               <h6
-                class="text-h6 text-sm-h5 font-weight-black letter-space-01em mb-4"
+                class="text-h6 text-sm-h5 font-weight-black letter-space-01em mb-2 mb-sm-4"
                 v-html="item.childTitle"></h6>
             </template>
 
@@ -48,7 +49,7 @@
             <template v-for="(text, textIndex) in item.texts">
               <p
                 :key="`guide-text_${textIndex}`"
-                :class="item.texts.length - 1 !== textIndex ? 'mb-8' : ''"
+                :class="item.texts.length - 1 !== textIndex ? 'mb-4 mb-sm-8' : ''"
                 v-html="text"></p>
             </template>
 
@@ -63,8 +64,18 @@
 
             <!-- ボタン -->
             <v-row v-if="item.btnList" class="mt-3">
-              <v-col v-for="(btn, btnIndex) in item.btnList" :key="`guide-btn_${btnIndex}`" cols="6">
+              <v-col
+                v-for="(btn, btnIndex) in item.btnList"
+                :key="`guide-btn_${btnIndex}`"
+                cols="12"
+                md="6">
                 <guideline-btn
+                  v-if="(typeof btn === 'number')"
+                  :link-text="getBtnText(btn)"
+                  :link-url="getBtnUrl(btn)"
+                ></guideline-btn>
+                <guideline-btn
+                  v-else
                   :link-text="btn.text"
                   :link-url="btn.url"></guideline-btn>
               </v-col>
@@ -137,6 +148,7 @@
 </template>
 
 <script>
+import links from '@/assets/json/guidelineLink.json'
 export default {
   props: {
     guideList: {
@@ -146,6 +158,14 @@ export default {
     contentList: {
       type: Array,
       default: () => [],
+    }
+  },
+  methods: {
+    getBtnText(num) {
+      return links[num] ? links[num].text : ''
+    },
+    getBtnUrl(num) {
+      return links[num] ? links[num].url : ''
     }
   }
 }

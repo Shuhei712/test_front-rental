@@ -2,7 +2,7 @@
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
     <top-bar title="レンタルガイドライン" :bread-crumbs="breadCrumbs"></top-bar>
-    <div class="sec__inner d-flex py-16">
+    <div class="sec__inner d-lg-flex py-16">
 
       <guideline-lists></guideline-lists>
 
