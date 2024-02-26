@@ -14,14 +14,14 @@
         <dd class="mb-6">
           <div v-if="read&&item.type" class="form__read-wrap">
 
-            <template v-if="item.type === 'addressHQ'">
+            <!-- <template v-if="item.type === 'addressHQ'">
               <span>〒</span><span v-text="userJson.HQ_ZIP_CODE"></span>
               <span v-text="userJson.HQ_PREFECT"></span><span v-text="userJson.HQ_ADDRESS"></span>
-            </template>
-            <template v-else-if="item.type === 'address'">
-              <span>〒</span><span v-text="userJson.ZIP_CODE"></span>
-              <span v-text="userJson.PREFECT"></span><span v-text="userJson.ADDRESS"></span>
-            </template>
+            </template> -->
+            <template v-if="item.type === 'address'">{{ joinAddress(item) }}</template>
+              <!-- <span>〒</span><span v-text="userJson[item.addressArr[0]]"></span>
+              <span v-text="userJson[item.addressArr[1]]"></span><span v-text="userJson[item.addressArr[2]]"></span> -->
+            <!-- </template> -->
             <span v-else v-text="userJson[item.val]"></span>
           </div>
           <div v-else>
@@ -82,19 +82,19 @@
                 @input="datePicker = false"
               ></v-date-picker>
             </v-menu>
-            <div v-else-if="item.type === 'addressHQ'">
+            <!-- <div v-else-if="item.type === 'addressHQ'">
               <set-address
                 :set-zip-code.sync="userJson.HQ_ZIP_CODE"
                 :set-prefect.sync="userJson.HQ_PREFECT"
                 :set-address.sync="userJson.HQ_ADDRESS"
                 :required="false" :read="read">
               </set-address>
-            </div>
+            </div> -->
             <div v-else-if="item.type === 'address'">
               <set-address
-                :set-zip-code.sync="userJson.ZIP_CODE"
-                :set-prefect.sync="userJson.PREFECT"
-                :set-address.sync="userJson.ADDRESS"
+                :set-zip-code.sync="userJson[item.addressArr[0]]"
+                :set-prefect.sync="userJson[item.addressArr[1]]"
+                :set-address.sync="userJson[item.addressArr[2]]"
                 :required="false" :read="read">
               </set-address>
             </div>
@@ -160,10 +160,11 @@
                       v-text="fileArr[index].name"></span>
                       <span v-else-if="subItem.type === 'checkbox'"
                       v-text="arrVal(userJson[subItem.val])"></span>
-                      <template v-else-if="subItem.type === 'addressLiaison'">
-                        <span>〒</span><span v-text="userJson.OFFICE_ZIP_CODE"></span>
-                        <span v-text="userJson.OFFICE_PREFECT"></span><span v-text="userJson.OFFICE_ADDRESS"></span>
-                      </template>
+                      <template v-else-if="subItem.type === 'address'">{{ joinAddress(subItem) }}</template>
+
+                        <!-- <span>〒</span><span v-text="userJson[item.addressArr[0]]"></span>
+                        <span v-text="userJson[item.addressArr[1]]"></span><span v-text="userJson[item.addressArr[2]]"></span>
+                      </template> -->
                       <span v-else v-text="userJson[subItem.val]"></span>
                     </div>
                     <div v-else>
@@ -185,11 +186,11 @@
                           :key="option" :label="option" :value="option"
                         ></v-radio>
                       </v-radio-group>
-                      <div v-else-if="subItem.type === 'addressLiaison'">
+                      <div v-else-if="subItem.type === 'address'">
                         <set-address
-                          :set-zip-code.sync="userJson.OFFICE_ZIP_CODE"
-                          :set-prefect.sync="userJson.OFFICE_PREFECT"
-                          :set-address.sync="userJson.OFFICE_ADDRESS"
+                          :set-zip-code.sync="userJson[item.addressArr[0]]"
+                          :set-prefect.sync="userJson[item.addressArr[1]]"
+                          :set-address.sync="userJson[item.addressArr[2]]"
                           :required="false" :read="read"
                           >
                         </set-address>
@@ -235,6 +236,8 @@
         当社の<a target="_blank" href="https://www.takenaka-co.co.jp/form/rental/privacypolicy.html" class="link" @click.stop>個人情報の取扱い</a>について同意する
       </template>
     </v-checkbox>
+    <!-- <v-btn @click="createMail">送信</v-btn>
+    <p class="form__read-wrap"> {{ mailText }}</p> -->
   </div>
 </template>
 <script>
@@ -269,7 +272,9 @@ export default {
         { require: true, type: 'text', title: '氏名', val: 'NAME' },
         { require: false, type: 'text', title: '氏名（フリガナ）', val: 'NAME_KANA', rule: 'kana|max:50' },
         { require: true, type: 'text', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50' },
-        { require: true, type: 'address', title: '住所', val: 'ADDRESS' },
+        { require: true, type: 'address', title: '住所', val: 'ADDRESS',
+          addressArr:['ZIP_CODE', 'PREFECT', 'ADDRESS']
+        },
         { require: false, type: 'text', title: '電話番号', val: 'TEL', rule: 'max:20' },
         { require: false, type: 'text', title: 'FAX番号', val: 'FAX', rule: 'max:20' },
         { require: false, type: 'text', title: '携帯番号', val: 'TEL_MOBILE', rule: 'max:20' },
@@ -289,7 +294,9 @@ export default {
         { require: true, type: 'text', title: '会社名', val: 'COMPANY_NAME' },
         { require: true, type: 'text', title: '会社名（フリガナ）', val: 'COMPANY_KANA', rule: 'kana|max:50' },
         { require: true, type: 'text', title: '代表者名', val: 'REPRESENTATIVE' },
-        { require: true, type: 'addressHQ', title: '本社 住所', val: 'HQ_ADDRESS' },
+        { require: true, type: 'address', title: '本社 住所', val: 'HQ_ADDRESS',
+          addressArr:['HQ_ZIP_CODE', 'HQ_PREFECT', 'HQ_ADDRESS']
+        },
         { require: true, type: 'text', title: '本社 電話番号', val: 'HQ_TEL', rule: 'max:20' },
         { require: false, type: 'text', title: '本社 FAX番号', val: 'HQ_FAX', rule: 'max:20' },
         { require: true, title: '事業内容', val: 'BUSS_CONTENT',
@@ -307,7 +314,9 @@ export default {
         { title: '窓口事業所が異なる場合 ▼',
           items: [
             { require: false, type: 'text', title: '事業所名', val: 'OFFICE_NAME', rule: 'max:255' },
-            { require: false, type: 'addressLiaison', title: '住所', val: 'OFFICE_ADDRESS' },
+            { require: false, type: 'address', title: '住所', val: 'OFFICE_ADDRESS',
+              addressArr:['OFFICE_ZIP_CODE', 'OFFICE_PREFECT', 'OFFICE_ADDRESS']
+            },
             { require: false, type: 'text', title: '電話番号', val: 'OFFICE_TEL', rule: 'max:20' },
             { require: false, type: 'text', title: 'FAX番号', val: 'OFFICE_FAX', rule: 'max:20' },
           ]
@@ -384,7 +393,8 @@ export default {
       services: [
         '広告代理店','イベント企画制作会社','会議運営サービス/学会代理店(PCO)','ほかプロダクション','放送局/マスコミ','イベント制作＋建装/ディスプレイ会社','デザイン/設計事務所','旅行代理店','ホテル/ホール/会館/結婚式場/展示会場','ホテル/ホール/会館/結婚式場/展示会場付業者','同業者(JVR系)','同業者(JVR以外)','同業者(総合レンタル)','同業者(音響系)','関連業者(映像専門以外)','建装/舞台技術/ディスプレイ会社','映像中継/収録技術','映像/音響メーカー/機器代理店/販売特約店','法人/団体(エンドユーザー)','学校法人(大学/専門学校)','法人/各種団体(学術会議系)','製薬会社/医療機器ﾒｰｶｰ','個人(エンドユーザー)'
       ],
-      isAgree: false
+      isAgree: false,
+      mailText: ''
     }
   },
   computed: {
@@ -412,10 +422,11 @@ export default {
         if(!this.isAgree) return true
         else if(e.val==='BUSS_CONTENT'){
           return !this.userJson[e.val].length && !this.userJson.BUSS_CONTENT_OTH
-        }else if(e.val==='HQ_ADDRESS'){
-          return !this.userJson.HQ_ZIP_CODE || !this.userJson.HQ_PREFECT || !this.userJson.HQ_ADDRESS
-        }else if(e.val==='ADDRESS'){
-          return !this.userJson.ZIP_CODE || !this.userJson.PREFECT || !this.userJson.ADDRESS
+        // }else if(e.val==='HQ_ADDRESS'){
+        //   return !this.userJson.HQ_ZIP_CODE || !this.userJson.HQ_PREFECT || !this.userJson.HQ_ADDRESS
+        }else if(e.val==='ADDRESS'||e.val==='HQ_ADDRESS'){
+          return !this.userJson[e.addressArr[0]] || !this.userJson[e.addressArr[1]] || !this.userJson[e.addressArr[2]]
+          // return !this.userJson.ZIP_CODE || !this.userJson.PREFECT || !this.userJson.ADDRESS
         }else if(e.items) return e.items.some((item,index) => {
           const val = (item.type==='file') ? this.fileArr[index] : this.userJson[item.val]
           return item.require && !val || this.isSameFileName
@@ -437,6 +448,7 @@ export default {
   },
   created() {
     this.$emit('update:valid', this.isValid)
+    if (this.read) this.createMail()
   },
   methods: {
     check(arr){
@@ -452,6 +464,35 @@ export default {
         val += item + '\r\n'
       })
       return val
+    },
+    joinAddress(item){
+      const arr = []
+      for (let i = 0; i < 3; i++) {
+        arr[i] = this.userJson[item.addressArr[i]] ? this.userJson[item.addressArr[i]] : ''
+      }
+      const [zip, prefect, address] = arr
+      return `〒${zip}\r\n${prefect}${address}`
+    },
+    createMail(){
+      this.formList.forEach(e=>{
+        let val = ''
+        if (e.items) {
+          e.items.forEach((item,index)=>{
+            if (e.val=== 'FILE') {
+              if(!this.fileArr[index]) return
+              val = this.fileArr[index].name
+            }else if(item.type==='address'){
+              val = this.joinAddress(item)
+            }else val = this.userJson[item.val] ? this.userJson[item.val] : ''
+            this.mailText += `${item.title}：\r\n${val}\r\n\r\n`
+          })
+        }else {
+          if(e.type==='address') val = this.joinAddress(e)
+          else val = this.userJson[e.val] ? this.userJson[e.val] : ''
+          this.mailText += `${e.title}：\r\n${val}\r\n\r\n`
+        }
+      })
+      this.$emit('mailText', this.mailText)
     }
   }
 }

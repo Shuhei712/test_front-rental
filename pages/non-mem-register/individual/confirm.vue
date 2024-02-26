@@ -6,7 +6,7 @@
       <loading v-if="isLoading"></loading>
         <v-form class="form">
 
-          <NonMemForm :user.sync="userJson" :file.sync="fileArr" :read="read"></NonMemForm>
+          <NonMemForm :user.sync="userJson" :file.sync="fileArr" :read="read" @mailText="mailText=$event"></NonMemForm>
           <div class="text-center mt-6">
             <v-btn large
               class="my-4 mx-2 white--text"
@@ -19,6 +19,7 @@
               @click="submit()"
             >送信</v-btn>
           </div>
+          {{mailText}}
         </v-form>
     </div>
   </section>
@@ -33,7 +34,8 @@ export default {
       read: true,
       contentKey: 'Contact_MemberRegist',
       url: 'https://contact-form-test.takenaka-co.co.jp/',
-      isLoading: false
+      isLoading: false,
+      mailText: ''
     }
   },
   fetch() {
@@ -106,8 +108,10 @@ export default {
     async registerInfo(accessKey, uploadKey){
       const param = new URLSearchParams()
       param.append('ContentsKey', this.contentKey)
-      param.append('AccessKey', accessKey )
-      param.append('UploadKey', uploadKey )
+      param.append('AccessKey', accessKey)
+      param.append('UploadKey', uploadKey)
+      console.log(this.mailText)
+      param.append('MailText', this.mailText)
       for (const key in this.userJson) {
         param.append(key, this.userJson[key])
       }
@@ -117,7 +121,8 @@ export default {
         fileCnt++
         param.append(`UPLOAD_FILE_NAME_${fileCnt}`, file.name)
       })
-      const res = await this.$axios.post(`${this.url}access_contact_attach.php`, param, {
+      const res = await this.$axios.post(`${this.url}access_contact_attach_on_mailtext.php`, param, {
+      // const res = await this.$axios.post(`${this.url}access_contact_attach.php`, param, {
         timeout: 15000,
       })
       if (res.data.Status!=='TRUE') {
