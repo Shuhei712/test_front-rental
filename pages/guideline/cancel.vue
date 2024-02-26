@@ -2,7 +2,7 @@
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
     <top-bar title="レンタルガイドライン" :bread-crumbs="breadCrumbs"></top-bar>
-    <div class="sec__inner d-flex py-16">
+    <div class="sec__inner d-lg-flex py-16">
 
       <guideline-lists></guideline-lists>
 
@@ -32,10 +32,10 @@
                 class="mt-6"
               ></guideline-footnote>
               <v-row class="mt-3" justify="center">
-                <v-col cols="6">
+                <v-col cols="12" md="6">
                   <guideline-btn
-                    link-text="支店・営業所連絡先"
-                    link-url="/"></guideline-btn>
+                    :link-text="btnList[2].text"
+                    :link-url="btnList[2].url"></guideline-btn>
                 </v-col>
               </v-row>
               <div class="my-16">
@@ -64,12 +64,14 @@
 </template>
 <script>
 import items from '@/assets/json/guideline.json'
+import links from '@/assets/json/guidelineLink.json'
 export default {
   data() {
     return {
       breadCrumbs: [],
       guideList: items.cancel,
       guideSections: items.cancel.sections,
+      btnList: links,
     }
   },
   fetch() {
