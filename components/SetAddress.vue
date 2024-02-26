@@ -51,7 +51,7 @@
     <ValidationProvider
       v-slot="{ errors }"
       name="Address"
-      :rules="required?'required|max:50':'max:50'">
+      :rules="required?'required|max:255':'max:255'">
       <v-text-field
         v-model="address"
         outlined

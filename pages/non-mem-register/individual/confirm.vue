@@ -94,7 +94,8 @@ export default {
       const res = await this.$axios.post(`${this.url}upload_attachment.php`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;charset=UTF-8",
-        }
+        },
+        timeout: 15000,
       })
       if(res.data.Status==='TRUE'){
         return res.data.UploadKey
@@ -116,7 +117,9 @@ export default {
         fileCnt++
         param.append(`UPLOAD_FILE_NAME_${fileCnt}`, file.name)
       })
-      const res = await this.$axios.post(`${this.url}access_contact_attach.php`, param)
+      const res = await this.$axios.post(`${this.url}access_contact_attach.php`, param, {
+        timeout: 15000,
+      })
       if (res.data.Status!=='TRUE') {
         this.setErr(res)
       }

@@ -8,7 +8,12 @@
         <img id="protan" src="/img/pickup/protan.png" alt="プロタン" />
       </div>
       <div class="loading__text text-h5 text-sm-h4 text-white letter-space-015em">Sorry... An Error occurred.</div>
+      <p v-if="error.code === 'ECONNABORTED'" class="text-white my-3">
+        ネットワークに問題がある可能性があります。<br>
+        設定をお確かめの上、再度お試しください。
+      </p>
       <div class="text-center">
+        <v-btn v-if="isNonMemRegister" class="text-white" text @click="$router.go(-1)"><v-icon color="#ffffff">mdi-form-select</v-icon>入力画面に戻る</v-btn>
         <v-btn class="text-white" href="/" text><v-icon color="#ffffff">mdi-home</v-icon>TOPページに戻る</v-btn>
       </div>
     </div>
@@ -17,6 +22,18 @@
 
 <script>
 export default {
+  props: {
+    error: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+  },
+  data() {
+    return {
+      isNonMemRegister: this.$route.path.includes('non-mem-register'),
+    }
+  },
   mounted() {
     document.addEventListener('touchmove', this.disableScroll, { passive: false })
     document.addEventListener('mousewheel', this.disableScroll, { passive: false })
@@ -111,6 +128,8 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 0 100px;
+    width: 90%;
+    max-width: 770px;
 
     @include mq(sm) {
       padding: 20px 0;
@@ -138,7 +157,7 @@ export default {
   &__text {
     color: white;
     display: inline-block;
-    white-space: nowrap;
+    word-break: break-word;
 
     span {
       display: inline-block;

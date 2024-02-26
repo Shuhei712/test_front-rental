@@ -301,12 +301,12 @@ export default {
         { title: 'ご担当者様 ▼',
           items: [
             { require: true, type: 'text', title: '氏名', val: 'NAME' },
-            { require: false, type: 'text', title: '部署', val: 'SECT' },
+            { require: false, type: 'text', title: '部署', val: 'SECT', rule: 'max:255' },
             { require: true, type: 'text', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50' },
         ]},
         { title: '窓口事業所が異なる場合 ▼',
           items: [
-            { require: false, type: 'text', title: '事業所名', val: 'OFFICE_NAME' },
+            { require: false, type: 'text', title: '事業所名', val: 'OFFICE_NAME', rule: 'max:255' },
             { require: false, type: 'addressLiaison', title: '住所', val: 'OFFICE_ADDRESS' },
             { require: false, type: 'text', title: '電話番号', val: 'OFFICE_TEL', rule: 'max:20' },
             { require: false, type: 'text', title: 'FAX番号', val: 'OFFICE_FAX', rule: 'max:20' },
@@ -370,7 +370,7 @@ export default {
           ]
         },
         { require: true, type: 'text', title: '弊社担当者名 (※担当者がわからない場合は不明と記載ください。)', val: 'STAFF_NAME' },
-        { require: false, type: 'text', title: '弊社を知ったきっかけ', val: 'YOU_KNOWN' },
+        { require: false, type: 'text', title: '弊社を知ったきっかけ', val: 'YOU_KNOWN', rule: 'max:255' },
         { require: false, type: 'textarea', title: 'ご質問など', val: 'CONTACTS' },
         { title: '必要書類▼', val: 'FILE',
           items: [
@@ -412,6 +412,10 @@ export default {
         if(!this.isAgree) return true
         else if(e.val==='BUSS_CONTENT'){
           return !this.userJson[e.val].length && !this.userJson.BUSS_CONTENT_OTH
+        }else if(e.val==='HQ_ADDRESS'){
+          return !this.userJson.HQ_ZIP_CODE || !this.userJson.HQ_PREFECT || !this.userJson.HQ_ADDRESS
+        }else if(e.val==='ADDRESS'){
+          return !this.userJson.ZIP_CODE || !this.userJson.PREFECT || !this.userJson.ADDRESS
         }else if(e.items) return e.items.some((item,index) => {
           const val = (item.type==='file') ? this.fileArr[index] : this.userJson[item.val]
           return item.require && !val || this.isSameFileName
