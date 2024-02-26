@@ -243,12 +243,15 @@ p {
   color: $primary;
 }
 
-.v-list-item--active .v-list-item__title,
-.v-list-item--active .v-icon,
-.v-item--active .v-icon,
-.v-list-item[aria-expanded='true'],
-.v-list-item[aria-expanded='true'] .v-icon {
-  color: $accent !important;
+// メニュー等v-list-groupで開いた時の色をaccentに上書き
+.v-list__color {
+  .v-list-item--active .v-list-item__title,
+  .v-list-item--active .v-icon,
+  .v-item--active .v-icon,
+  .v-list-item[aria-expanded='true'],
+  .v-list-item[aria-expanded='true'] .v-icon {
+    color: $accent !important;
+  }
 }
 
 .v-breadcrumbs {
