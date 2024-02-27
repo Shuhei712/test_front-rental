@@ -31,6 +31,13 @@ extend('zipCode', {
   },
   message: '正しい形式でお願いします'
 })
+extend('num', {
+  validate(value) {
+    if( String(value).match( /^[0-9０-９]{7,20}$/) ) return true
+    return false
+  },
+  message: '正しい形式でお願いします'
+})
 extend('file', {
   validate(value) {
     if( value.size <= 3145728 ) return true

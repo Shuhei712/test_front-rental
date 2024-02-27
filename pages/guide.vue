@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="top">
+    <to-top-btn></to-top-btn>
     <top-bar title="ご利用方法" :bread-crumbs="breadCrumbs"></top-bar>
     <section class="guide">
       <div class="guide__inner px-3 py-16">
@@ -54,6 +55,9 @@ export default {
         });
       }, 100);
     }
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     setBreadCrumbs() {

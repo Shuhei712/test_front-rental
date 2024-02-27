@@ -134,6 +134,9 @@ p {
   background-color: #ffffff !important;
 }
 
+.letter-space-005em {
+  letter-spacing: 0.05em !important;
+}
 .letter-space-015em {
   letter-spacing: 0.15em !important;
 }
@@ -304,16 +307,6 @@ p {
 }
 
 // 用語集 上書きCSS (Vuetifyと競合のため)
-.blued {
-  color: #0101c9 !important;
-  border-bottom: 1px solid #0101c9 !important;
-}
-
-.blued:visited {
-  color: #00007b !important;
-  border-bottom: 1px solid #00007b !important;
-}
-
 .link {
   color: #0101c9 !important;
   border-bottom: 1px solid #0101c9 !important;
