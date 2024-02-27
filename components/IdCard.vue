@@ -8,18 +8,18 @@
         登録できる添付ファイルはJPG、PNG、PDFで1枚につき3MBまでのファイルとなります。
       </li>
       <li class="note">
-        住所確認できる書類が無い場合は保証金をお預かりする場合があります
+        住所確認できる書類が無い場合は保証金をお預かりする場合があります。
       </li>
       <li class="note">
         国民健康保険(被用者保険以外)などの場合は以下が必要となります。<br>
         銀行取引の証明できるもの(取引銀行通帳の表紙裏１枚目の写し又は、法人番号指定通知書の写し)
       </li>
       <li class="red--text note">
-        マイナンバーカードは顔写真・住所記載面のみ(ナンバー記載面は添付しないでください)
+        マイナンバーカードは顔写真・住所記載面のみ(ナンバー記載面は添付しないでください)。
       </li>
       <li class="red--text note">
         書類の提出等で対応できない場合は、
-        <a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="text-decoration-underline red--text">お問合せ</a>からご相談ください。
+        <a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="text-decoration-underline red--text">お問い合わせ</a>からご相談ください。
       </li>
     </ul>
     <div class="px-2">

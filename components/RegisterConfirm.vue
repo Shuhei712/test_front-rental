@@ -41,13 +41,13 @@
             </v-row>
           </template>
           <v-row>
-            <v-col cols="12" md="4" class="pb-0">氏名</v-col>
+            <v-col cols="12" md="4" class="pb-0">お名前</v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.MemberName}}</v-card>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="4" class="pb-0">氏名(カナ)</v-col>
+            <v-col cols="12" md="4" class="pb-0">お名前(カナ)</v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.MemberKana}}</v-card>
             </v-col>

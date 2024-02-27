@@ -16,7 +16,7 @@
                 dense
                 :headers="headers"
                 :items="cartInfo.ProductList"
-                :items-per-page="30"
+                :items-per-page="-1"
                 item-key="ProductID"
                 hide-default-footer
                 mobile-breakpoint="890">

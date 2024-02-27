@@ -1,5 +1,5 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
     <est-card
       :dialog.sync="estDialog"
@@ -37,7 +37,7 @@
             dense
             :headers="headers"
             :items="cartInfo.ProductList"
-            :items-per-page="30"
+            :items-per-page="-1"
             item-key="ProductID"
             hide-default-footer
             mobile-breakpoint="890">
@@ -119,14 +119,20 @@
                       <span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 注文件名
                     </v-col>
                     <v-col cols="12" md="8">
-                      <v-text-field
-                        v-model="rentJson.OrderTitle"
-                        outlined
-                        dense
-                        hide-details="auto"
-                        placeholder="タケナカ内覧会2023"
-                        counter="50"
-                      ></v-text-field>
+                      <ValidationProvider
+                        v-slot="{ errors }"
+                        name="title"
+                        rules="max:50">
+                        <v-text-field
+                          v-model="rentJson.OrderTitle"
+                          outlined
+                          dense
+                          hide-details="auto"
+                          placeholder="タケナカ内覧会2023"
+                          counter="50"
+                          :error-messages="errors"
+                        ></v-text-field>
+                      </ValidationProvider>
                     </v-col>
                   </v-row>
 
@@ -283,7 +289,7 @@
                                 item-text="ShopName"
                                 :items="branchList"
                                 :error-messages="errors"
-                                hide-details="false"
+                                hide-details="auto"
                                 outlined
                                 dense
                               ></v-select>
@@ -550,7 +556,7 @@
                               item-text="ShopName"
                               :items="branchList"
                               :error-messages="errors"
-                              hide-details="false"
+                              hide-details="auto"
                               outlined
                               dense
                             ></v-select>
@@ -764,6 +770,9 @@ export default {
         this.concatRentRange = null
       }
     }
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     setBreadCrumbs() {

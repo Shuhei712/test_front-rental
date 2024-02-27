@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section id="top">
     <top-bar :title="title" :bread-crumbs="breadCrumbs"></top-bar>
     <to-top-btn></to-top-btn>
     <div class="register__inner py-16 px-3 px-lg-0">

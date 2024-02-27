@@ -1,5 +1,6 @@
 <template>
-  <section>
+  <section id="top">
+    <to-top-btn></to-top-btn>
     <div class="sec__inner py-16">
       <div class="py-15">
         <h1 class="text-center py-6 mb-4">パスワード再設定</h1>
@@ -98,6 +99,9 @@ export default {
         { hid: "robots", name: "robots", content: "noindex" }
       ]
     }
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     async passChange(){

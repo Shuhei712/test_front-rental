@@ -1,5 +1,6 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
+    <to-top-btn></to-top-btn>
     <top-bar title="パスワード変更 入力" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
       <p v-if="result==='110804'" class="red--text pb-4">現在のパスワードが正しくありません</p>
@@ -101,6 +102,9 @@ export default {
         { hid: "robots", name: "robots", content: "noindex" }
       ]
     }
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
 

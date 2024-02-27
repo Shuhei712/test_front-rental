@@ -1,5 +1,5 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
     <cancel-card
       :id="cancelID"
@@ -21,6 +21,7 @@
         :sort-by="['OrderNo']"
         :sort-desc="true"
         :items-per-page="30"
+        :footer-props="{'items-per-page-options':[5, 15, 30, -1]}"
         item-key="name"
         mobile-breakpoint="890"
       >

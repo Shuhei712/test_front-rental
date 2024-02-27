@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section id="top">
     <to-top-btn></to-top-btn>
     <component :is="child" :user.sync="user"></component>
   </section>
@@ -32,6 +32,9 @@ export default {
           return 'contact-input'
       }
     }
-  }
+  },
+  updated() {
+    this.$scrollBackButton()
+  },
 }
 </script>

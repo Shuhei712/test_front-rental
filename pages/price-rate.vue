@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="top">
     <to-top-btn></to-top-btn>
     <top-bar title="日数掛率表" :bread-crumbs="breadCrumbs"></top-bar>
     <section class="price-rate">

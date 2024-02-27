@@ -1,5 +1,5 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
     <top-bar title="本人確認" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
@@ -96,6 +96,9 @@ export default {
           return 'red'
       }
     },
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     setBreadCrumbs() {

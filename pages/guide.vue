@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="top">
     <to-top-btn></to-top-btn>
     <top-bar title="ご利用方法" :bread-crumbs="breadCrumbs"></top-bar>
     <section class="guide">

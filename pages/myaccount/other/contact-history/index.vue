@@ -1,5 +1,5 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
     <top-bar title="お問い合わせ履歴" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
@@ -11,6 +11,7 @@
         :sort-by="'ContactNo'"
         :sort-desc="true"
         :items-per-page="30"
+        :footer-props="{'items-per-page-options':[5, 15, 30, -1]}"
         item-key="name"
         mobile-breakpoint="900"
       >
@@ -41,7 +42,7 @@ export default {
       breadCrumbs: [],
       contactLists:null,
       headers: [
-        { text: '問合せ番号', value: 'ContactNo', width: '96px',sortable: false },
+        { text: '番号', value: 'ContactNo', width: '96px',sortable: false },
         { text: '日付', value: 'ContactDate', width: '130px', },
         { text: '件名', value: 'ContactSubject',sortable: false },
         { text: '状況', value: 'ContactStatusDisp', width: '120px',sortable: false},
@@ -62,6 +63,9 @@ export default {
         { hid: "robots", name: "robots", content: "noindex" }
       ]
     };
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     setBreadCrumbs() {

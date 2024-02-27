@@ -1,5 +1,5 @@
 <template>
-  <section v-if="!$fetchState.pending && !$fetchState.error">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
     <top-bar title="詳細" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
@@ -14,7 +14,7 @@
             状況：{{contactLists.ContactStatusDisp}}
             <v-btn color="cushion"
               :to="`/myaccount/other/contact?id=${contactLists.ContactNo}`">
-              再問い合せ
+              再問い合わせ
             </v-btn>
           </v-card-title>
           <v-card-text v-if="contactLists.ContactStatus" class="text--text">
@@ -53,13 +53,13 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="3" class="pb-0">氏名</v-col>
+            <v-col cols="12" md="3" class="pb-0">お名前</v-col>
             <v-col cols="12" md="9" class="pt-0 pt-md-4">
               <v-card elevation="0" class="px-2 py-1 border">{{contactLists.Name }}</v-card>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="3" class="pb-0">氏名(カナ)</v-col>
+            <v-col cols="12" md="3" class="pb-0">お名前(カナ)</v-col>
             <v-col cols="12" md="9" class="pt-0 pt-md-4">
               <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{contactLists.NameKana}}</v-card>
             </v-col>
@@ -115,6 +115,9 @@ export default {
         { hid: "robots", name: "robots", content: "noindex" }
       ]
     };
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     setBreadCrumbs() {

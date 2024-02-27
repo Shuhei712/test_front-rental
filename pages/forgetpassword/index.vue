@@ -1,5 +1,6 @@
 <template>
-  <section>
+  <section id="top">
+    <to-top-btn></to-top-btn>
     <div class="sec__inner py-16 text-center">
       <div class="text-center py-15">
         <h1 class="py-6 mb-4">パスワードをお忘れですか？</h1>
@@ -84,6 +85,9 @@ export default {
         { hid: "robots", name: "robots", content: "noindex" }
       ]
     }
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     async passChange(){
