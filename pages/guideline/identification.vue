@@ -7,8 +7,8 @@
       <guideline-lists></guideline-lists>
 
       <div class="content ml-lg-10">
-
-        <div class="identification-intro pa-10 mb-13">
+        <guideline-section-title section-type="identification"></guideline-section-title>
+        <div class="identification-intro pa-10 mb-13 text-body-2 text-sm-body-1">
           <guideline-footnote
             :note-list="{
               type: 'note',
@@ -19,7 +19,7 @@
               ]}"></guideline-footnote>
           <p class="mt-5 headingText--text">書類の提出に関して対応できないことや不明な点がある場合、お問い合わせフォームよりご相談ください。</p>
           <v-row class="mt-3">
-            <v-col cols="6">
+            <v-col cols="12" md="6">
               <guideline-btn
                 :link-text="btnList[208].text"
                 :link-url="btnList[208].url"></guideline-btn>
@@ -37,7 +37,7 @@
             :content-list="guideItem.contents">
 
             <template #identification-2__item2>
-              <ol class="pl-8 pl-sm-9 text-h6 text-sm-h5 font-weight-black letter-space-01em">
+              <ol class="pl-8 pl-sm-9 guide__heading text-md-h5 font-weight-black letter-space-01em">
                 <!-- eslint-disable vue/no-v-html -->
                 <li
                   v-for="(item, index) in [
@@ -56,6 +56,8 @@
           </guideline-content>
 
         </guideline-section>
+
+        <guideline-transition-btn></guideline-transition-btn>
       </div>
 
     </div>
@@ -125,6 +127,17 @@ export default {
   &-intro {
     border: 1px solid $accent;
     border-radius: 10px;
+  }
+}
+
+.guide {
+  &__heading {
+    @include mq(md){
+      font-size: 1.3rem;
+    }
+    @include mq(sm){
+      font-size: 1rem;
+    }
   }
 }
 </style>

@@ -7,6 +7,7 @@
       <guideline-lists></guideline-lists>
 
       <div class="content ml-lg-10">
+        <guideline-section-title section-type="cancel"></guideline-section-title>
         <guideline-section
           v-for="guideItem in guideSections"
           :key="guideItem.id"
@@ -40,13 +41,13 @@
               </v-row>
               <div class="my-16">
                 <v-img
-                  src="/img/guideline/cancel/example-01.svg"
+                  src="/img/guideline/cancel/cancel_not_included.svg"
                   alt="図：利用開始日の5日前に営業外の日が含まれない場合の例"
                   contain></v-img>
               </div>
               <div>
                 <v-img
-                  src="/img/guideline/cancel/example-02.svg"
+                  src="/img/guideline/cancel/cancel_included.svg"
                   alt="図：営業外の日が含まれる場合の例"
                   contain></v-img>
               </div>
@@ -55,6 +56,8 @@
           </guideline-content>
 
         </guideline-section>
+
+        <guideline-transition-btn></guideline-transition-btn>
 
       </div>
 

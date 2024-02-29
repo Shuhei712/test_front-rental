@@ -7,6 +7,7 @@
       <guideline-lists></guideline-lists>
 
       <div class="content ml-lg-10">
+        <guideline-section-title section-type="return"></guideline-section-title>
         <guideline-section
           v-for="(guideItem, key) in guideSections"
           :key="key"
@@ -16,6 +17,8 @@
           <guideline-content
             :content-list="guideItem.contents"></guideline-content>
         </guideline-section>
+
+        <guideline-transition-btn></guideline-transition-btn>
       </div>
 
     </div>

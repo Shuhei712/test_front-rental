@@ -422,11 +422,8 @@ export default {
               "question": "メールが届きません/メールの返信がありません/サイトに不具合があります。",
               "answer": "システムトラブルが発生した場合は、問い合わせフォームまたは電話にてご連絡ください。",
               "detailList": [
-                {
-                  "detailNo": 1,
-                  "detailTitle": "連絡先リンク",
-                  "detailURL": "",
-                }
+                this.getBtnInfo("link", 208),
+                this.getBtnInfo("link", 2),
               ]
             },
             {
@@ -434,10 +431,12 @@ export default {
               "question": "問い合わせ先を教えてほしいです。",
               "answer": "以下を参照ください。",
               "detailList": [
+                this.getBtnInfo("link", 208),
+                this.getBtnInfo("link", 2),
                 {
                   "detailNo": 1,
-                  "detailTitle": "問い合わせリンク羅列",
-                  "detailURL": "",
+                  "detailTitle": "非会員向けお問い合わせフォーム",
+                  "detailURL": "https://www.takenaka-co.co.jp/contact/product_form/",
                 }
               ]
             }

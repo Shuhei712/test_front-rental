@@ -7,6 +7,7 @@
       <guideline-lists></guideline-lists>
 
       <div class="content ml-lg-10">
+        <guideline-section-title section-type="invoice"></guideline-section-title>
         <guideline-section
           v-for="guideItem in guideSections"
           :key="guideItem.id"
@@ -15,6 +16,8 @@
           <guideline-content
             :content-list="guideItem.contents"></guideline-content>
         </guideline-section>
+
+        <guideline-transition-btn></guideline-transition-btn>
       </div>
 
     </div>
