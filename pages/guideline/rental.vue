@@ -8,6 +8,7 @@
       <Guideline-lists></Guideline-lists>
       <div class="content ml-lg-10">
         <!-- 各セクションのコンポーネント -->
+        <guideline-section-title section-type="rental"></guideline-section-title>
         <guideline-section
           v-for="guideItem in guideSections"
           :key="guideItem.id"
@@ -28,19 +29,19 @@
             <template #rental-1__item3>
               <v-list-item class="px-0">
                 <v-list-item-content>
-                  <v-list-item-title>ご希望のレンタル商品（機材または、型番名）・数量</v-list-item-title>
+                  <v-list-item-title class="white-space-normal">ご希望のレンタル商品（機材または、型番名）・数量</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-divider class="white-border"></v-divider>
               <v-list-item class="px-0">
                 <v-list-item-content>
-                  <v-list-item-title>レンタル日数（商品の使用開始日時・期間）・使用場所</v-list-item-title>
+                  <v-list-item-title class="white-space-normal">レンタル日数（商品の使用開始日時・期間）・使用場所</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-divider class="white-border"></v-divider>
               <v-list-item class="px-0">
                 <v-list-item-content>
-                  <v-list-item-title>機材引渡し/返却方法と日付の指定</v-list-item-title>
+                  <v-list-item-title class="white-space-normal">機材引渡し/返却方法と日付の指定</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
 
@@ -48,25 +49,25 @@
                 <template #default>
                   <thead class="text-body-1">
                     <tr>
-                      <th class="headingText--text text-center text-body-2 font-weight-bold">引き渡し/返却方法</th>
-                      <th class="headingText--text text-center text-body-2 font-weight-bold">引渡し日</th>
-                      <th class="headingText--text text-center text-body-2 font-weight-bold">返却日</th>
+                      <th class="headingText--text text-center text-md-body-2 font-weight-bold">引き渡し/返却方法</th>
+                      <th class="headingText--text text-center text-md-body-2 font-weight-bold">引渡し日</th>
+                      <th class="headingText--text text-center text-md-body-2 font-weight-bold">返却日</th>
                     </tr>
                   </thead>
                   <tbody class="headingText--text text-center">
                     <tr>
-                      <td class="guide-table__td text-body-1">直接来社</td>
-                      <td class="guide-table__td text-body-1">来社引き渡し日</td>
-                      <td class="guide-table__td text-body-1">来社返却日</td>
+                      <td class="guide-table__td text-md-body-1">直接来社</td>
+                      <td class="guide-table__td text-md-body-1">来社引き渡し日</td>
+                      <td class="guide-table__td text-md-body-1">来社返却日</td>
                     </tr>
                     <tr>
-                      <td class="guide-table__td text-body-1">宅配便（郵送）<span class="accent--text">※</span></td>
-                      <td class="guide-table__td text-body-1">お客様着日</td>
-                      <td class="guide-table__td text-body-1">弊社戻り着日</td>
+                      <td class="guide-table__td text-md-body-1">宅配便（郵送）<span class="accent--text">※</span></td>
+                      <td class="guide-table__td text-md-body-1">お客様着日</td>
+                      <td class="guide-table__td text-md-body-1">弊社戻り着日</td>
                     </tr>
                     <tr>
-                      <td class="guide-table__td text-body-1">チャーター便</td>
-                      <td class="guide-table__td text-body-1" colspan="2">搬入/搬出希望日時・指定場所（別途料金）</td>
+                      <td class="guide-table__td text-md-body-1">チャーター便</td>
+                      <td class="guide-table__td text-md-body-1" colspan="2">搬入/搬出希望日時・指定場所（別途料金）</td>
                     </tr>
                   </tbody>
                 </template>
@@ -88,7 +89,7 @@
             <template #rental-4__item3>
               <div>
                 <v-img
-                  src="/img/guideline/cancel/example-02.svg"
+                  src="/img/guideline/rental/rental_days.svg"
                   alt="例：レンタル日数の計算の仕方"
                   contain></v-img>
               </div>
@@ -97,7 +98,7 @@
             <template #rental-5__item1>
               <div>
                 <v-img
-                  src="/img/guideline/cancel/example-02.svg"
+                  src="/img/guideline/rental/rental_price.svg"
                   alt="例：レンタル日数の計算の仕方"
                   contain></v-img>
               </div>
@@ -105,6 +106,8 @@
 
           </guideline-content>
         </guideline-section>
+
+        <guideline-transition-btn></guideline-transition-btn>
 
       </div>
 
@@ -148,6 +151,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 .sec__inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -162,6 +166,12 @@ export default {
 
 .white-border {
   border-color: #fff;
+}
+
+.v-list-item__title {
+  @include mq(sm) {
+    font-size: 0.9rem;
+  }
 }
 
 .content-divider {

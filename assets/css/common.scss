@@ -135,6 +135,10 @@ p {
   background-color: #ffffff !important;
 }
 
+.white-space-normal {
+  white-space: normal !important;
+}
+
 .letter-space-005em {
   letter-spacing: 0.05em !important;
 }
@@ -328,6 +332,9 @@ p {
 .guide-table {
   tr:not(:last-child) .guide-table__td {
     border-bottom: 1px solid #afbab8 !important;
+  }
+  &__td:nth-child(1) {
+    min-width: 90px;
   }
 
   tr:hover {

@@ -17,7 +17,7 @@
             :class="[
               content.title === 'member' ? 'accent--text' :
               content.title === 'nonmember' ? 'primary--text' : '',
-              'text-h6 text-sm-h5 font-weight-black letter-space-01em']"
+              'guide__heading text-md-h5 font-weight-black letter-space-01em']"
           >{{
             content.title === 'member' ? 'WEB会員の場合' :
             content.title === 'nonmember' ? 'WEB非会員の場合' : content.title }}
@@ -34,14 +34,14 @@
             :key="itemIndex"
             :class="[
               content.items.length - 1 !== itemIndex ? 'mb-4 mb-sm-8' : '',
-              item.layoutType === 1 || item.layoutType === 2 ? 'guide__sub pa-8' : '',
+              item.layoutType === 1 || item.layoutType === 2 ? 'guide__sub px-3 py-5 pa-md-8' : '',
               item.layoutType === 1 ? 'guide__sub--note mt-8 mt-sm-14' : '',
               'text-body-2 text-sm-body-1']"
           >
             <template v-if="item.childTitle">
               <!-- eslint-disable vue/no-v-html -->
               <h6
-                class="text-h6 text-sm-h5 font-weight-black letter-space-01em mb-2 mb-sm-4"
+                class="guide__heading text-md-h5 font-weight-black letter-space-01em pt-2 mb-2 mb-sm-4"
                 v-html="item.childTitle"></h6>
             </template>
 
@@ -93,7 +93,7 @@
                     <th
                       v-for="(headItem, headIndex) in item.table.headItems"
                       :key="headIndex"
-                      class="headingText--text text-center text-body-2 font-weight-bold">{{ headItem }}</th>
+                      class="headingText--text text-center text-md-body-2 font-weight-bold">{{ headItem }}</th>
                   </tr>
                 </thead>
                 <tbody class="headingText--text text-center">
@@ -101,7 +101,7 @@
                     <td
                       v-for="(tdItem, tdIndex) in trItem"
                       :key="tdIndex"
-                      class="guide-table__td text-body-1"
+                      class="guide-table__td text-md-body-1"
                       v-html="tdItem"></td>
                   </tr>
                 </tbody>
@@ -118,8 +118,8 @@
               <template #default>
                 <tbody>
                   <tr v-for="tableItem in item.lineTable.items" :key="tableItem.title">
-                    <td class="guide-table__td text-body-1 font-weight-bold pl-0 py-4" v-html="tableItem.title"></td>
-                    <td class="guide-table__td text-body-1 pr-0 py-4" v-html="tableItem.text"></td>
+                    <td class="guide-table__td text-md-body-1 font-weight-bold pl-0 py-4" v-html="tableItem.title"></td>
+                    <td class="guide-table__td text-md-body-1 pr-0 py-4" v-html="tableItem.text"></td>
                   </tr>
                 </tbody>
               </template>
@@ -178,7 +178,13 @@ export default {
     border: 1px solid $accent;
     border-radius: 10px;
     overflow: hidden;
-    width: 57%;
+    width: 60%;
+    @include mq(md){
+      width: 60%;
+    }
+    @include mq(sm){
+      width: 100%;
+    }
   }
 
   &__sub {
@@ -209,6 +215,15 @@ export default {
         text-align: center;
         position: absolute;
       }
+    }
+  }
+
+  &__heading {
+    @include mq(md){
+      font-size: 1.3rem;
+    }
+    @include mq(sm){
+      font-size: 1rem;
     }
   }
 }
