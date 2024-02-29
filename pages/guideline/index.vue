@@ -55,9 +55,13 @@
               </div>
             </v-col>
           </v-row>
+
           <v-row class="mt-10">
             <v-col cols="12">
-              <guideline-btn link-text="レンタルのご利用についての詳細を見る" link-url="/guideline/rental"></guideline-btn>
+              <v-btn to="/guideline/rental" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタルのご利用についての詳細を見る</span>
+                <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
+              </v-btn>
             </v-col>
           </v-row>
         </guideline-section>
@@ -77,9 +81,13 @@
               </div>
             </v-col>
           </v-row>
+
           <v-row class="mt-10">
             <v-col cols="12">
-              <guideline-btn link-text="レンタル日数・期間についての詳細を見る" link-url="/guideline/rental#rental-4"></guideline-btn>
+              <v-btn to="/guideline/rental#rental-4" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタル日数・期間についての詳細を見る</span>
+                <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
+              </v-btn>
             </v-col>
           </v-row>
         </guideline-section>
@@ -109,9 +117,13 @@
               </div>
             </v-col>
           </v-row>
+
           <v-row class="mt-10">
             <v-col cols="12">
-              <guideline-btn link-text="レンタル費用についての詳細を見る" link-url="/guideline/rental#rental-5"></guideline-btn>
+              <v-btn to="/guideline/rental#rental-5" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタル費用についての詳細を見る</span>
+                <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
+              </v-btn>
             </v-col>
           </v-row>
         </guideline-section>
@@ -241,7 +253,7 @@
           <v-row class="mt-10">
             <v-col cols="12">
               <v-btn to="/guideline/rental-flow" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-                <span class="lh-crop-12 text-md-h6 font-weight-bold">レンタル利用の手順についての詳細を見る</span>
+                <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタル利用の手順についての詳細を見る</span>
                 <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
               </v-btn>
             </v-col>
@@ -249,26 +261,26 @@
         </guideline-section>
 
         <div class="guide__border border-top"></div>
-        <div class="text-md-center color__4B5654 text-h6 text-sm-h5 font-weight-medium letter-space-01em mt-10">
+        <div class="text-md-center color__4B5654 text-md-h6 text-sm-h5 font-weight-medium letter-space-01em mt-10">
           <p>実際にご利用を検討される場合は詳しいガイドラインを参照ください。</p>
           <p>不明点などがあればお気軽にお問い合わせくださいませ。</p>
         </div>
         <v-row class="mt-10">
           <v-col cols="12">
             <v-btn to="/guideline/rental" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-              <span class="lh-crop-12 text-h6">レンタルガイドライン</span>
+              <span class="lh-crop-12 text-md-h6 font-weight-bold">レンタルガイドライン</span>
               <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="12" md="6">
             <v-btn href="https://www.takenaka-co.co.jp/contact/product_form/" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-              <span class="lh-crop-12 text-h6">お問い合わせフォーム</span>
+              <span class="lh-crop-12 text-md-h6 font-weight-bold">お問い合わせフォーム</span>
               <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="12" md="6">
             <v-btn href="https://www.takenaka-co.co.jp/contact/#information" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-              <span class="lh-crop-12 text-h6">各拠点連絡先</span>
+              <span class="lh-crop-12 text-md-h6 font-weight-bold">各拠点連絡先</span>
               <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>

@@ -130,7 +130,7 @@ export default {
               "question": "WEB会員登録しなくてもレンタルはできますか？",
               "answer": "WEB会員に登録しなくてもレンタル可能です。ただし、お客様情報の登録は必要です。",
               "detailList": [
-                this.getBtnInfo("link", 100),
+                this.getBtnInfo("link", 104),
               ]
             },
             {
@@ -170,7 +170,7 @@ export default {
               "question": "在庫の有無は分かりますか？",
               "answer": "お申込みいただいた後、在庫を確認して回答させていただきます。",
               "detailList": [
-                this.getBtnInfo("link", 100),
+                this.getBtnInfo("link", 105),
               ]
             },
             {

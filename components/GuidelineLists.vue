@@ -98,7 +98,6 @@ export default {
   computed: {
     isMobile() {
       const menuBP = 1263
-      console.log(this.windowWidth + ':' + this.menuFlg)
       if (this.windowWidth < menuBP) {
         return true
       } else {

@@ -45,7 +45,7 @@ export default {
     &__icon {
       position: absolute;
       top: 50%;
-      right: 0;
+      right: -9px;
       transform: translateY(-50%);
     }
   }
