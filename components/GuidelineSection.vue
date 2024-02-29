@@ -1,8 +1,8 @@
 <template>
   <div :id="sectionId" class="guide__section">
     <div class="mt-5">
-      <div class="guide__background pa-10 mb-16">
-        <h4 class="guideTitle__background d-flex justify-center text-h6 text-sm-h5 font-weight-medium letter-space-01em py-2">{{ sectionTitle }}</h4>
+      <div class="guide__background py-10 px-5 pa-md-10 mb-16">
+        <h4 class="guideTitle__background d-flex justify-center text-md-h5 font-weight-medium letter-space-01em py-2">{{ sectionTitle }}</h4>
         <slot></slot>
       </div>
     </div>
@@ -38,7 +38,7 @@ export default {
     border-radius: 5px;
   }
   &Title__background {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     background-color: #fff;
     border-radius: 10px;
@@ -46,6 +46,12 @@ export default {
     position: relative;
     top: -45px;
     margin-top: -10px;
+    @include mq(md){
+      font-size: 1.3rem;
+    }
+    @include mq(sm){
+      font-size: 0.9rem;
+    }
   }
 }
 

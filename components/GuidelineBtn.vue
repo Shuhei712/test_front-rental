@@ -1,6 +1,6 @@
 <template>
-  <v-btn :to="linkURL" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined>
-    <span class="lh-crop-12">{{ linkText }}</span>
+  <v-btn :href="linkUrl" target="_blank" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined small>
+    <span class="lh-crop-12 font-weight-medium">{{ linkText }}</span>
     <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
   </v-btn>
 </template>
@@ -12,7 +12,7 @@ export default {
       type: String,
       default: '',
     },
-    linkURL: {
+    linkUrl: {
       type: String,
       default: '',
     }
