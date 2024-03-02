@@ -23,6 +23,9 @@
       </li>
     </ul>
     <div class="px-2">
+      <p v-if="isSameFileName"
+        class="red--text mb-3">※同一のファイル名では登録できません。
+      </p>
       <v-row class="my-1">
         <v-col cols="12" md="6" class="pb-0 d-flex align-start">
           <span class="white--text red darken-1 px-2 me-2 rounded text-no-wrap body-2 line-height-sm">必須</span>
@@ -139,7 +142,7 @@
         <ValidationProvider
           v-slot="{ errors }"
           name="representative"
-          rules="required">
+          rules="required|max:100">
           <v-row class="my-1">
             <v-col cols="12" md="4" class="pb-0">
               <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
@@ -163,38 +166,37 @@
             設立年月
           </v-col>
           <v-col cols="12" md="8" class="d-flex align-end">
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="incorporationY"
-              rules="required|min:4|max:4">
-              <v-text-field
-                v-model="incorporation[0]"
-                type="number"
-                outlined
-                dense
-                hide-details="auto"
-                class="width-s"
-                placeholder="1996"
-                :error-messages="errors"
-              ></v-text-field>
-            </ValidationProvider>
-            &nbsp;年&nbsp;
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="incorporationM"
-              rules="required|max:2">
-              <v-text-field
-                v-model="incorporation[1]"
-                type="number"
-                outlined
-                dense
-                hide-details="auto"
-                class="width-s"
-                placeholder="05"
-                :error-messages="errors"
-              ></v-text-field>
-            </ValidationProvider>
-            &nbsp;月
+            <v-menu
+              v-model="datePicker"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template #activator="{ on, attrs }">
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="incorporationM"
+                  rules="required">
+                  <v-text-field
+                    v-model="incorporation"
+                    readonly outlined dense
+                    hide-details="auto"
+                    :error-messages="errors"
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </ValidationProvider>
+              </template>
+              <v-date-picker
+                v-model="incorporation" :readonly="read"
+                type="month"
+                locale="jp-ja"
+                @input="datePicker = false"
+                @change="userJson.Incorporation = dateFormat('remove',incorporation,'-')"
+              ></v-date-picker>
+            </v-menu>
           </v-col>
         </v-row>
 
@@ -293,7 +295,7 @@
         <ValidationProvider
           v-slot="{ errors }"
           name="BillingEmail"
-          rules="email">
+          rules="email|max:50">
           <v-row class="my-1 last-row">
             <v-col cols="12" md="4" class="pb-0">
               <span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 請求書送付先メールアドレス
@@ -346,15 +348,14 @@ export default {
     return {
       result: null,
       resultDialog: false,
-      incorporation: []
+      datePicker: false,
+      incorporation: null
     }
   },
   fetch(){
     if(this.userJson.Incorporation&&!this.read){
-      const num = this.userJson.Incorporation
-      const year = num.substring(0, 4)
-      const month = num.substring(4, 6)
-      this.incorporation = [year,month]
+      const date = this.userJson.Incorporation
+      this.incorporation = this.dateFormat('add', date, '-')
     }
   },
   computed: {
@@ -374,17 +375,10 @@ export default {
         this.$emit('update:file', val)
       }
     },
-  },
-  watch: {
-    'incorporation'(){
-      if(this.incorporation.length > 1) {
-        let result = ''
-        this.incorporation.forEach((item,index)=>{
-          if (index!==0) item = String(item).padStart(2, '0')
-          result += String(item)
-        })
-        this.$set(this.userJson, 'Incorporation', result)
-      }
+    isSameFileName(){
+      const fileNames = this.fileJson.filter(file => file ).map((file) => file.name)
+      const uniqueFileNames = new Set(fileNames)
+      return uniqueFileNames.size !== fileNames.length
     }
   },
   methods: {
@@ -452,7 +446,18 @@ export default {
       return e.replace(/[０-９]/g, function(m) {
         return "０１２３４５６７８９".indexOf(m)
       }).replace(/-|ー|－/g,'')
-    }
+    },
+    dateFormat(action, date, separator){
+      if(!date) return
+      if(action==='add'){
+        const year = date.substring(0, 4)
+        const month = date.substring(4, 6)
+        const formateDate = year+separator+month
+        return formateDate
+      }else if(action==='remove'){
+        return date.replace(new RegExp(separator, 'g'), "")
+      }
+    },
   },
 }
 </script>

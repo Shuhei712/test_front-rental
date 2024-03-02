@@ -11,24 +11,28 @@
               <v-row class="my-1">
                 <v-col>会員番号 {{loginInfo.MemberID}}</v-col>
               </v-row>
-              <v-row class="my-1">
-                <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お問い合わせの種類</v-col>
-                <v-col cols="12" md="8">
-                  <v-select
-                    v-model="syncedUser.ContactType"
-                    item-text="ItemDispName"
-                    :items="displayLists[0].ItemChoicesList"
-                    hide-details="false"
-                    outlined
-                    dense
-                  ></v-select>
-                </v-col>
-              </v-row>
+              <ValidationProvider
+                name="type"
+                rules="required">
+                <v-row class="my-1">
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お問い合わせの種類</v-col>
+                  <v-col cols="12" md="8">
+                    <v-select
+                      v-model="syncedUser.ContactType"
+                      item-text="ItemDispName"
+                      :items="displayLists[0].ItemChoicesList"
+                      hide-details="false"
+                      outlined
+                      dense
+                    ></v-select>
+                  </v-col>
+                </v-row>
+              </ValidationProvider>
 
               <ValidationProvider
                 v-slot="{ errors }"
                 name="name"
-                rules="required">
+                rules="required|max:50">
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お名前</v-col>
                   <v-col cols="12" md="8">
@@ -46,9 +50,9 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="nameKana"
-                rules="max:50">
+                rules="kana|max:50">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> お名前(カナ)</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> お名前(フリガナ)</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.NameKana"
@@ -64,7 +68,7 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="email"
-                rules="required|email">
+                rules="required|email|max:50">
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                     メールアドレス
@@ -84,7 +88,7 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="orderNo"
-                rules="numeric">
+                rules="numeric|max:20">
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 注文番号</v-col>
                   <v-col cols="12" md="8">
@@ -104,7 +108,7 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="Subject"
-                rules="required">
+                rules="required|max:255">
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お問い合わせ件名</v-col>
                   <v-col cols="12" md="8">
@@ -122,7 +126,7 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="Inquiry"
-                rules="required">
+                rules="required|max:1500">
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お問い合わせ内容</v-col>
                   <v-col cols="12" md="8">
@@ -179,12 +183,14 @@ export default {
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     this.displayLists = await this.$getDisplayInfo('DISP_2003')
+    if(this.displayLists[0].ItemChoicesList) {
+      this.displayLists[0].ItemChoicesList.shift()
+    }
     this.loginInfo = await this.$getLoginInfo()
     if( !this.syncedUser.Inquiry ) {
       if(this.$route.query.id) {
         await this.getContactInfo()
       }else{
-        this.$set(this.syncedUser, 'ContactType', '未選択')
         await this.getUserInfo()
       }
     }

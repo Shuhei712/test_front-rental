@@ -33,7 +33,7 @@ extend('zipCode', {
 })
 extend('num', {
   validate(value) {
-    if( String(value).match( /^[0-9０-９]{7,20}$/) ) return true
+    if( String(value).match( /^[0-9０-９]{4,20}$/) ) return true
     return false
   },
   message: '正しい形式でお願いします'
@@ -47,10 +47,10 @@ extend('file', {
 })
 extend('kana', {
   validate(value) {
-    if( ( /^[ぁ-んァ-ヴ\sｦ-ﾟー]+$/u ).test(String(value)) ) return true
+    if( ( /^[ァ-ヴ\sｦ-ﾟー]+$/u ).test(String(value)) ) return true
     return false
   },
-  message: 'ひらがなかカタカナでお願いします'
+  message: 'カタカナでお願いします'
 })
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)

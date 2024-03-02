@@ -16,8 +16,8 @@
         <ValidationObserver v-slot="ObserverProps">
           <ValidationProvider
             v-slot="{ errors }"
-            name="メールアドレス"
-            rules="required|email">
+            name="mail"
+            rules="required|email|max:50">
             <v-row>
               <v-col sm="3" cols="12" class="text-left pb-0">
                 メールアドレス

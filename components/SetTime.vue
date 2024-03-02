@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return{
-      time: null,
+      time: '時間未定',
     }
   },
   methods: {
@@ -89,8 +89,8 @@ export default {
       return arr
     },
     reset(){
-      this.time = ''
-      this.$emit( 'change-time', '')
+      this.time = '時間未定'
+      this.$emit( 'change-time', '時間未定')
     }
   }
 }

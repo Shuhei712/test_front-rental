@@ -1,6 +1,24 @@
 import axios from 'axios'
 
-export default ({ store, $config, redirect, route }, inject) => {
+export default ({ store, $config, redirect, route, app }, inject) => {
+  app.router.afterEach((to, from) => {
+    const loginID = store.getters['auth/getUser']
+    if (loginID) getCartNum()
+  })
+  window.addEventListener('storage', function(e) {
+    const newVal = JSON.parse(e.newValue)
+    const oldVal = JSON.parse(e.oldValue)
+    const keyFlg = e.key === 'takenaka-rental'
+    if(keyFlg && oldVal.auth.authToken && !newVal.auth.authToken){
+      // console.log(newVal, newVal.auth.authToken)
+      store.dispatch('auth/resetUser')
+      console.log('logout',route.path,)
+      if (route.path.match(/myaccount/)) {
+        redirect('/login')
+      }
+    }
+  })
+
   const memberAxios = axios.create({
     baseURL: $config.MEMBER_API_URL,
   })
@@ -19,7 +37,9 @@ export default ({ store, $config, redirect, route }, inject) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log(res.data)
+    if ($config.DEBUG_MODE) {
+      console.log(res.data)
+    }
     if (res.data.Status === 'FALSE') {
       // alert('AuthKey Err:' + res.data.ErrorInfo)
       store.dispatch('auth/resetUser')

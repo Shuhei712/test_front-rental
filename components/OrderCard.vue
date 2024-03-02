@@ -17,8 +17,8 @@
                 <v-col cols="12" md="9">
                   <ValidationProvider
                     v-slot="{ errors }"
-                    name="name"
-                    rules="required">
+                    name="no"
+                    rules="required|max:50">
                     <v-text-field
                       v-model="json.OrderReqQuotationNo"
                       outlined
@@ -91,12 +91,18 @@
                   請求書記載 注文番号
                 </v-col>
                 <v-col cols="12" md="9">
-                  <v-text-field
-                    v-model="json.InvoiceOrderNo"
-                    dense
-                    outlined
-                    hide-details="auto"
-                  ></v-text-field>
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    name="invoiceNo"
+                    rules="max:50">
+                    <v-text-field
+                      v-model="json.InvoiceOrderNo"
+                      dense
+                      outlined
+                      hide-details="auto"
+                      :error-messages="errors"
+                    ></v-text-field>
+                  </ValidationProvider>
                 </v-col>
               </v-row>
             </v-form>

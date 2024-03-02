@@ -9,8 +9,8 @@
           <v-form class="pt-5">
             <ValidationProvider
               v-slot="{ errors }"
-              name="メールアドレス"
-              rules="required|email">
+              name="mail"
+              rules="required|email|max:50">
               <v-row class="pb-3">
                 <v-col cols="12" md="4" class="pb-0">
                   <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>

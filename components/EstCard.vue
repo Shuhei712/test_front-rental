@@ -16,7 +16,7 @@
                   <ValidationProvider
                     v-slot="{ errors }"
                     name="name"
-                    rules="required">
+                    rules="required|max:50">
                     <v-text-field
                       v-model="estJson.OwnerName"
                       outlined
@@ -33,11 +33,19 @@
                   会社名
                 </v-col>
                 <v-col cols="12" md="9">
-                  <v-text-field
-                  v-model="estJson.CompanyName"
-                  dense
-                  outlined
-                  hide-details="auto"></v-text-field>
+
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    name="company"
+                    rules="max:150">
+                    <v-text-field
+                      v-model="estJson.CompanyName"
+                      dense
+                      outlined
+                      hide-details="auto"
+                      :error-messages="errors"
+                    ></v-text-field>
+                  </ValidationProvider>
                 </v-col>
               </v-row>
               <v-row>
@@ -49,7 +57,7 @@
                   <ValidationProvider
                     v-slot="{ errors }"
                     name="title"
-                    rules="required">
+                    rules="required|max:255">
                     <v-text-field
                       v-model="estJson.QuotationTitle"
                       outlined
@@ -124,12 +132,19 @@
                   ご使用場所
                 </v-col>
                 <v-col cols="12" md="9">
-                  <v-text-field
-                    v-model="estJson.UsePlase"
-                    dense
-                    outlined
-                    hide-details="auto">
-                  </v-text-field>
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    name="usePlace"
+                    rules="max:150">
+                    <v-text-field
+                      v-model="estJson.UsePlase"
+                      dense
+                      outlined
+                      hide-details="auto"
+                      :error-messages="errors"
+                    >
+                    </v-text-field>
+                  </ValidationProvider>
                 </v-col>
               </v-row>
             </v-form>

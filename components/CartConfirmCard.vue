@@ -21,13 +21,13 @@
                 hide-default-footer
                 mobile-breakpoint="890">
                 <template #[`item.ProductName`]="{ item }">
-                  <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" target="_blank" class="d-flex align-center text-left flex-column flex-sm-row">
+                  <div class="d-flex align-center text-left flex-column flex-sm-row">
                     <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
                     <div class="table__txt text-truncate">
                       {{item.ProductName}}
                       <p class="font-weight-bold text-truncate">{{item.TypeNumber}}</p>
                     </div>
-                  </a>
+                  </div>
                 </template>
 
                 <template #[`item.Price`]="{ item }">
@@ -39,11 +39,12 @@
               </v-data-table>
 
               <v-divider></v-divider>
-
-              <price-card
-                :item-info="cartInfo"
-                :use-day="rentJson.UseDay">
-              </price-card>
+              <div class="text-right">
+                <price-card
+                  :item-info="cartInfo"
+                  :use-day="rentJson.UseDay">
+                </price-card>
+              </div>
 
             </div>
 
@@ -97,7 +98,14 @@
                     <template v-else>搬入日時</template>
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                    <v-card elevation="0" class="pa-2 border">{{ getDate(rentDate[0],rentJson.DeliveryTime) }}</v-card>
+                    <v-card elevation="0" class="pa-2 border">
+                      <template v-if="rentJson.DeliveryType===1">
+                        {{ getDate(rentDate[0],null) }}
+                      </template>
+                      <template v-else>
+                        {{ getDate(rentDate[0],rentJson.DeliveryTime) }}
+                      </template>
+                    </v-card>
                   </v-col>
                 </v-row>
                 <v-row v-if="rentJson.DeliveryType===0">
@@ -162,7 +170,14 @@
                     <template v-else>搬出日時</template>
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                    <v-card elevation="0" class="pa-2 border">{{ getDate(rentDate[1],rentJson.ReturnTime) }}</v-card>
+                    <v-card elevation="0" class="pa-2 border">
+                      <template v-if="rentJson.ReturnType===1">
+                        {{ getDate(rentDate[1],null) }}
+                      </template>
+                      <template v-else>
+                        {{ getDate(rentDate[1],rentJson.ReturnTime) }}
+                      </template>
+                    </v-card>
                   </v-col>
                 </v-row>
                 <v-row v-if="rentJson.ReturnType!==2">
@@ -292,6 +307,14 @@ export default {
       }
     },
   },
+  updated() {
+    if (this.confirmDialog) return
+    const elements = document.getElementsByClassName('cart-confirm');
+    if (!elements || !elements.length) {
+      return;
+    }
+    elements[0].scrollTop = 0;
+  },
   mounted(){
     window.addEventListener('popstate', this.popstateHook)
   },
@@ -314,10 +337,12 @@ export default {
       const loginID = this.$store.getters["auth/getUser"]
       this.$set(this.rentJson, "DeliveryDate", this.rentDate[0].replace(/-/g,''))
       this.$set(this.rentJson, "ReturnDate", this.rentDate[1].replace(/-/g,''))
+      let postRentJson = JSON.parse(JSON.stringify(this.rentJson))
+      postRentJson = this.deleteUnnecessaryData(postRentJson)
 
       const param = new URLSearchParams()
       param.append('LoginID', loginID)
-      param.append('JsonData', JSON.stringify(this.rentJson) )
+      param.append('JsonData', JSON.stringify(postRentJson) )
       const res = await this.$memberBaseAxios.post(`order/orderRental`, param, {
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -341,6 +366,27 @@ export default {
         this.result = String(res.data.ErrorNo)
         this.resultDialog = true
       }
+    },
+    deleteUnnecessaryData(postRentJson){
+      const arr = []
+      if (postRentJson.DeliveryType===0) {
+        arr.push('DeliveryTel', 'DeliveryZipCode', 'DeliveryPrefect', 'DeliveryAddress')
+      }else if (postRentJson.DeliveryType===1) {
+        arr.push('DeliveryTime', 'DeliveryShop')
+      }else if (postRentJson.DeliveryType===2) {
+        arr.push('DeliveryTel', 'DeliveryShop')
+      }
+      if (postRentJson.ReturnType===0) {
+        arr.push('ReturnZipCode', 'ReturnPrefect', 'ReturnAddress')
+      }else if (postRentJson.ReturnType===1) {
+        arr.push('ReturnTime', 'ReturnZipCode', 'ReturnPrefect', 'ReturnAddress')
+      }else if (postRentJson.ReturnType===2) {
+        arr.push('ReturnShop')
+      }
+      arr.forEach(key => {
+        this.$set(postRentJson, key, '')
+      })
+      return postRentJson
     },
     getPrice(priceType, price) {
       switch (priceType) {

@@ -1,10 +1,9 @@
 <template>
   <v-card
-    max-width="360"
-    width="100%"
     color="cushion"
     elevation="0"
-    class="ml-auto mt-3">
+    min-width="340"
+    class="mt-3 d-inline-block">
     <v-card-text>
       <template v-if="itemInfo.Total">
         <div class="d-flex justify-space-between pb-1">
