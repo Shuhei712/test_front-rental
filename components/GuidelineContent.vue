@@ -55,10 +55,12 @@
 
             <!-- 画像 -->
             <template v-for="(img, imgIndex) in item.imgs">
-              <div :key="`guide-img_${imgIndex}`" class="guide__img mt-6 mx-auto">
+              <div :key="`guide-img_${imgIndex}`" class="mt-6 d-flex justify-center">
                 <v-img
                   :src="img.src"
-                  :alt="img.alt"></v-img>
+                  :alt="img.alt"
+                  class="guide__img">
+                </v-img>
               </div>
             </template>
 
@@ -174,16 +176,31 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
 .guide {
+  // &__img {
+  //   border: 1px solid $accent;
+  //   border-radius: 10px;
+  //   overflow: hidden;
+  //   width: 60%;
+  //   @include mq(md){
+  //     width: 60%;
+  //   }
+  //   @include mq(sm){
+  //     width: 100%;
+  //   }
+  // }
   &__img {
-    border: 1px solid $accent;
+    width: 100%;
+    max-width: 550px;
+    border: 2px solid $accent;
     border-radius: 10px;
-    overflow: hidden;
-    width: 60%;
+    // &__nonmember{
+    //   border: 2px solid $primary;
+    // }
     @include mq(md){
-      width: 60%;
+      max-width: 550px;
     }
     @include mq(sm){
-      width: 100%;
+      max-width: 700px;
     }
   }
 

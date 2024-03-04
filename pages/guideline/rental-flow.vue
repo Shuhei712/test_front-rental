@@ -2,7 +2,7 @@
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
     <top-bar title="レンタル全般 レンタルの流れ（詳細版）" :bread-crumbs="breadCrumbs"></top-bar>
-    <div class="sec__inner d-md-flex py-16">
+    <div class="sec__inner d-lg-flex py-16">
 
       <!-- サイドメニューコンポーネント -->
       <Guideline-lists></Guideline-lists>
@@ -31,7 +31,7 @@
             </v-btn>
           </v-col>
         </v-row>
-        
+
         <!-- WEB会員の場合 -->
         <guideline-rental-section section-title="WEB会員の場合" section-id="member">
 
@@ -180,7 +180,7 @@
 
           <guideline-rental-section-inner guideline-rental-id="flow-member-9" member-type="member" guideline-rental-title="レンタル商品のご利用">
             <p>ご指定の期間にてレンタル商品（機材）をご利用ください。商品は精密機器になります。お取扱いには十分ご注意をお願いいたします。</p>
-            <guideline-image guideline-img="/img/guideline/sc_quotation_answer.png" guideline-alt="レンタル商品のご利用のイメージ"></guideline-image>
+            <guideline-image guideline-img="/img/guideline/rental_flow/flow_use.png" guideline-alt="レンタル商品のご利用のイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -213,7 +213,7 @@
                   </tbody>
                 </template>
               </v-simple-table>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_use.png" guideline-alt="レンタル商品の返却のイメージ"></guideline-image>
+            <guideline-image guideline-img="/img/guideline/rental_flow/flow_return.png" guideline-alt="レンタル商品の返却のイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">

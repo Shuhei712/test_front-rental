@@ -40,16 +40,18 @@
                 </v-col>
               </v-row>
               <div class="my-16">
-                <v-img
+                <guideline-image guideline-img="/img/guideline/cancel/cancel_not_included.svg" guideline-alt="図：利用開始日の5日前に営業外の日が含まれない場合の例" figure-flg="true"></guideline-image>
+                <!-- <v-img
                   src="/img/guideline/cancel/cancel_not_included.svg"
                   alt="図：利用開始日の5日前に営業外の日が含まれない場合の例"
-                  contain></v-img>
+                  contain></v-img> -->
               </div>
               <div>
-                <v-img
+                <guideline-image guideline-img="/img/guideline/cancel/cancel_included.svg" guideline-alt="図：営業外の日が含まれる場合の例" figure-flg="true"></guideline-image>
+                <!-- <v-img
                   src="/img/guideline/cancel/cancel_included.svg"
                   alt="図：営業外の日が含まれる場合の例"
-                  contain></v-img>
+                  contain></v-img> -->
               </div>
             </template>
 

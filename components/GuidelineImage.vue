@@ -2,8 +2,8 @@
   <div>
     <div class="mt-10 d-flex justify-center">
       <v-img v-if="nonmemberFlg" :src="guidelineImg" :alt="guidelineAlt" class="guide__img guide__img__nonmember"></v-img>
+      <v-img v-else-if="figureFlg" :src="guidelineImg" :alt="guidelineAlt" class="guide__img__figureFlg"></v-img>
       <v-img v-else :src="guidelineImg" :alt="guidelineAlt" class="guide__img"></v-img>
-      
     </div>
   </div>
 </template>
@@ -22,7 +22,11 @@ export default {
     nonmemberFlg: {
       type: String,
       default: '',
-    }
+    },
+    figureFlg: {
+      type: String,
+      default: '',
+    },
   }
 }
 </script>
@@ -43,6 +47,9 @@ export default {
     }
     @include mq(sm){
       max-width: 700px;
+    }
+    &__figureFlg {
+      width: 100%;
     }
   }
 }
