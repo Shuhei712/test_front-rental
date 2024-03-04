@@ -137,67 +137,73 @@
             <v-row>
               <v-col cols="6" class="px-0 pr-1 px-sm-3">
                 <div class="guide-flow__member py-3">WEB会員の場合</div>
-                <div class="guide-flow__section py-4 px-1 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">WEB会員登録</h5>
                   <p class="guide-flow__section__text">身分証明書などによる本人確認手続きが必要です。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
-                <div class="guide-flow__section py-4 px-1 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">カート機能で<br class="br">レンタル仮申し込み</h5>
                   <p class="guide-flow__section__text">WEB上でレンタル機材をカートに追加</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
-                <div class="guide-flow__section py-4 px-1 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お見積り提示</h5>
                   <p class="guide-flow__section__text">お申込み内容で在庫を確認・回答いたします。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow_bottom_left"></div>
                   </div>
+                  <div class="d-flex justify-center mt-4 mb-4">
+                    <div class="arrow_bottom_left__down"></div>
+                  </div>
               </v-col>
 
               <v-col cols="6" class="px-0 pl-1 px-sm-3">
                 <div class="guide-flow__nonmember py-3">WEB非会員の場合</div>
-                <div class="guide-flow__section py-4 px-1 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">レンタル仮申し込み</h5>
                   <p class="guide-flow__section__text">問い合わせフォーム、または電話でご連絡ください。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
-                <div class="guide-flow__section py-4 px-1 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お見積り提示</h5>
                   <p class="guide-flow__section__text">お申込み内容で在庫を確認・回答いたします。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
-                <div class="guide-flow__section py-4 px-1 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お客様登録</h5>
                   <p class="guide-flow__section__text">初めてご利用のお客様は登録をお願いします。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow_bottom_right"></div>
                   </div>
+                  <div class="d-flex justify-center mt-4 mb-4">
+                    <div class="arrow_bottom_right__down"></div>
+                  </div>
               </v-col>
             </v-row>
 
-            <v-row class="d-flex justify-center pt-5 my-5">
-              <v-col cols="12" class="px-0">
-                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-1 my-1 mx-lg-5">
+            <v-row class="d-flex justify-center pt-5 my-5 guide-flow__section__row__cols12">
+              <v-col cols="12" class="px-0 px-sm-3">
+                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-3 px-sm-4 my-1 mx-lg-5 mb-3">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お見積り承認・注文確定</h5>
                   <p class="guide-flow__section__text__cols12">お客様からお見積りの回答をいただきましたら、注文が確定いたします。</p>
                 </div>
-              </v-col>
+
                 <div class="d-flex justify-center">
                   <div class="arrow-down"></div>
                 </div>
-              <v-col cols="12" class="px-0">
-                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-1 my-1 mx-lg-5 mb-3">
+
+                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-3 px-sm-4 my-1 mx-lg-5 my-3">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お支払い</h5>
                   <p class="guide-flow__section__text__cols12">指定の銀行口座にレンタル費用をお振込みください。</p>
                 </div>
@@ -206,7 +212,7 @@
                   <div class="arrow-down"></div>
                 </div>
 
-                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-1 my-1 mx-lg-5 my-3">
+                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-3 px-sm-4 my-1 mx-lg-5 my-3">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">レンタル商品の準備</h5>
                   <p class="guide-flow__section__text__cols12">お支払い確認後、機材の準備・事前チェックを行います。</p>
                 </div>
@@ -215,7 +221,7 @@
                   <div class="arrow-down"></div>
                 </div>
 
-                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-1 my-1 mx-lg-5 my-3">
+                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-3 px-sm-4 my-1 mx-lg-5 my-3">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">レンタル商品のお引渡し</h5>
                   <p class="guide-flow__section__text__cols12">店舗での直接引き取り/宅配便/チャーター便のいずれかで商品をお引渡しします。</p>
                 </div>
@@ -224,7 +230,7 @@
                   <div class="arrow-down"></div>
                 </div>
 
-                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-1 my-1 mx-lg-5 my-3 d-flex align-center justify-center">
+                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-3 my-1 mx-lg-5 my-3 d-flex align-center justify-center">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">レンタル商品のご利用</h5>
                 </div>
 
@@ -232,7 +238,7 @@
                   <div class="arrow-down"></div>
                 </div>
 
-                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-1 my-1 mx-lg-5 my-3">
+                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-3 my-1 px-sm-4 mx-lg-5 my-3">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">返却</h5>
                   <p class="guide-flow__section__text__cols12">店舗での直接返却/宅配便/チャーター便のいずれかで商品の返却をお願いします。</p>
                 </div>
@@ -241,7 +247,7 @@
                   <div class="arrow-down"></div>
                 </div>
 
-                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-1 my-1 mx-lg-5 my-3">
+                <div class="guide-flow__section guide-flow__section__cols12 py-4 px-3 my-1 px-sm-4 mx-lg-5 my-3">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">返却商品のチェック</h5>
                   <p class="guide-flow__section__text__cols12">弊社にて、返却品のチェックをおこない、問題なければお取引終了です。</p>
                 </div>
@@ -273,13 +279,13 @@
             </v-btn>
           </v-col>
           <v-col cols="12" md="6">
-            <v-btn href="https://www.takenaka-co.co.jp/contact/product_form/" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+            <v-btn href="https://www.takenaka-co.co.jp/contact/product_form/" target="_blank" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
               <span class="lh-crop-12 text-md-h6 font-weight-bold">お問い合わせフォーム</span>
               <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="12" md="6">
-            <v-btn href="https://www.takenaka-co.co.jp/contact/#information" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+            <v-btn href="https://www.takenaka-co.co.jp/contact/#information" target="_blank" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
               <span class="lh-crop-12 text-md-h6 font-weight-bold">各拠点連絡先</span>
               <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
             </v-btn>
@@ -480,7 +486,7 @@ export default {
       }
       &__cols12 {
         @include mq(md){
-          text-align: center;
+          text-align: left;
         }
         @include mq(sm){
           text-align: left;
@@ -516,8 +522,12 @@ export default {
 }
 
 .arrow_bottom_right {
+  display: block;
   position: relative;
   padding-left: 110px;
+  &__down {
+    display: none;
+  }
   &::before { /* くの字の表示設定 */
     content: "";
     position: absolute;
@@ -541,8 +551,12 @@ export default {
 }
 
 .arrow_bottom_left {
+  display: block;
   position: relative;
   padding-left: 110px;
+  &__down {
+    display: none;
+  }
   &::before { /* くの字の表示設定 */
     content: "";
     position: absolute;
@@ -562,6 +576,55 @@ export default {
     height: 88px;
     border-left: 2px dashed #4b5654;
     transform: rotate(135deg);
+  }
+}
+
+@media screen and (max-width:370px){
+  .guide-flow__section__row__cols12 {
+    padding-top: 0!important;
+    margin-top: 0!important;
+  }
+  .arrow_bottom_right {
+    display: none;
+    &__down {
+      display: block;
+      position: relative;
+      width: 0;
+      height: 45px; /* 線の長さを調整 */
+      border-left: 2px dashed #4b5654; /* 左側の境界 */
+      &::after {
+        content: "";
+        position: absolute;
+        top: 38px; /* 矢印の位置を線の末端に合わせる */
+        left: -7px;
+        border: solid #4b5654;
+        border-width: 0 2px 2px 0; /* 矢印のサイズを調整 */
+        padding: 4.9px;
+        transform: rotate(45deg); /* 矢印を下向きに */
+        -webkit-transform: rotate(45deg); /* Safari用 */
+      }
+    }
+  }
+  .arrow_bottom_left {
+    display: none;
+    &__down {
+      display: block;
+      position: relative;
+      width: 0;
+      height: 45px; /* 線の長さを調整 */
+      border-left: 2px dashed #4b5654; /* 左側の境界 */
+      &::after {
+        content: "";
+        position: absolute;
+        top: 38px; /* 矢印の位置を線の末端に合わせる */
+        left: -7px;
+        border: solid #4b5654;
+        border-width: 0 2px 2px 0; /* 矢印のサイズを調整 */
+        padding: 4.9px;
+        transform: rotate(45deg); /* 矢印を下向きに */
+        -webkit-transform: rotate(45deg); /* Safari用 */
+      }
+    }
   }
 }
 </style>
