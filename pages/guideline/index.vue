@@ -137,21 +137,21 @@
             <v-row>
               <v-col cols="6" class="px-0 pr-1 px-sm-3">
                 <div class="guide-flow__member py-3">WEB会員の場合</div>
-                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">WEB会員登録</h5>
                   <p class="guide-flow__section__text">身分証明書などによる本人確認手続きが必要です。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
-                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">カート機能で<br class="br">レンタル仮申し込み</h5>
                   <p class="guide-flow__section__text">WEB上でレンタル機材をカートに追加</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
-                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お見積り提示</h5>
                   <p class="guide-flow__section__text">お申込み内容で在庫を確認・回答いたします。</p>
                 </div>
@@ -165,21 +165,21 @@
 
               <v-col cols="6" class="px-0 pl-1 px-sm-3">
                 <div class="guide-flow__nonmember py-3">WEB非会員の場合</div>
-                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">レンタル仮申し込み</h5>
                   <p class="guide-flow__section__text">問い合わせフォーム、または電話でご連絡ください。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
-                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お見積り提示</h5>
                   <p class="guide-flow__section__text">お申込み内容で在庫を確認・回答いたします。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
-                <div class="guide-flow__section py-4 px-2 px-sm-2 my-5 ma-lg-5">
+                <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お客様登録</h5>
                   <p class="guide-flow__section__text">初めてご利用のお客様は登録をお願いします。</p>
                 </div>
