@@ -38,7 +38,7 @@
   </section>
 
   <section v-else id="guidelineList__sp" class="guidelineList__sp guidelineList__sp__sticky">
-    <v-expansion-panels v-model="openPanel" class="mt-n10 mb-7">
+    <v-expansion-panels v-model="openPanel" class="mt-n7 pt-1 mb-7" hover>
       <v-expansion-panel>
         <v-expansion-panel-header>
           <template #actions>
@@ -67,7 +67,8 @@
                 <v-list-item
                   v-for="section in menuItem.sections"
                   :key="section.title"
-                  :href="'/guideline/'+key+'#'+section.id">
+                  :href="'/guideline/'+key+'#'+section.id"
+                  @click="openPanel=''">
                   <v-list-item-content>
                     <v-list-item-title class="d-flex align-center pl-3">
                       <div class="txt-limit">{{ section.title }}</div>
@@ -93,6 +94,7 @@ export default {
     menuList: items,
     openPanel: '',
     windowWidth: '',
+    scrollPosition: 0,
     menuFlg: null,
   }),
   computed: {
@@ -121,9 +123,21 @@ export default {
       this.windowWidth = window.innerWidth
       if (this.windowWidth > 1263) {
       this.menuFlg = true
-    } else {
-      this.menuFlg = false
-    }
+      } else {
+        this.menuFlg = false
+      }
+    },
+    onScroll() {
+      const headerElm = window.document.getElementById('guidelineList__sp')
+      if (headerElm) {
+        const scroll = window.scrollY
+        if (this.scrollPosition < scroll) {
+          headerElm.classList.add('is-scroll')
+        } else {
+          headerElm.classList.remove('is-scroll')
+        }
+        this.scrollPosition = scroll
+      }
     },
   },
 }
@@ -181,9 +195,20 @@ export default {
   z-index: 100;
   &__sticky {
     position: sticky;
-    top: 80px;
-    @include mq(sm){
-      top: 65px;
+    top: 90px;
+    transition: top 0.4s;
+    @include mq(md) {
+      top: 82px;
+    }
+    @include mq(sm) {
+      top: 66px;
+    }
+    &.is-scroll {
+      top: 70px;
+      transition: top 0.4s;
+      @include mq(sm) {
+        top: 59px;
+      }
     }
   }
   &__lists {

@@ -27,6 +27,6 @@
   "209": { "text": "マイページ/お問い合わせ履歴", "url": "myaccount/other/contact-history" },
   "210": { "text": "マイページ/退会手続き", "url": "/myaccount" },
   "300": { "text": "ケーブルリスト", "url": "/" },
-  "301": { "text": "投射距離標", "url": "https://rental-resource.takenaka-co.co.jp/catalog-page/projector/lens_kyori/lens_kyori02.html" },
+  "301": { "text": "投射距離表", "url": "https://rental-resource.takenaka-co.co.jp/catalog-page/projector/lens_kyori/lens_kyori02.html" },
   "302": { "text": "スクリーンサイズ表", "url": "/screen-size" }
 }

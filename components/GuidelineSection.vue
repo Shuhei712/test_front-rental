@@ -1,7 +1,7 @@
 <template>
   <div :id="sectionId" class="guide__section">
     <div class="mt-5">
-      <div class="guide__background py-10 px-5 pa-md-10 mb-16">
+      <div class="guide__background py-10 px-5 pa-sm-8 pa-md-10 mb-16">
         <h4 class="guideTitle__background d-flex justify-center text-md-h5 font-weight-medium letter-space-01em py-2">{{ sectionTitle }}</h4>
         <slot></slot>
       </div>
@@ -29,8 +29,8 @@ export default {
 @import 'assets/css/common.scss';
 .guide{
   &__section {
-    padding-top: 100px;
-    margin-top: -100px;
+    padding-top: 130px;
+    margin-top: -130px;
   }
   &__background {
     background-color: $cushion;

@@ -87,21 +87,23 @@
             </template>
 
             <template #rental-4__item3>
-              <div>
-                <v-img
-                  src="/img/guideline/rental/rental_days.svg"
-                  alt="例：レンタル日数の計算の仕方"
-                  contain></v-img>
-              </div>
+                <guideline-image guideline-img="/img/guideline/rental/rental_days.svg" guideline-alt="例：レンタル日数の計算の仕方" figure-flg="true"></guideline-image>
             </template>
 
             <template #rental-5__item1>
-              <div>
-                <v-img
-                  src="/img/guideline/rental/rental_price.svg"
-                  alt="例：レンタル日数の計算の仕方"
-                  contain></v-img>
+              <div class="guide__price guide__price--important mt-10 mb-3 mt-sm-14 d-flex justify-center">
+                <p class="guide__price--title guide__heading text-md-h6 font-weight-bold pt-6 pt-sm-8">
+                  レンタル価格10,000円の商品の場合
+                </p>
               </div>
+              <v-row>
+                <v-col cols="12" sm="6" class="d-flex justify-center">
+                  <v-img src="/img/guideline/rental/rental_priceA.svg" alt="例：レンタル日数の計算の仕方(掛け率パターンA)" class="guide__img__figureFlg"></v-img>
+                </v-col>
+                <v-col cols="12" sm="6" class="d-flex justify-center">
+                  <v-img src="/img/guideline/rental/rental_priceB.svg" alt="例：レンタル日数の計算の仕方(掛け率パターンB)" class="guide__img__figureFlg"></v-img>
+                </v-col>
+              </v-row>
             </template>
 
           </guideline-content>
@@ -182,6 +184,43 @@ export default {
   .rental-line-table {
     td:first-child {
       width: 18%;
+    }
+  }
+}
+
+.guide {
+  &__price {
+    --circleSize: 50px;
+    margin-top: 25px;
+    position: relative;
+    &--title {
+      color: $headingText;
+    }
+    @include mq(sm) {
+      --circleSize: 35px;
+    }
+    &--important {
+      &::before {
+        content: '例';
+        background-color: $accent;
+        border-radius: 50%;
+        color: #fff;
+        font-size: calc(var(--circleSize) * 0.5);
+        line-height: var(--circleSize);
+        top: calc(var(--circleSize) / -2);
+        right: 0;
+        left: 0;
+        margin: auto;
+        width: var(--circleSize);
+        height: var(--circleSize);
+        text-align: center;
+        position: absolute;
+      }
+    }
+  }
+  &__img {
+    &__figureFlg {
+      width: 100%;
     }
   }
 }
