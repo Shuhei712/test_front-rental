@@ -34,6 +34,7 @@
         <result-card
           :result="result"
           :action="'アカウント情報の変更'"
+          :status="'done'"
           :path="'/myaccount'"
           :dialog.sync="resultDialog">
         </result-card>

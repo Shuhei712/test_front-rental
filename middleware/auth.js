@@ -7,7 +7,7 @@ export default ({ store, route, redirect }) => {
     if (route.path.match(/myaccount/)) {
       redirect('/login')
     }
-  } else if (route.path.match(/login/)||route.path.match(/register/)) {
+  } else if (route.path==="/login"||route.path==="/register") {
     redirect('/myaccount')
   }
 }

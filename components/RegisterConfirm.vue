@@ -330,7 +330,10 @@ export default {
       this.loading = true
       if(this.syncedUser.NecDocFlg){
         const id = await this.$refs.id.register()
-        if( !id ) return false
+        if( !id ) {
+          this.loading = false
+          return false
+        }
       }else{
         this.$set(this.syncedUser, 'UploadKey', '')
         this.$set(this.syncedUser, 'DocFileName1', '')

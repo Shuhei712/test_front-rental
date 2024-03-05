@@ -80,7 +80,7 @@
       <v-card class="pa-5 text-center">
         <result-card
           :result="result"
-          :action="'フォームの送信'"
+          :action="'お問い合わせ'"
           :path="'/myaccount/other'"
           :dialog.sync="resultDialog">
         </result-card>

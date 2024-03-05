@@ -110,6 +110,7 @@ export default {
     async getUserInfo(){
       const res = await this.$getUserInfo()
       if(res) {
+        if (res.RentalFlg===1||res.RentalFlg===5) this.$router.push('/myaccount')
         this.userInfo = res
         const arr = ['MemberType','Representative','HOfficeTel','HOfficeFax','HOfficeZipCode','HOfficePrefect','HOfficeAddress','Incorporation','CorpNumber','CorpType','PaymentMethod','PayeeName','BillingEmail']
         arr.forEach((item) => {

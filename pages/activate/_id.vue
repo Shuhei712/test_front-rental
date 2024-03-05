@@ -3,26 +3,37 @@
     <div class="sec__inner py-16 activate__inner">
       <div v-if="!$fetchState.pending && !$fetchState.error" class="text-center py-15">
         <div v-if="activateFlg" class="activate__success">
-          <h1 class="py-6 mb-4">登録完了</h1>
-          <p>本登録が完了いたしました。</p>
+          <h1 class="py-6 mb-4">登録が完了いたしました</h1>
+          <p>ご登録いただき、ありがとうございます。<br>
+            ご登録いただいたメールアドレスに、完了メールを送信いたしましたのでご確認ください。<br>
+            <span class="mt-4 text-caption text-left d-inline-block">
+              通知メールが届かない場合、迷惑メールフォルダに届いているか、処理が正常に行われていない可能性があります。<br>
+              大変お手数ですが、再度お試しいただくか、<a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="link">お問い合わせ</a>ください。<br>
+              ※「takenaka-co.co.jp」からのメールを受信出来るように設定をお願いします。
+            </span>
+          </p>
           <v-btn large
             class="my-4 text-white"
             color="primary"
             to="/login"
           >ログイン</v-btn>
         </div>
-        <div v-else class="activate__err red--text">
-          <h1 class="py-6">登録失敗</h1>
+        <div v-else class="activate__err">
           <div v-if="errFlg===110601">
-            <p>既に登録が完了しています。</p>
+            <p>既に会員登録が完了しています。</p>
             <v-btn large
               class="my-6 text-white"
               color="primary"
               to="/login"
             >ログイン</v-btn>
           </div>
-          <div v-else>
-            <p>登録が正常に行われませんでした。<br>もう一度ご登録いただくか、弊社までお問い合わせください。</p>
+          <div v-else class="red--text">
+            <h1 class="py-6">登録に失敗いたしました</h1>
+            <p>
+              登録が正常に行われませんでした。<br>
+              認証URLが正しくないか、有効期限が切れている可能性があります。<br>
+              もう一度ご登録いただくか、弊社までお問い合わせください。
+            </p>
             <v-btn large
               class="my-6 mx-2 text-white"
               color="primary"
@@ -71,7 +82,6 @@ export default {
       if (this.$config.DEBUG_MODE) {
         console.log(res)
       }
-      // this.$setLog('新規登録', 'アクティベーション', res.data.Status)
       if(res.data.Status==='TRUE'){
         this.activateFlg = true
       }else{

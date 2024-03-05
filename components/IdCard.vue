@@ -5,13 +5,13 @@
         本人登録確認後にレンタルがご利用可能となります。
       </li>
       <li class="note">
-        登録できる添付ファイルはJPG、PNG、PDFで1枚につき3MBまでのファイルとなります。
+        登録できる添付ファイルはJPG・PNG・PDFで1枚につき3MBまでのファイルとなります。
       </li>
       <li class="note">
         住所確認できる書類が無い場合は保証金をお預かりする場合があります。
       </li>
       <li class="note">
-        国民健康保険(被用者保険以外)などの場合は以下が必要となります。<br>
+        国民健康保険証(被用者保険証以外)などの場合は以下が必要となります。<br>
         銀行取引の証明できるもの(取引銀行通帳の表紙裏１枚目の写し又は、法人番号指定通知書の写し)
       </li>
       <li class="red--text note">
@@ -23,9 +23,6 @@
       </li>
     </ul>
     <div class="px-2">
-      <p v-if="isSameFileName"
-        class="red--text mb-3">※同一のファイル名では登録できません。
-      </p>
       <v-row class="my-1">
         <v-col cols="12" md="6" class="pb-0 d-flex align-start">
           <span class="white--text red darken-1 px-2 me-2 rounded text-no-wrap body-2 line-height-sm">必須</span>
@@ -313,14 +310,12 @@
         </ValidationProvider>
       </template>
     </div>
-    <v-dialog v-model="resultDialog" width="600" persistent>
-      <v-card class="pa-5 pb-0 text-center">
-        <v-card-text>
-          <result-card
-            :result="result" :action="'本人確認の登録'"
-            :path="'/myaccount'" :dialog.sync="resultDialog">
-          </result-card>
-        </v-card-text>
+    <v-dialog v-model="resultDialog" width="780" persistent>
+      <v-card class="pa-5 text-center">
+        <result-card
+          :result="result" :action="'本人確認の登録'"
+          :path="'/myaccount'" :dialog.sync="resultDialog">
+        </result-card>
       </v-card>
     </v-dialog>
   </div>
@@ -384,10 +379,15 @@ export default {
   methods: {
     async register(){
       const formData = new FormData()
-      formData.append('File_01', this.fileJson[0], encodeURIComponent(this.fileJson[0].name) )
-      formData.append('File_02', this.fileJson[1], encodeURIComponent(this.fileJson[1].name) )
-      if(this.fileJson[2]) formData.append('File_03', this.fileJson[2], encodeURIComponent(this.fileJson[2].name) )
-      formData.append('FileCnt', this.fileJson[2] ? 3:2 )
+      let fileCnt = 0
+      const postFileArr = this.$sameFileNameCheck(this.fileJson)
+      postFileArr.forEach((file)=>{
+        if(!file) return
+        fileCnt++
+        formData.append(`File_0${fileCnt}`, file, encodeURIComponent(file.name))
+        this.$set(this.userJson, `DocFileName${fileCnt}`, file.name)
+      })
+      formData.append('FileCnt', fileCnt )
       const res = await this.$memberAxios.post(`comm/uploadFile/`, formData, {
       headers: {
           "Content-Type": "multipart/form-data;charset=UTF-8",
@@ -399,12 +399,9 @@ export default {
       }
 
       const loginID = this.$store.getters["auth/getUser"]
-      if(loginID) this.$setLog('会員情報', '本人確認ファイル登録', res.data.Status)
+      if(loginID) await this.$setLog('会員情報', '本人確認ファイル登録', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.$set(this.userJson, 'UploadKey', res.data.FileUploadKey)
-        this.$set(this.userJson, 'DocFileName1', this.fileJson[0].name)
-        this.$set(this.userJson, 'DocFileName2', this.fileJson[1].name)
-        if(this.fileJson[2]) this.$set(this.userJson, 'DocFileName3', this.fileJson[2].name)
         this.$set(this.userJson, 'NecDocFlg', 1)
         return true
       }else if(res.data.ErrorNo === 100002){
