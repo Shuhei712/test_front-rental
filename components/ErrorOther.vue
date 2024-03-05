@@ -13,7 +13,7 @@
         設定をお確かめの上、再度お試しください。
       </p>
       <div class="text-center">
-        <v-btn v-if="isNonMemRegister" class="text-white" text @click="$router.go(-1)"><v-icon color="#ffffff">mdi-form-select</v-icon>入力画面に戻る</v-btn>
+        <v-btn v-if="error.code === 'ECONNABORTED'&&isNonMemRegister" class="text-white" text @click="$router.go(-1)"><v-icon color="#ffffff">mdi-form-select</v-icon>入力画面に戻る</v-btn>
         <v-btn class="text-white" href="/" text><v-icon color="#ffffff">mdi-home</v-icon>TOPページに戻る</v-btn>
       </div>
     </div>
