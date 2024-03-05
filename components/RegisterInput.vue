@@ -9,6 +9,10 @@
               <p v-if="result==='120107'||result==='120108'||result==='120201'" class="red--text mb-5">
                 ご記入のメールアドレスは既に使用されています。
               </p>
+              <v-row v-if="memberId" class="my-1">
+                <v-col cols="12" md="4" class="pb-0">会員番号</v-col>
+                <v-col cols="12" md="8">{{ memberId }}</v-col>
+              </v-row>
               <v-row v-if="loginId" class="my-1">
                 <v-col cols="12" md="4" class="pb-0">ログインID</v-col>
                 <v-col cols="12" md="8">{{ loginId }}</v-col>
@@ -25,26 +29,32 @@
                 </v-col>
               </v-row>
               <div v-if="syncedUser.MemberType===0">
-                <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0">
-                    <span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 所属先
-                  </v-col>
-                  <v-col cols="12" md="8">
-                    <v-text-field
-                      v-model="syncedUser.Organization"
-                      outlined
-                      dense
-                      hide-details="auto"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="organization"
+                  rules="max:150">
+                  <v-row class="my-1">
+                    <v-col cols="12" md="4" class="pb-0">
+                      <span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 所属先
+                    </v-col>
+                    <v-col cols="12" md="8">
+                      <v-text-field
+                        v-model="syncedUser.Organization"
+                        outlined
+                        dense
+                        hide-details="auto"
+                        :error-messages="errors"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </ValidationProvider>
               </div>
               <div v-else>
 
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="company"
-                  rules="required">
+                  rules="required|max:150">
                   <v-row class="my-1">
                     <v-col cols="12" md="4" class="pb-0">
                       <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 会社名
@@ -64,9 +74,9 @@
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="companyKana"
-                  rules="max:50">
+                  rules="kana|max:150">
                   <v-row class="my-1">
-                    <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 会社名(カナ)</v-col>
+                    <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 会社名(フリガナ)</v-col>
                     <v-col cols="12" md="8">
                       <v-text-field
                         v-model="syncedUser.OrganizationKana"
@@ -82,7 +92,7 @@
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="department"
-                  rules="required">
+                  rules="required|max:150">
                   <v-row class="my-1">
                     <v-col cols="12" md="4" class="pb-0">
                       <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 所属部署
@@ -104,7 +114,7 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="name"
-                rules="required">
+                rules="required|max:100">
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お名前</v-col>
                   <v-col cols="12" md="8">
@@ -122,9 +132,9 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="nameKana"
-                rules="max:50">
+                rules="kana|max:100">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> お名前(カナ)</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> お名前(フリガナ)</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.MemberKana"
@@ -141,7 +151,7 @@
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="companyOffice"
-                  rules="max:50">
+                  rules="max:150">
                   <v-row class="my-1">
                     <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 勤務先事業所名</v-col>
                     <v-col cols="12" md="8">
@@ -220,7 +230,7 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="email"
-                rules="required|email">
+                rules="required|email|max:50">
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0">
                     <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
@@ -241,9 +251,9 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="staff"
-                rules="max:50">
+                rules="max:100">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> タケナカ担当者名</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 弊社担当者名</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.SalesStaff"
@@ -376,6 +386,11 @@ export default {
     },
     loginId:{
       type: String,
+      required: false,
+      default: null
+    },
+    memberId:{
+      type: Number,
       required: false,
       default: null
     }

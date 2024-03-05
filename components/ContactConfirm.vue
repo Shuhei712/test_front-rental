@@ -22,7 +22,7 @@
           </v-row>
 
           <v-row class="my-1">
-            <v-col cols="12" md="4" class="pb-0">お名前(カナ)</v-col>
+            <v-col cols="12" md="4" class="pb-0">お名前(フリガナ)</v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{ user.NameKana }}</v-card>
             </v-col>
@@ -80,7 +80,7 @@
       <v-card class="pa-5 text-center">
         <result-card
           :result="result"
-          :action="'フォームの送信'"
+          :action="'お問い合わせ'"
           :path="'/myaccount/other'"
           :dialog.sync="resultDialog">
         </result-card>

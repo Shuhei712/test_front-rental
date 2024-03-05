@@ -1,6 +1,24 @@
 import axios from 'axios'
 
-export default ({ store, $config, redirect, route }, inject) => {
+export default ({ store, $config, redirect, route, app }, inject) => {
+  app.router.afterEach((to, from) => {
+    const loginID = store.getters['auth/getUser']
+    if (loginID) getCartNum()
+  })
+  window.addEventListener('storage', function(e) {
+    const newVal = JSON.parse(e.newValue)
+    const oldVal = JSON.parse(e.oldValue)
+    const keyFlg = e.key === 'takenaka-rental'
+    if(keyFlg && oldVal.auth.authToken && !newVal.auth.authToken){
+      // console.log(newVal, newVal.auth.authToken)
+      store.dispatch('auth/resetUser')
+      console.log('logout',route.path,)
+      if (route.path.match(/myaccount/)) {
+        redirect('/login')
+      }
+    }
+  })
+
   const memberAxios = axios.create({
     baseURL: $config.MEMBER_API_URL,
   })
@@ -19,7 +37,9 @@ export default ({ store, $config, redirect, route }, inject) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log(res.data)
+    if ($config.DEBUG_MODE) {
+      console.log(res.data)
+    }
     if (res.data.Status === 'FALSE') {
       // alert('AuthKey Err:' + res.data.ErrorInfo)
       store.dispatch('auth/resetUser')
@@ -28,6 +48,16 @@ export default ({ store, $config, redirect, route }, inject) => {
     return res
   }
   inject('checkToken', checkToken)
+
+  const checkMailToken = async (token) => {
+    const res = await memberAxios.get(`/auth/checkMailToken`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return res.data.Status === 'FALSE' ? res.data.ErrorNo : ''
+  }
+  inject('checkMailToken', checkMailToken)
 
   const getAccessToken = async () => {
     const token = store.getters['auth/getAuthToken']
@@ -65,7 +95,6 @@ export default ({ store, $config, redirect, route }, inject) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log(res)
     if (res.data.Status === 'TRUE') {
       return res.data.DispSelectItemList
     } else if (res.data.ErrorNo === 100002) {
@@ -139,6 +168,38 @@ export default ({ store, $config, redirect, route }, inject) => {
     }
   }
   inject('getCartNum', getCartNum)
+
+  const sameFileNameCheck = (fileArr) => {
+    const newFileArr = structuredClone(fileArr)
+    const nameArr = []
+    newFileArr.forEach((file,index)=>{
+      if (!file) return
+      const fileName = file.name
+      if (!nameArr[fileName]) {
+        nameArr[fileName] = []
+      }
+      nameArr[fileName].push(index)
+    })
+    Object.keys(nameArr).forEach(name => {
+      const arr = nameArr[name]
+      if (arr.length > 1) {
+        arr.forEach((fileIndex,index)=>{
+          if (index === 0) return
+          const file = newFileArr[fileIndex]
+          const name = file.name.split('.')[0]
+          const extension = file.name.split('.').pop()
+          const newName = `${name}(${index}).${extension}`
+          const blob = file.slice(0, file.size, file.type)
+          // ファイル名称変更後のファイルオブジェクト
+          const renamedFile = new File([blob], newName, {type: file.type})
+          newFileArr[fileIndex] = renamedFile
+        })
+      }
+    })
+    return newFileArr
+  }
+  inject('sameFileNameCheck', sameFileNameCheck)
+
   // ('会員お問い合わせ', '登録', res.data.Status)
   const setLog = async (display, action, info) => {
     const token = store.getters['auth/getAccessToken']

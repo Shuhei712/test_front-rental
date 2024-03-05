@@ -6,7 +6,8 @@
         <h1 class="py-6 mb-4">パスワードをお忘れですか？</h1>
         <p class="mb-8 text-left text-md-center">
           ご登録のアドレスに、通知メールを送信いたします。<br>
-          通知メールでお知らせするURLにアクセスいただくことで、パスワードの変更が可能となります。
+          通知メールでお知らせする認証URLにアクセスいただくことで、パスワードの変更が可能となります。<br>
+          ※「takenaka-co.co.jp」からのメールを受信出来るように設定をお願いします。
         </p>
         <div v-if="errFlg">
           <p class="mb-4 red--text text-left">
@@ -16,8 +17,8 @@
         <ValidationObserver v-slot="ObserverProps">
           <ValidationProvider
             v-slot="{ errors }"
-            name="メールアドレス"
-            rules="required|email">
+            name="mail"
+            rules="required|email|max:50">
             <v-row>
               <v-col sm="3" cols="12" class="text-left pb-0">
                 メールアドレス
@@ -59,7 +60,7 @@
         <result-card
           :result="result"
           :action="'パスワード変更依頼'"
-          :path="'./'"
+          :path="'/'"
           :dialog.sync="resultDialog">
         </result-card>
       </v-card>

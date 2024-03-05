@@ -28,7 +28,7 @@
           </v-row>
           <template v-if="syncedUser.MemberType===1">
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">会社名(カナ)</v-col>
+              <v-col cols="12" md="4" class="pb-0">会社名(フリガナ)</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.OrganizationKana}}</v-card>
               </v-col>
@@ -47,7 +47,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="4" class="pb-0">お名前(カナ)</v-col>
+            <v-col cols="12" md="4" class="pb-0">お名前(フリガナ)</v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.MemberKana}}</v-card>
             </v-col>
@@ -95,7 +95,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="4" class="pb-0">タケナカ担当者名</v-col>
+            <v-col cols="12" md="4" class="pb-0">弊社担当者名</v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{syncedUser.SalesStaff}}</v-card>
             </v-col>
@@ -330,7 +330,10 @@ export default {
       this.loading = true
       if(this.syncedUser.NecDocFlg){
         const id = await this.$refs.id.register()
-        if( !id ) return false
+        if( !id ) {
+          this.loading = false
+          return false
+        }
       }else{
         this.$set(this.syncedUser, 'UploadKey', '')
         this.$set(this.syncedUser, 'DocFileName1', '')

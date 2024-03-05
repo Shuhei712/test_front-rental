@@ -124,16 +124,16 @@
     </v-dialog>
     <v-dialog
       v-model="deleteDialog"
-      width="500"
+      width="580"
       persistent>
-      <v-card class="pa-5 pb-0 text-center">
-        <v-card-text v-if="result">
+      <v-card class="pa-5 text-center">
+        <template v-if="result">
           <result-card
             :result="result" :action="'退会'"
             :path="'/'" :dialog.sync="deleteDialog">
           </result-card>
-        </v-card-text>
-        <v-card-text v-else>
+        </template>
+        <template v-else>
           <p class="mb-4">退会しますか？</p>
           <ul class="d-inline-block mb-4">
             <li>お気に入りや購入履歴が消失します。</li>
@@ -154,7 +154,7 @@
               戻る
             </v-btn>
           </div>
-        </v-card-text>
+        </template>
       </v-card>
     </v-dialog>
   </section>

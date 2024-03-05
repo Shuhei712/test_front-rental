@@ -42,13 +42,15 @@
             hide-default-footer
             mobile-breakpoint="890">
             <template #[`item.ProductName`]="{ item }">
-              <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row">
+              <nuxt-link :to="`/products/${item.ProductID}?name=${item.ProductName}`" tag="a" class="d-flex align-center text-left flex-column flex-sm-row">
+              <!-- <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row"> -->
                 <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
                 <div class="table__txt text-truncate">
                   {{item.ProductName}}
                   <p class="font-weight-bold text-truncate">{{item.TypeNumber}}</p>
                 </div>
-              </a>
+              <!-- </a> -->
+              </nuxt-link>
             </template>
 
             <template #[`item.Price`]="{ item }">
@@ -57,15 +59,17 @@
             <template #[`item.Qty`]="{ item }">
               <td class="px-2 table__qty">
                 <div class="d-flex align-center">
-                  <v-autocomplete
+                  <v-text-field
                     v-model.number="item.Qty"
                     outlined
-                    :items="qtyArr"
+                    type="number"
                     dense
                     hide-details="auto"
+                    min="1"
+                    max="999"
                     class="d-inline-block"
                     @change="changeQuantity(item.ProductID, $event)"
-                  ></v-autocomplete>
+                  ></v-text-field>
                   <v-btn
                     class="ml-2"
                     fab
@@ -81,13 +85,18 @@
                 </div>
               </td>
             </template>
+            <template #[`item.SubTotal`]="{ item }">
+              {{ getPrice(item.PriceType, item.SubTotal) }}
+            </template>
           </v-data-table>
           <p class="pt-2 text-subtitle-2 note">レンタル期間は下部のレンタル申し込み記入欄「ご使用期間」より変更可能です。</p>
 
-          <price-card
-            :item-info="cartInfo"
-            :use-day="rentJson.UseDay">
-          </price-card>
+          <div class="text-right">
+            <price-card
+              :item-info="cartInfo"
+              :use-day="rentJson.UseDay">
+            </price-card>
+          </div>
 
           <!-- <v-card
             max-width="320"
@@ -177,7 +186,7 @@
                         <ValidationProvider
                           v-slot="{ errors }"
                           name="email"
-                          rules="required|email">
+                          rules="required|email|max:50">
                           <v-text-field
                             v-model="rentJson.ContactEmail"
                             outlined
@@ -699,7 +708,6 @@ export default {
       returnMin: null,
       concatRentRange: null,
       confirmDialog: false,
-      qtyArr: [...Array(99).keys()].map(i => i + 1),
       branchDialog: false,
       branchList: null
     }
@@ -722,10 +730,8 @@ export default {
   watch: {
     'rentJson.DeliveryType'(value){ // 時間リセット
       if(this.$refs.deliveryTime){
-        if(this.$refs.deliveryTime.time) {
-          this.$refs.deliveryTime.reset()
-          this.$set(this.rentJson, "DeliveryTime", '')
-        }
+        this.$refs.deliveryTime.reset()
+        this.$set(this.rentJson, "DeliveryTime", '時間未定')
       }
       if(value!==0){
         this.$set(this.rentJson, "PayMethod", 0)
@@ -733,10 +739,8 @@ export default {
     },
     'rentJson.ReturnType'(){ // 時間リセット
       if(this.$refs.returnTime){
-        if(this.$refs.returnTime.time) {
-          this.$refs.returnTime.reset()
-          this.$set(this.rentJson, "ReturnTime", '')
-        }
+        this.$refs.returnTime.reset()
+        this.$set(this.rentJson, "ReturnTime", '時間未定')
       }
     },
     'rentJson.UseDay'(newVal, oldVal){
@@ -877,7 +881,13 @@ export default {
       this.deleteLoading = false
     },
     async changeQuantity(ProductID, Qty){
-      if( !Qty || Qty <= 0 ) return false
+      let qty = parseInt(Qty, 10)
+      if( !qty || qty <= 0 || qty > 999 ){
+        qty = 1
+      }
+      await this.upCart(ProductID, qty)
+    },
+    async upCart(ProductID, Qty){
       const accessToken = this.$store.getters["auth/getAccessToken"]
       const loginID = this.$store.getters["auth/getUser"]
       const param = new URLSearchParams()
@@ -900,7 +910,7 @@ export default {
         this.resetEst()
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
-        if( res ) return this.changeQuantity(ProductID, Qty)
+        if( res ) return this.upCart(ProductID, Qty)
       }
     },
     resetEst(){

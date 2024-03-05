@@ -2,15 +2,34 @@
   <section id="top">
     <to-top-btn></to-top-btn>
     <div class="sec__inner py-16">
-      <div class="py-15">
+      <div v-if="tokenErrNo" class="text-center py-15">
+        <template v-if="tokenErrNo===111201">
+          <p class="red--text">認証URLが正しくないか、有効期限が切れています。<br>お手数ですが、下記ボタンからもう一度お試しください。</p>
+          <v-btn
+            class="my-4 white--text"
+            color="primary"
+            to="/forgetpassword"
+          >パスワード再設定</v-btn>
+        </template>
+        <template v-else-if="tokenErrNo===111202">
+          <p>既にパスワード再設定の処理が行われました。</p>
+          <v-btn
+            color="outline"
+            class="my-4 white--text"
+            to="/">
+            TOPページに戻る
+          </v-btn>
+        </template>
+      </div>
+      <div v-else class="py-15">
         <h1 class="text-center py-6 mb-4">パスワード再設定</h1>
         <p v-if="result==='111103'" class="red--text pb-4">メールアドレスが正しくありません</p>
         <ValidationObserver v-slot="ObserverProps">
           <v-form class="pt-5">
             <ValidationProvider
               v-slot="{ errors }"
-              name="メールアドレス"
-              rules="required|email">
+              name="mail"
+              rules="required|email|max:50">
               <v-row class="pb-3">
                 <v-col cols="12" md="4" class="pb-0">
                   <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
@@ -72,6 +91,7 @@
         <result-card
           :result="result"
           :action="'パスワード変更'"
+          :status="'done'"
           :path="'/login'"
           :dialog.sync="resultDialog">
         </result-card>
@@ -90,7 +110,11 @@ export default {
       loading: false,
       resultDialog: false,
       result: null,
+      tokenErrNo: null
     }
+  },
+  async fetch(){
+    this.tokenErrNo = await this.$checkMailToken(this.$route.params.id)
   },
   head () {
     return {

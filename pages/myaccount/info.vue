@@ -7,7 +7,7 @@
         <v-form
           ref="form">
           <v-container>
-            <register-input :user.sync="userUpInfo" :result.sync="result" :login-id="loginID"></register-input>
+            <register-input :user.sync="userUpInfo" :result.sync="result" :login-id="loginID" :member-id="userInfo.MemberID"></register-input>
             <div class="text-center mt-6">
               <v-btn
                 class="my-4 mx-2 white--text"
@@ -34,6 +34,7 @@
         <result-card
           :result="result"
           :action="'アカウント情報の変更'"
+          :status="'done'"
           :path="'/myaccount'"
           :dialog.sync="resultDialog">
         </result-card>

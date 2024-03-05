@@ -1,46 +1,50 @@
 <template>
-  <v-dialog v-model="addressDialog" width="580">
-    <v-card>
-      <v-toolbar
-        height="50px"
-        elevation="0"
-      >
-        <v-spacer></v-spacer>
-        <v-btn
-          icon
-          @click="addressDialog = false"
+  <v-dialog v-model="addressDialog" width="580" scrollable>
+    <v-card class="branch-list">
+      <v-card-title class="pa-1">
+        <v-toolbar
+          height="50px"
+          elevation="0"
         >
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </v-toolbar>
-      <v-list class="px-2">
-        <v-list-item v-for="item in branchList" :key="item.ShopID" :title="item.ShopName">
-          <v-list-item-content>
-            <v-list-item-title class="primary--text mb-1">{{ item.ShopName }}</v-list-item-title>
-            <v-list-item-subtitle>
-              <v-card class="px-5 py-3" outlined>
-                <ul>
-                  <li>
-                    〒{{ item.ZipCode }}
-                    <v-btn small target="_blank"
-                      :href=item.WebURL color="white" elevation="0">
-                      <v-icon color="primary" small>mdi-map-marker</v-icon>Map
-                    </v-btn>
-                    <br>
-                    <span class="d-inline-block">{{ item.Address1 }}</span>
-                    <span class="d-inline-block">{{ item.Address2 }}</span><br>
-                  </li>
-                  <li>
-                    <v-divider class="my-2"></v-divider>
-                    <v-icon color="primary" small>mdi-phone</v-icon>
-                    {{ item.Tel }}
-                  </li>
-                </ul>
-              </v-card>
-            </v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+          <v-spacer></v-spacer>
+          <v-btn
+            icon
+            @click="addressDialog = false"
+          >
+            <v-icon color="primary" large>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+      </v-card-title>
+      <v-card-text class="branch-list__content">
+        <v-list class="px-2">
+          <v-list-item v-for="item in branchList" :key="item.ShopID" :title="item.ShopName">
+            <v-list-item-content>
+              <v-list-item-title class="primary--text mb-1">{{ item.ShopName }}</v-list-item-title>
+              <v-list-item-subtitle>
+                <v-card class="px-5 py-3" outlined>
+                  <ul>
+                    <li>
+                      〒{{ item.ZipCode }}
+                      <v-btn small target="_blank"
+                        :href=item.WebURL color="white" elevation="0">
+                        <v-icon color="primary" small>mdi-map-marker</v-icon>Map
+                      </v-btn>
+                      <br>
+                      <span class="d-inline-block">{{ item.Address1 }}</span>
+                      <span class="d-inline-block">{{ item.Address2 }}</span><br>
+                    </li>
+                    <li>
+                      <v-divider class="my-2"></v-divider>
+                      <v-icon color="primary" small>mdi-phone</v-icon>
+                      {{ item.Tel }}
+                    </li>
+                  </ul>
+                </v-card>
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
     </v-card>
   </v-dialog>
 </template>
@@ -100,6 +104,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/css/common.scss';
+
+.branch-list {
+  &__content {
+    @include scrollbar();
+  }
+}
 li{
   list-style: none;
 }

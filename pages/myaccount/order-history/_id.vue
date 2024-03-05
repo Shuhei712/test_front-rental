@@ -265,13 +265,15 @@
           hide-default-footer
           mobile-breakpoint="890">
           <template #[`item.ProductName`]="{ item }">
-            <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row">
+            <nuxt-link :to="`/products/${item.ProductID}?name=${item.ProductName}`" tag="a" class="d-flex align-center text-left flex-column flex-sm-row">
+            <!-- <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row"> -->
               <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
               <div class="table__txt text-truncate">
                 {{item.ProductName}}
                 <p class="font-weight-bold text-truncate">{{item.TypeNumber}}</p>
               </div>
-            </a>
+            <!-- </a> -->
+            </nuxt-link>
           </template>
 
           <template #[`item.Price`]="{ item }">
@@ -283,28 +285,30 @@
         </v-data-table>
 
         <v-divider></v-divider>
+        <div class="text-right">
+          <div class="d-inline-flex flex-column flex-direction-">
 
-        <price-card
-          :item-info="order"
-          :use-day="order.UseDay">
-        </price-card>
-        <v-card
-          max-width="360"
-          width="100%"
-          elevation="0"
-          class="ml-auto mt-1">
-          <v-card-actions tag="div" class="px-0">
-            <v-btn
-              v-if="order.OrderStatus !== 5 && order.OrderStatus !== 9"
+            <price-card
+              :item-info="order"
+              :use-day="order.UseDay">
+            </price-card>
+            <v-card
               elevation="0"
-              color="feature"
-              width="100%"
-              class="white--text"
-              :disabled="order.CancelEnableFlg===1"
-              @click="setCancelDialog()">申し込みキャンセル*
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+              class="mt-1 d-inline-block">
+              <v-card-actions tag="div" class="px-0">
+                <v-btn
+                  v-if="order.OrderStatus !== 5 && order.OrderStatus !== 9"
+                  elevation="0"
+                  color="feature"
+                  width="100%"
+                  class="white--text"
+                  :disabled="order.CancelEnableFlg===1"
+                  @click="setCancelDialog()">申し込みキャンセル*
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </div>
+        </div>
         <h3 class="text-subtitle-1 red--text mt-3 font-weight-bold">* 5営業日前以降のキャンセルについて</h3>
         <p>本システムでは、レンタルお引渡し日の5営業日前以降のキャンセルを受け付けておりません。<br>注文をキャンセルする場合は、<NuxtLink :to="{ path: '/guide', hash: '#item' }" class="link">ご利用方法 レンタル規約</NuxtLink>から「レンタル期間及び料金内容」をご確認いただき、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/" class="link" target="_blank">お問い合わせ</a>ください。</p>
       </div>
@@ -509,6 +513,9 @@ export default {
   max-width: 225px;
 }
 ::v-deep {
+  .v-chip:hover::before{
+    opacity: 0;
+  }
   .v-data-table-header{
     background-color: #f2f2f2;
   }

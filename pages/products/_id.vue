@@ -125,14 +125,17 @@
             <div class="info__status mt-sm-3 mt-md-5 mt-lg-8 pa-4 cushion">
               <div class="mb-2 info__status-qty">
                 数量：
-                <v-autocomplete
+                <v-text-field
                   v-model.number="itemNum"
                   outlined
-                  :items="qtyArr"
+                  type="number"
                   dense
                   hide-details="auto"
+                  min="1"
+                  max="999"
                   class="d-inline-block w-70 pointer"
-                ></v-autocomplete>
+                  @change="itemNum=changeQuantity($event)"
+                  ></v-text-field>
               </div>
               <div class="info__status-cart">
                 <v-btn
@@ -410,7 +413,6 @@ export default {
       loginDialog: false,
       addCartDialog: false,
       loading: false,
-      qtyArr: [...Array(99).keys()].map(i => i + 1)
     }
   },
   async fetch() {
@@ -772,7 +774,14 @@ export default {
         const res = await this.$getAccessToken()
         if( res ) return this.favorite(api, method)
       }
-    }
+    },
+    changeQuantity(Qty){
+      let qty = parseInt(Qty, 10)
+      if( !qty || qty <= 0 || qty > 999 ){
+        qty = 1
+      }
+      return qty
+    },
   },
 }
 </script>
