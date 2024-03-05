@@ -85,7 +85,8 @@ export default {
     async registerFile(accessKey){
       const formData = new FormData()
       let fileCnt = 0
-      this.fileArr.forEach((file)=>{
+      const postFileArr = this.$sameFileNameCheck(this.fileArr)
+      postFileArr.forEach((file)=>{
         if(!file) return
         fileCnt++
         formData.append(`File0${fileCnt}`, file)
@@ -116,7 +117,8 @@ export default {
         param.append(key, this.userJson[key])
       }
       let fileCnt = 0
-      this.fileArr.forEach((file)=>{
+      const postFileArr = this.$sameFileNameCheck(this.fileArr)
+      postFileArr.forEach((file)=>{
         if(!file) return
         fileCnt++
         param.append(`UPLOAD_FILE_NAME_${fileCnt}`, file.name)

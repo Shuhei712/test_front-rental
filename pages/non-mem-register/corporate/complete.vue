@@ -16,9 +16,10 @@
           </p>
           <p v-else>
             内容を確認次第、担当者よりご返信させていただきますので、しばらくお待ち下さい。<br>
-            なお、ご入力いただいたメールアドレス宛に受付完了メールを配信しております。<br>
+            なお、ご入力いただいたメールアドレス宛に受付完了メールを送信しております。<br><br>
             完了メールが届かない場合、迷惑メールフォルダに届いているか、処理が正常に行われていない可能性があります。<br>
-            大変お手数ですが、再度お試しいただくか、<a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="link">お問い合わせ</a>ください。
+            大変お手数ですが、再度お試しいただくか、<a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="link">お問い合わせ</a>ください。<br><br>
+            ※「takenaka-co.co.jp」からのメールを受信出来るように設定をお願いします。
           </p>
         </v-card-text>
       </v-card>
