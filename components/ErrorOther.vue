@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      isNonMemRegister: this.$route.path.includes('non-mem-register'),
+      isNonMemRegister: this.$route.path.includes('nonmember-register'),
     }
   },
   mounted() {
