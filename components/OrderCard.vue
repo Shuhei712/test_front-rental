@@ -55,7 +55,7 @@
                     <v-card-text>
                       <dl class="d-flex flex-column flex-md-row align-start">
                         <dt class="font-weight-bold colon">事前お振込</dt>
-                        <dd class="ps-md-4">お引き取り予定３営業日前までにお振り込み</dd>
+                        <dd class="ps-md-4">お引き取り予定5営業日前までにお振り込み</dd>
                       </dl>
                       <!-- <dl v-if="userType" class="d-flex flex-column flex-md-row align-start pt-1">
                         <dt class="font-weight-bold colon">店頭お支払い</dt>

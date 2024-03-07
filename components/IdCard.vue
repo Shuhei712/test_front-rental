@@ -267,7 +267,7 @@
         <ValidationProvider
           v-slot="{ errors }"
           name="payName"
-          rules="max:100">
+          rules="required|max:100">
           <v-row class="my-1">
             <v-col cols="12" md="4" class="pb-0">
               <template v-if="userJson.PaymentMethod===0">

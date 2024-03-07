@@ -9,7 +9,7 @@
         <p v-else>
           {{action}}を承りました。
           <template v-if="action==='レンタル申し込み'">
-            <br>申し込みいただいたレンタル商品の空き状況を確認の上、指定いただいた連絡方法にて、<span class="d-inline-block">レンタルの可否をご連絡させていただきます。</span><br>
+            <br>お申し込みいただいたレンタル商品の空き状況を確認の上、指定いただいた連絡方法にて、<span class="d-inline-block">レンタルの可否をご連絡させていただきます。</span><br>
             <span class="red--text">（※注文はまだ確定しておりません）</span>
           </template>
           <template v-if="action==='注文依頼'">

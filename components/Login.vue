@@ -24,6 +24,7 @@
                   dense
                   hide-details="auto"
                   autocomplete="on"
+                  autofocus
                   :error-messages="errors"
                 ></v-text-field>
               </v-col>

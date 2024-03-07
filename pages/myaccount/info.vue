@@ -9,12 +9,12 @@
           <v-container>
             <register-input :user.sync="userUpInfo" :result.sync="result" :login-id="loginID" :member-id="userInfo.MemberID"></register-input>
             <div class="text-center mt-6">
-              <v-btn
+              <!-- <v-btn
                 class="my-4 mx-2 white--text"
                 color="secondary"
                 to="/myaccount"
                 :disabled="loading"
-              >マイページ</v-btn>
+              >マイページ</v-btn> -->
               <v-btn
                 :disabled="(ObserverProps.invalid)"
                 class="my-4 mx-2 white--text"

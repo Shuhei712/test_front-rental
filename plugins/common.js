@@ -156,7 +156,7 @@ export default ({ store, $config, redirect, route, app }, inject) => {
         Authorization: `Bearer ${token}`,
       },
     })
-
+    console.log('cartNum',res, new Date())
     if ($config.DEBUG_MODE) {
       console.log(res)
     }
