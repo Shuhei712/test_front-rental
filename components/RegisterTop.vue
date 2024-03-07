@@ -61,7 +61,7 @@
                   </ul>
                   <div class="mt-2">
                     <h4 class="color-title fw-m">期日・期間の変更</h4>
-                    <p>御申し込み後の機材変更・期日変更につきましては、お渡し日の3営業日前までにご連絡下さい。</p>
+                    <p>お申し込み後の機材変更・期日変更につきましては、お渡し日の5営業日前までにご連絡下さい。</p>
                   </div>
                   <div class="mt-2">
                     <h4 class="color-title fw-m">キャンセル料金</h4>
@@ -138,12 +138,12 @@
             class="white--text ma-1"
             :disabled="!checkbox"
             @click="setUserType(0)"
-          >一般 Web会員登録</v-btn>
+          >一般WEB会員</v-btn>
           <v-btn color="primary"
             class="white--text ma-1"
             :disabled="!checkbox"
             @click="setUserType(1)"
-          >法人 Web会員登録</v-btn>
+          >法人WEB会員</v-btn>
         </div>
       </v-container>
     </div>

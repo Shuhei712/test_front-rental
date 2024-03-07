@@ -220,6 +220,7 @@
                         ></v-radio>
                       </v-radio-group>
                       <div class="notes my-4">
+                        <p class="note caption">お引き渡し日は営業日のみとなります。</p><br>
                         <p class="note caption">大型機材のイベント会場や施設への直接配送、発送到着のお時間指定ご希望の場合はチャーター便となります。</p>
                         <p class="note caption">宅配送料及びチャーター費はお客様ご負担となります。</p>
                       </div>
@@ -261,8 +262,11 @@
                             </template>
                             <v-date-picker
                               v-model="rentDate[0]"
+                              locale="ja"
+                              :day-format="(date) => new Date(date).getDate()"
                               no-title
                               scrollable
+                              :allowed-dates="allowedBusinessDates"
                               :max="deliverMax"
                               @input="datePick[0] = false"
                             ></v-date-picker>
@@ -412,26 +416,34 @@
                         </template>
                         <v-date-picker
                           v-model="rentRange"
+                          locale="ja"
+                          :day-format="(date) => new Date(date).getDate()"
                           no-title
                           scrollable
                           range
+                          :allowed-dates="allowedDates"
                           :min="rentRangeMin"
                           :max="rentRangeMax"
                         >
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            text
-                            color="primary"
-                            @click="rentRange=[]"
-                          >
-                            リセット
-                          </v-btn>
-                          <v-btn
-                            text
-                            color="primary"
-                            @click="setRange">
-                            確定
-                          </v-btn>
+                          <div class="flex-grow-1">
+                            <p v-if="rentRangeDays > 90" class="red--text text-caption text-center">90日以上の期間は選択できません</p>
+                            <div class="d-flex">
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                text
+                                color="primary"
+                                @click="rentRange=[]"
+                              >
+                                リセット
+                              </v-btn>
+                              <v-btn
+                                text
+                                color="primary"
+                                @click="setRange">
+                                確定
+                              </v-btn>
+                            </div>
+                          </div>
                         </v-date-picker>
                       </v-menu>
                       ( {{rentJson.UseDay}}日間 )
@@ -463,6 +475,7 @@
                         ></v-radio>
                       </v-radio-group>
                       <div class="my-4">
+                        <p class="note caption">ご返却日は営業日のみとなります。</p><br>
                         <p class="note caption">ご返送料及びチャーター費はお客様ご負担となります。</p>
                       </div>
                       <v-divider class="mb-4"></v-divider>
@@ -503,8 +516,11 @@
                             </template>
                             <v-date-picker
                               v-model="rentDate[1]"
+                              locale="ja"
+                              :day-format="(date) => new Date(date).getDate()"
                               no-title
                               scrollable
+                              :allowed-dates="allowedBusinessDates"
                               :min="returnMin"
                               @input="datePick[2] = false"
                             ></v-date-picker>
@@ -702,6 +718,7 @@ export default {
       datePick: [ false,false,false],
       rentRange: [],
       rentDate: [],
+      rentRangeDays: null,
       rentRangeMin: null,
       rentRangeMax: null,
       deliverMax: null,
@@ -765,6 +782,8 @@ export default {
       if( value.length === 1 ){
         this.rentRangeMin = value[0]
         this.concatRentRange = `${value[0]}~${value[0]}`
+        this.rentRangeDays = 1
+        // this.returnInitialMonth = value[0]
       }else if( value.length === 2 ){
         this.concatRentRange = this.rentRange.join(' ~ ')
         this.rentRangeMin = this.rentDate[0]
@@ -772,6 +791,8 @@ export default {
       }else{
         this.rentRangeMin = this.rentDate[0]
         this.concatRentRange = null
+        this.rentRangeDays = null
+        // this.returnInitialMonth = null
       }
     }
   },
@@ -927,7 +948,33 @@ export default {
         return "０１２３４５６７８９".indexOf(m)
       }).replace(/-|－|ー/g,'')
     },
+    allowedBusinessDates(date) {
+      const allowedDates = this.allowedDates(date)
+      const holiday = new Date(date).getDay()===0 || new Date(date).getDay()===6
+      return allowedDates && !holiday
+    },
+    allowedDates(date) {
+      let today = new Date()
+      today = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+      )
+      let maxAllowedDay = new Date()
+      maxAllowedDay.setDate(
+        today.getDate() + 365
+      )
+      maxAllowedDay = new Date(
+        maxAllowedDay.getFullYear(),
+        maxAllowedDay.getMonth(),
+        maxAllowedDay.getDate()
+      )
+
+      return today <= new Date(date)
+        && new Date(date) <= maxAllowedDay
+     },
     setRange(){
+      console.log(this.rentRange)
       if( this.rentRange.length ){
         if( this.rentRange.length === 1 ) this.rentRange[1] = this.rentRange[0]
         // API用にフォーマット変更
@@ -937,8 +984,9 @@ export default {
         this.$set(this.rentJson, 'UseEndDate', EndDate)
         // 使用期間抽出
         const dateDiff = this.toDate(this.rentRange[1]).getTime() - this.toDate(this.rentRange[0]).getTime()
-        const days = Math.ceil(dateDiff / (1000 * 3600 * 24)) + 1
-        this.$set(this.rentJson, 'UseDay', days)
+        this.rentRangeDays = Math.ceil(dateDiff / (1000 * 3600 * 24)) + 1
+        if (this.rentRangeDays > 90) return false
+        this.$set(this.rentJson, 'UseDay', this.rentRangeDays)
       }else{
         // 初期設定
         this.$set(this.rentJson, 'UseDay', 1)

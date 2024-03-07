@@ -9,10 +9,10 @@
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" class="px-2 py-1 border">
                 <template v-if="syncedUser.MemberType===0">
-                  一般 Web会員登録
+                  一般WEB会員
                 </template>
                 <template v-else>
-                  法人 Web会員登録
+                  法人WEB会員
                 </template>
               </v-card>
             </v-col>

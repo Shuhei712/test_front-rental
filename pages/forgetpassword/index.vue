@@ -1,11 +1,12 @@
 <template>
   <section id="top">
     <to-top-btn></to-top-btn>
+    <top-bar title="パスワードをお忘れの方" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 text-center">
-      <div class="text-center py-15">
-        <h1 class="py-6 mb-4">パスワードをお忘れですか？</h1>
+      <div class="text-center">
+        <h1 class="py-3 mb-4">パスワードをお忘れですか？</h1>
         <p class="mb-8 text-left text-md-center">
-          ご登録のアドレスに、通知メールを送信いたします。<br>
+          ご登録のアドレスに通知メールを送信いたします。<br>
           通知メールでお知らせする認証URLにアクセスいただくことで、パスワードの変更が可能となります。<br>
           ※「takenaka-co.co.jp」からのメールを受信出来るように設定をお願いします。
         </p>
@@ -79,9 +80,14 @@ export default {
       result: null,
     }
   },
+  fetch() {
+    this.$store.commit('loading/changeStatus', true)
+    this.setBreadCrumbs()
+    this.$store.commit('loading/changeStatus', false)
+  },
   head () {
     return {
-      title: "パスワード変更",
+      title: "パスワードをお忘れの方",
       meta: [
         { hid: "robots", name: "robots", content: "noindex" }
       ]
@@ -91,6 +97,11 @@ export default {
     this.$scrollBackButton()
   },
   methods: {
+    setBreadCrumbs() {
+      this.$store.commit("breadCrumbs/deleteList")
+      this.$store.commit('breadCrumbs/addList', { name: "パスワードをお忘れの方", path: "/forgetpassword" });
+      this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"];
+    },
     async passChange(){
       this.loading = true
       const res = await this.$memberAxios.get(`/auth/forgetRequest/${this.mail}`)

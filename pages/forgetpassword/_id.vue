@@ -1,8 +1,9 @@
 <template>
   <section id="top">
     <to-top-btn></to-top-btn>
+    <top-bar title="パスワード再設定" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16">
-      <div v-if="tokenErrNo" class="text-center py-15">
+      <div v-if="tokenErrNo" class="text-center">
         <template v-if="tokenErrNo===111201">
           <p class="red--text">認証URLが正しくないか、有効期限が切れています。<br>お手数ですが、下記ボタンからもう一度お試しください。</p>
           <v-btn
@@ -21,8 +22,7 @@
           </v-btn>
         </template>
       </div>
-      <div v-else class="py-15">
-        <h1 class="text-center py-6 mb-4">パスワード再設定</h1>
+      <div v-else>
         <p v-if="result==='111103'" class="red--text pb-4">メールアドレスが正しくありません</p>
         <ValidationObserver v-slot="ObserverProps">
           <v-form class="pt-5">
@@ -114,7 +114,10 @@ export default {
     }
   },
   async fetch(){
+    this.$store.commit('loading/changeStatus', true)
+    this.setBreadCrumbs()
     this.tokenErrNo = await this.$checkMailToken(this.$route.params.id)
+    this.$store.commit('loading/changeStatus', false)
   },
   head () {
     return {
@@ -128,6 +131,11 @@ export default {
     this.$scrollBackButton()
   },
   methods: {
+    setBreadCrumbs() {
+      this.$store.commit("breadCrumbs/deleteList")
+      this.$store.commit('breadCrumbs/addList', { name: "パスワード再設定", path: "/forgetpassword" })
+      this.breadCrumbs = this.$store.getters["breadCrumbs/getLists"]
+    },
     async passChange(){
       this.loading = true
       const token = this.$route.params.id

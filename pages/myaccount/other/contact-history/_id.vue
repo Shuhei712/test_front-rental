@@ -153,10 +153,12 @@ export default {
     },
     dateFormat(num){
       if(num){
-        const year = num.substring(0, 4);
-        const month = num.substring(4, 6);
-        const day = num.substring(6, 8);
-        const entryDate = year+"-"+month+"-"+day;
+        const year = num.substring(0, 4)
+        const month = num.substring(4, 6)
+        const day = num.substring(6, 8)
+        const hour = num.substring(8, 10)
+        const min = num.substring(10, 12)
+        const entryDate = `${year}-${month}-${day} ${hour}:${min}`
         return entryDate
       }
     }

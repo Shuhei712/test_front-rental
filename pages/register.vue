@@ -42,6 +42,7 @@ export default {
           this.changeChild('新規登録 確認','/register#confirm')
           return 'register-confirm'
         default:
+          this.changeChild('新規登録','/register')
           return 'register-top'
       }
     }

@@ -124,7 +124,7 @@
     </v-dialog>
     <v-dialog
       v-model="deleteDialog"
-      width="580"
+      width="780"
       persistent>
       <v-card class="pa-5 text-center">
         <template v-if="result">

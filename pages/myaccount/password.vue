@@ -4,8 +4,8 @@
     <top-bar title="パスワード変更" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 text-center">
       <p class="mb-4 text-left text-md-center">
-        パスワード変更を選択いただくと、登録されているメールアドレスに、通知メールを送信いたします。<br>
-        通知メールでお知らせするURLにアクセスいただくことで、パスワードの変更が可能となります。
+        パスワード変更を選択いただくと、登録いただいたメールアドレスに通知メールを送信いたします。<br>
+        通知メールに記載されている認証URLにアクセスいただくことで、パスワードの変更が可能となります。
       </p>
       <v-btn
         color="primary"
@@ -13,12 +13,12 @@
         @click="passChange">
         パスワード変更
       </v-btn>
-      <v-btn
+      <!-- <v-btn
         color="outline"
         class="mx-3 white--text"
         to="/myaccount">
         マイページに戻る
-      </v-btn>
+      </v-btn> -->
     </div>
 
     <v-dialog v-model="resultDialog"

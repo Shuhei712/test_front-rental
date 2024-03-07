@@ -21,10 +21,10 @@
                 <v-col cols="12" md="4" class="pb-0">会員タイプ</v-col>
                 <v-col cols="12" md="8">
                   <template v-if="syncedUser.MemberType===0">
-                    一般 Web会員登録
+                    一般WEB会員
                   </template>
                   <template v-else>
-                    法人 Web会員登録
+                    法人WEB会員
                   </template>
                 </v-col>
               </v-row>

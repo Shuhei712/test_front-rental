@@ -28,6 +28,9 @@
         <template #[`item.RegistDate`]="{ item }">
           {{dateFormat(item.RegistDate)}}
         </template>
+        <template #[`item.OrderTitle`]="{ item }">
+          <span class="order-hx__table-title text-truncate">{{item.OrderTitle}}</span>
+        </template>
         <template #[`item.RentalStartDate`]="{ item }">
           {{dateFormat(item.RentalStartDate)}}
         </template>
@@ -75,7 +78,7 @@ export default {
       headers: [
         { text: '注文番号', value: 'OrderNo', width: '70px', sortable: false},
         { text: '件名', value: 'OrderTitle', sortable: false },
-        { text: '申込日', value: 'RegistDate', width: '124px' },
+        { text: '申込日', value: 'RegistDate', width: '120px' },
         { text: 'レンタル開始日', value: 'RentalStartDate', width: '124px'},
         { text: '合計金額(円)', value: 'RentalTotal', sortable: false },
         { text: '注文状況', value: 'OrderStatusDisp', sortable: false, width: '153px' },
@@ -152,10 +155,18 @@ export default {
 }
 .order-hx{
   &__table-actions{
-    width: 206px;
-    max-width: unset;
+    min-width: 204px;
+    width: 204px;
     @media (min-width:889px)and(max-width:1263.9px) {
       width: 100px;
+      min-width: unset;
+    }
+  }
+  &__table-title{
+    max-width: 240px;
+    display: block;
+    @media (min-width:500px) {
+      max-width: 310px;
     }
   }
   ::v-deep {
