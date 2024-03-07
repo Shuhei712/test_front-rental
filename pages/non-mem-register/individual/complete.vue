@@ -12,7 +12,7 @@
           <p v-if="err" class="red--text mb-4">
             登録に失敗いたしました。<br>
             大変申し訳ございませんが、再度お試しいただくか、<a href="https://www.takenaka-co.co.jp/contact/" class="link">お問い合わせ</a>ください。<br>
-            <v-btn color="primary" class="mt-4" @click="$router.push('/non-mem-register/individual/input')">フォームに戻る</v-btn>
+            <v-btn color="primary" class="mt-4" @click="$router.push('/nonmember-register/individual/input')">フォームに戻る</v-btn>
           </p>
           <p v-else>
             内容を確認次第、担当者よりご返信させていただきますので、しばらくお待ち下さい。<br>
@@ -42,7 +42,7 @@ export default {
     this.err = this.$store.getters['register/getFormErr']
     if (userJson.NAME && fileArr.length > 0) {
       this.$store.commit('register/deleteInfo')
-    }else this.$router.push('/non-mem-register/individual/input')
+    }else this.$router.push('/nonmember-register/individual/input')
     this.$store.commit('loading/changeStatus', false)
   },
   head () {

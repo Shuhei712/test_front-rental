@@ -11,7 +11,7 @@
             <v-btn large
               class="my-4 mx-2 white--text"
               color="secondary"
-              @click="$router.push('/non-mem-register/corporate/input')"
+              @click="$router.push('/nonmember-register/corporate/input')"
             >戻る</v-btn>
             <v-btn large
               class="my-4 mx-2 white--text"
@@ -41,7 +41,7 @@ export default {
     this.setBreadCrumbs()
     this.userJson = this.$store.getters['register/getFormInfo']
     this.fileArr = this.$store.getters['register/getFormFile']
-    if(!this.userJson.NAME) this.$router.push('/non-mem-register/corporate/input')
+    if(!this.userJson.NAME) this.$router.push('/nonmember-register/corporate/input')
     this.$store.commit('loading/changeStatus', false)
   },
   head () {
@@ -58,7 +58,7 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'お取引登録票フォーム', path: '/non-mem-register/corporate/confirm' })
+      this.$store.commit('breadCrumbs/addList', { name: 'お取引登録票フォーム', path: '/nonmember-register/corporate/confirm' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async submit() {
@@ -66,7 +66,7 @@ export default {
       const accessKey = await this.getAccessKey()
       const uploadKey = await this.registerFile(accessKey)
       if (uploadKey) await this.registerInfo(accessKey, uploadKey)
-      this.$router.push('/non-mem-register/corporate/complete')
+      this.$router.push('/nonmember-register/corporate/complete')
       this.isLoading = false
     },
     async getAccessKey(){

@@ -23,7 +23,7 @@
 <script>
 export default {
   middleware({from,store}){
-    if (from.path !== '/non-mem-register/individual/confirm') {
+    if (from.path !== '/nonmember-register/individual/confirm') {
       store.commit('register/deleteInfo')
     }
   },
@@ -60,13 +60,13 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'ご入会申込書フォーム 入力', path: '/non-mem-register/individual/input' })
+      this.$store.commit('breadCrumbs/addList', { name: 'ご入会申込書フォーム 入力', path: '/nonmember-register/individual/input' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     confirm() {
       this.$store.commit('register/setFormInfo', this.userJson)
       this.$store.commit('register/setFormFile', this.fileArr)
-      this.$router.push('/non-mem-register/individual/confirm')
+      this.$router.push('/nonmember-register/individual/confirm')
     },
   },
 }
