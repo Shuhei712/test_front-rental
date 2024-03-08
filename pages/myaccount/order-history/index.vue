@@ -35,7 +35,7 @@
           {{dateFormat(item.RentalStartDate)}}
         </template>
         <template #[`item.RentalTotal`]="{ item }">
-          {{ item.RentalTotal.toLocaleString() }}
+          {{ item.RentalTotal ? item.RentalTotal.toLocaleString() : '' }}
         </template>
         <template #[`item.actions`]="{ item }">
           <td class="px-0 order-hx__table-actions py-1">

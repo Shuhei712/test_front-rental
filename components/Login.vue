@@ -51,7 +51,7 @@
               </v-col>
             </v-row>
           </ValidationProvider>
-          <div class="text-center mt-6">
+          <div class="text-center mt-2">
             <v-btn large
               class="my-4"
               color="primary"
@@ -80,7 +80,13 @@ export default {
       loading: false,
     }
   },
+  beforeDestroy() {
+    this.resetBeforePath('beforeDestroy')
+  },
   methods: {
+    resetBeforePath(val){
+      this.$store.commit('referrer/setPath', null)
+    },
     async login(){
       this.loading = true
       const param = new URLSearchParams()
@@ -93,7 +99,8 @@ export default {
         this.$store.commit('auth/setAuthToken', res.data.AuthToken)
         this.$store.commit('auth/setAccessToken', res.data.AccessToken)
         await this.$getCartNum()
-        location.reload()
+        const beforePath = this.$store.getters["referrer/getPath"]
+        this.$router.push(beforePath || '/myaccount/')
       }else{
         this.loginErr = true
         this.loading = false
