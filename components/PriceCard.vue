@@ -5,7 +5,7 @@
     min-width="340"
     class="mt-3 d-inline-block">
     <v-card-text>
-      <template v-if="itemInfo.PriceType!==9">
+      <template v-if="itemInfo.PriceType!==9&&itemInfo.PriceType!=='9'">
         <div class="d-flex justify-space-between pb-1">
           <span>レンタル期間</span><span>{{ useDay }}日</span>
         </div>
