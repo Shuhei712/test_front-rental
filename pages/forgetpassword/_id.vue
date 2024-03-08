@@ -25,22 +25,21 @@
       <div v-else>
         <p v-if="result==='111103'" class="red--text pb-4">メールアドレスが正しくありません</p>
         <ValidationObserver v-slot="ObserverProps">
-          <v-form class="pt-5">
+          <v-form>
             <ValidationProvider
               v-slot="{ errors }"
               name="mail"
               rules="required|email|max:50">
-              <v-row class="pb-3">
+              <v-row>
                 <v-col cols="12" md="4" class="pb-0">
                   <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                   メールアドレス
                 </v-col>
-                <v-col cols="12" md="8">
+                <v-col cols="12" md="8" class="pt-1 pt-md-2">
                   <v-text-field
                     v-model="mail"
                     outlined
                     dense
-                    hide-details="auto"
                     :error-messages="errors"
                   ></v-text-field>
                 </v-col>
@@ -56,12 +55,11 @@
                   新しいパスワード
                   <span class="caption d-block">(半角英数字8文字以上24文字以下)</span>
                 </v-col>
-                <v-col cols="12" md="8">
+                <v-col cols="12" md="8" class="pt-1 pt-md-3">
                   <v-text-field
                     v-model="newPass"
                     outlined
                     dense
-                    hide-details="auto"
                     :error-messages="errors"
                     :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                     :type="show ? 'text':'password'"
@@ -72,7 +70,7 @@
               </v-row>
             </ValidationProvider>
             <div class="text-center mt-6">
-              <v-btn
+              <v-btn large
                 :disabled="ObserverProps.invalid || !ObserverProps.validated"
                 class="my-4 mx-2 white--text"
                 color="primary"
