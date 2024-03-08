@@ -24,12 +24,11 @@
               <v-col sm="3" cols="12" class="text-left pb-0">
                 メールアドレス
               </v-col>
-              <v-col sm="9" cols="12" class="pt-0 pt-sm-3">
+              <v-col sm="9" cols="12" class="pt-0 pt-sm-2">
                 <v-text-field
                   v-model="mail"
                   outlined
                   dense
-                  hide-details="auto"
                   :error-messages="errors"
                 ></v-text-field>
               </v-col>

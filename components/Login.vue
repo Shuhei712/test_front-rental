@@ -13,16 +13,15 @@
             v-slot="{ errors }"
             name="id"
             rules="required">
-            <v-row>
+            <v-row class="">
               <v-col cols="12" md="3" class="pb-0 text-left">
                 ログインID
               </v-col>
-              <v-col cols="12" md="9" class="pt-0 pt-md-3">
+              <v-col cols="12" md="9" class="pt-0 pt-md-2">
                 <v-text-field
                   v-model="id"
                   outlined
                   dense
-                  hide-details="auto"
                   autocomplete="on"
                   autofocus
                   :error-messages="errors"
@@ -38,12 +37,11 @@
               <v-col cols="12" md="3" class="pb-0 text-left">
                 パスワード
               </v-col>
-              <v-col cols="12" md="9" class="pt-0 pt-md-3">
+              <v-col cols="12" md="9" class="pt-0 pt-md-2">
                 <v-text-field
                   v-model="password"
                   outlined
                   dense
-                  hide-details="auto"
                   autocomplete="on"
                   :error-messages="errors"
                   :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
@@ -98,8 +96,8 @@ export default {
         location.reload()
       }else{
         this.loginErr = true
+        this.loading = false
       }
-      this.loading = false
     },
   }
 }

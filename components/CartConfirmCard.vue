@@ -241,7 +241,7 @@
         </v-card-actions>
       </v-card>
       <v-dialog v-model="resultDialog"
-        width="580"
+        width="780"
         persistent>
         <v-card class="pa-5 text-center">
           <result-card
