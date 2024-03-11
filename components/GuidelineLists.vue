@@ -22,7 +22,7 @@
             <v-list-item
               v-for="section in menuItem.sections"
               :key="section.title"
-              :to="'/guideline/'+key+'#'+section.id">
+              :to="section.id ? '/guide/'+key+'#'+section.id : '/guide/'+key">
               <v-list-item-content>
                 <v-list-item-title class="d-flex align-center pl-3">
                   <div class="txt-limit">{{ section.title }}</div>
@@ -67,7 +67,7 @@
                 <v-list-item
                   v-for="section in menuItem.sections"
                   :key="section.title"
-                  :href="'/guideline/'+key+'#'+section.id"
+                  :href="'/guide/'+key+'#'+section.id"
                   @click="openPanel=''">
                   <v-list-item-content>
                     <v-list-item-title class="d-flex align-center pl-3">
