@@ -2,13 +2,13 @@
   <v-row class="guide__transition d-flex justify-space-around">
     <v-col cols="12" md="6">
       <v-row>
-        <v-col cols="2" class="d-flex justify-end align-center">
-          <v-btn v-if="prev" :to="prev.url" class="bg-white" depressed>
+        <v-col cols="1" class="d-flex justify-end align-center">
+          <a v-if="prev" :href="prev.url">
             <v-icon color="primary"  x-large>mdi-chevron-left</v-icon>
-          </v-btn>
+          </a>
         </v-col>
-        <v-col cols="10" class="pl-0">
-          <v-btn v-if="prev" :to="prev.url" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
+        <v-col cols="11" class="pl-0">
+          <v-btn v-if="prev" :href="prev.url" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
             <span class="lh-crop-12 font-weight-medium">{{ prev.No + 1 }}. {{ prev.title }}</span>
           </v-btn>
         </v-col>
@@ -16,15 +16,15 @@
     </v-col>
     <v-col cols="12" md="6">
       <v-row>
-        <v-col cols="10" class="pr-0">
-          <v-btn v-if="next" :to="next.url" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
+        <v-col cols="11" class="pr-0">
+          <v-btn v-if="next" :href="next.url" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
             <span class="lh-crop-12 font-weight-medium">{{ next.No + 1 }}. {{ next.title }}</span>
           </v-btn>
         </v-col>
-        <v-col cols="2" class="d-flex justify-start align-center">
-          <v-btn v-if="next" :to="next.url" class="bg-white" depressed>
+        <v-col cols="1" class="d-flex justify-start align-center">
+          <a v-if="next" :href="next.url">
             <v-icon color="primary"  x-large>mdi-chevron-right</v-icon>
-          </v-btn>
+          </a>
         </v-col>
       </v-row>
     </v-col>
@@ -60,14 +60,14 @@ export default {
         this.prev = {
           No: prevIndex,
           title: prevElement.title,
-          url: "/guideline/" + prevKey,
+          url: "/guide/" + prevKey,
         };
       }
       if(nextElement){
         this.next = {
           No: nextIndex,
           title: nextElement.title,
-          url: "/guideline/" + nextKey,
+          url: "/guide/" + nextKey,
         };
       }
     }
@@ -82,7 +82,6 @@ export default {
     max-width: 1200px;
     margin: 0 auto;
     width: 95%;
-    overflow: hidden;
     &__btn{
       width: 100%;
     }

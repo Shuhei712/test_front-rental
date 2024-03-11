@@ -29,8 +29,13 @@ export default {
 @import 'assets/css/common.scss';
 .guide{
   &__section {
-    padding-top: 130px;
-    margin-top: -130px;
+    padding-top: 100px;
+    margin-top: -100px;
+    @include mq(lg){
+      padding-top: 130px;
+      margin-top: -130px;
+    }
+    width: 100%;
   }
   &__background {
     background-color: $cushion;

@@ -1,12 +1,12 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
-    <top-bar title="レンタルガイドライン" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="レンタルご利用ガイド" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner d-lg-flex py-16">
 
       <!-- サイドメニューコンポーネント -->
       <Guideline-lists></Guideline-lists>
-      <div class="content ml-lg-10">
+      <div class="content guide__content ml-lg-10">
         <!-- 各セクションのコンポーネント -->
         <guideline-section-title section-type="rental"></guideline-section-title>
         <guideline-section
@@ -14,7 +14,6 @@
           :key="guideItem.id"
           :section-title="guideItem.title"
           :section-id="guideItem.id">
-
           <guideline-content
             :content-list="guideItem.contents">
 
@@ -87,7 +86,7 @@
             </template>
 
             <template #rental-4__item3>
-                <guideline-image guideline-img="/img/guideline/rental/rental_days.svg" guideline-alt="例：レンタル日数の計算の仕方" figure-flg="true"></guideline-image>
+                <guideline-image guideline-img="/img/guide/rental/rental_days.svg" guideline-alt="例：レンタル日数の計算の仕方" figure-flg="true"></guideline-image>
             </template>
 
             <template #rental-5__item1>
@@ -98,10 +97,10 @@
               </div>
               <v-row>
                 <v-col cols="12" sm="6" class="d-flex justify-center">
-                  <v-img src="/img/guideline/rental/rental_priceA.svg" alt="例：レンタル日数の計算の仕方(掛け率パターンA)" class="guide__img__figureFlg"></v-img>
+                  <img src="/img/guide/rental/rental_priceA.svg" alt="例：レンタル日数の計算の仕方(掛け率パターンA)" class="guide__img__figureFlg">
                 </v-col>
                 <v-col cols="12" sm="6" class="d-flex justify-center">
-                  <v-img src="/img/guideline/rental/rental_priceB.svg" alt="例：レンタル日数の計算の仕方(掛け率パターンB)" class="guide__img__figureFlg"></v-img>
+                  <img src="/img/guide/rental/rental_priceB.svg" alt="例：レンタル日数の計算の仕方(掛け率パターンB)" class="guide__img__figureFlg">
                 </v-col>
               </v-row>
             </template>
@@ -134,9 +133,9 @@ export default {
   },
   head () {
     return {
-      title: "レンタルガイドライン",
+      title: "レンタルご利用ガイド",
       meta: [
-        { hid: 'description', name: 'description', content: 'レンタルガイドライン | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
+        { hid: 'description', name: 'description', content: 'レンタルご利用ガイド - レンタル全般 - | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
       ]
     }
   },
@@ -146,7 +145,7 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'レンタルガイドライン - レンタル全般 -', path: '/guideline' })
+      this.$store.commit('breadCrumbs/addList', { name: 'レンタルご利用ガイド - レンタル全般 -', path: '/guide/rental' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
   }
@@ -189,6 +188,9 @@ export default {
 }
 
 .guide {
+  &__content {
+    width: 100%;
+  }
   &__price {
     --circleSize: 50px;
     margin-top: 25px;

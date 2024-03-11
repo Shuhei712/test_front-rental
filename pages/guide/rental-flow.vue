@@ -1,33 +1,36 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
-    <top-bar title="レンタル全般 レンタルの流れ（詳細版）" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="レンタル全般 レンタルの手順（詳細版）" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner d-lg-flex py-16">
 
       <!-- サイドメニューコンポーネント -->
       <Guideline-lists></Guideline-lists>
       <main class="content ml-lg-10 letter-space-01em font-weight-medium">
-        <div class="mt-3 mb-7">
-          <h4 class="text-gray letter-space-01em text-h5 text-md-h4 font-weight-medium">
-            <span class="font-italic bold text-white bg-accent px-6 py-3 mr-5">{{ menuIndex + 1 }}</span>{{ getTitle[menuIndex].title }}
+        <div class="pb-md-3 mb-5">
+          <h4 class="d-flex align-center text-gray letter-space-01em text-h6 text-md-h4 font-weight-medium">
+            <div class="square font-italic bold text-white mr-5">
+              <p class="title-no">{{ menuIndex + 1 }}</p>
+            </div>
+            {{ getTitle[menuIndex].title }}
           </h4>
-          <div class="d-flex text-gray text-h6 font-weight-medium mt-2 mt-md-3 ml-13 ml-md-16 pl-8">
+          <div class="d-flex text-gray text-h6 font-weight-medium mt-2 mt-md-3 ml-11 ml-md-14 pl-8">
             <span class="guide__title__decoration mr-3"></span>
-            <p class="mt-2">レンタルの流れ（詳細版）</p>
+            <p class="mt-2">レンタルの手順（詳細版）</p>
           </div>
         </div>
         
         <v-row class="guide__flow-section mb-10">
           <v-col cols="12" md="6">
-            <v-btn to="/guideline/rental-flow#member" class="guide__flow-section__btn pt-8 pb-7 white--text letter-space-01em font-weight-medium" color="accent">
+            <v-btn v-scroll-to="'#member'" class="guide__flow-section__btn pt-8 pb-7 white--text letter-space-01em font-weight-medium" color="accent">
               <span>WEB会員の場合</span>
-              <v-icon class="">mdi-chevron-down</v-icon>
+              <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="12" md="6">
-            <v-btn to="/guideline/rental-flow#nonmember" class="guide__flow-section__btn pt-8 pb-7 white--text letter-space-01em font-weight-medium" color="primary">
+            <v-btn v-scroll-to="'#nonmember'" class="guide__flow-section__btn pt-8 pb-7 white--text letter-space-01em font-weight-medium" color="primary">
               <span>WEB非会員の場合</span>
-              <v-icon class="">mdi-chevron-down</v-icon>
+              <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -37,11 +40,12 @@
 
           <guideline-rental-section-inner guideline-rental-id="flow-member-1" member-type="member" guideline-rental-title="WEB会員登録">
             <p>
-              レンタルの注文を行う場合、身分証明などでの本人確認手続きが必要となります。
-              本人確認登録が未実施の場合はレンタルの注文申し込みができませんので、あらか
-              じめ本人確認の手続きをお済ませください。
+              レンタルの注文を行う場合、身分証明などでの本人確認手続きが必要となります。本人確認登録が未実施の場合はレンタルの注文申し込みができませんので、あらかじめ本人確認の手続きをお済ませください。
             </p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_web_member_register.png" guideline-alt="Web会員登録のイメージ"></guideline-image>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_web_member_register.png" alt="Web会員登録のイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_web_member_register.png" guideline-alt="Web会員登録のイメージ"></guideline-image>
             <v-row class="mt-10">
               <v-col cols="12">
                 <guideline-btn
@@ -68,8 +72,14 @@
                 }"
                 class="mt-6"
               ></guideline-footnote>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_cart.png" guideline-alt="カートのイメージ"></guideline-image>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_cart_order_confirm.png" guideline-alt="レンタル申し込み完了のイメージ"></guideline-image>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_cart.png" alt="カートのイメージ" class="guide__img">
+            </div>
+            <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_cart_order_confirm.png" alt="レンタル申し込み完了のイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_cart.png" guideline-alt="カートのイメージ"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_cart_order_confirm.png" guideline-alt="レンタル申し込み完了のイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -80,7 +90,10 @@
             <p>
               お申し込みいただいた内容にて、レンタルのお見積りと在庫状況の確認結果をお知らせします。
             </p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_quotation_answer.png" guideline-alt="お見積回答のイメージ"></guideline-image>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_quotation_answer.png" alt="お見積回答のイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_quotation_answer.png" guideline-alt="お見積回答のイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -90,7 +103,10 @@
           <guideline-rental-section-inner guideline-rental-id="flow-member-4" member-type="member" guideline-rental-title="お見積り確認・ご注文">
             <p>弊社からの見積もりを確認し、ご注文いただける場合はマイページより手続きをお願いします。</p>
             <p class="mt-1">マイページ→注文履歴→該当する注文の詳細画面→注文を進める</p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_order.png" guideline-alt="お見積り確認・ご注文のイメージ"></guideline-image>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_order.png" alt="お見積り確認・ご注文のイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_order.png" guideline-alt="お見積り確認・ご注文のイメージ"></guideline-image>
             <guideline-footnote
                 :note-list="{
                   type: 'bold-note',
@@ -110,7 +126,10 @@
             <p>
               お客様からのお見積り承認の回答を受け、レンタル注文（予約）を確定いたします。注文確定についてお客様にお知らせし、注文手続きは完了となります。
             </p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_confirm.png" guideline-alt="注文確定（機材確保完了）のイメージ"></guideline-image>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_confirm.png" alt="注文確定（機材確保完了）のイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_confirm.png" guideline-alt="注文確定（機材確保完了）のイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -118,7 +137,7 @@
           </div>
 
           <guideline-rental-section-inner guideline-rental-id="flow-member-6" member-type="member" guideline-rental-title="お支払い">
-            <p>支払いは事前振込みのみとなります。機材引き渡し日より3営業日前までに指定の銀行口座にレンタル費用をお振込みください。</p>
+            <p>支払いは事前振込みのみとなります。機材引き渡し日より5営業日前までに指定の銀行口座にレンタル費用をお振込みください。</p>
             <v-row class="mt-3">
               <v-col cols="12">
                 <guideline-btn
@@ -127,7 +146,10 @@
                 </guideline-btn>
               </v-col>
             </v-row>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_payment.png" guideline-alt="お支払いのイメージ"></guideline-image>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_payment.png" alt="お支払いのイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_payment.png" guideline-alt="お支払いのイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -136,42 +158,48 @@
 
           <guideline-rental-section-inner guideline-rental-id="flow-member-7" member-type="staff-member--section" guideline-rental-title="レンタル商品の準備">
             <p>お支払い確認後、レンタル商品（機材）の準備及び、事前チェックを行います。</p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/frow_preparation.png" guideline-alt="注文確定（機材確保完了）のイメージ"></guideline-image>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/frow_preparation.png" alt="注文確定（機材確保完了）のイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/frow_preparation.png" guideline-alt="注文確定（機材確保完了）のイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
             <div class="arrow-down"></div>
           </div>
 
-          <guideline-rental-section-inner guideline-rental-id="flow-member-8" member-type="member-staff" guideline-rental-title="レンタル商品のお引渡し/お受け取り">
+          <guideline-rental-section-inner guideline-rental-id="flow-member-8" member-type="staff-member" guideline-rental-title="レンタル商品のお引渡し/お受け取り">
             <p>
-              ご指定いただいた日程でレンタル商品（機材）をお引渡しします。引き渡し方法は下記の3つよりご指定下さい。
+              ご指定いただいた日程でレンタル商品（機材）をお引渡しします。引き渡し方法は下記の3つよりご指定ください。
             </p>
             <v-simple-table class="guide-table guide__flow-table guide-table--default transparent mt-7">
-                <template #default>
-                  <thead class="text-body-1">
-                    <tr>
-                      <th class="headingText--text text-center text-body-2 font-weight-bold">引き渡し方法</th>
-                      <th class="headingText--text text-center text-body-2 font-weight-bold">詳細</th>
-                    </tr>
-                  </thead>
-                  <tbody class="headingText--text text-center">
-                    <tr>
-                      <td class="guide-table__td text-body-1">直接来社</td>
-                      <td class="guide-table__td text-body-1 text-left">弊社各拠点にて営業時間内にお渡し</td>
-                    </tr>
-                    <tr>
-                      <td class="guide-table__td text-body-1">宅配便（郵送）</td>
-                      <td class="guide-table__td text-body-1 text-left">指定日・指定場所に弊社から着払いで発送</td>
-                    </tr>
-                    <tr>
-                      <td class="guide-table__td text-body-1">チャーター便</td>
-                      <td class="guide-table__td text-body-1 text-left">弊社スタッフまたは配送業者より、搬入希望日時・指定場所に発送（別途料金）</td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_delivery.png" guideline-alt="レンタル商品のお引渡し/お受け取り"></guideline-image>
+              <template #default>
+                <thead class="text-body-1">
+                  <tr>
+                    <th class="headingText--text text-center text-body-2 font-weight-bold">引き渡し方法</th>
+                    <th class="headingText--text text-center text-body-2 font-weight-bold">詳細</th>
+                  </tr>
+                </thead>
+                <tbody class="headingText--text text-center">
+                  <tr>
+                    <td class="guide-table__td text-body-1">直接来社</td>
+                    <td class="guide-table__td text-body-1 text-left">弊社各拠点にて営業時間内にお渡し</td>
+                  </tr>
+                  <tr>
+                    <td class="guide-table__td text-body-1">宅配便（郵送）</td>
+                    <td class="guide-table__td text-body-1 text-left">指定日・指定場所に弊社から着払いで発送</td>
+                  </tr>
+                  <tr>
+                    <td class="guide-table__td text-body-1">チャーター便</td>
+                    <td class="guide-table__td text-body-1 text-left">弊社スタッフまたは配送業者より、搬入希望日時・指定場所に発送（別途料金）</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_delivery.png" alt="レンタル商品のお引渡し/お受け取り" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_delivery.png" guideline-alt="レンタル商品のお引渡し/お受け取り"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -180,7 +208,10 @@
 
           <guideline-rental-section-inner guideline-rental-id="flow-member-9" member-type="member" guideline-rental-title="レンタル商品のご利用">
             <p>ご指定の期間にてレンタル商品（機材）をご利用ください。商品は精密機器になります。お取扱いには十分ご注意をお願いいたします。</p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_use.png" guideline-alt="レンタル商品のご利用のイメージ"></guideline-image>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_use.png" alt="レンタル商品のご利用のイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_use.png" guideline-alt="レンタル商品のご利用のイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -188,32 +219,35 @@
           </div>
 
           <guideline-rental-section-inner guideline-rental-id="flow-member-10" member-type="member-staff" guideline-rental-title="レンタル商品の返却">
-            <p>ご指定いただいた日程でレンタル商品（機材）をご返却ください。引き渡し方法は下記の3つよりご指定下さい。</p>
+            <p>ご指定いただいた日程でレンタル商品（機材）をご返却ください。ご返却方法は下記の3つよりご指定ください。</p>
             <v-simple-table class="guide-table guide__flow-table guide-table--default transparent mt-7">
-                <template #default>
-                  <thead class="text-body-1">
-                    <tr>
-                      <th class="headingText--text text-center text-body-2 font-weight-bold">返却方法</th>
-                      <th class="headingText--text text-center text-body-2 font-weight-bold">詳細</th>
-                    </tr>
-                  </thead>
-                  <tbody class="headingText--text text-center">
-                    <tr>
-                      <td class="guide-table__td text-body-1">直接来社</td>
-                      <td class="guide-table__td text-body-1 text-left">弊社各拠点にて営業時間内に返却</td>
-                    </tr>
-                    <tr>
-                      <td class="guide-table__td text-body-1">宅配便（郵送）</td>
-                      <td class="guide-table__td text-body-1 text-left">お客様手配で弊社拠点へ発払いで発送</td>
-                    </tr>
-                    <tr>
-                      <td class="guide-table__td text-body-1">チャーター便</td>
-                      <td class="guide-table__td text-body-1 text-left">弊社スタッフまたは配送業者より、指定場所で引き取りいたします。（別途料金）</td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_return.png" guideline-alt="レンタル商品の返却のイメージ"></guideline-image>
+              <template #default>
+                <thead class="text-body-1">
+                  <tr>
+                    <th class="headingText--text text-center text-body-2 font-weight-bold">返却方法</th>
+                    <th class="headingText--text text-center text-body-2 font-weight-bold">詳細</th>
+                  </tr>
+                </thead>
+                <tbody class="headingText--text text-center">
+                  <tr>
+                    <td class="guide-table__td text-body-1">直接来社</td>
+                    <td class="guide-table__td text-body-1 text-left">弊社各拠点にて営業時間内に返却</td>
+                  </tr>
+                  <tr>
+                    <td class="guide-table__td text-body-1">宅配便（郵送）</td>
+                    <td class="guide-table__td text-body-1 text-left">お客様手配で弊社拠点へ発払いで発送</td>
+                  </tr>
+                  <tr>
+                    <td class="guide-table__td text-body-1">チャーター便</td>
+                    <td class="guide-table__td text-body-1 text-left">弊社スタッフまたは配送業者より、指定場所で引き取りいたします。（別途料金）</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_return.png" alt="レンタル商品の返却のイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_return.png" guideline-alt="レンタル商品の返却のイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -222,7 +256,10 @@
 
           <guideline-rental-section-inner guideline-rental-id="flow-member-11" member-type="staff-member--section" guideline-rental-title="返却商品の確認">
             <p>弊社にて返却品のチェックをおこない、問題なければ取引終了です。</p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_confirmation.png" guideline-alt="返却商品の確認のイメージ"></guideline-image>
+            <!-- <div class="mt-10 d-flex justify-center">
+              <img src="/img/guide/rental_flow/flow_confirmation.png" alt="返却商品の確認のイメージ" class="guide__img">
+            </div> -->
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_confirmation.png" guideline-alt="返却商品の確認のイメージ"></guideline-image>
           </guideline-rental-section-inner>
 
         </guideline-rental-section>
@@ -235,14 +272,20 @@
             <p>ご希望の機材や内容をお問合せフォームまたは電話にてご連絡ください。お急ぎの場合は、各拠点へお電話ください。</p>
             <v-row class="mt-3">
               <v-col cols="12" md="6">
-                <guideline-btn link-text="お問い合わせフォーム" link-url=""></guideline-btn>
+                <guideline-btn
+                  :link-text="btnList[9].text"
+                  :link-url="btnList[9].url">
+                </guideline-btn>
               </v-col>
               <v-col cols="12" md="6">
-                <guideline-btn link-text="支店・営業所連絡先" link-url=""></guideline-btn>
+                <guideline-btn
+                  :link-text="btnList[2].text"
+                  :link-url="btnList[2].url">
+                </guideline-btn>
               </v-col>
             </v-row>
-            <guideline-image guideline-img="/img/guideline/rental_flow/frow_request_pc.png" guideline-alt="パソコンでレンタルの仮申し込みのイメージ" nonmember-flg="true"></guideline-image>
-            <guideline-image guideline-img="/img/guideline/rental_flow/frow_request_tell.png" guideline-alt="電話でレンタルの仮申し込みのイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/frow_request_pc.png" guideline-alt="パソコンでレンタルの仮申し込みのイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/frow_request_tell.png" guideline-alt="電話でレンタルの仮申し込みのイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -260,7 +303,7 @@
               }"
               class="mt-6 color__C8E8E2"
             ></guideline-footnote>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_quotation_answer.png" guideline-alt="お見積り回答のイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_quotation_answer.png" guideline-alt="お見積り回答のイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -268,7 +311,7 @@
           </div>
 
           <guideline-rental-section-inner guideline-rental-id="flow-nonmember-3"  member-type="nonmember" guideline-rental-title="お見積り確認・ご注文">
-            <p>ご希望の機材や内容をお問合せフォームまたは電話にてご連絡ください。お急ぎの場合は、各拠点へお電話ください。</p>
+            <p>弊社からの見積もりを確認し、ご注文いただける場合はその旨を回答お願いします。</p>
             <guideline-footnote
               :note-list="{
                 type: 'bold-note',
@@ -278,7 +321,7 @@
               }"
               class="mt-6"
             ></guideline-footnote>
-            <guideline-image guideline-img="/img/guideline/rental_flow/frow_check.png" guideline-alt="お見積り確認・ご注文のイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/frow_check.png" guideline-alt="お見積り確認・ご注文のイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -290,13 +333,19 @@
             <p>下記フォームよりお手続き・書類提出をお願いしております。</p>
             <v-row class="mt-3">
               <v-col cols="12" md="6">
-                <guideline-btn link-text="一般会員ご入会申込書フォーム" link-url=""></guideline-btn>
+                <guideline-btn
+                  :link-text="btnList[11].text"
+                  :link-url="btnList[11].url">
+                </guideline-btn>
               </v-col>
               <v-col cols="12" md="6">
-                <guideline-btn link-text="法人会員お取引登録票フォーム" link-url=""></guideline-btn>
+                <guideline-btn
+                  :link-text="btnList[12].text"
+                  :link-url="btnList[12].url">
+                </guideline-btn>
               </v-col>
             </v-row>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_certificate.png" guideline-alt="お客様登録（※初めてのご利用の場合）のイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_certificate.png" guideline-alt="お客様登録（※初めてのご利用の場合）のイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -307,7 +356,7 @@
             <p>
               お客様からのお見積り承認の回答を受け、レンタル注文（予約）を確定いたします。注文確定についてお客様にお知らせし、注文手続きは完了となります。
             </p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_confirm.png" guideline-alt="注文確定（機材確保完了）のイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_confirm.png" guideline-alt="注文確定（機材確保完了）のイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -315,13 +364,16 @@
           </div>
 
           <guideline-rental-section-inner guideline-rental-id="flow-nonmember-6"  member-type="nonmember" guideline-rental-title="お支払い">
-            <p>支払いは事前振込みのみとなります。機材引き渡し日より3営業日前までに指定の銀行口座にレンタル費用をお振込みください。</p>
+            <p>支払いは事前振込みのみとなります。機材引き渡し日より5営業日前までに指定の銀行口座にレンタル費用をお振込みください。</p>
             <v-row class="mt-3">
               <v-col cols="12">
-                <guideline-btn link-text="振込先口座情報" link-url=""></guideline-btn>
+                <guideline-btn
+                  :link-text="btnList[6].text"
+                  :link-url="btnList[6].url">
+                </guideline-btn>
               </v-col>
             </v-row>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_payment.png" guideline-alt="お支払いのイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_payment.png" guideline-alt="お支払いのイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -330,16 +382,16 @@
 
           <guideline-rental-section-inner guideline-rental-id="flow-nonmember-7"  member-type="staff-nonmember--section" guideline-rental-title="レンタル商品の準備">
             <p>お支払い確認後、レンタル商品（機材）の準備及び、事前チェックを行います。</p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/frow_preparation.png" guideline-alt="レンタル商品の準備のイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/frow_preparation.png" guideline-alt="レンタル商品の準備のイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
             <div class="arrow-down"></div>
           </div>
 
-          <guideline-rental-section-inner guideline-rental-id="flow-nonmember-8"  member-type="member-staff" guideline-rental-title="レンタル商品のお引渡し/お受け取り">
+          <guideline-rental-section-inner guideline-rental-id="flow-nonmember-8"  member-type="staff-member" guideline-rental-title="レンタル商品のお引渡し/お受け取り">
             <p>
-              ご指定いただいた日程でレンタル商品（機材）をお引渡しします。引き渡し方法は下記の3つよりご指定下さい。
+              ご指定いただいた日程でレンタル商品（機材）をお引渡しします。引き渡し方法は下記の3つよりご指定ください。
             </p>
             <v-simple-table class="guide-table guide__flow-table guide-table--default transparent mt-7">
                 <template #default>
@@ -365,7 +417,7 @@
                   </tbody>
                 </template>
               </v-simple-table>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_delivery.png" guideline-alt="レンタル商品のお引渡し/お受け取りのイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_delivery.png" guideline-alt="レンタル商品のお引渡し/お受け取りのイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -374,7 +426,7 @@
 
           <guideline-rental-section-inner guideline-rental-id="flow-nonmember-9"  member-type="nonmember" guideline-rental-title="レンタル商品のご利用">
             <p>ご指定の期間にてレンタル商品（機材）をご利用ください。商品は精密機器になります。お取扱いには十分ご注意をお願いいたします。</p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_use.png" guideline-alt="レンタル商品のご利用のイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_use.png" guideline-alt="レンタル商品のご利用のイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -382,7 +434,7 @@
           </div>
 
           <guideline-rental-section-inner guideline-rental-id="flow-nonmember-10"  member-type="member-staff" guideline-rental-title="レンタル商品の返却">
-            <p>ご指定いただいた日程でレンタル商品（機材）をご返却ください。引き渡し方法は下記の3つよりご指定下さい。</p>
+            <p>ご指定いただいた日程でレンタル商品（機材）をご返却ください。ご返却方法は下記の3つよりご指定ください。</p>
             <v-simple-table class="guide-table guide__flow-table guide-table--default transparent mt-7">
                 <template #default>
                   <thead class="text-body-1">
@@ -407,7 +459,7 @@
                   </tbody>
                 </template>
               </v-simple-table>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_return.png" guideline-alt="レンタル商品の返却のイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_return.png" guideline-alt="レンタル商品の返却のイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
           <div class="d-flex justify-center mt-7 mb-4">
@@ -416,7 +468,7 @@
 
           <guideline-rental-section-inner guideline-rental-id="flow-nonmember-11" member-type="staff-nonmember--section" guideline-rental-title="返却商品の確認">
             <p>弊社にて返却品のチェックをおこない、問題なければ取引終了です。</p>
-            <guideline-image guideline-img="/img/guideline/rental_flow/flow_confirmation.png" guideline-alt="返却商品の確認のイメージ" nonmember-flg="true"></guideline-image>
+            <guideline-image guideline-img="/img/guide/rental_flow/flow_confirmation.png" guideline-alt="返却商品の確認のイメージ" nonmember-flg="true"></guideline-image>
           </guideline-rental-section-inner>
 
         </guideline-rental-section>
@@ -425,13 +477,13 @@
           <v-col cols="12" md="6" class="guide__transition__btn__left">
             <v-row>
               <v-col cols="2" class="d-flex justify-end align-center">
-                <v-btn to="/guideline/rental" class="bg-white" depressed>
+                <v-btn to="/guide/rental" class="bg-white" depressed>
                   <v-icon class="guide__transition__btn__left__icon" color="primary"  x-large>mdi-chevron-left</v-icon>
                 </v-btn>
               </v-col>
               <v-col cols="10" class="pl-0">
-                <v-btn to="/guideline/rental" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
-                  <span class="guide__transition__btn__left__title lh-crop-12 font-weight-medium">レンタル全般ガイドライン</span>
+                <v-btn to="/guide/rental" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
+                  <span class="guide__transition__btn__left__title lh-crop-12 font-weight-medium">レンタルご利用ガイド/レンタル全般</span>
                 </v-btn>
               </v-col>
             </v-row>
@@ -472,9 +524,9 @@ export default {
   },
   head () {
     return {
-      title: "レンタルガイドライン",
+      title: "レンタルご利用ガイド",
       meta: [
-        { hid: 'description', name: 'description', content: 'レンタルガイドライン | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
+        { hid: 'description', name: 'description', content: 'レンタルご利用ガイド - レンタル全般 レンタルの手順（詳細版） - | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
       ]
     }
   },
@@ -486,15 +538,30 @@ export default {
       return Object.values(this.menuList)
     }
   },
+  mounted() {
+    this.scrollToHash();
+  },
   updated() {
     this.$scrollBackButton()
   },
   methods: {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'レンタルガイドライン - レンタル全般 -', path: '/guideline' })
+      this.$store.commit('breadCrumbs/addList', { name: 'レンタルご利用ガイド - レンタル全般 -', path: '/guide/rental-flow' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
+    scrollToHash() {
+      const hash = window.location.hash;
+      if (hash) {
+        const checkExist = setInterval(() => {
+          const element = document.querySelector(hash);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            clearInterval(checkExist);
+          }
+        }, 100); 
+      }
+    }
   }
 }
 </script>
@@ -538,6 +605,46 @@ export default {
           flex-direction: column;
         }
       }
+    }
+  }
+}
+
+.square{
+  position: relative;
+  width: 60px;
+  padding-top: 60px;
+  background: $accent;
+  @include mq(md) {
+    width: 50px;
+    padding-top: 50px;
+  }
+}
+.title-no{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+}
+
+.guide{
+  &__img {
+    width: 100%;
+    max-width: 550px;
+    border: 2px solid $accent;
+    border-radius: 10px;
+    &__nonmember{
+      border: 2px solid $primary;
+    }
+    @include mq(md){
+      max-width: 550px;
+    }
+    @include mq(sm){
+      max-width: 700px;
+    }
+    &__figureFlg {
+      width: 100%;
     }
   }
 }

@@ -1,16 +1,16 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
-    <top-bar title="レンタルガイドライン" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="レンタルご利用ガイド" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner d-lg-flex py-16">
 
       <guideline-lists></guideline-lists>
 
-      <div class="content ml-lg-10">
-        <guideline-section-title section-type="invoice"></guideline-section-title>
+      <div class="content guide__content ml-lg-10">
+        <guideline-section-title section-type="membership"></guideline-section-title>
         <guideline-section
-          v-for="guideItem in guideSections"
-          :key="guideItem.id"
+          v-for="(guideItem, key) in guideSections"
+          :key="key"
           :section-title="guideItem.title"
           :section-id="guideItem.id">
           <guideline-content
@@ -30,8 +30,9 @@ export default {
   data() {
     return {
       breadCrumbs: [],
-      guideList: items.invoice,
-      guideSections: items.invoice.sections,
+      test: items,
+      guideList: items.membership,
+      guideSections: items.membership.sections,
     }
   },
   fetch() {
@@ -41,9 +42,9 @@ export default {
   },
   head () {
     return {
-      title: "レンタルガイドライン",
+      title: "レンタルご利用ガイド",
       meta: [
-        { hid: 'description', name: 'description', content: 'レンタルガイドライン | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
+        { hid: 'description', name: 'description', content: 'レンタルご利用ガイド - 会員機能について - | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
       ]
     }
   },
@@ -53,7 +54,7 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'レンタルガイドライン - レンタル全般 -', path: '/guideline' })
+      this.$store.commit('breadCrumbs/addList', { name: 'レンタルご利用ガイド - 会員機能について -', path: '/guide/membership' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
   }
@@ -72,5 +73,11 @@ export default {
   max-width: 800px !important;
   padding: 0 5%;
   position: relative;
+}
+
+.guide {
+  &__content {
+    width: 100%;
+  }
 }
 </style>

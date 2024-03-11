@@ -1,19 +1,19 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
-    <top-bar title="レンタルガイドライン" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="レンタルご利用ガイド" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner d-lg-flex py-16">
 
       <guideline-lists></guideline-lists>
 
-      <div class="content ml-lg-10">
+      <div class="content guide__content ml-lg-10">
         <guideline-section-title section-type="identification"></guideline-section-title>
         <div class="identification-intro pa-10 mb-13 text-body-2 text-sm-body-1">
           <guideline-footnote
             :note-list="{
               type: 'note',
               items: [
-                '本人登録確認後にレンタルが利用可能になります。',
+                '本人確認登録の確認後にレンタルが利用可能になります。',
                 '登録できる添付ファイル形式はJPG・PNG・PDF/1枚につき3MBまで',
                 '住所確認できる書類が無い場合は保証金をお預かりする場合があります。'
               ]}"></guideline-footnote>
@@ -83,9 +83,9 @@ export default {
   },
   head () {
     return {
-      title: "レンタルガイドライン",
+      title: "レンタルご利用ガイド",
       meta: [
-        { hid: 'description', name: 'description', content: 'レンタルガイドライン | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
+        { hid: 'description', name: 'description', content: 'レンタルご利用ガイド - 本人確認について - | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
       ]
     }
   },
@@ -95,7 +95,7 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'レンタルガイドライン - レンタル全般 -', path: '/guideline' })
+      this.$store.commit('breadCrumbs/addList', { name: 'レンタルご利用ガイド - 本人確認について -', path: '/guide/identification' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
   }
@@ -131,6 +131,9 @@ export default {
 }
 
 .guide {
+  &__content {
+    width: 100%;
+  }
   &__heading {
     @include mq(md){
       font-size: 1.3rem;

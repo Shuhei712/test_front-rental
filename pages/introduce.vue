@@ -1,14 +1,14 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
-    <top-bar title="はじめての方へ -タケナカレンタルガイド-" sub-title="-タケナカレンタルガイド-" :bread-crumbs="breadCrumbs"></top-bar>
+    <top-bar title="はじめての方へ -レンタルご利用ガイド-" sub-title="-レンタルご利用ガイド-" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner category__inner pt-10 pb-16 letter-space-01em font-weight-medium">
       <div>
         <div class="guide_introduce mb-10 d-flex justify-center align-center">
-          <img class="guide_introduce_img" src="/img/guideline/introduce/introduce_top.svg" alt="はじめての方へ">
+          <img class="guide_introduce_img" src="/img/guide/introduce/introduce_top.svg" alt="はじめての方へ">
           <div class="guide_introduce_text text-center text-white pt-10 pb-5 pb-sm-0">
             <h3 class="text-h4 text-sm-h3 text-md-h2 zen-kaku-gothic bold pt-md-7">はじめての方へ</h3>
-            <p class="mt-md-5 text-sm-h6 font-weight-medium">- タケナカレンタルガイド -</p>
+            <p class="mt-md-5 text-sm-h6 font-weight-medium">- レンタルご利用ガイド -</p>
           </div>
         </div>
 
@@ -23,7 +23,7 @@
             </v-col>
             <v-col cols="12" md="5">
               <div class="d-flex justify-center justify-md-end">
-                <img class="guide_introduce_content_img__equipment pt-5 pt-md-0" src="/img/guideline/introduce/introduce_equipment_icon.svg" alt="タケナカでレンタルできる機材イメージ">
+                <img class="guide_introduce_content_img__equipment pt-5 pt-md-0" src="/img/guide/introduce/introduce_equipment_icon.svg" alt="タケナカでレンタルできる機材イメージ">
               </div>
             </v-col>
           </v-row>
@@ -34,15 +34,14 @@
             <v-col cols="12" md="8">
               <p>レンタルWEB会員、または非会員での利用ができます。</p>
               <div class="mt-5">
-                <h5 class="accent--text text-h6 text-sm-h5 font-weight-black">レンタルWEB会員</h5>
+                <h5 class="accent--text text-h6 text-sm-h5 font-weight-black letter-space-01em">レンタルWEB会員</h5>
                 <p class="pl-1">
                   サイト上でのカート機能を利用したお申込みが可能です。<br>
-                  その他、機材のお気に入り機能が使えたり、注文履歴が閲覧できるなど、レンタ
-                  ル利用が簡単になります。
+                  その他、機材のお気に入り機能が使えたり、注文履歴が閲覧できるなどの機能をご利用いただけます。
                 </p>
               </div>
               <div class="mt-5">
-                <h5 class="primary--text text-h6 text-sm-h5 font-weight-black">WEB非会員</h5>
+                <h5 class="primary--text text-h6 text-sm-h5 font-weight-black letter-space-01em">WEB非会員</h5>
                 <p class="pl-1">
                   お申込みフォーム記述でのお問い合わせでレンタル申し込みをしていただきます。<br>
                   （お見積り確定段階でお客様登録をお願いしています。）
@@ -51,15 +50,15 @@
             </v-col>
             <v-col cols="12" md="4">
               <div class="d-flex justify-center justify-md-end">
-                <img class="guide_introduce_content_img pt-5 pt-md-0" src="/img/guideline/introduce/introduce_rental_icon.svg" alt="レンタルするにはイメージ">
+                <img class="guide_introduce_content_img pt-5 pt-md-0" src="/img/guide/introduce/introduce_rental_icon.svg" alt="レンタルするにはイメージ">
               </div>
             </v-col>
           </v-row>
 
           <v-row class="mt-10">
             <v-col cols="12">
-              <v-btn to="/guideline/rental" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-                <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタルのご利用についての詳細を見る</span>
+              <v-btn to="/guide/rental" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 font-weight-medium">レンタルのご利用についての詳細を見る</span>
                 <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
               </v-btn>
             </v-col>
@@ -74,18 +73,19 @@
                 （リハーサル・本番など、機材を実際に使う期間が該当します）
               </p>
               <p class="pt-5 pt-md-10">具体例は図を参照ください。</p>
+              <p class="pt-2">より詳しく確認したい場合は下記ボタンよりご覧ください。</p>
             </v-col>
             <v-col cols="12" md="5">
               <div class="d-flex justify-center justify-md-end">
-                <img class="guide_introduce_content_figure pt-5 pt-md-0" src="/img/guideline/introduce/introduce_days.svg" alt="レンタル日数・期間についてイメージ">
+                <img class="guide_introduce_content_figure pt-5 pt-md-0" src="/img/guide/introduce/introduce_days.svg" alt="レンタル日数・期間についてイメージ">
               </div>
             </v-col>
           </v-row>
 
           <v-row class="mt-10">
             <v-col cols="12">
-              <v-btn to="/guideline/rental#rental-4" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-                <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタル日数・期間についての詳細を見る</span>
+              <v-btn to="/guide/rental#rental-4" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 font-weight-medium">レンタル日数・期間についての詳細を見る</span>
                 <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
               </v-btn>
             </v-col>
@@ -99,8 +99,8 @@
                 レンタルカタログには1日あたりの価格を記載しております。
               </p>
               <p class="pt-5 pt-md-10">
-                <span class="color__accent">2日間以降のレンタル料金は、1日分の価格に掛け率を計算する形</span>で決まります。<br>
-                （掛け率は機材によって異なります。2日間以降は各商品ページの料金表をご確
+                <span class="color__accent">2日間以上のレンタル料金は、1日分の価格に掛け率を計算する形</span>で決まります。<br>
+                （掛け率は機材によって異なります。2日間以上は各商品ページの料金表をご確
                 認ください。）
               </p>
               <div class="d-flex pt-5 pt-md-10">
@@ -110,27 +110,28 @@
                   → ¥10,000×1.3＝¥13,000
                 </dd>
               </div>
+              <p class="pt-5 pt-md-10">より詳しく確認したい場合は下記ボタンよりご覧ください。</p>
             </v-col>
             <v-col cols="12" md="5">
               <div class="d-flex justify-center justify-md-end">
-                <img class="guide_introduce_content_figure pt-5 pt-md-0" src="/img/guideline/introduce/introduce_price.svg" alt="レンタル費用についてイメージ">
+                <img class="guide_introduce_content_figure pt-5 pt-md-0" src="/img/guide/introduce/introduce_price.svg" alt="レンタル費用についてイメージ">
               </div>
             </v-col>
           </v-row>
 
           <v-row class="mt-10">
             <v-col cols="12">
-              <v-btn to="/guideline/rental#rental-5" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-                <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタル費用についての詳細を見る</span>
+              <v-btn to="/guide/rental#rental-5" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 font-weight-medium">レンタル費用についての詳細を見る</span>
                 <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
               </v-btn>
             </v-col>
           </v-row>
         </guideline-section>
 
-        <guideline-section section-title="レンタルの流れ（簡易版）">
+        <guideline-section section-title="レンタルの手順（簡易版）">
           <div class="d-flex justify-center">
-            <p class="font-weight-bold">簡易的なレンタルの流れです。詳細な流れは<a class="color__primary" href="/guideline/rental-flow">ガイドラインのページ</a>をご参照ください。</p>
+            <p class="font-weight-bold">簡易的なレンタルの手順です。詳細な手順は<a class="color__primary text-decoration-underline" href="/guide/rental-flow">レンタルの手順（詳細版）</a>をご参照ください。</p>
           </div>
 
           <div class="mt-10 guide-flow text-md-center">
@@ -258,8 +259,8 @@
 
           <v-row class="mt-10">
             <v-col cols="12">
-              <v-btn to="/guideline/rental-flow" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-                <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタル利用の手順についての詳細を見る</span>
+              <v-btn to="/guide/rental-flow" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 font-weight-medium">レンタルの手順についての詳細を見る</span>
                 <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
               </v-btn>
             </v-col>
@@ -273,20 +274,20 @@
         </div>
         <v-row class="mt-10">
           <v-col cols="12">
-            <v-btn to="/guideline/rental" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-              <span class="lh-crop-12 text-md-h6 font-weight-bold">レンタルガイドライン</span>
+            <v-btn to="/guide/rental" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+              <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタルご利用ガイド</span>
               <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="12" md="6">
             <v-btn href="https://www.takenaka-co.co.jp/contact/product_form/" target="_blank" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-              <span class="lh-crop-12 text-md-h6 font-weight-bold">お問い合わせフォーム</span>
+              <span class="lh-crop-12 text-md-h6 font-weight-medium">お問い合わせフォーム</span>
               <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="12" md="6">
             <v-btn href="https://www.takenaka-co.co.jp/contact/#information" target="_blank" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-              <span class="lh-crop-12 text-md-h6 font-weight-bold">各拠点連絡先</span>
+              <span class="lh-crop-12 text-md-h6 font-weight-medium">各拠点連絡先</span>
               <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
@@ -313,9 +314,9 @@ export default {
   },
   head () {
     return {
-      title: "はじめての方へ -タケナカレンタルガイド-",
+      title: "はじめての方へ -レンタルご利用ガイド-",
       meta: [
-        { hid: 'description', name: 'description', content: 'はじめての方へ -タケナカレンタルガイド- | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
+        { hid: 'description', name: 'description', content: 'はじめての方へ -レンタルご利用ガイド- | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
       ]
     }
   },
@@ -325,7 +326,7 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'はじめての方へ -タケナカレンタルガイド-', path: '/guideline' })
+      this.$store.commit('breadCrumbs/addList', { name: 'はじめての方へ -レンタルご利用ガイド-', path: '/introduce' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
   }

@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <div class="mt-10 d-flex justify-center">
-      <v-img v-if="nonmemberFlg" :src="guidelineImg" :alt="guidelineAlt" class="guide__img guide__img__nonmember"></v-img>
-      <v-img v-else-if="figureFlg" :src="guidelineImg" :alt="guidelineAlt" class="guide__img__figureFlg"></v-img>
-      <v-img v-else :src="guidelineImg" :alt="guidelineAlt" class="guide__img"></v-img>
-    </div>
+  <div class="mt-10 d-flex justify-center">
+    <img v-if="nonmemberFlg" :src="guidelineImg" :alt="guidelineAlt" class="guide__img guide__img__nonmember">
+    <img v-else-if="figureFlg" :src="guidelineImg" :alt="guidelineAlt" class="guide__img__figureFlg">
+    <img v-else :src="guidelineImg" :alt="guidelineAlt" class="guide__img">
   </div>
 </template>
 

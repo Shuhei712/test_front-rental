@@ -29,9 +29,16 @@
         <h4 class="d-flex justify-center text-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
         <slot></slot>
       </div>
+      <div v-if="memberType == 'staff-member'" class="guide__background member-staff px-2 px-md-10 pb-10">
+        <diV class="d-flex justify-center">
+          <span class="d-inline-block guide__member-staff__title text-center font-weight-bold">弊社側/お客様側</span>
+        </diV>
+        <h4 class="d-flex justify-center text-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
+        <slot></slot>
+      </div>
       <div v-if="memberType == 'member-staff'" class="guide__background member-staff px-2 px-md-10 pb-10">
         <diV class="d-flex justify-center">
-          <span class="d-inline-block guide__member-staff__title text-center font-weight-bold">お客様/弊社側</span>
+          <span class="d-inline-block guide__member-staff__title text-center font-weight-bold">お客様側/弊社側</span>
         </diV>
         <h4 class="d-flex justify-center text-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
         <slot></slot>
