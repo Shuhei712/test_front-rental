@@ -53,14 +53,16 @@
                 v-html="text"></p>
             </template>
 
+            <!-- 営業時間 -->
+            <business-hours v-if="item.businessHours"></business-hours>
+
             <!-- 画像 -->
             <template v-for="(img, imgIndex) in item.imgs">
               <div :key="`guide-img_${imgIndex}`" class="mt-6 d-flex justify-center">
-                <v-img
+                <img
                   :src="img.src"
                   :alt="img.alt"
                   class="guide__img">
-                </v-img>
               </div>
             </template>
 
