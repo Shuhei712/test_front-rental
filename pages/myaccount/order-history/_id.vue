@@ -81,27 +81,26 @@
                   <span v-if="order.ResQuotationLimit" class="caption">&emsp;( 見積有効期限：{{getDate(order.ResQuotationLimit)}} )</span>
                 </v-card-actions>
               </v-card>
-              <div v-if="order.OrderEnableFlg===0" class="text-right">
-                <v-btn
-                  color="accent"
-                  height="3.8rem"
-                  min-width="220px"
-                  class="text-white mt-1 btn-column text-h6"
-                  @click="checkID">
-                  <span class="caption">回答見積書の内容で</span>注文を進める
-                </v-btn>
-              </div>
-              <p v-if="order.OrderEnableFlg===2" class="red--text mt-3">
-                <span class="text-subtitle-1 font-weight-bold">* 回答見積書の有効期限が切れております</span><br>
-                回答見積書の有効期限が切れており、ご注文を確定することができません。<br>ご注文の確定を希望される場合は、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/#information" class="link" target="_blank">お問い合わせ</a>ください。
-              </p>
-
-              <p v-if="order.OrderEnableFlg===9" class="red--text mt-3">
-                <span class="text-subtitle-1 font-weight-bold">* お引渡し日の5営業日前より後のご注文の確定について</span><br>
-                本システムでは、レンタルお引渡し日の5営業日前より後のご注文の確定を受け付けておりません。<br>ご注文の確定を希望される場合は、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/#information" class="link" target="_blank">お問い合わせ</a>ください。
-              </p>
             </dd>
           </dl>
+          <div v-if="order.OrderEnableFlg===0" class="text-right">
+            <v-btn
+              color="accent"
+              height="3.8rem"
+              min-width="220px"
+              class="text-white mt-1 btn-column text-h6"
+              @click="checkID">
+              <span class="caption">回答見積書の内容で</span>注文を進める
+            </v-btn>
+          </div>
+          <p v-if="order.OrderEnableFlg===2" class="red--text mt-3">
+            <span class="text-subtitle-1 font-weight-bold">* 回答見積書の有効期限が切れております</span><br>
+            回答見積書の有効期限が切れており、ご注文を確定することができません。<br>ご注文の確定を希望される場合は、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/#information" class="link" target="_blank">お問い合わせ</a>ください。
+          </p>
+          <p v-if="order.OrderEnableFlg===9" class="red--text mt-3">
+            <span class="text-subtitle-1 font-weight-bold">* お引渡し日の5営業日前より後のご注文の確定について</span><br>
+            本システムでは、レンタルお引渡し日の5営業日前より後のご注文の確定を受け付けておりません。<br>ご注文の確定を希望される場合は、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/#information" class="link" target="_blank">お問い合わせ</a>ください。
+          </p>
         </div>
 
       </div>
