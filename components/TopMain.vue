@@ -32,7 +32,7 @@
           <v-row class="main__menu pb-5 pr-md-16" no-gutters>
             <v-col cols="6">
               <div class="btn-wrap pr-2">
-                <v-btn color="#fff" to="/guide#enrty" block v-bind="size" class=" letter-space-02em" max-height="40">
+                <v-btn color="#fff" to="/introduce" block v-bind="size" class=" letter-space-02em" max-height="40">
                   <img class="icon mr-1" src="/img/top/beginner-icon.png" /><span class="btn-text lh-crop-12"
                     >はじめての方へ</span
                   >

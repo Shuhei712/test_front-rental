@@ -6,8 +6,8 @@ const errMessage = {
   messages:{
     "required": "必須項目です",
     "email": "有効なフォーマットではありません",
-    "min": "{length}文字以上にしてください",
-    "max": "{length}文字以内にしてください",
+    "min": "{length}文字以上でお願いします",
+    "max": "{length}文字以内でお願いします",
     "numeric": "半角数字のみ"
   }
 }
@@ -33,10 +33,10 @@ extend('zipCode', {
 })
 extend('num', {
   validate(value) {
-    if( String(value).match( /^[0-9０-９]{4,20}$/) ) return true
+    if( String(value).match( /^[0-9０-９]{4,14}$/) ) return true
     return false
   },
-  message: '正しい形式でお願いします'
+  message: '半角数字で14桁以内でお願いします'
 })
 extend('file', {
   validate(value) {

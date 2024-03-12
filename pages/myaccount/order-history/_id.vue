@@ -310,7 +310,7 @@
           </div>
         </div>
         <h3 class="text-subtitle-1 red--text mt-3 font-weight-bold">* 5営業日前以降のキャンセルについて</h3>
-        <p>本システムでは、レンタルお引渡し日の5営業日前以降のキャンセルを受け付けておりません。<br>注文をキャンセルする場合は、<NuxtLink :to="{ path: '/guide', hash: '#item' }" class="link">ご利用方法 レンタル規約</NuxtLink>から「レンタル期間及び料金内容」をご確認いただき、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/" class="link" target="_blank">お問い合わせ</a>ください。</p>
+        <p>本システムでは、レンタルお引渡し日の5営業日前以降のキャンセルを受け付けておりません。<br>注文をキャンセルする場合は、<NuxtLink :to="{ path: '/guide/cancel', hash: '#cancel-3' }" class="link">レンタルご利用ガイド</NuxtLink>をご確認いただき、レンタルスタッフまで<a href="https://www.takenaka-co.co.jp/contact/#information" class="link" target="_blank">お問い合わせ</a>ください。</p>
       </div>
     </div>
 
