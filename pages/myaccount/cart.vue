@@ -220,7 +220,7 @@
                         ></v-radio>
                       </v-radio-group>
                       <div class="notes my-4">
-                        <p class="note caption">お引き渡し日は営業日のみとなります。</p><br>
+                        <p class="note caption">お引渡し日は営業日のみとなります。</p><br>
                         <p class="note caption">大型機材のイベント会場や施設への直接配送、発送到着のお時間指定ご希望の場合はチャーター便となります。</p>
                         <p class="note caption">宅配送料及びチャーター費はお客様ご負担となります。</p>
                       </div>

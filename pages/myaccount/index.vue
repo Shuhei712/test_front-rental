@@ -64,7 +64,7 @@
               outlined
               block
               x-large
-              to="myaccount/other">
+              to="/myaccount/other">
               ヘルプ・お問い合わせ
             </v-btn>
           </div>
