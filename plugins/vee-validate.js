@@ -33,7 +33,7 @@ extend('zipCode', {
 })
 extend('num', {
   validate(value) {
-    if( String(value).match( /^[0-9０-９]{4,14}$/) ) return true
+    if( String(value).match( /^[0-9０-９]{0,14}$/) ) return true
     return false
   },
   message: '半角数字14桁以内でお願いします'
