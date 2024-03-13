@@ -3,29 +3,28 @@
     <to-top-btn></to-top-btn>
     <top-bar title="お取引登録票フォーム 確認" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="input__inner py-16 px-3 px-lg-0">
-      <loading v-if="isLoading"></loading>
-        <v-form class="form">
+      <v-form class="form">
 
-          <NonMemForm
-            ref="form"
-            :user.sync="userJson"
-            :file.sync="fileArr" :read="read"
-            @mailText="mailText=$event"
-            @registerInfo="registerInfo($event)"
-          ></NonMemForm>
-          <div class="text-center mt-6">
-            <v-btn large
-              class="my-4 mx-2 white--text"
-              color="secondary"
-              @click="$router.push('/nonmember-register/corporate/input')"
-            >戻る</v-btn>
-            <v-btn large
-              class="my-4 mx-2 white--text"
-              color="primary"
-              @click="submit()"
-            >送信</v-btn>
-          </div>
-        </v-form>
+        <NonMemForm
+          ref="form"
+          :user.sync="userJson"
+          :file.sync="fileArr" :read="read"
+          @mailText="mailText=$event"
+          @registerInfo="registerInfo($event)"
+        ></NonMemForm>
+        <div class="text-center mt-6">
+          <v-btn large
+            class="my-4 mx-2 white--text"
+            color="secondary"
+            @click="$router.push('/nonmember-register/corporate/input')"
+          >戻る</v-btn>
+          <v-btn large
+            class="my-4 mx-2 white--text"
+            color="primary"
+            @click="submit()"
+          >送信</v-btn>
+        </div>
+      </v-form>
     </div>
   </section>
 </template>
@@ -41,7 +40,6 @@ export default {
       url: 'https://contact-form-test.takenaka-co.co.jp/',
       path: '/nonmember-register/corporate',
       mailText: '',
-      isLoading: false,
     }
   },
   fetch() {

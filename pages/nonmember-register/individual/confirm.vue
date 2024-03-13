@@ -3,7 +3,6 @@
     <to-top-btn></to-top-btn>
     <top-bar title="ご入会申込書フォーム 確認" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="input__inner py-16 px-3 px-lg-0">
-      <loading v-if="isLoading"></loading>
       <v-form class="form">
         <NonMemForm
           ref="form"
@@ -40,7 +39,6 @@ export default {
       url: 'https://contact-form-test.takenaka-co.co.jp/',
       path: '/nonmember-register/individual',
       mailText: '',
-      isLoading: false,
     }
   },
   fetch() {
