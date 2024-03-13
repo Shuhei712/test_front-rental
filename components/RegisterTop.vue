@@ -4,7 +4,7 @@
     <div class="pb-16">
       <v-container>
         <p>
-          会員登録の前に、必ず「<nuxt-link to="/guide" class="sns--text text-decoration-underline">利用方法、サービスの内容</nuxt-link>」をご確認ください。
+          会員登録の前に、必ず「<nuxt-link to="/guide/rental" class="sns--text text-decoration-underline">レンタルご利用ガイド</nuxt-link>」をご確認ください。
         </p>
         <v-card class="mt-3 overflow-y-auto" height="40vh" min-height="280">
           <v-card-title>レンタル規約（2017年6月改定）</v-card-title>

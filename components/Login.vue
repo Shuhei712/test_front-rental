@@ -51,7 +51,7 @@
               </v-col>
             </v-row>
           </ValidationProvider>
-          <div class="text-center mt-2">
+          <div class="text-center">
             <v-btn large
               class="my-4"
               color="primary"
@@ -100,7 +100,8 @@ export default {
         this.$store.commit('auth/setAccessToken', res.data.AccessToken)
         await this.$getCartNum()
         const beforePath = this.$store.getters["referrer/getPath"]
-        this.$router.push(beforePath || '/myaccount/')
+        if (beforePath) this.$router.push(beforePath)
+        else location.reload()
       }else{
         this.loginErr = true
         this.loading = false
