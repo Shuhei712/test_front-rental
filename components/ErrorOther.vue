@@ -8,12 +8,12 @@
         <img id="protan" src="/img/pickup/protan.png" alt="プロタン" />
       </div>
       <div class="loading__text text-h5 text-sm-h4 text-white letter-space-015em">Sorry... An Error occurred.</div>
-      <p v-if="error.code === 'ECONNABORTED'" class="text-white my-3">
+      <p v-if="error.code === 'ECONNABORTED'||error.message==='Network Error'" class="text-white my-3">
         ネットワークに問題がある可能性があります。<br>
         設定をお確かめの上、再度お試しください。
       </p>
       <div class="text-center">
-        <v-btn v-if="error.code === 'ECONNABORTED'&&isNonMemRegister" class="text-white" text @click="$router.go(-1)"><v-icon color="#ffffff">mdi-form-select</v-icon>入力画面に戻る</v-btn>
+        <v-btn v-if="isNonMemRegister" class="text-white" text @click="$router.go(-1)"><v-icon color="#ffffff">mdi-form-select</v-icon>入力画面に戻る</v-btn>
         <v-btn class="text-white" href="/" text><v-icon color="#ffffff">mdi-home</v-icon>TOPページに戻る</v-btn>
       </div>
     </div>
@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      isNonMemRegister: this.$route.path.includes('nonmember-register'),
+      isNonMemRegister: this.$route.path.match(/nonmember-register\/.*\/confirm/)
     }
   },
   mounted() {

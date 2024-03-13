@@ -9,7 +9,7 @@
           <span v-else class="red--text">登録エラー</span>
         </v-card-title>
         <v-card-text class="text--text text-body-1">
-          <p v-if="err" class="red--text mb-4">
+          <p v-if="err" class="red--text mb-4 text-center">
             登録に失敗いたしました。<br>
             大変申し訳ございませんが、再度お試しいただくか、<a href="https://www.takenaka-co.co.jp/contact/" class="link">お問い合わせ</a>ください。<br>
             <v-btn color="primary" class="mt-4" @click="$router.push('/nonmember-register/individual/input')">フォームに戻る</v-btn>
