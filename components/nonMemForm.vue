@@ -523,7 +523,7 @@ export default {
       param.append('ContentsKey', contentKey)
       param.append('UserAgent', navigator.userAgent)
       const res = await this.$axios.$post(`${this.url}get_access_key.php`, param, {
-        timeout: 15,
+        timeout: 15000,
       })
       return res.AccessKey
     },
