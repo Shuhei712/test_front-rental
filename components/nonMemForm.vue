@@ -516,7 +516,7 @@ export default {
           uploadKey
         })
       } else this.$router.push(`${completePath}/complete`)
-      this.isLoading = false
+      // this.isLoading = false
     },
     async getAccessKey(contentKey){
       const param = new URLSearchParams()
