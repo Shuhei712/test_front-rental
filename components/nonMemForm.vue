@@ -1,5 +1,6 @@
 <template>
   <div :class="read?'form-read':''">
+    <loading v-if="isLoading"></loading>
     <template v-for="item in formList">
       <dl v-if="check(item.if)" :key="item.val" class="form__dl">
         <dt class="mb-1">
@@ -382,6 +383,7 @@ export default {
       isAgree: false,
       mailText: '',
       url: 'https://contact-form-test.takenaka-co.co.jp/',
+      isLoading: false,
     }
   },
   computed: {
