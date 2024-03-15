@@ -1,5 +1,6 @@
 <template>
   <div :class="read?'form-read':''">
+    <loading v-if="isLoading"></loading>
     <template v-for="item in formList">
       <dl v-if="check(item.if)" :key="item.val" class="form__dl">
         <dt class="mb-1">
@@ -18,13 +19,15 @@
             <span v-else v-text="userJson[item.val]"></span>
           </div>
           <div v-else>
-            <ValidationProvider v-if="item.type === 'text'"
+            <ValidationProvider v-if="item.type === 'text'||item.type === 'number'"
               v-slot="{ errors }"
               :name="item.val"
               :rules="item.rule?item.rule:'max:50'">
               <v-text-field
                 v-model="userJson[item.val]" outlined dense
                 :error-messages="errors" hide-details="auto" :readonly="read"
+                :inputmode="item.inputMode?item.inputMode:'text'"
+                @blur="item.type === 'number'?userJson[item.val]=toNum(userJson[item.val]):''"
               ></v-text-field>
             </ValidationProvider>
             <v-radio-group v-else-if="item.type === 'radio'"
@@ -149,7 +152,7 @@
                       <span v-else v-text="userJson[subItem.val]"></span>
                     </div>
                     <div v-else>
-                      <ValidationProvider v-if="subItem.type === 'text'"
+                      <ValidationProvider v-if="subItem.type === 'text'||subItem.type === 'number'"
                         v-slot="{ errors }"
                         :name="subItem.val"
                         :rules="subItem.rule?subItem.rule:'max:50'">
@@ -157,6 +160,8 @@
                           v-model="userJson[subItem.val]" outlined dense
                           :error-messages="errors" hide-details="auto"
                           :readonly="read"
+                          :inputmode="subItem.inputMode?subItem.inputMode:'text'"
+                          @blur="subItem.type === 'number'?userJson[subItem.val]=toNum(userJson[subItem.val]):''"
                         ></v-text-field>
                       </ValidationProvider>
                       <v-radio-group v-else-if="subItem.type === 'radio'"
@@ -217,6 +222,8 @@
         当社の<a target="_blank" href="https://www.takenaka-co.co.jp/form/rental/privacypolicy.html" class="link" @click.stop>個人情報の取扱い</a>について同意する
       </template>
     </v-checkbox>
+
+    <!-- <p style="white-space: pre-wrap;">{{mailText}}</p> -->
     <!-- <v-btn @click="createMail">送信</v-btn>
     <p class="form__read-wrap"> {{ mailText }}</p> -->
   </div>
@@ -252,15 +259,15 @@ export default {
       indList: [
         { require: true, type: 'text', title: 'お名前', val: 'NAME' },
         { require: false, type: 'text', title: 'お名前(フリガナ)', val: 'NAME_KANA', rule: 'kana|max:50' },
-        { require: true, type: 'text', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50' },
+        { require: true, type: 'text', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50', inputMode: 'email' },
         { require: true, type: 'address', title: '住所', val: 'ADDRESS',
           addressArr:['ZIP_CODE', 'PREFECT', 'ADDRESS']
         },
-        { require: false, type: 'text', title: '電話番号', val: 'TEL', rule: 'max:20' },
-        { require: false, type: 'text', title: 'FAX番号', val: 'FAX', rule: 'max:20' },
-        { require: false, type: 'text', title: '携帯番号', val: 'TEL_MOBILE', rule: 'max:20' },
+        { require: false, type: 'number', title: '電話番号', val: 'TEL', rule: 'num', inputMode: 'numeric' },
+        { require: false, type: 'number', title: 'FAX番号', val: 'FAX', rule: 'num', inputMode: 'numeric' },
+        { require: false, type: 'number', title: '携帯番号', val: 'TEL_MOBILE', rule: 'num', inputMode: 'numeric' },
         { require: false, type: 'text', title: '勤務先/学校名', val: 'WORK_PLACE' },
-        { require: false, type: 'text', title: '上記電話番号', val: 'WORK_TEL', rule: 'max:20' },
+        { require: false, type: 'number', title: '上記電話番号', val: 'WORK_TEL', rule: 'num', inputMode: 'numeric' },
         { require: true, type: 'text', title: '弊社担当者名 (※担当者がわからない場合は不明と記載ください。)', val: 'STAFF_NAME' },
         { require: false, type: 'textarea', title: 'ご質問など', val: 'CONTACTS' },
         { title: '必要書類▼', val: 'FILE',
@@ -278,8 +285,8 @@ export default {
         { require: true, type: 'address', title: '本社 住所', val: 'HQ_ADDRESS',
           addressArr:['HQ_ZIP_CODE', 'HQ_PREFECT', 'HQ_ADDRESS']
         },
-        { require: true, type: 'text', title: '本社 電話番号', val: 'HQ_TEL', rule: 'max:20' },
-        { require: false, type: 'text', title: '本社 FAX番号', val: 'HQ_FAX', rule: 'max:20' },
+        { require: true, type: 'number', title: '本社 電話番号', val: 'HQ_TEL', rule: 'num', inputMode: 'numeric' },
+        { require: false, type: 'number', title: '本社 FAX番号', val: 'HQ_FAX', rule: 'num', inputMode: 'numeric' },
         { require: true, title: '事業内容', val: 'BUSS_CONTENT',
           items: [
             { type: 'checkbox',title: '', val: 'BUSS_CONTENT'},
@@ -290,7 +297,7 @@ export default {
           items: [
             { require: true, type: 'text', title: 'お名前', val: 'NAME' },
             { require: false, type: 'text', title: '部署', val: 'SECT', rule: 'max:255' },
-            { require: true, type: 'text', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50' },
+            { require: true, type: 'text', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50', inputMode: 'email' },
         ]},
         { title: '窓口事業所が異なる場合 ▼',
           items: [
@@ -298,12 +305,12 @@ export default {
             { require: false, type: 'address', title: '住所', val: 'OFFICE_ADDRESS',
               addressArr:['OFFICE_ZIP_CODE', 'OFFICE_PREFECT', 'OFFICE_ADDRESS']
             },
-            { require: false, type: 'text', title: '電話番号', val: 'OFFICE_TEL', rule: 'max:20' },
-            { require: false, type: 'text', title: 'FAX番号', val: 'OFFICE_FAX', rule: 'max:20' },
+            { require: false, type: 'number', title: '電話番号', val: 'OFFICE_TEL', rule: 'num', inputMode: 'numeric' },
+            { require: false, type: 'number', title: 'FAX番号', val: 'OFFICE_FAX', rule: 'num', inputMode: 'numeric' },
           ]
         },
         { require: false, type: 'date', title: '設立年月', val: 'FOUNDED' },
-        { require: false, type: 'text', title: '法人番号', val: 'CORPORATE_NO' },
+        { require: false, type: 'text', title: '法人番号', val: 'CORPORATE_NO', inputMode: 'numeric' },
         { require: false, type: 'radio', title: '法人区分', val: 'CORPORATE_CLASS',
           options:['上場', '非上場', '公共団体ほか']
         },
@@ -346,15 +353,15 @@ export default {
             { type: 'text', title: 'その他の場合', val: 'billingOther',
               if:['invoiceFlg','なし']
             },
-            { type: 'text', title: 'メールアドレス(複数可)', val: 'BILLING_EMAIL_1', rule: 'email|max:50',
+            { type: 'text', title: 'メールアドレス(複数可)', val: 'BILLING_EMAIL_1', rule: 'email|max:50', inputMode: 'email',
               if:['invoiceFlg','あり'] },
-            { type: 'text', title: '', val: 'BILLING_EMAIL_2', rule: 'email|max:50',
+            { type: 'text', title: '', val: 'BILLING_EMAIL_2', rule: 'email|max:50', inputMode: 'email',
               if:['invoiceFlg','あり']
             },
-            { type: 'text', title: '', val: 'BILLING_EMAIL_3', rule: 'email|max:50',
+            { type: 'text', title: '', val: 'BILLING_EMAIL_3', rule: 'email|max:50', inputMode: 'email',
               if:['invoiceFlg','あり']
             },
-            { type: 'text', title: '', val: 'BILLING_EMAIL_4', rule: 'email|max:50',
+            { type: 'text', title: '', val: 'BILLING_EMAIL_4', rule: 'email|max:50', inputMode: 'email',
               if:['invoiceFlg','あり']
             },
           ]
@@ -376,7 +383,9 @@ export default {
         '広告代理店','イベント企画制作会社','会議運営サービス/学会代理店(PCO)','ほかプロダクション','放送局/マスコミ','イベント制作＋建装/ディスプレイ会社','デザイン/設計事務所','旅行代理店','ホテル/ホール/会館/結婚式場/展示会場','ホテル/ホール/会館/結婚式場/展示会場付業者','同業者(JVR系)','同業者(JVR以外)','同業者(総合レンタル)','同業者(音響系)','関連業者(映像専門以外)','建装/舞台技術/ディスプレイ会社','映像中継/収録技術','映像/音響メーカー/機器代理店/販売特約店','法人/団体(エンドユーザー)','学校法人(大学/専門学校)','法人/各種団体(学術会議系)','製薬会社/医療機器ﾒｰｶｰ','個人(エンドユーザー)'
       ],
       isAgree: false,
-      mailText: ''
+      mailText: '',
+      url: 'https://contact-form-test.takenaka-co.co.jp/',
+      isLoading: false,
     }
   },
   computed: {
@@ -427,14 +436,14 @@ export default {
     if (this.read) this.createMail()
   },
   methods: {
-    check(arr){
+    check(arr){ // 条件によって見た目を変える
       if(!arr) return true
       else if(arr[1]) return this.userJson[arr[0]] === arr[1]
       else {
         return !(!this.fileArr[arr[0]] && this.read)
       }
     },
-    arrVal(arr){
+    arrVal(arr){ // 配列の値を１つずつ改行する
       let val = ''
       arr.forEach(item=>{
         val += item + '\r\n'
@@ -447,10 +456,10 @@ export default {
         arr[i] = this.userJson[item.addressArr[i]] ? this.userJson[item.addressArr[i]] : ''
       }
       const [zip, prefect, address] = arr
-      return `〒${zip}\r\n${prefect}${address}`
+      return `${zip?`〒${zip}  `:''}${prefect}${address}`
     },
     dateFormat(action, date, separator){
-      if(!date) return
+      if(!date) return ''
       if(action==='add'){
         const year = date.substring(0, 4)
         const month = date.substring(4, 6)
@@ -463,24 +472,88 @@ export default {
     createMail(){
       this.formList.forEach(e=>{
         let val = ''
-        if (e.items) {
+        const postFileArr = this.$sameFileNameCheck(this.fileArr)
+        if (e.val==='BUSS_CONTENT') {
+          val = this.userJson[e.val].length?`${this.userJson[e.val]}`:''
+          const oth = this.userJson.BUSS_CONTENT_OTH
+          if (oth) val += `\r\nその他、法人/個人(エンドユーザー以外)： ${oth}`
+          this.mailText += `■${e.title}\r\n${val}\r\n\r\n`
+        } else if (e.items) {
+          if (e.if && !this.check(e.if)) return
+          if (e.title) this.mailText += `--------------------------------------------------\r\n${e.title}\r\n--------------------------------------------------\r\n`
           e.items.forEach((item,index)=>{
-            if (e.val=== 'FILE') {
-              if(!this.fileArr[index]) return
-              val = this.fileArr[index].name
+            if (item.if && !this.check(item.if)) return
+            else if (e.val=== 'FILE') {
+              if(!postFileArr[index]) return
+              val = postFileArr[index].name
             }else if(item.type==='address'){
               val = this.joinAddress(item)
             }else val = this.userJson[item.val] ? this.userJson[item.val] : ''
-            this.mailText += `${item.title}：\r\n${val}\r\n\r\n`
+            this.mailText += `${item.title?`  ■${item.title}\r\n`:''}`
+            this.mailText += `  ${item.title&&item.val!=='BILLING_EMAIL_1'?`${val}\r\n`:`・${val}`}\r\n`
           })
+          this.mailText += '\r\n'
         }else {
-          if(e.type==='address') val = this.joinAddress(e)
+          if (e.type==='address') val = this.joinAddress(e)
+          else if (e.type==='date') val = this.dateFormat('add', this.userJson[e.val], '-')
           else val = this.userJson[e.val] ? this.userJson[e.val] : ''
-          this.mailText += `${e.title}：\r\n${val}\r\n\r\n`
+          this.mailText += `■${e.title}\r\n${val}\r\n\r\n`
         }
       })
       this.$emit('mailText', this.mailText)
-    }
+    },
+    toNum(e){
+      if (!e) return
+      return e.replace(/[０-９]/g, function(m) {
+        return "０１２３４５６７８９".indexOf(m)
+      }).replace(/-|ー|－/g,'')
+    },
+    async submit(contentKey, completePath) {
+      this.isLoading = true
+      const accessKey = await this.getAccessKey(contentKey)
+      const uploadKey = await this.registerFile(accessKey, contentKey)
+      if (uploadKey) {
+        await this.$emit('registerInfo',{
+          accessKey,
+          uploadKey
+        })
+      } else this.$router.push(`${completePath}/complete`)
+      // this.isLoading = false
+    },
+    async getAccessKey(contentKey){
+      const param = new URLSearchParams()
+      param.append('ContentsKey', contentKey)
+      param.append('UserAgent', navigator.userAgent)
+      const res = await this.$axios.$post(`${this.url}get_access_key.php`, param, {
+        timeout: 15000,
+      })
+      return res.AccessKey
+    },
+    async registerFile(accessKey, contentKey){
+      const formData = new FormData()
+      let fileCnt = 0
+      const postFileArr = this.$sameFileNameCheck(this.fileArr)
+      postFileArr.forEach((file)=>{
+        if(!file) return
+        fileCnt++
+        formData.append(`File0${fileCnt}`, file)
+      })
+      formData.append('ContentsKey', contentKey)
+      formData.append('AccessKey', accessKey )
+      formData.append('FileCnt', fileCnt )
+      const res = await this.$axios.post(`${this.url}upload_attachment.php`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data;charset=UTF-8",
+        },
+        timeout: 15000,
+      })
+      if(res.data.Status==='TRUE'){
+        return res.data.UploadKey
+      }else{
+        this.$store.commit('register/setFormErr', res.data)
+        return false
+      }
+    },
   }
 }
 </script>

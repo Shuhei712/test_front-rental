@@ -10,9 +10,7 @@ export default ({ store, $config, redirect, route, app }, inject) => {
     const oldVal = JSON.parse(e.oldValue)
     const keyFlg = e.key === 'takenaka-rental'
     if(keyFlg && oldVal.auth.authToken && !newVal.auth.authToken){
-      // console.log(newVal, newVal.auth.authToken)
       store.dispatch('auth/resetUser')
-      console.log('logout',route.path,)
       if (route.path.match(/myaccount/)) {
         redirect('/login')
       }
@@ -113,7 +111,6 @@ export default ({ store, $config, redirect, route, app }, inject) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log(res)
     if (res.data.Status === 'TRUE') {
       return res.data.AccountInfo
     } else if (res.data.ErrorNo === 100002) {
@@ -156,7 +153,6 @@ export default ({ store, $config, redirect, route, app }, inject) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log('cartNum',res, new Date())
     if ($config.DEBUG_MODE) {
       console.log(res)
     }

@@ -68,9 +68,8 @@
                   {{getDate(order.OrderResponseDate)}}
                   <p class="pre-wrap">{{order.OrderResponse}}</p>
                 </v-card-text>
-                <v-card-actions class="flex-wrap">
+                <v-card-actions v-if="order.ResponseQuotationURL" class="flex-wrap">
                   <v-btn
-                    v-if="order.ResponseQuotationURL"
                     outlined
                     color=primary
                     class="letter-space-005em"

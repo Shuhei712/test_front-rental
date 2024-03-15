@@ -3,23 +3,28 @@
     <to-top-btn></to-top-btn>
     <top-bar title="お取引登録票フォーム 確認" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="input__inner py-16 px-3 px-lg-0">
-      <loading v-if="isLoading"></loading>
-        <v-form class="form">
+      <v-form class="form">
 
-          <NonMemForm :user.sync="userJson" :file.sync="fileArr" :read="read"></NonMemForm>
-          <div class="text-center mt-6">
-            <v-btn large
-              class="my-4 mx-2 white--text"
-              color="secondary"
-              @click="$router.push('/nonmember-register/corporate/input')"
-            >戻る</v-btn>
-            <v-btn large
-              class="my-4 mx-2 white--text"
-              color="primary"
-              @click="submit()"
-            >送信</v-btn>
-          </div>
-        </v-form>
+        <NonMemForm
+          ref="form"
+          :user.sync="userJson"
+          :file.sync="fileArr" :read="read"
+          @mailText="mailText=$event"
+          @registerInfo="registerInfo($event)"
+        ></NonMemForm>
+        <div class="text-center mt-6">
+          <v-btn large
+            class="my-4 mx-2 white--text"
+            color="secondary"
+            @click="$router.push('/nonmember-register/corporate/input')"
+          >戻る</v-btn>
+          <v-btn large
+            class="my-4 mx-2 white--text"
+            color="primary"
+            @click="submit()"
+          >送信</v-btn>
+        </div>
+      </v-form>
     </div>
   </section>
 </template>
@@ -33,7 +38,8 @@ export default {
       read: true,
       contentKey: 'Contact_TranRegist',
       url: 'https://contact-form-test.takenaka-co.co.jp/',
-      isLoading: false
+      path: '/nonmember-register/corporate',
+      mailText: '',
     }
   },
   fetch() {
@@ -62,53 +68,14 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async submit() {
-      this.isLoading = true
-      const accessKey = await this.getAccessKey()
-      const uploadKey = await this.registerFile(accessKey)
-      if (uploadKey) await this.registerInfo(accessKey, uploadKey)
-      this.$router.push('/nonmember-register/corporate/complete')
-      this.isLoading = false
+      await this.$refs.form.submit(this.contentKey, this.path)
     },
-    async getAccessKey(){
-      const param = new URLSearchParams()
-      param.append('ContentsKey', this.contentKey)
-      param.append('UserAgent', navigator.userAgent)
-      const res = await this.$axios.$post(`${this.url}get_access_key.php`, param)
-      return res.AccessKey
-    },
-    setErr(errInfo){
-      this.$store.commit('register/setFormErr', errInfo.data)
-      return false
-    },
-    async registerFile(accessKey){
-      const formData = new FormData()
-      let fileCnt = 0
-      const postFileArr = this.$sameFileNameCheck(this.fileArr)
-      postFileArr.forEach((file)=>{
-        if(!file) return
-        fileCnt++
-        formData.append(`File0${fileCnt}`, file)
-      })
-      formData.append('ContentsKey', this.contentKey)
-      formData.append('AccessKey', accessKey )
-      formData.append('FileCnt', fileCnt )
-      const res = await this.$axios.post(`${this.url}upload_attachment.php`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data;charset=UTF-8",
-        },
-        timeout: 15000,
-      })
-      if(res.data.Status==='TRUE'){
-        return res.data.UploadKey
-      }else{
-        return this.setErr(res)
-      }
-    },
-    async registerInfo(accessKey, uploadKey){
+    async registerInfo({accessKey, uploadKey}){
       const param = new URLSearchParams()
       param.append('ContentsKey', this.contentKey)
       param.append('AccessKey', accessKey )
       param.append('UploadKey', uploadKey )
+      param.append('MailText', this.mailText)
       const excludedKeys = ['invoiceFlg', 'billingOther']
       const skipCondition = key =>
         excludedKeys.includes(key) ||
@@ -125,12 +92,13 @@ export default {
         fileCnt++
         param.append(`UPLOAD_FILE_NAME_${fileCnt}`, file.name)
       })
-      const res = await this.$axios.post(`${this.url}access_contact_attach.php`, param, {
+      const res = await this.$axios.post(`${this.url}access_contact_attach_on_mailtext.php`, param, {
         timeout: 15000,
       })
       if (res.data.Status!=='TRUE') {
-        this.setErr(res)
+        this.$store.commit('register/setFormErr', res.data)
       }
+      this.$router.push(`${this.path}/complete`)
     },
     paramVal(key){
       if (key === 'BUSS_CONTENT') return this.userJson[key].join('、')
