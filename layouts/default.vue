@@ -25,8 +25,6 @@ export default {
     const hereHost = window.location.hostname
     const sStr = '^https?://' + hereHost
     const rExp = new RegExp(sStr, 'i')
-    console.log('ref==', ref)
-    console.log('here==', hereHost)
     if (ref.length === 0 || !ref.match(rExp)) {
       const res = await this.$checkToken()
       // alert(ref + '外部domeinから来ました')

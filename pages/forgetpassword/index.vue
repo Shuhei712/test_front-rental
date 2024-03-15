@@ -29,6 +29,7 @@
                   v-model="mail"
                   outlined
                   dense
+                  inputmode="email"
                   :error-messages="errors"
                 ></v-text-field>
               </v-col>

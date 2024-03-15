@@ -79,6 +79,7 @@
                       outlined
                       dense
                       hide-details="auto"
+                      inputmode="email"
                       :error-messages="errors"
                     ></v-text-field>
                   </v-col>
@@ -97,6 +98,7 @@
                       outlined
                       dense
                       hide-details="auto"
+                      inputmode="numeric"
                       :error-messages="errors"
                       class="width-s"
                       @blur="syncedUser.OrderNo=toNum($event.target.value)"

@@ -8,21 +8,15 @@
     </cancel-card>
     <top-bar title="注文履歴" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="sec__inner py-16 order-hx">
-      <!-- <v-card outlined class="mb-5 pa-3">
-        ご注文の変更は<br>
-        「キャンセル」ボタンを押していただくことで、ご注文のキャンセルが可能です。
-      </v-card> -->
-
       <v-data-table
         v-if="orderHxLists"
         dense
         :headers="headers"
         :items="orderHxLists"
-        :sort-by="['OrderNo']"
-        :sort-desc="true"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
         :items-per-page="30"
         :footer-props="{'items-per-page-options':[5, 15, 30, -1]}"
-        item-key="name"
         mobile-breakpoint="890"
       >
         <template #[`item.RegistDate`]="{ item }">
@@ -84,6 +78,8 @@ export default {
         { text: '注文状況', value: 'OrderStatusDisp', sortable: false, width: '153px' },
         { text: '', value: 'actions', sortable: false },
       ],
+      sortBy: 'OrderNo',
+      sortDesc: true,
       cancelDialog: false,
       cancelID: null,
     }
@@ -101,6 +97,16 @@ export default {
         { hid: "robots", name: "robots", content: "noindex" }
       ]
     }
+  },
+  watch: {
+    sortBy(newVal) {
+      if (!newVal) {
+        this.sortBy = 'OrderNo'
+        this.$nextTick(() => {
+          this.sortDesc = true
+        })
+      }
+    },
   },
   updated() {
     this.$scrollBackButton()
@@ -120,9 +126,6 @@ export default {
           Authorization: `Bearer ${token}`
         }
       })
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       if(res.data.Status==='TRUE'){
         this.orderHxLists = res.data.OrderList
       }else if(res.data.ErrorNo===100002){
@@ -148,10 +151,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/css/common.scss';
+
 .sec__inner {
   max-width: 1150px;
   margin: 0 auto;
   width: 95%;
+  @media (max-width: 888.9px) {
+    max-width: 650px;
+  }
 }
 .order-hx{
   &__table-actions{
@@ -163,10 +171,16 @@ export default {
     }
   }
   &__table-title{
-    max-width: 240px;
+    max-width: 360px;
     display: block;
-    @media (min-width:500px) {
-      max-width: 310px;
+    @include mq(lg) {
+      width: 290px;
+    }
+    @include mq(md) {
+      width: 180px;
+    }
+    @media (max-width:889px) {
+      width: 270px;
     }
   }
   ::v-deep {

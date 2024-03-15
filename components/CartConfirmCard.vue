@@ -242,6 +242,7 @@
       </v-card>
       <v-dialog v-model="resultDialog"
         width="780"
+        max-width="90%"
         persistent>
         <v-card class="pa-5 text-center">
           <result-card
@@ -460,6 +461,10 @@ export default {
   }
   .v-data-table__mobile-row__header{
     white-space: nowrap;
+  }
+  .v-dialog{
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 </style>
