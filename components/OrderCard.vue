@@ -24,6 +24,7 @@
                       outlined
                       dense
                       hide-details="auto"
+                      inputmode="numeric"
                       :error-messages="errors"
                     ></v-text-field>
                   </ValidationProvider>
@@ -100,6 +101,7 @@
                       dense
                       outlined
                       hide-details="auto"
+                      inputmode="numeric"
                       :error-messages="errors"
                     ></v-text-field>
                   </ValidationProvider>

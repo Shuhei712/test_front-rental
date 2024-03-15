@@ -36,7 +36,7 @@
                     <li>
                       <v-divider class="my-2"></v-divider>
                       <v-icon color="primary" small>mdi-phone</v-icon>
-                      {{ item.Tel }}
+                      <a :href="`tel:${item.Tel}`">{{ item.Tel }}</a>
                     </li>
                   </ul>
                 </v-card>

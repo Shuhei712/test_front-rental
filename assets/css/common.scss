@@ -315,6 +315,9 @@ p {
 .popup {
   z-index: 600;
 }
+.menuable__content__active{ // date-picker
+  z-index: 101 !important;
+}
 
 // 用語集 上書きCSS (Vuetifyと競合のため)
 .link {

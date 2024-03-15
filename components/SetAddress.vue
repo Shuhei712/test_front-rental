@@ -14,6 +14,7 @@
         hide-details="auto"
         placeholder="5520021"
         prefix="〒"
+        inputmode="numeric"
         :error-messages="errors"
         class="width-s"
         :readonly="read"

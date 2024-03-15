@@ -38,12 +38,14 @@ extend('num', {
   },
   message: '半角数字14桁以内でお願いします'
 })
-extend('file', {
-  validate(value) {
-    if( value.size <= 3145728 ) return true
-    return false
-  },
-  message: '3MB以内でお願いします'
+extend('file', (value) => {
+  const name = value.name.split('.')[0]
+  if (value.size > 3145728) {
+    return '3MB以内でお願いします'
+  } else if (name.length > 50) {
+    return '50文字以内でお願いします'
+  }
+  return true
 })
 extend('kana', {
   validate(value) {

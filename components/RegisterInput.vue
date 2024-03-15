@@ -183,6 +183,7 @@
                       dense
                       hide-details="auto"
                       placeholder="0123456789"
+                      inputmode="numeric"
                       :error-messages="errors"
                       @blur="syncedUser.Tel=toNum($event.target.value)"
                     ></v-text-field>
@@ -206,6 +207,7 @@
                         dense
                         hide-details="auto"
                         placeholder="0123456789"
+                        inputmode="numeric"
                         :error-messages="errors"
                         @blur="syncedUser.Fax=toNum($event.target.value)"
                       ></v-text-field>
@@ -242,6 +244,7 @@
                       outlined
                       dense
                       hide-details="auto"
+                      inputmode="email"
                       :error-messages="errors"
                     ></v-text-field>
                   </v-col>

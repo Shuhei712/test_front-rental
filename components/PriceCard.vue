@@ -2,7 +2,7 @@
   <v-card
     color="cushion"
     elevation="0"
-    min-width="340"
+    min-width="310"
     class="mt-3 d-inline-block">
     <v-card-text>
       <template v-if="itemInfo.PriceType!==9&&itemInfo.PriceType!=='9'">

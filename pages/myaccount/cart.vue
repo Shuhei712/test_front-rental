@@ -177,6 +177,7 @@
                             dense
                             hide-details="auto"
                             :error-messages="errors"
+                            inputmode="numeric"
                             @blur="rentJson.ContactTel=toNum($event.target.value)">
                           </v-text-field>
                         </ValidationProvider>
@@ -192,6 +193,7 @@
                             outlined
                             dense
                             hide-details="auto"
+                            inputmode="email"
                             :error-messages="errors"
                           ></v-text-field>
                         </ValidationProvider>
@@ -341,6 +343,7 @@
                                 outlined
                                 dense
                                 hide-details="auto"
+                                inputmode="numeric"
                                 :error-messages="errors"
                                 @blur="rentJson.DeliveryTel=toNum($event.target.value)">
                               </v-text-field>

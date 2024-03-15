@@ -8,13 +8,18 @@
         dense
         :headers="headers"
         :items="contactLists"
-        :sort-by="'ContactNo'"
-        :sort-desc="true"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
         :items-per-page="30"
         :footer-props="{'items-per-page-options':[5, 15, 30, -1]}"
-        item-key="name"
         mobile-breakpoint="900"
       >
+
+        <template #[`item.ContactSubject`]="{ item }">
+          <span class="contact-hx__table-title text-truncate">
+            {{item.ContactSubject}}
+          </span>
+        </template>
         <template #[`item.ContactDate`]="{ item }">
           {{dateFormat(item.ContactDate)}}
         </template>
@@ -42,12 +47,14 @@ export default {
       breadCrumbs: [],
       contactLists:null,
       headers: [
-        { text: '番号', value: 'ContactNo', width: '96px',sortable: false },
+        { text: 'お問い合わせ番号', value: 'ContactNo', width: '135px',sortable: false },
         { text: '日付', value: 'ContactDate', width: '130px', },
         { text: '件名', value: 'ContactSubject',sortable: false },
         { text: '状況', value: 'ContactStatusDisp', width: '120px',sortable: false},
         { text: '', value: 'details' , width: '80px', sortable: false},
       ],
+      sortBy: 'ContactNo',
+      sortDesc: true,
     };
   },
   async fetch() {
@@ -63,6 +70,16 @@ export default {
         { hid: "robots", name: "robots", content: "noindex" }
       ]
     };
+  },
+  watch: {
+    sortBy(newVal) {
+      if (!newVal) {
+        this.sortBy = 'ContactNo'
+        this.$nextTick(() => {
+          this.sortDesc = true
+        })
+      }
+    },
   },
   updated() {
     this.$scrollBackButton()
@@ -83,10 +100,6 @@ export default {
           Authorization: `Bearer ${accessToken}`
         }
       })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       if(res.data.Status==='TRUE'){
         return res.data.ContactList
       }else if(res.data.ErrorNo===100002){
@@ -109,12 +122,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/css/common.scss';
+
 .sec__inner {
   max-width: 1000px;
   margin: 0 auto;
   width: 95%;
+  @media (max-width: 899.9px) {
+    max-width: 700px;
+  }
 }
-
+.contact-hx{
+  &__table-title{
+    max-width: 480px;
+    display: block;
+    @include mq(lg) {
+      max-width: 380px;
+    }
+    @include mq(md) {
+      max-width: 328px;
+    }
+    @include mq(sm) {
+      max-width: 270px;
+    }
+  }
+}
 ::v-deep {
     .v-data-table-header{
       background-color: #f2f2f2;
