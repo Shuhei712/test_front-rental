@@ -19,15 +19,17 @@
             <span v-else v-text="userJson[item.val]"></span>
           </div>
           <div v-else>
-            <ValidationProvider v-if="item.type === 'text'||item.type === 'number'"
+            <ValidationProvider v-if="item.type === 'text'||item.type === 'tel'||item.type === 'email'"
               v-slot="{ errors }"
               :name="item.val"
               :rules="item.rule?item.rule:'max:50'">
               <v-text-field
                 v-model="userJson[item.val]" outlined dense
                 :error-messages="errors" hide-details="auto" :readonly="read"
-                :inputmode="item.inputMode?item.inputMode:'text'"
-                @blur="item.type === 'number'?userJson[item.val]=toNum(userJson[item.val]):''"
+                :type="item.type === 'tel'?'tel':item.type === 'email'?'email':'text'"
+                :inputmode="item.inputMode||''"
+                :autocomplete="item.type === 'tel'?'tel':item.type === 'email'?'email':''"
+                @blur="item.type === 'tel'?userJson[item.val]=toNum(userJson[item.val]):''"
               ></v-text-field>
             </ValidationProvider>
             <v-radio-group v-else-if="item.type === 'radio'"
@@ -152,7 +154,7 @@
                       <span v-else v-text="userJson[subItem.val]"></span>
                     </div>
                     <div v-else>
-                      <ValidationProvider v-if="subItem.type === 'text'||subItem.type === 'number'"
+                      <ValidationProvider v-if="subItem.type === 'text'||subItem.type === 'tel'||subItem.type === 'email'"
                         v-slot="{ errors }"
                         :name="subItem.val"
                         :rules="subItem.rule?subItem.rule:'max:50'">
@@ -160,8 +162,10 @@
                           v-model="userJson[subItem.val]" outlined dense
                           :error-messages="errors" hide-details="auto"
                           :readonly="read"
-                          :inputmode="subItem.inputMode?subItem.inputMode:'text'"
-                          @blur="subItem.type === 'number'?userJson[subItem.val]=toNum(userJson[subItem.val]):''"
+                          :type="subItem.type === 'tel'?'tel':subItem.type === 'email'?'email':'text'"
+                          :inputmode="subItem.inputMode||''"
+                          :autocomplete="subItem.type === 'tel'?'tel':subItem.type === 'email'?'email':''"
+                          @blur="subItem.type === 'tel'?userJson[subItem.val]=toNum(userJson[subItem.val]):''"
                         ></v-text-field>
                       </ValidationProvider>
                       <v-radio-group v-else-if="subItem.type === 'radio'"
@@ -259,15 +263,15 @@ export default {
       indList: [
         { require: true, type: 'text', title: 'お名前', val: 'NAME' },
         { require: false, type: 'text', title: 'お名前(フリガナ)', val: 'NAME_KANA', rule: 'kana|max:50' },
-        { require: true, type: 'text', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50', inputMode: 'email' },
+        { require: true, type: 'email', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50' },
         { require: true, type: 'address', title: '住所', val: 'ADDRESS',
           addressArr:['ZIP_CODE', 'PREFECT', 'ADDRESS']
         },
-        { require: false, type: 'number', title: '電話番号', val: 'TEL', rule: 'num', inputMode: 'numeric' },
-        { require: false, type: 'number', title: 'FAX番号', val: 'FAX', rule: 'num', inputMode: 'numeric' },
-        { require: false, type: 'number', title: '携帯番号', val: 'TEL_MOBILE', rule: 'num', inputMode: 'numeric' },
+        { require: false, type: 'tel', title: '電話番号', val: 'TEL', rule: 'num', inputMode: 'numeric' },
+        { require: false, type: 'tel', title: 'FAX番号', val: 'FAX', rule: 'num', inputMode: 'numeric' },
+        { require: false, type: 'tel', title: '携帯番号', val: 'TEL_MOBILE', rule: 'num', inputMode: 'numeric' },
         { require: false, type: 'text', title: '勤務先/学校名', val: 'WORK_PLACE' },
-        { require: false, type: 'number', title: '上記電話番号', val: 'WORK_TEL', rule: 'num', inputMode: 'numeric' },
+        { require: false, type: 'tel', title: '上記電話番号', val: 'WORK_TEL', rule: 'num', inputMode: 'numeric' },
         { require: true, type: 'text', title: '弊社担当者名 (※担当者がわからない場合は不明と記載ください。)', val: 'STAFF_NAME' },
         { require: false, type: 'textarea', title: 'ご質問など', val: 'CONTACTS' },
         { title: '必要書類▼', val: 'FILE',
@@ -285,8 +289,8 @@ export default {
         { require: true, type: 'address', title: '本社 住所', val: 'HQ_ADDRESS',
           addressArr:['HQ_ZIP_CODE', 'HQ_PREFECT', 'HQ_ADDRESS']
         },
-        { require: true, type: 'number', title: '本社 電話番号', val: 'HQ_TEL', rule: 'num', inputMode: 'numeric' },
-        { require: false, type: 'number', title: '本社 FAX番号', val: 'HQ_FAX', rule: 'num', inputMode: 'numeric' },
+        { require: true, type: 'tel', title: '本社 電話番号', val: 'HQ_TEL', rule: 'num', inputMode: 'numeric' },
+        { require: false, type: 'tel', title: '本社 FAX番号', val: 'HQ_FAX', rule: 'num', inputMode: 'numeric' },
         { require: true, title: '事業内容', val: 'BUSS_CONTENT',
           items: [
             { type: 'checkbox',title: '', val: 'BUSS_CONTENT'},
@@ -297,7 +301,7 @@ export default {
           items: [
             { require: true, type: 'text', title: 'お名前', val: 'NAME' },
             { require: false, type: 'text', title: '部署', val: 'SECT', rule: 'max:255' },
-            { require: true, type: 'text', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50', inputMode: 'email' },
+            { require: true, type: 'email', title: 'メールアドレス', val: 'EMAIL', rule: 'email|max:50' },
         ]},
         { title: '窓口事業所が異なる場合 ▼',
           items: [
@@ -305,8 +309,8 @@ export default {
             { require: false, type: 'address', title: '住所', val: 'OFFICE_ADDRESS',
               addressArr:['OFFICE_ZIP_CODE', 'OFFICE_PREFECT', 'OFFICE_ADDRESS']
             },
-            { require: false, type: 'number', title: '電話番号', val: 'OFFICE_TEL', rule: 'num', inputMode: 'numeric' },
-            { require: false, type: 'number', title: 'FAX番号', val: 'OFFICE_FAX', rule: 'num', inputMode: 'numeric' },
+            { require: false, type: 'tel', title: '電話番号', val: 'OFFICE_TEL', rule: 'num', inputMode: 'numeric' },
+            { require: false, type: 'tel', title: 'FAX番号', val: 'OFFICE_FAX', rule: 'num', inputMode: 'numeric' },
           ]
         },
         { require: false, type: 'date', title: '設立年月', val: 'FOUNDED' },
@@ -353,15 +357,15 @@ export default {
             { type: 'text', title: 'その他の場合', val: 'billingOther',
               if:['invoiceFlg','なし']
             },
-            { type: 'text', title: 'メールアドレス(複数可)', val: 'BILLING_EMAIL_1', rule: 'email|max:50', inputMode: 'email',
+            { type: 'email', title: 'メールアドレス(複数可)', val: 'BILLING_EMAIL_1', rule: 'email|max:50',
               if:['invoiceFlg','あり'] },
-            { type: 'text', title: '', val: 'BILLING_EMAIL_2', rule: 'email|max:50', inputMode: 'email',
+            { type: 'email', title: '', val: 'BILLING_EMAIL_2', rule: 'email|max:50',
               if:['invoiceFlg','あり']
             },
-            { type: 'text', title: '', val: 'BILLING_EMAIL_3', rule: 'email|max:50', inputMode: 'email',
+            { type: 'email', title: '', val: 'BILLING_EMAIL_3', rule: 'email|max:50',
               if:['invoiceFlg','あり']
             },
-            { type: 'text', title: '', val: 'BILLING_EMAIL_4', rule: 'email|max:50', inputMode: 'email',
+            { type: 'email', title: '', val: 'BILLING_EMAIL_4', rule: 'email|max:50',
               if:['invoiceFlg','あり']
             },
           ]
