@@ -79,7 +79,6 @@
                       outlined
                       dense
                       hide-details="auto"
-                      inputmode="email"
                       type="email"
                       :error-messages="errors"
                     ></v-text-field>

@@ -114,5 +114,8 @@ export default {
   .v-text-field > .v-input__control > .v-input__slot{
     cursor: pointer;
   }
+  .v-messages__message {
+    white-space: pre-line;
+  }
 }
 </style>
