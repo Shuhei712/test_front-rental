@@ -108,6 +108,7 @@
                 placeholder="0123456789"
                 inputmode="numeric"
                 type="tel"
+                autocomplete="tel"
                 :error-messages="errors"
                 @blur="userJson.HOfficeTel=toNum($event.target.value)"
               ></v-text-field>
@@ -133,6 +134,7 @@
                 placeholder="0123456789"
                 inputmode="numeric"
                 type="tel"
+                autocomplete="tel"
                 :error-messages="errors"
                 @blur="userJson.HOfficeFax=toNum($event.target.value)"
               ></v-text-field>
@@ -309,6 +311,7 @@
                 dense
                 hide-details="auto"
                 type="email"
+                autocomplete="email"
                 :error-messages="errors"
               ></v-text-field>
             </v-col>
