@@ -80,6 +80,7 @@
                       dense
                       hide-details="auto"
                       type="email"
+                      autocomplete="email"
                       :error-messages="errors"
                     ></v-text-field>
                   </v-col>

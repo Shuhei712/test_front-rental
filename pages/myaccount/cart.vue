@@ -178,6 +178,8 @@
                             hide-details="auto"
                             :error-messages="errors"
                             inputmode="numeric"
+                            type="tel"
+                            autocomplete="tel"
                             @blur="rentJson.ContactTel=toNum($event.target.value)">
                           </v-text-field>
                         </ValidationProvider>
@@ -193,7 +195,8 @@
                             outlined
                             dense
                             hide-details="auto"
-                            inputmode="email"
+                            type="email"
+                            autocomplete="email"
                             :error-messages="errors"
                           ></v-text-field>
                         </ValidationProvider>
@@ -346,6 +349,8 @@
                                 dense
                                 hide-details="auto"
                                 inputmode="numeric"
+                                type="tel"
+                                autocomplete="tel"
                                 :error-messages="errors"
                                 @blur="rentJson.DeliveryTel=toNum($event.target.value)">
                               </v-text-field>

@@ -184,6 +184,8 @@
                       hide-details="auto"
                       placeholder="0123456789"
                       inputmode="numeric"
+                      type="tel"
+                      autocomplete="tel"
                       :error-messages="errors"
                       @blur="syncedUser.Tel=toNum($event.target.value)"
                     ></v-text-field>
@@ -208,6 +210,8 @@
                         hide-details="auto"
                         placeholder="0123456789"
                         inputmode="numeric"
+                        type="tel"
+                        autocomplete="tel"
                         :error-messages="errors"
                         @blur="syncedUser.Fax=toNum($event.target.value)"
                       ></v-text-field>
@@ -244,7 +248,8 @@
                       outlined
                       dense
                       hide-details="auto"
-                      inputmode="email"
+                      type="email"
+                      autocomplete="email"
                       :error-messages="errors"
                     ></v-text-field>
                   </v-col>
@@ -268,6 +273,7 @@
                       outlined
                       dense
                       hide-details="auto"
+                      autocomplete="off"
                       :error-messages="errors"
                       :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                       :type="show ? 'text':'password'"
