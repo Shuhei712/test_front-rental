@@ -24,7 +24,6 @@
                   dense
                   autocomplete="on"
                   autofocus
-                  inputmode="email"
                   :error-messages="errors"
                 ></v-text-field>
               </v-col>

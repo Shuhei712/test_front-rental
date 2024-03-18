@@ -252,24 +252,6 @@
               </ValidationProvider>
 
               <ValidationProvider
-                v-slot="{ errors }"
-                name="staff"
-                rules="max:100">
-                <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 弊社担当者名</v-col>
-                  <v-col cols="12" md="8">
-                    <v-text-field
-                      v-model="syncedUser.SalesStaff"
-                      outlined
-                      dense
-                      hide-details="auto"
-                      :error-messages="errors"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </ValidationProvider>
-
-              <ValidationProvider
                 v-if="!loginId"
                 v-slot="{ errors }"
                 rules="required|min:8|max:24|pass"
@@ -292,6 +274,24 @@
                       @click:append="show=!show"
                     ></v-text-field>
 
+                  </v-col>
+                </v-row>
+              </ValidationProvider>
+
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="staff"
+                rules="max:100">
+                <v-row class="my-1">
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 弊社担当者名</v-col>
+                  <v-col cols="12" md="8">
+                    <v-text-field
+                      v-model="syncedUser.SalesStaff"
+                      outlined
+                      dense
+                      hide-details="auto"
+                      :error-messages="errors"
+                    ></v-text-field>
                   </v-col>
                 </v-row>
               </ValidationProvider>

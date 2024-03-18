@@ -5,7 +5,7 @@ export default {
   ssr: false,
   head: {
     titleTemplate: '%s - 映像機材・音響機器のレンタルサービス | 株式会社タケナカ',
-    title: '映像機材・音響機器のレンタルサービス | 株式会社タケナカ',
+    // title: '映像機材・音響機器のレンタルサービス | 株式会社タケナカ',
     htmlAttrs: {
       lang: 'ja',
     },

@@ -120,6 +120,7 @@ export default {
   },
   head () {
     return {
+      title: "パスワード変更",
       meta: [
         { hid: "robots", name: "robots", content: "noindex" }
       ]
