@@ -64,6 +64,11 @@ export default {
     ])
     this.$store.commit('loading/changeStatus', false)
   },
+  head() {
+    return {
+      title: "トップ"
+    };
+  },
   updated() {
     this.$scrollBackButton()
   },

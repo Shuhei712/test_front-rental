@@ -1,7 +1,7 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
-    <est-card
+    <!-- <est-card
       :dialog.sync="estDialog"
       :rent-obj.sync="rentJson"
       :est-obj.sync="estJson"
@@ -10,7 +10,7 @@
       :rent-range-min="rentRangeMin"
       :rent-range-max="rentRangeMax"
       @setRange="setRange">
-    </est-card>
+    </est-card> -->
     <cart-confirm-card
       :dialog.sync="confirmDialog"
       :rent-json="rentJson"
@@ -268,6 +268,8 @@
                               :day-format="(date) => new Date(date).getDate()"
                               no-title
                               scrollable
+                              :events="today"
+                              :event-color="todayColor"
                               :allowed-dates="allowedBusinessDates"
                               :max="deliverMax"
                               @input="datePick[0] = false"
@@ -389,11 +391,9 @@
                       ご使用期間(リハーサル含む)
                     </v-col>
                     <v-col cols="12" md="8">
-
                       <v-menu
                         ref="datePick"
                         v-model="datePick[1]"
-                        :close-on-click="false"
                         :close-on-content-click="false"
                         :return-value.sync="rentRange"
                         transition="scale-transition"
@@ -424,12 +424,16 @@
                           no-title
                           scrollable
                           range
+                          :show-current="initialMonth"
+                          :events="today"
+                          :event-color="todayColor"
                           :allowed-dates="allowedDates"
                           :min="rentRangeMin"
                           :max="rentRangeMax"
                         >
-                          <div class="flex-grow-1">
-                            <p v-if="rentRangeDays > 90" class="red--text text-caption text-center">90日以上の期間は選択できません</p>
+                          <div class="flex-grow-1 pl-3">
+                            <p v-if="rentRangeDays > 90" class="red--text text-caption">90日以上の期間は選択できません</p>
+                            <p v-if="rentRange.length === 1" class="red--text text-caption">終了日を選択してください</p>
                             <div class="d-flex">
                               <v-spacer></v-spacer>
                               <v-btn
@@ -442,8 +446,8 @@
                               <v-btn
                                 text
                                 color="primary"
-                                @click="setRange">
-                                確定
+                                @click="$set(datePick, 1,false)">
+                                閉じる
                               </v-btn>
                             </div>
                           </div>
@@ -523,6 +527,9 @@
                               :day-format="(date) => new Date(date).getDate()"
                               no-title
                               scrollable
+                              :show-current="initialMonth"
+                              :events="today"
+                              :event-color="todayColor"
                               :allowed-dates="allowedBusinessDates"
                               :min="returnMin"
                               @input="datePick[2] = false"
@@ -726,6 +733,9 @@ export default {
       rentRangeMax: null,
       deliverMax: null,
       returnMin: null,
+      initialMonth: null,
+      today: [this.getToday()],
+      todayColor: 'primary',
       concatRentRange: null,
       confirmDialog: false,
       branchDialog: false,
@@ -766,13 +776,14 @@ export default {
     'rentJson.UseDay'(newVal, oldVal){
       if(newVal!== oldVal && oldVal) {
         this.getCartInfo()
-        this.resetEst()
+        // this.resetEst()
       }
     },
     'rentDate.0'(value){
         this.rentRangeMin = value
         if(!this.rentRange.length){
           this.returnMin = value
+          this.initialMonth = value
         }
     },
     'rentDate.1'(value){
@@ -784,18 +795,20 @@ export default {
     'rentRange'(value){
       if( value.length === 1 ){
         this.rentRangeMin = value[0]
-        this.concatRentRange = `${value[0]}~${value[0]}`
-        this.rentRangeDays = 1
-        // this.returnInitialMonth = value[0]
+        // this.concatRentRange = `${value[0]}~${value[0]}`
+        // this.rentRangeDays = 1
+        // this.initialMonth = value[0]
       }else if( value.length === 2 ){
         this.concatRentRange = this.rentRange.join(' ~ ')
         this.rentRangeMin = this.rentDate[0]
         this.rentRangeMax = this.rentDate[1]
+        this.initialMonth = value[1]
+        this.setRange()
       }else{
         this.rentRangeMin = this.rentDate[0]
         this.concatRentRange = null
         this.rentRangeDays = null
-        // this.returnInitialMonth = null
+        this.initialMonth = null
       }
     }
   },
@@ -885,14 +898,10 @@ export default {
           Authorization: `Bearer ${accessToken}`
         }
       })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       this.$setLog('会員カート', '消去', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.cartInfo = res.data
-        this.resetEst()
+        // this.resetEst()
         this.$getCartNum()
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
@@ -923,26 +932,22 @@ export default {
           Authorization: `Bearer ${accessToken}`
         }
       })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       this.$setLog('会員カート', '数量変更', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.$getCartNum()
         this.cartInfo = res.data
-        this.resetEst()
+        // this.resetEst()
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
         if( res ) return this.upCart(ProductID, Qty)
       }
     },
-    resetEst(){
-      this.$set(this.rentJson, "QuotationID", '')
-      this.$set(this.rentJson, "QuotationNo", '')
-      this.$set(this.rentJson, "DocumentNo", '')
-      this.$set(this.rentJson, "QuotationURL", '')
-    },
+    // resetEst(){
+    //   this.$set(this.rentJson, "QuotationID", '')
+    //   this.$set(this.rentJson, "QuotationNo", '')
+    //   this.$set(this.rentJson, "DocumentNo", '')
+    //   this.$set(this.rentJson, "QuotationURL", '')
+    // },
     toDate (str) {
       return new Date(str.split('-')[0], str.split('-')[1] - 1, str.split('-')[2]);
     },
@@ -950,6 +955,13 @@ export default {
       return e.replace(/[０-９]/g, function(m) {
         return "０１２３４５６７８９".indexOf(m)
       }).replace(/-|－|ー/g,'')
+    },
+    getToday(){
+      const today = new Date()
+      const year = today.getFullYear()
+      const month = String(today.getMonth() + 1).padStart(2, '0')
+      const day = String(today.getDate()).padStart(2, '0')
+      return `${year}-${month}-${day}`
     },
     allowedBusinessDates(date) {
       const allowedDates = this.allowedDates(date)
@@ -965,7 +977,7 @@ export default {
       )
       let maxAllowedDay = new Date()
       maxAllowedDay.setDate(
-        today.getDate() + 365
+        today.getDate() + 365*5
       )
       maxAllowedDay = new Date(
         maxAllowedDay.getFullYear(),
@@ -977,7 +989,6 @@ export default {
         && new Date(date) <= maxAllowedDay
      },
     setRange(){
-      console.log(this.rentRange)
       if( this.rentRange.length ){
         if( this.rentRange.length === 1 ) this.rentRange[1] = this.rentRange[0]
         // API用にフォーマット変更
@@ -1053,9 +1064,15 @@ li{
     }
     .v-autocomplete.v-input .v-input__slot,
     .v-autocomplete.v-input input{
-        cursor: pointer;
-      }
+      cursor: pointer;
+    }
   }
+}
+::v-deep {
+  .v-date-picker-table__current.accent--text{
+      border: none;
+      color: initial!important;
+    }
 }
 .border-bottom{
   border-bottom: 1px solid #dddddd;

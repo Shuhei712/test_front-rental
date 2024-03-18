@@ -85,7 +85,7 @@
             </v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
               <v-card elevation="0" class="px-2 py-1 border width-s mb-1">〒{{syncedUser.ZipCode}}</v-card>
-              <v-card elevation="0" class="px-2 py-1 border mb-1">{{syncedUser.Prefect}} {{syncedUser.Address}}</v-card>
+              <v-card elevation="0" class="px-2 py-1 border mb-1">{{syncedUser.Prefect}}{{syncedUser.Address}}</v-card>
             </v-col>
           </v-row>
           <v-row>
@@ -152,7 +152,7 @@
                     <v-col cols="12" md="4" class="pb-0">本社住所</v-col>
                     <v-col cols="12" md="8" class="pt-0 pt-md-3">
                       <v-card elevation="0" class="px-2 py-1 border width-s mb-1">〒{{syncedUser.HOfficeZipCode}}</v-card>
-                      <v-card elevation="0" class="px-2 py-1 border mb-1">{{syncedUser.HOfficePrefect}} {{syncedUser.HOfficeAddress}}</v-card>
+                      <v-card elevation="0" class="px-2 py-1 border mb-1">{{syncedUser.HOfficePrefect}}{{syncedUser.HOfficeAddress}}</v-card>
                     </v-col>
                   </v-row>
                   <v-row>
