@@ -196,6 +196,9 @@
                 v-model="incorporation" :readonly="read"
                 type="month"
                 locale="jp-ja"
+                :active-picker.sync="activePicker"
+                :max="incorporateMaxDate"
+                min="1700-01"
                 @input="datePicker = false"
                 @change="userJson.Incorporation = dateFormat('remove',incorporation,'-')"
               ></v-date-picker>
@@ -353,7 +356,9 @@ export default {
       result: null,
       resultDialog: false,
       datePicker: false,
-      incorporation: null
+      incorporation: null,
+      incorporateMaxDate: this.getMaxDate(),
+      activePicker: null
     }
   },
   fetch(){
@@ -385,6 +390,11 @@ export default {
       return uniqueFileNames.size !== fileNames.length
     }
   },
+  watch: {
+    datePicker (val) {
+      val && setTimeout(() => (this.activePicker = 'YEAR'))
+    },
+  },
   methods: {
     async register(){
       const formData = new FormData()
@@ -402,10 +412,6 @@ export default {
           "Content-Type": "multipart/form-data;charset=UTF-8",
         }
       })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
 
       const loginID = this.$store.getters["auth/getUser"]
       if(loginID) await this.$setLog('会員情報', '本人確認ファイル登録', res.data.Status)
@@ -433,9 +439,6 @@ export default {
         }
       })
 
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       this.$setLog('会員情報', '更新', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.result = 'success'
@@ -463,6 +466,12 @@ export default {
       }else if(action==='remove'){
         return date.replace(new RegExp(separator, 'g'), "")
       }
+    },
+    getMaxDate(){
+      const today = new Date()
+      const year = today.getFullYear()
+      const month = String(today.getMonth() + 1).padStart(2, '0')
+      return `${year+1}-${month}`
     },
   },
 }
