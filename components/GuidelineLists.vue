@@ -22,6 +22,7 @@
             <v-list-item
               v-for="section in menuItem.sections"
               :key="section.title"
+              v-scroll-to="{ el: '#' + section.id,duration: 500,offset: -20 }"
               :to="section.id ? '/guide/'+key+'#'+section.id : '/guide/'+key">
               <v-list-item-content>
                 <v-list-item-title class="d-flex align-center pl-3">
@@ -46,7 +47,7 @@
               {{ openPanel===0 ? 'mdi-minus' : 'mdi-plus' }}
             </v-icon>
           </template>
-          <h3 class="guide__heading text-md-h5 d-flex align-center justify-center text-gray font-weight-medium"><v-icon class="mr-2" color="accent">mdi-menu</v-icon>ガイドライン目次</h3>
+          <h3 class="guide__heading text-md-h5 d-flex align-center justify-center text-gray font-weight-medium"><v-icon class="mr-2" color="accent">mdi-menu</v-icon>ご利用ガイド目次</h3>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="v-list__color">
           <div class="guidelineList__sp__lists my-5">
@@ -116,6 +117,22 @@ export default {
     } else {
       this.menuFlg = false
     }
+    this.$nextTick(function () {
+      const hash = window.location.hash;
+      if (hash) {
+        const refName = hash.replace('#', '');
+        setTimeout(() => {
+          const element = document.getElementById(refName);
+          if (element) {
+            const elementPosition = element.getBoundingClientRect().top+130 + window.pageYOffset - 130; // ここで100px上にオフセット
+            window.scrollTo({
+              top: elementPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 300);
+      }
+    });
   },
   methods: {
     resizeWindow() {
