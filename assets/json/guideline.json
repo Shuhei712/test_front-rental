@@ -230,7 +230,7 @@
                   "items": [
                     "送料はお客様負担となります。",
                     "各商品（機材）の大きさ・重量により料金は異なります。",
-                    "時間指定は基本的には承れません。",
+                    "時間指定は基本的に承っておりません。",
                     "返送はお客様手配となります。"
                   ]
                 }
@@ -406,7 +406,7 @@
             "title": "法人WEB会員",
             "items": [
               { "texts": ["株式会社・法人団体などでレンタルを利用する場合"] },
-              { "btnList": [ 5 ] }
+              { "btnList": [ 4 ] }
             ]
           }
         ]
@@ -482,7 +482,9 @@
                 "imgs": [
                   {
                     "src": "/img/guide/membership/membership_favorite.png",
-                    "alt": "お気に入りボタンのイメージ"
+                    "alt": "お気に入りボタンのイメージ",
+                    "width": "900",
+                    "height": "301"
                   }
                 ]
               },
@@ -491,7 +493,9 @@
                 "imgs": [
                   {
                     "src": "/img/guide/membership/membership_favorite_mypage.png",
-                    "alt": "お気に入り画面のイメージ"
+                    "alt": "お気に入り画面のイメージ",
+                    "width": "900",
+                    "height": "591"
                   }
                 ],
                 "btnList": [ 201 ]
@@ -530,11 +534,15 @@
                 "imgs": [
                   {
                     "src": "/img/guide/membership/membership_history_mypage.png",
-                    "alt": "マイページ内の注文履歴ボタンのイメージ"
+                    "alt": "マイページ内の注文履歴ボタンのイメージ",
+                    "width": "900",
+                    "height": "269"
                   },
                   {
                     "src": "/img/guide/membership/membership_history.png",
-                    "alt": "注文履歴一覧のイメージ"
+                    "alt": "注文履歴一覧のイメージ",
+                    "width": "900",
+                    "height": "672"
                   }
                 ]
               }
@@ -1014,11 +1022,13 @@
             "title": "member",
             "items": [
               {
-                "texts": ["会員マイペーシの注文履歴より、キャンセルを受け付けることができます。<br>キャンセルする注文を選択してご依頼ください。"],
+                "texts": ["会員マイペーシの注文履歴より、キャンセルが可能です。<br>キャンセルする注文を選択してご依頼ください。"],
                 "imgs": [
                   {
                     "src": "/img/guide/cancel/cancel_history.png",
-                    "alt": "会員マイページ注文履歴：キャンセルボタンのイメージ"
+                    "alt": "会員マイページ注文履歴：キャンセルボタンのイメージ",
+                    "width": "900",
+                    "height": "484"
                   }
                 ]
               },
@@ -1097,7 +1107,9 @@
                 "imgs": [
                   {
                     "src": "/img/guide/invoice/invoice_request.png",
-                    "alt": "注文依頼画面のイメージ"
+                    "alt": "注文依頼画面のイメージ",
+                    "width": "900",
+                    "height": "488"
                   }
                 ]
               },
@@ -1106,7 +1118,9 @@
                 "imgs": [
                   {
                     "src": "/img/guide/invoice/invoice_download.png",
-                    "alt": "会員マイページの注文履歴のイメージ"
+                    "alt": "会員マイページの注文履歴のイメージ",
+                    "width": "901",
+                    "height": "346"
                   }
                 ]
               },
