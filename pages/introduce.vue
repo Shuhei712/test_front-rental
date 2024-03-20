@@ -578,6 +578,26 @@ export default {
   }
 }
 
+@media screen and (max-width:450px) {
+  .arrow_bottom_right {
+    &::before { /* くの字の表示設定 */
+      right: 99px;
+    }
+    &::after { /* 棒の表示設定 */
+      right: 75px;
+    }
+  }
+
+  .arrow_bottom_left {
+    &::before { /* くの字の表示設定 */
+      left: 95px;
+    }
+    &::after { /* 棒の表示設定 */
+      left: 60px;
+    }
+  }
+}
+
 @media screen and (max-width:370px){
   .guide-flow__section__row__cols12 {
     padding-top: 0!important;
