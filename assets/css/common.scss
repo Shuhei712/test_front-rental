@@ -19,6 +19,7 @@ $lightGray: #9da5a4;
 
 // ブレイクポイント
 $breakpoints: (
+  'xsm': 'screen and (max-width: 449.9px)',
   'sm': 'screen and (max-width: 599.9px)',
   'md': 'screen and (max-width: 959.9px)',
   'lg': 'screen and (max-width: 1263.9px)',

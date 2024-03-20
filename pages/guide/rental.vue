@@ -65,7 +65,7 @@
                       <td class="guide-table__td text-md-body-1">弊社戻り着日</td>
                     </tr>
                     <tr>
-                      <td class="guide-table__td text-md-body-1">チャーター便</td>
+                      <td class="guide-table__td text-md-body-1">チャーター便<span class="accent--text ml-2">※</span></td>
                       <td class="guide-table__td text-md-body-1" colspan="2">搬入/搬出希望日時・指定場所（別途料金）</td>
                     </tr>
                   </tbody>
@@ -86,7 +86,14 @@
             </template>
 
             <template #rental-4__item3>
-                <guideline-image guideline-img="/img/guide/rental/rental_days.svg" guideline-alt="例：レンタル日数の計算の仕方" figure-flg="true"></guideline-image>
+                <guideline-image 
+                  guideline-title="例：レンタル日数の計算" 
+                  guideline-img="/img/guide/rental/rental_days.svg" 
+                  guideline-alt="例：レンタル日数の計算の仕方" 
+                  attr-width="185" 
+                  attr-height="150"
+                  figure-flg="true"
+                ></guideline-image>
             </template>
 
             <template #rental-5__item1>
@@ -148,7 +155,7 @@ export default {
       this.$store.commit('breadCrumbs/addList', { name: 'レンタルご利用ガイド - レンタル全般 -', path: '/guide/rental' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -223,6 +230,7 @@ export default {
   &__img {
     &__figureFlg {
       width: 100%;
+      height: auto;
     }
   }
 }

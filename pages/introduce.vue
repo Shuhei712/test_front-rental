@@ -1,8 +1,8 @@
 <template>
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
-    <to-top-btn></to-top-btn>
-    <top-bar title="はじめての方へ -レンタルご利用ガイド-" sub-title="-レンタルご利用ガイド-" :bread-crumbs="breadCrumbs"></top-bar>
-    <div class="sec__inner category__inner pt-10 pb-16 letter-space-01em font-weight-medium">
+    <!-- <to-top-btn></to-top-btn> -->
+    <top-bar title="はじめての方へ" :bread-crumbs="breadCrumbs"></top-bar>
+    <div class="sec__inner pt-10 pb-16 letter-space-01em font-weight-medium">
       <div>
         <div class="guide_introduce mb-10 d-flex justify-center align-center">
           <img class="guide_introduce_img" src="/img/guide/introduce/introduce_top.svg" alt="はじめての方へ">
@@ -16,9 +16,7 @@
           <v-row>
             <v-col cols="12" md="7">
               <p class="guide_introduce_content_text">
-                映像・音響・ネットワーク通信機器や、その関連機材が充実。
-                イベント（リアル/オンライン）や会議・発表会、体感できるインタラクティブ
-                な試みなどに必要な機材は一式揃えられます。
+                映像・音響・ネットワーク通信機器や、その関連機材が充実。イベント（リアル/オンライン）や会議・発表会、体感できるインタラクティブな試みなどに必要な機材は一式揃えられます。
               </p>
             </v-col>
             <v-col cols="12" md="5">
@@ -140,21 +138,21 @@
                 <div class="guide-flow__member py-3">WEB会員の場合</div>
                 <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">WEB会員登録</h5>
-                  <p class="guide-flow__section__text">身分証明書などによる本人確認手続きが必要です。</p>
+                  <p class="guide-flow__section__text px-1 px-md-0">身分証明書などによる本人確認手続きが必要です。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
                 <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">カート機能で<br class="br">レンタル仮申し込み</h5>
-                  <p class="guide-flow__section__text">WEB上でレンタル機材をカートに追加</p>
+                  <p class="guide-flow__section__text px-1 px-md-0">WEB上でレンタル機材をカートに追加</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
                 <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お見積り提示</h5>
-                  <p class="guide-flow__section__text">お申込み内容で在庫を確認・回答いたします。</p>
+                  <p class="guide-flow__section__text px-1 px-md-0">お申込み内容で在庫を確認・回答いたします。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow_bottom_left"></div>
@@ -168,21 +166,21 @@
                 <div class="guide-flow__nonmember py-3">WEB非会員の場合</div>
                 <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">レンタル仮申し込み</h5>
-                  <p class="guide-flow__section__text">問い合わせフォーム、または電話でご連絡ください。</p>
+                  <p class="guide-flow__section__text px-1 px-md-0">問い合わせフォーム、または電話でご連絡ください。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
                 <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お見積り提示</h5>
-                  <p class="guide-flow__section__text">お申込み内容で在庫を確認・回答いたします。</p>
+                  <p class="guide-flow__section__text px-1 px-md-0">お申込み内容で在庫を確認・回答いたします。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow-down"></div>
                   </div>
                 <div class="guide-flow__section py-4 px-2 px-sm-1 my-5 ma-lg-5">
                   <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">お客様登録</h5>
-                  <p class="guide-flow__section__text">初めてご利用のお客様は登録をお願いします。</p>
+                  <p class="guide-flow__section__text px-1 px-md-0">初めてご利用のお客様は登録をお願いします。</p>
                 </div>
                   <div class="d-flex justify-center mt-4 mb-4">
                     <div class="arrow_bottom_right"></div>
@@ -232,7 +230,7 @@
                 </div>
 
                 <div class="guide-flow__section guide-flow__section__cols12 py-4 px-3 my-1 mx-lg-5 my-3 d-flex align-center justify-center">
-                  <h5 class="guide-flow__section__title text-md-h6 font-weight-bold mb-2">レンタル商品のご利用</h5>
+                  <h5 class="guide-flow__section__title text-md-h6 font-weight-bold my-2">レンタル商品のご利用</h5>
                 </div>
 
                 <div class="d-flex justify-center">
@@ -268,30 +266,30 @@
         </guideline-section>
 
         <div class="guide__border border-top"></div>
-        <div class="text-md-center color__4B5654 text-md-h6 text-sm-h5 font-weight-medium letter-space-01em mt-10">
+        <div class="sec__inner text-md-center color__4B5654 text-md-h6 text-sm-h5 font-weight-medium letter-space-01em mt-10">
           <p>実際にご利用を検討される場合は詳しいガイドラインを参照ください。</p>
           <p>不明点などがあればお気軽にお問い合わせくださいませ。</p>
+          <v-row class="mt-10">
+            <v-col cols="12">
+              <v-btn to="/guide/rental" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタルご利用ガイド</span>
+                <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-btn href="https://www.takenaka-co.co.jp/contact/product_form/" target="_blank" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 text-md-h6 font-weight-medium">お問い合わせフォーム</span>
+                <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-btn href="https://www.takenaka-co.co.jp/contact/#information" target="_blank" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
+                <span class="lh-crop-12 text-md-h6 font-weight-medium">各拠点連絡先</span>
+                <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
         </div>
-        <v-row class="mt-10">
-          <v-col cols="12">
-            <v-btn to="/guide/rental" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-              <span class="lh-crop-12 text-md-h6 font-weight-medium">レンタルご利用ガイド</span>
-              <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col cols="12" md="6">
-            <v-btn href="https://www.takenaka-co.co.jp/contact/product_form/" target="_blank" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-              <span class="lh-crop-12 text-md-h6 font-weight-medium">お問い合わせフォーム</span>
-              <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col cols="12" md="6">
-            <v-btn href="https://www.takenaka-co.co.jp/contact/#information" target="_blank" class="bg-white text-caption text-sm-body-2 guide__btn d-flex" color="headingText" elevation="2" outlined x-large>
-              <span class="lh-crop-12 text-md-h6 font-weight-medium">各拠点連絡先</span>
-              <v-icon class="guide__btn__icon" color="primary">mdi-chevron-right</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
 
       </div>
     </div>
@@ -314,9 +312,9 @@ export default {
   },
   head () {
     return {
-      title: "はじめての方へ -レンタルご利用ガイド-",
+      title: "はじめての方へ",
       meta: [
-        { hid: 'description', name: 'description', content: 'はじめての方へ -レンタルご利用ガイド- | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
+        { hid: 'description', name: 'description', content: 'はじめての方へ | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
       ]
     }
   },
@@ -326,7 +324,7 @@ export default {
   methods: {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'はじめての方へ -レンタルご利用ガイド-', path: '/introduce' })
+      this.$store.commit('breadCrumbs/addList', { name: 'はじめての方へ', path: '/introduce' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
   }
