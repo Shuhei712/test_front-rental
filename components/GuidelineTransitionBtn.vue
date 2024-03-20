@@ -1,34 +1,36 @@
 <template> 
-  <v-row class="guide__transition d-flex justify-space-around">
-    <v-col cols="12" md="6">
-      <v-row>
-        <v-col cols="1" class="d-flex justify-end align-center">
-          <a v-if="prev" :href="prev.url">
-            <v-icon color="primary"  x-large>mdi-chevron-left</v-icon>
-          </a>
-        </v-col>
-        <v-col cols="11" class="pl-0">
-          <v-btn v-if="prev" :href="prev.url" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
-            <span class="lh-crop-12 font-weight-medium">{{ prev.No + 1 }}. {{ prev.title }}</span>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-col>
-    <v-col cols="12" md="6">
-      <v-row>
-        <v-col cols="11" class="pr-0">
-          <v-btn v-if="next" :href="next.url" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
-            <span class="lh-crop-12 font-weight-medium">{{ next.No + 1 }}. {{ next.title }}</span>
-          </v-btn>
-        </v-col>
-        <v-col cols="1" class="d-flex justify-start align-center">
-          <a v-if="next" :href="next.url">
-            <v-icon color="primary"  x-large>mdi-chevron-right</v-icon>
-          </a>
-        </v-col>
-      </v-row>
-    </v-col>
-  </v-row>
+  <div class="guide__transition">
+    <v-row class="d-flex justify-space-around">
+      <v-col cols="12" md="6">
+        <v-row class="guide__transition__left">
+          <v-col cols="1" class="d-flex justify-end justify-md-start align-center pa-0">
+            <a v-if="prev" :href="prev.url">
+              <v-icon color="primary" x-large>mdi-chevron-left</v-icon>
+            </a>
+          </v-col>
+          <v-col cols="9" md="11" class="px-0 pr-md-2 px-lg-2">
+            <v-btn v-if="prev" :href="prev.url" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
+              <span class="lh-crop-12 font-weight-medium">{{ prev.No + 1 }}. {{ prev.title }}</span>
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-row class="guide__transition__light">
+          <v-col cols="9" md="11" class="px-0 pl-md-2 px-lg-2">
+            <v-btn v-if="next" :href="next.url" class="d-flex justify-center guide__transition__btn bg-white text-caption text-sm-body-2" color="primary" elevation="0" outlined x-large>
+              <span class="lh-crop-12 font-weight-medium">{{ next.No + 1 }}. {{ next.title }}</span>
+            </v-btn>
+          </v-col>
+          <v-col cols="1" class="d-flex justify-start justify-md-end  align-center pa-0">
+            <a v-if="next" :href="next.url">
+              <v-icon color="primary" x-large>mdi-chevron-right</v-icon>
+            </a>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
@@ -85,8 +87,17 @@ export default {
     &__btn{
       width: 100%;
     }
-    &__icon::before{
-      background-color: #fff;
+    &__left {
+      justify-content: start;
+      @include mq(xsm){
+        justify-content: center;
+      }
+    }
+    &__light {
+      justify-content: end;
+      @include mq(xsm){
+        justify-content: center;
+      }
     }
   }
 }
