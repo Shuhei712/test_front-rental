@@ -429,7 +429,7 @@
                           no-title
                           scrollable
                           range
-                          :show-current="initialMonth"
+                          :picker-date.sync="rentRangeInitial"
                           :events="today"
                           :event-color="todayColor"
                           :allowed-dates="allowedDates"
@@ -438,19 +438,19 @@
                         >
                           <div class="flex-grow-1 pl-3">
                             <p v-if="rentRangeDays > 90" class="red--text text-caption">90日以上の期間は選択できません</p>
-                            <p v-if="rentRange.length === 1" class="red--text text-caption">終了日を選択してください</p>
+                            <p v-if="rentRange.length === 1" class="text-caption">終了日を選択してください</p>
                             <div class="d-flex">
                               <v-spacer></v-spacer>
                               <v-btn
                                 text
-                                color="primary"
+                                color="error"
                                 @click="rentRange=[]"
                               >
                                 リセット
                               </v-btn>
                               <v-btn
                                 text
-                                color="primary"
+                                color="secondary"
                                 @click="$set(datePick, 1,false)">
                                 閉じる
                               </v-btn>
@@ -532,7 +532,7 @@
                               :day-format="(date) => new Date(date).getDate()"
                               no-title
                               scrollable
-                              :show-current="initialMonth"
+                              :picker-date.sync="returnInitial"
                               :events="today"
                               :event-color="todayColor"
                               :allowed-dates="allowedBusinessDates"
@@ -715,15 +715,17 @@ export default {
       rentJson: {
         DeliveryType:0,
         ReturnType:0,
+        DeliveryTime: '時間未定',
+        ReturnTime: '時間未定'
       },
       estJson: {},
       userInfo: null,
       headers: [
         { text: '商品名', value: 'ProductName', sortable: false, align: 'center' },
-        { text: '単価(円)', value: 'Price', sortable: false },
+        { text: '単価(円)', value: 'Price', sortable: false, align: 'right' },
         { text: '日数掛率', value: 'DayRate', sortable: false, width: '84px' },
         { text: '数量', value: 'Qty', sortable: false, width: '130px' },
-        { text: '小計(円)', value: 'SubTotal', sortable: false },
+        { text: '小計(円)', value: 'SubTotal', sortable: false, align: 'right' },
       ],
       estDialog: false,
       dialog: false,
@@ -738,7 +740,8 @@ export default {
       rentRangeMax: null,
       deliverMax: null,
       returnMin: null,
-      initialMonth: null,
+      rentRangeInitial: null,
+      returnInitial: null,
       today: [this.getToday()],
       todayColor: 'primary',
       concatRentRange: null,
@@ -785,11 +788,14 @@ export default {
       }
     },
     'rentDate.0'(value){
-        this.rentRangeMin = value
-        if(!this.rentRange.length){
-          this.returnMin = value
-          this.initialMonth = value
+      this.rentRangeMin = value
+      if(!this.rentRange.length){
+        this.returnMin = value
+        this.rentRangeInitial = value
+        if(!this.rentDate[1]){
+          this.returnInitial = value
         }
+      }
     },
     'rentDate.1'(value){
         this.rentRangeMax = value
@@ -802,18 +808,23 @@ export default {
         this.rentRangeMin = value[0]
         // this.concatRentRange = `${value[0]}~${value[0]}`
         // this.rentRangeDays = 1
-        // this.initialMonth = value[0]
       }else if( value.length === 2 ){
         this.concatRentRange = this.rentRange.join(' ~ ')
         this.rentRangeMin = this.rentDate[0]
         this.rentRangeMax = this.rentDate[1]
-        this.initialMonth = value[1]
+        if(!this.rentDate[1]){
+          this.returnInitial = value[1]
+        }
         this.setRange()
       }else{
         this.rentRangeMin = this.rentDate[0]
         this.concatRentRange = null
         this.rentRangeDays = null
-        this.initialMonth = null
+        if(!this.rentDate[0]&&!this.rentDate[1]){
+          this.returnInitial = null
+        }else if(this.rentDate[0]){
+          this.returnInitial = this.rentDate[0]
+        }
       }
     }
   },
@@ -840,10 +851,6 @@ export default {
           Authorization: `Bearer ${accessToken}`
         }
       })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       if(res.data.Status === 'TRUE'){
         this.cartInfo = res.data
       }else if(res.data.ErrorNo === 100002){
@@ -1074,10 +1081,13 @@ li{
   }
 }
 ::v-deep {
-  .v-date-picker-table__current.accent--text{
-      border: none;
-      color: initial!important;
-    }
+  .v-picker .accent--text{
+    border: none;
+    color: initial!important;
+  }
+  .theme--light.v-btn.v-btn--disabled {
+    color: rgba(0, 0, 0, 0.26) !important;
+  }
 }
 .border-bottom{
   border-bottom: 1px solid #dddddd;

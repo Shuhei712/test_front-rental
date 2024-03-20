@@ -59,6 +59,7 @@ export default {
     changeChild(title, path){
       this.title = title
       this.setBreadCrumbs(title, path)
+      if (path==='/register') this.user = {}
       if(!this.checkbox && this.$route.hash) this.$router.push('/register')
     }
   }

@@ -291,10 +291,10 @@ export default {
       result: null,
       headers: [
         { text: '商品名', value: 'ProductName', sortable: false, align: 'center' },
-        { text: '単価(円)', value: 'Price', sortable: false },
+        { text: '単価(円)', value: 'Price', sortable: false, align: 'right' },
         { text: '日数掛率', value: 'DayRate', sortable: false, width: '84px' },
         { text: '数量', value: 'Qty', sortable: false },
-        { text: '小計(円)', value: 'SubTotal', sortable: false },
+        { text: '小計(円)', value: 'SubTotal', sortable: false, align: 'right' },
       ],
     }
   },
