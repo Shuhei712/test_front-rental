@@ -129,7 +129,7 @@
               :maker="list.MakerName"
               :category-name01="list.CategoryNmae01"
               :category-name02="list.CategoryNmae02"
-              :price-value="list.PriceValue"
+              :price-value="list.PriceValue||''"
               :price-type="list.PriceType"
               :price-unit="list.PriceUnit"
               :tariff-id="list.TariffID"
@@ -202,7 +202,7 @@ export default {
     } else {
       await this.searchProducts()
     }
-    
+
     this.setBreadCrumbs(this.$route.query.type)
     this.$store.commit('loading/changeStatus', false)
   },
@@ -456,7 +456,7 @@ export default {
       } else {
         this.selectedTagLists = []
       }
-    
+
       if(searchConditionInfo.PriceFlg) {
         this.selectedPriceLists.push({id: searchConditionInfo.PriceRangeID, name: searchConditionInfo.PriceRangeName})
       } else {
