@@ -55,7 +55,7 @@
                 </li>
               </ul>
             </nav>
-            <v-form class="header__search d-flex align-center mt-5 mt-lg-0 ml-lg-2" @submit.prevent>
+            <v-form class="header__search d-flex mt-5 mt-lg-0 ml-lg-2" @submit.prevent>
               <v-text-field
                 v-model="keyword"
                 color="primary"
@@ -64,14 +64,14 @@
                 dense
                 hide-details="auto"
                 @keyup.enter="searchKeyword"></v-text-field>
-              <!-- <v-btn color="primary" class="text-white ml-2" :to="'/products?type=3&keyword=' + keyword">
-                <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索 -->
               <v-btn color="primary"
                 max-width="40"
                 min-width="53"
+                height="auto"
+                elevation="0"
                 class="text-white ml-2"
-                :to="'/products?type=3&keyword=' + keyword">
-                <v-icon class="mr-1" color="#fff">mdi-magnify</v-icon>
+                :href="'/products?type=3&keyword=' + keyword">
+                <v-icon color="#fff">mdi-magnify</v-icon>
               </v-btn>
             </v-form>
             <div v-if="isLogin" class="header__member d-flex text-center py-6 py-lg-0 ms-2">
@@ -165,7 +165,7 @@
             <v-icon large color="lightGray">mdi-close-circle-outline</v-icon>
           </v-btn>
         </div>
-        <v-form class="d-flex align-center" @submit.prevent>
+        <v-form class="d-flex" @submit.prevent>
           <v-text-field
             ref="searchWindow"
             v-model="keyword"
@@ -176,8 +176,11 @@
             prepend-inner-icon="mdi-magnify"
             hide-details="auto"
             @keyup.enter="searchKeyword"></v-text-field>
-          <v-btn color="primary" class="text-white ml-2" :to="'/products?type=3&keyword=' + keyword">
-            <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
+          <v-btn color="primary" class="text-white ml-2"
+            height="auto" elevation="0"
+            :href="'/products?type=3&keyword=' + keyword"
+          >
+            <v-icon color="#fff">mdi-magnify</v-icon>
           </v-btn>
         </v-form>
       </div>

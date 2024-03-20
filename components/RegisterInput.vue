@@ -184,6 +184,8 @@
                       hide-details="auto"
                       placeholder="0123456789"
                       inputmode="numeric"
+                      type="tel"
+                      autocomplete="tel"
                       :error-messages="errors"
                       @blur="syncedUser.Tel=toNum($event.target.value)"
                     ></v-text-field>
@@ -208,6 +210,8 @@
                         hide-details="auto"
                         placeholder="0123456789"
                         inputmode="numeric"
+                        type="tel"
+                        autocomplete="tel"
                         :error-messages="errors"
                         @blur="syncedUser.Fax=toNum($event.target.value)"
                       ></v-text-field>
@@ -244,9 +248,12 @@
                       outlined
                       dense
                       hide-details="auto"
-                      inputmode="email"
+                      type="email"
+                      autocomplete="email"
                       :error-messages="errors"
+                      @change="checkEmail"
                     ></v-text-field>
+                    <p v-if="mailDuplicateErr" class="red--text text-caption">このメールアドレスはすでに使用されています</p>
                   </v-col>
                 </v-row>
               </ValidationProvider>
@@ -268,6 +275,7 @@
                       outlined
                       dense
                       hide-details="auto"
+                      autocomplete="off"
                       :error-messages="errors"
                       :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                       :type="show ? 'text':'password'"
@@ -352,7 +360,7 @@
                   @click="reset()"
                 >リセット</v-btn> -->
                 <v-btn large
-                  :disabled="ObserverProps.invalid"
+                  :disabled="ObserverProps.invalid||mailDuplicateErr"
                   class="my-4 mx-2 white--text"
                   color="primary"
                   @click="confirm()"
@@ -403,6 +411,7 @@ export default {
     return {
       show: false,
       loading: false,
+      mailDuplicateErr: false,
     }
   },
   computed: {
@@ -440,6 +449,16 @@ export default {
     //   this.$refs.form.reset()
     //   this.$refs.observer.reset()
     // },
+    async checkEmail(email){
+      if(!email) return
+      const param = new URLSearchParams()
+      param.append('MailAddress', email)
+      const res = await this.$memberAxios.post(`auth/checkDuplicateMailAddr`, param, {
+        timeout: 15000,
+      })
+      if (res.data.ErrorNo === 111301) this.mailDuplicateErr = true
+      else this.mailDuplicateErr = false
+    },
     toNum(e){
       return e.replace(/[０-９]/g, function(m) {
         return "０１２３４５６７８９".indexOf(m)
