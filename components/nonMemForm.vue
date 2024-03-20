@@ -80,6 +80,9 @@
                 v-model="incorporation" :readonly="read"
                 type="month"
                 locale="jp-ja"
+                :active-picker.sync="activePicker"
+                :max="incorporateMaxDate"
+                min="1700-01"
                 @input="datePicker = false"
               ></v-date-picker>
             </v-menu>
@@ -382,7 +385,9 @@ export default {
         },
       ],
       datePicker: false,
+      activePicker: null,
       incorporation: null,
+      incorporateMaxDate: this.getMaxDate(),
       services: [
         '広告代理店','イベント企画制作会社','会議運営サービス/学会代理店(PCO)','ほかプロダクション','放送局/マスコミ','イベント制作＋建装/ディスプレイ会社','デザイン/設計事務所','旅行代理店','ホテル/ホール/会館/結婚式場/展示会場','ホテル/ホール/会館/結婚式場/展示会場付業者','同業者(JVR系)','同業者(JVR以外)','同業者(総合レンタル)','同業者(音響系)','関連業者(映像専門以外)','建装/舞台技術/ディスプレイ会社','映像中継/収録技術','映像/音響メーカー/機器代理店/販売特約店','法人/団体(エンドユーザー)','学校法人(大学/専門学校)','法人/各種団体(学術会議系)','製薬会社/医療機器ﾒｰｶｰ','個人(エンドユーザー)'
       ],
@@ -433,7 +438,10 @@ export default {
     },
     'incorporation'(val){
       this.userJson.FOUNDED = this.dateFormat('remove',val,'-')
-    }
+    },
+    datePicker (val) {
+      val && setTimeout(() => (this.activePicker = 'YEAR'))
+    },
   },
   created() {
     this.$emit('update:valid', this.isValid)
@@ -511,6 +519,12 @@ export default {
       return e.replace(/[０-９]/g, function(m) {
         return "０１２３４５６７８９".indexOf(m)
       }).replace(/-|ー|－/g,'')
+    },
+    getMaxDate(){
+      const today = new Date()
+      const year = today.getFullYear()
+      const month = String(today.getMonth() + 1).padStart(2, '0')
+      return `${year+1}-${month}`
     },
     async submit(contentKey, completePath) {
       this.isLoading = true
