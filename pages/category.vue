@@ -125,7 +125,7 @@ export default {
     },
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'カテゴリーから探す', path: '/category' })
+      this.$store.commit('breadCrumbs/addList', { name: 'カテゴリから探す', path: '/category' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     searchKeyword() {

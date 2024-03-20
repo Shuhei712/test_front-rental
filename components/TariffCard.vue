@@ -8,6 +8,7 @@
           <v-data-table
             :headers="tariffHeaders"
             :items="items"
+            :page.sync="page"
             :items-per-page="5"></v-data-table>
         </v-card-text>
         <v-divider></v-divider>
@@ -39,6 +40,7 @@ export default {
         { text: '掛け率', value: 'RateValue', align: 'start' },
         { text: '料金(円)', value: 'Price', align: 'start', sortable: false },
       ],
+      page: 1,
     }
   },
   computed: {
@@ -54,6 +56,7 @@ export default {
   methods: {
     closeDialog() {
       this.tariffDialog = false
+      this.page = 1
     },
   },
 }
