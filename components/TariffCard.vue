@@ -50,13 +50,13 @@ export default {
       },
       set(value) {
         this.$emit('change-tariff-dialog', value)
+        if(!value) this.page = 1
       },
     },
   },
   methods: {
     closeDialog() {
       this.tariffDialog = false
-      this.page = 1
     },
   },
 }
