@@ -331,17 +331,18 @@
       <v-card class="pa-5 text-md-center">
         <p>
           <span class="note">レンタルのお申込みには、本人確認の登録が必要になります。</span><br>
-          <template v-if="rentalFlg===0">
-            <span class="red--text">本人確認の登録をお願いいたします。</span>
-          </template>
-          <template v-else-if="rentalFlg===5">
+          <template v-if="rentalFlg===5">
             <span class="red--text">現在、本人確認の登録申請中でございます。</span><br>
             申請が通るまで、もうしばらくお待ちください。
+          </template>
+          <template v-else>
+            <p class="red--text mb-2">本人確認の登録をお願いいたします。</p>
+            現在の申請状況：<span class="d-inline-block">{{ rentalFlg===9 ? '不備あり（再登録が必要です）' : '未提出' }}</span>
           </template>
         </p>
         <v-card-actions class="justify-center">
           <v-btn
-            v-if="rentalFlg===0"
+            v-if="rentalFlg!==5"
             class="mt-4 mx-2 white--text"
             dark
             color="primary"

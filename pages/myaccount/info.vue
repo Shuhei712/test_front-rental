@@ -7,16 +7,17 @@
         <v-form
           ref="form">
           <v-container>
-            <register-input :user.sync="userUpInfo" :result.sync="result" :login-id="loginID" :member-id="userInfo.MemberID"></register-input>
+            <register-input
+              :user.sync="userUpInfo"
+              :result.sync="result"
+              :login-id="loginID"
+              :member-id="userInfo.MemberID"
+              :member-email="userInfo.Email"
+              @mail-duplicate="mailDuplicateErr=$event"
+            ></register-input>
             <div class="text-center mt-6">
-              <!-- <v-btn
-                class="my-4 mx-2 white--text"
-                color="secondary"
-                to="/myaccount"
-                :disabled="loading"
-              >マイページ</v-btn> -->
               <v-btn
-                :disabled="(ObserverProps.invalid)"
+                :disabled="ObserverProps.invalid||mailDuplicateErr"
                 class="my-4 mx-2 white--text"
                 color="primary"
                 :loading="loading"
@@ -54,7 +55,8 @@ export default {
       userUpInfo: {},
       loading: false,
       result: '',
-      resultDialog: false
+      resultDialog: false,
+      mailDuplicateErr: false
     }
   },
   async fetch() {
@@ -104,10 +106,6 @@ export default {
           Authorization: `Bearer ${accessToken}`
         }
       })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       this.$setLog('会員情報', '更新', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.result = 'success'

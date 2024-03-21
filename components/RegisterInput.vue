@@ -404,6 +404,11 @@ export default {
       type: Number,
       required: false,
       default: null
+    },
+    memberEmail:{
+      type: String,
+      required: false,
+      default: null
     }
   },
 
@@ -440,6 +445,11 @@ export default {
       }
     }
   },
+  watch: {
+    mailDuplicateErr(val){
+      if (this.memberId) this.$emit('mail-duplicate', val)
+    }
+  },
   methods: {
     confirm(){
       this.$emit('update:result', '')
@@ -450,7 +460,10 @@ export default {
     //   this.$refs.observer.reset()
     // },
     async checkEmail(email){
-      if(!email) return
+      if (!email||this.memberEmail===email) {
+        this.mailDuplicateErr = false
+        return
+      }
       const param = new URLSearchParams()
       param.append('MailAddress', email)
       const res = await this.$memberAxios.post(`auth/checkDuplicateMailAddr`, param, {
