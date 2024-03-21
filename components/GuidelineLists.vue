@@ -22,6 +22,7 @@
             <v-list-item
               v-for="section in menuItem.sections"
               :key="section.title"
+              v-scroll-to="{ el: '#' + section.id,duration: 500,offset: -20 }"
               :to="section.id ? '/guide/'+key+'#'+section.id : '/guide/'+key">
               <v-list-item-content>
                 <v-list-item-title class="d-flex align-center pl-3">
@@ -46,7 +47,7 @@
               {{ openPanel===0 ? 'mdi-minus' : 'mdi-plus' }}
             </v-icon>
           </template>
-          <h3 class="guide__heading text-md-h5 d-flex align-center justify-center text-gray font-weight-medium"><v-icon class="mr-2" color="accent">mdi-menu</v-icon>ガイドライン目次</h3>
+          <h3 class="guide__heading text-md-h5 d-flex align-center justify-center text-gray font-weight-medium"><v-icon class="mr-2" color="accent">mdi-menu</v-icon>ご利用ガイド目次</h3>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="v-list__color">
           <div class="guidelineList__sp__lists my-5">
@@ -108,6 +109,11 @@ export default {
     },
   },
   mounted() {
+    this.$nextTick(() => {
+      this.ensureImagesLoaded(() => {
+        this.scrollToHash();
+      });
+    });
     window.addEventListener('scroll', this.onScroll)
     this.windowWidth = window.innerWidth
     window.addEventListener('resize', this.resizeWindow)
@@ -118,6 +124,47 @@ export default {
     }
   },
   methods: {
+    // ページ内のすべての画像が読み込まれたかをチェックし、全て読み込まれた後にスクロール処理を実行する
+    ensureImagesLoaded(callback) {
+      const images = document.querySelectorAll('img');
+      let loadedCount = 0;
+      images.forEach(image => {
+        if (image.complete) {
+          loadedCount++;
+        } else {
+          image.addEventListener('load', () => {
+            loadedCount++;
+            if (loadedCount === images.length) {
+              callback();
+            }
+          });
+          image.addEventListener('error', () => {
+            loadedCount++;
+            if (loadedCount === images.length) {
+              callback();
+            }
+          });
+        }
+      });
+      if (loadedCount === images.length) {
+        callback();
+      }
+    },
+    scrollToHash() {
+      const hash = window.location.hash;
+      if (hash) {
+        const refName = hash.replace('#', '');
+        const element = document.getElementById(refName);
+        if (element) {
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+    },
+
     resizeWindow() {
       const menuBP = 1263
       this.windowWidth = window.innerWidth

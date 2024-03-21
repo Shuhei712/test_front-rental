@@ -19,6 +19,7 @@ $lightGray: #9da5a4;
 
 // ブレイクポイント
 $breakpoints: (
+  'xsm': 'screen and (max-width: 449.9px)',
   'sm': 'screen and (max-width: 599.9px)',
   'md': 'screen and (max-width: 959.9px)',
   'lg': 'screen and (max-width: 1263.9px)',
@@ -315,7 +316,7 @@ p {
 .popup {
   z-index: 600;
 }
-.menuable__content__active{ // date-picker
+.menuable__content__active:has(.v-picker){ // date-picker
   z-index: 101 !important;
 }
 

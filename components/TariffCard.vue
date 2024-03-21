@@ -50,6 +50,10 @@ export default {
       },
       set(value) {
         this.$emit('change-tariff-dialog', value)
+        if (!value) {
+          const elements = document.getElementsByClassName('tariff__content')
+          if(elements.length) elements[0].scrollTop = 0
+        }
         if(!value) this.page = 1
       },
     },

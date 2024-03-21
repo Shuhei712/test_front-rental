@@ -58,11 +58,14 @@
 
             <!-- 画像 -->
             <template v-for="(img, imgIndex) in item.imgs">
-              <div :key="`guide-img_${imgIndex}`" class="mt-6 d-flex justify-center">
-                <img
-                  :src="img.src"
-                  :alt="img.alt"
-                  class="guide__img">
+              <div :key="`guide-img_${imgIndex}`">
+                <guideline-image
+                  :guideline-img="img.src"
+                  :guideline-alt="img.alt" 
+                  :attr-width="img.width" 
+                  :attr-height="img.height" 
+                  :figure-flg="img.figureFlg">
+                </guideline-image>
               </div>
             </template>
 
@@ -178,34 +181,6 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/css/common.scss';
 .guide {
-  // &__img {
-  //   border: 1px solid $accent;
-  //   border-radius: 10px;
-  //   overflow: hidden;
-  //   width: 60%;
-  //   @include mq(md){
-  //     width: 60%;
-  //   }
-  //   @include mq(sm){
-  //     width: 100%;
-  //   }
-  // }
-  &__img {
-    width: 100%;
-    max-width: 550px;
-    border: 2px solid $accent;
-    border-radius: 10px;
-    // &__nonmember{
-    //   border: 2px solid $primary;
-    // }
-    @include mq(md){
-      max-width: 550px;
-    }
-    @include mq(sm){
-      max-width: 700px;
-    }
-  }
-
   &__sub {
     --circleSize: 50px;
     background-color: #ddd;

@@ -68,7 +68,7 @@
                     min="1"
                     max="999"
                     class="d-inline-block"
-                    @change="changeQuantity(item.ProductID, $event)"
+                    @blur="changeQuantity(item.ProductID, $event)"
                   ></v-text-field>
                   <v-btn
                     class="ml-2"
@@ -137,7 +137,7 @@
                           outlined
                           dense
                           hide-details="auto"
-                          placeholder="タケナカ内覧会2023"
+                          placeholder="第××回 ◯◯◯◯展"
                           counter="50"
                           :error-messages="errors"
                         ></v-text-field>
@@ -926,7 +926,7 @@ export default {
       this.deleteLoading = false
     },
     async changeQuantity(ProductID, Qty){
-      let qty = parseInt(Qty, 10)
+      let qty = parseInt(Qty.target.value, 10)
       if( !qty || qty <= 0 || qty > 999 ){
         qty = 1
       }

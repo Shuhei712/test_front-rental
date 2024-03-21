@@ -27,7 +27,7 @@
                 :note-list="{
                   type: 'bold-note',
                   items: [
-                    '5営業日を切っている場合、キャンセル料金が発生します。'
+                    '5営業日を切っている場合、キャンセル料金が発生する場合があります。'
                   ]
                 }"
                 class="mt-6"
@@ -40,10 +40,22 @@
                 </v-col>
               </v-row>
               <div class="my-16">
-                <guideline-image guideline-img="/img/guide/cancel/cancel_not_included.svg" guideline-alt="図：利用開始日の5日前に営業外の日が含まれない場合の例" figure-flg="true"></guideline-image>
+                <guideline-image
+                  guideline-img="/img/guide/cancel/cancel_not_included.svg"
+                  guideline-alt="図：利用開始日の5日前に営業外の日が含まれない場合の例" 
+                  attr-width="300" 
+                  attr-height="147" 
+                  figure-flg="true">
+                </guideline-image>
               </div>
               <div>
-                <guideline-image guideline-img="/img/guide/cancel/cancel_included.svg" guideline-alt="図：営業外の日が含まれる場合の例" figure-flg="true"></guideline-image>
+                <guideline-image
+                  guideline-img="/img/guide/cancel/cancel_included.svg" 
+                  guideline-alt="図：営業外の日が含まれる場合の例" 
+                  attr-width="300" 
+                  attr-height="147" 
+                  figure-flg="true">
+                </guideline-image>
               </div>
             </template>
 
