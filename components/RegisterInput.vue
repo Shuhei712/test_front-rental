@@ -6,9 +6,9 @@
         <ValidationObserver v-slot="ObserverProps" ref="observer">
           <v-form ref="form">
             <v-container>
-              <p v-if="result==='120107'||result==='120108'||result==='120201'" class="red--text mb-5">
+              <!-- <p v-if="result==='120107'||result==='120108'||result==='120201'" class="red--text mb-5">
                 ご記入のメールアドレスは既に使用されています。
-              </p>
+              </p> -->
               <v-row v-if="memberId" class="my-1">
                 <v-col cols="12" md="4" class="pb-0">会員番号</v-col>
                 <v-col cols="12" md="8">{{ memberId }}</v-col>
@@ -453,7 +453,18 @@ export default {
   methods: {
     confirm(){
       this.$emit('update:result', '')
+      if(!this.syncedUser.NecDocFlg) this.resetUserInfo()
       this.$router.push('/register#confirm')
+    },
+    resetUserInfo(){
+      this.syncedFile = []
+      if (this.syncedUser.MemberType===0) return
+      const item = [
+        'HOfficeZipCode', 'HOfficePrefect', 'HOfficeAddress', 'HOfficeTel', 'HOfficeFax', 'Representative', 'Incorporation', 'CorpNumber', 'CorpType', 'PaymentMethod', 'PayeeName', 'BillingEmail'
+      ]
+      item.forEach((key) => {
+        this.$delete(this.syncedUser, key)
+      })
     },
     // reset() {
     //   this.$refs.form.reset()

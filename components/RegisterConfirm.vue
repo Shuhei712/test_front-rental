@@ -346,17 +346,10 @@ export default {
       param.append('Password', this.pass)
       param.append('JsonData', userInfo)
       const res = await this.$memberAxios.post('member/', param)
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       if(res.data.Status === 'TRUE'){
         this.syncedResult = 'success'
       }else{
         this.syncedResult = String( res.data.ErrorNo )
-        if(res.data.ErrorNo===120107){
-          this.$router.push('/register#input')
-          return
-        }
       }
       this.resultDialog = true
       this.loading = false
