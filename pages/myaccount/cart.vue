@@ -137,7 +137,7 @@
                           outlined
                           dense
                           hide-details="auto"
-                          placeholder="タケナカ内覧会2023"
+                          placeholder="第××回 ◯◯◯◯展"
                           counter="50"
                           :error-messages="errors"
                         ></v-text-field>

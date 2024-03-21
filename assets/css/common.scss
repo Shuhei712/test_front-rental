@@ -315,7 +315,7 @@ p {
 .popup {
   z-index: 600;
 }
-.menuable__content__active{ // date-picker
+.menuable__content__active:has(.v-picker){ // date-picker
   z-index: 101 !important;
 }
 
