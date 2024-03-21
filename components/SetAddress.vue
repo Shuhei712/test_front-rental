@@ -154,7 +154,6 @@ export default {
           this.prefect = data.results[0].address1
           this.address = data.results[0].address2 + data.results[0].address3
         }).catch(() => {
-        // console.log(err)
           return false
         })
       this.loading = false

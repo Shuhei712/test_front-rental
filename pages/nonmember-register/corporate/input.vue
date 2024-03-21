@@ -45,7 +45,6 @@ export default {
     this.$store.commit('register/deleteErr', true)
     if (storeInfo.NAME) this.userJson = JSON.parse(JSON.stringify(storeInfo))
     if (storeFile.length) this.fileArr = structuredClone(storeFile)
-    // console.log('FILe=',storeInfo,storeFile,this.fileArr)
     this.$store.commit('loading/changeStatus', false)
   },
   head () {

@@ -213,7 +213,6 @@ export default ({ store, $config, redirect, route, app }, inject) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log(res)
     if (res.data.Status === 'TRUE') {
       return true
       // }else if(res.data.ErrorNo===100002){
