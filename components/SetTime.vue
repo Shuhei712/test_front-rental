@@ -57,7 +57,6 @@ export default {
       }
     },
     timeNum(){
-      // console.log(this.minH)
       const arr = ['時間未定']
       if(this.period){
         arr.push('10:00-12:00','12:00-15:00','15:00-18:00')

@@ -250,7 +250,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_category_list_search.php', param)
-      // console.log(res)
       this.searchCategoryLists = res.CategoryRootList
     },
     async getMakerListforSearch() {
@@ -259,7 +258,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('CategoryID', this.presentCategoryID === undefined ? '' : this.presentCategoryID)
       const res = await this.$axios.$post('get_maker_list_search.php', param)
-      // console.log(res)
       this.searchMakerLists = res.MakerIndexList
     },
     async getTagListforSearch() {
@@ -268,7 +266,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('CategoryID', this.presentCategoryID === undefined ? '' : this.presentCategoryID)
       const res = await this.$axios.$post('get_tag_list_search.php', param)
-      // console.log(res)
       this.searchTagLists = res.FeatureCategoryList
     },
     async getPriceListforSearch() {
@@ -276,7 +273,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_price_range_list.php', param)
-      // console.log(res)
       this.searchPriceLists = res.PriceRangeList
     },
     async getFilterCondition() {
@@ -303,7 +299,6 @@ export default {
       param.append('PageNo', this.page)
       this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
-      // console.log(res)
       this.productLists = res.SearchProductList
       this.searchProductListCount = res.SearchAllCnt
       this.setPresentCategoryID()
@@ -327,7 +322,6 @@ export default {
       param.append('PageNo', this.page)
       this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
-      // console.log(res)
       this.conditionalSearchFlg = true
       this.productLists = res.SearchProductList
       this.searchProductListCount = res.SearchAllCnt

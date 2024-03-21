@@ -78,7 +78,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_menu_list.php', param)
-      // console.log(res)
       this.menuLists = res.MenuRootList
     },
     async getNewsList() {
@@ -86,7 +85,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_news_list_top.php', param)
-      // console.log(res)
       this.newsLists = res.NewsReleaseList
     },
     async getPickupList() {
@@ -94,7 +92,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_pickup_list_top.php', param)
-      // console.log(res)
       this.pickupLists = res.NewsReleaseList
     },
     async getNewProductList() {
@@ -103,7 +100,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ListMaxCnt', 4)
       const res = await this.$axios.$post('get_new_product_list_top.php', param)
-      // console.log(res)
       this.newProductLists = res.NewProductList
     },
     async getSpecialPageList() {
@@ -111,7 +107,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_special_page_list_top.php', param)
-      // console.log(res)
       this.specialPageLists = res
     },
     async getPickUpTagList() {
@@ -120,7 +115,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ListMaxCnt', 4)
       const res = await this.$axios.$post('get_pickup_tag_list_top.php', param)
-      // console.log(res)
       this.pickupTagLists = res
     },
     resetBreadCrumbs() {
