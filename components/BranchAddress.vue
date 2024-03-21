@@ -87,10 +87,6 @@ export default {
           Authorization: `Bearer ${accessToken}`
         }
       })
-
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       if(res.data.Status === 'TRUE'){
         this.branchList = res.data.ShopList
         this.$emit('get-branch', this.branchList)

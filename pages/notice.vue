@@ -78,7 +78,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_news_list.php', param)
-      // console.log(res)
       this.newsLists = res.NewsReleaseList
     },
     handleToggle(index) {
