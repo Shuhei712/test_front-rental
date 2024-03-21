@@ -93,6 +93,7 @@ export default {
     UNDER_NEW_PRODUCT_DAY: process.env.UNDER_NEW_PRODUCT_DAY,
     MEMBER_API_URL: process.env.API_MEMBER_URL,
     MEMBER_API_BASE_URL: process.env.API_MEMBER_BASE_URL,
+    NONMEMBER_API_URL: process.env.API_NONMEMBER_URL,
     DEBUG_MODE: process.env.DEBUG_MODE,
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
