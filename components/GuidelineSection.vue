@@ -32,8 +32,8 @@ export default {
     padding-top: 100px;
     margin-top: -100px;
     @include mq(lg){
-      padding-top: 130px;
-      margin-top: -130px;
+      padding-top: 140px;
+      margin-top: -140px;
     }
     width: 100%;
   }

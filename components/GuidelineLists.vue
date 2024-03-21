@@ -109,6 +109,11 @@ export default {
     },
   },
   mounted() {
+    this.$nextTick(() => {
+      this.ensureImagesLoaded(() => {
+        this.scrollToHash();
+      });
+    });
     window.addEventListener('scroll', this.onScroll)
     this.windowWidth = window.innerWidth
     window.addEventListener('resize', this.resizeWindow)
@@ -117,24 +122,49 @@ export default {
     } else {
       this.menuFlg = false
     }
-    this.$nextTick(function () {
+  },
+  methods: {
+    // ページ内のすべての画像が読み込まれたかをチェックし、全て読み込まれた後にスクロール処理を実行する
+    ensureImagesLoaded(callback) {
+      const images = document.querySelectorAll('img');
+      let loadedCount = 0;
+      images.forEach(image => {
+        if (image.complete) {
+          loadedCount++;
+        } else {
+          image.addEventListener('load', () => {
+            loadedCount++;
+            if (loadedCount === images.length) {
+              callback();
+            }
+          });
+          image.addEventListener('error', () => {
+            loadedCount++;
+            if (loadedCount === images.length) {
+              callback();
+            }
+          });
+        }
+      });
+      if (loadedCount === images.length) {
+        callback();
+      }
+    },
+    scrollToHash() {
       const hash = window.location.hash;
       if (hash) {
         const refName = hash.replace('#', '');
-        setTimeout(() => {
-          const element = document.getElementById(refName);
-          if (element) {
-            const elementPosition = element.getBoundingClientRect().top+130 + window.pageYOffset - 130; // ここで100px上にオフセット
-            window.scrollTo({
-              top: elementPosition,
-              behavior: 'smooth'
-            });
-          }
-        }, 300);
+        const element = document.getElementById(refName);
+        if (element) {
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+          });
+        }
       }
-    });
-  },
-  methods: {
+    },
+
     resizeWindow() {
       const menuBP = 1263
       this.windowWidth = window.innerWidth
