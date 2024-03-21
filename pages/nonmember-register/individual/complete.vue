@@ -1,5 +1,5 @@
 <template>
-  <section id="top" class="article">
+  <section v-if="!$fetchState.pending && !$fetchState.error" id="top" class="article">
     <to-top-btn></to-top-btn>
     <top-bar title="ご入会申込書フォーム 完了" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="input__inner py-16 px-3 px-lg-0">

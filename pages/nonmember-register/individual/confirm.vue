@@ -36,7 +36,6 @@ export default {
       fileArr: [],
       read: true,
       contentKey: 'Contact_MemberRegist',
-      url: 'https://contact-form-test.takenaka-co.co.jp/',
       path: '/nonmember-register/individual',
       mailText: '',
     }
@@ -69,7 +68,7 @@ export default {
     async submit() {
       await this.$refs.form.submit(this.contentKey, this.path)
     },
-    async registerInfo({accessKey, uploadKey}){
+    async registerInfo({accessKey, uploadKey, url}){
       const param = new URLSearchParams()
       param.append('ContentsKey', this.contentKey)
       param.append('AccessKey', accessKey)
@@ -85,7 +84,7 @@ export default {
         fileCnt++
         param.append(`UPLOAD_FILE_NAME_${fileCnt}`, file.name)
       })
-      const res = await this.$axios.post(`${this.url}access_contact_attach_on_mailtext.php`, param, {
+      const res = await this.$axios.post(`${url}access_contact_attach_on_mailtext.php`, param, {
         timeout: 15000,
       })
       if (res.data.Status!=='TRUE') {

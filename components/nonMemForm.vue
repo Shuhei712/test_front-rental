@@ -393,7 +393,7 @@ export default {
       ],
       isAgree: false,
       mailText: '',
-      url: 'https://contact-form-test.takenaka-co.co.jp/',
+      url: this.$config.NONMEMBER_API_URL,
       isLoading: false,
     }
   },
@@ -533,7 +533,8 @@ export default {
       if (uploadKey) {
         await this.$emit('registerInfo',{
           accessKey,
-          uploadKey
+          uploadKey,
+          url: this.url
         })
       } else this.$router.push(`${completePath}/complete`)
       // this.isLoading = false
