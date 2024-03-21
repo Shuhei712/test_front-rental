@@ -7,7 +7,7 @@
         <div class="guide_introduce mb-10 d-flex justify-center align-center">
           <img class="guide_introduce_img" src="/img/guide/introduce/introduce_top.svg" alt="はじめての方へ">
           <div class="guide_introduce_text text-center text-white pt-10 pb-5 pb-sm-0">
-            <h3 class="text-h4 text-sm-h3 text-md-h2 zen-kaku-gothic bold pt-md-7">はじめての方へ</h3>
+            <h3 class="text-h5 text-sm-h3 text-md-h2 zen-kaku-gothic bold pt-md-7">はじめての方へ</h3>
             <p class="mt-md-5 text-sm-h6 font-weight-medium">- レンタルご利用ガイド -</p>
           </div>
         </div>
