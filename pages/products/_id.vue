@@ -355,16 +355,16 @@
       <v-card class="pa-5 text-center">
         <p class="mb-4">商品をカートに追加しました。</p>
         <v-btn
-          color="primary"
-          class="mt-4 mx-1 white--text"
-          :to="'/myaccount/cart'">
-          カートを見る
-        </v-btn>
-        <v-btn
           color="outline"
           class="mt-4 mx-1 white--text"
           @click="addCartDialog=false">
           戻る
+        </v-btn>
+        <v-btn
+          color="primary"
+          class="mt-4 mx-1 white--text"
+          :to="'/myaccount/cart'">
+          カートを見る
         </v-btn>
       </v-card>
     </v-dialog>

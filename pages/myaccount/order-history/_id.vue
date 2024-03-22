@@ -342,16 +342,16 @@
         </p>
         <v-card-actions class="justify-center">
           <v-btn
+            class="mt-4 mx-2"
+            color="secondary"
+            @click="idDialog=false">戻る
+          </v-btn>
+          <v-btn
             v-if="rentalFlg!==5"
             class="mt-4 mx-2 white--text"
             dark
             color="primary"
             :to="'/myaccount/identification'">本人確認の登録
-          </v-btn>
-          <v-btn
-            class="mt-4 mx-2"
-            color="secondary"
-            @click="idDialog=false">戻る
           </v-btn>
         </v-card-actions>
       </v-card>
