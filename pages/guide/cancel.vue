@@ -20,14 +20,14 @@
             <!-- 注文後のキャンセルについて -->
             <template #cancel-3__note>
               <p>
-                利用開始日まで5営業日を切っている場合、キャンセル操作をすることができません。<br>
+                商品引き渡し日まで5営業日を切っている場合、キャンセル操作をすることができません。<br>
                 その場合は、以下まで直接ご連絡ください。
               </p>
               <guideline-footnote
                 :note-list="{
                   type: 'bold-note',
                   items: [
-                    '5営業日を切っている場合、キャンセル料金が発生する場合があります。'
+                    '商品引き渡し日まで5日を切っている場合、キャンセル料金が発生します。'
                   ]
                 }"
                 class="mt-6"
@@ -44,7 +44,7 @@
                   guideline-img="/img/guide/cancel/cancel_not_included.svg"
                   guideline-alt="図：利用開始日の5日前に営業外の日が含まれない場合の例" 
                   attr-width="300" 
-                  attr-height="147" 
+                  attr-height="137" 
                   figure-flg="true">
                 </guideline-image>
               </div>
@@ -53,7 +53,7 @@
                   guideline-img="/img/guide/cancel/cancel_included.svg" 
                   guideline-alt="図：営業外の日が含まれる場合の例" 
                   attr-width="300" 
-                  attr-height="147" 
+                  attr-height="137" 
                   figure-flg="true">
                 </guideline-image>
               </div>

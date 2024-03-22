@@ -1,5 +1,5 @@
 <template>
-  <div class="guide__footnote">
+  <div class="guide__footnote text-body-2 text-sm-body-1">
     <div :class="noteList.type === 'number-note' || noteList.type === 'bold-note' || noteList.type === 'attention-note' ? 'font-weight-bold' : ''">
       <template v-if="noteList.type === 'number-note'">
         <dl

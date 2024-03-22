@@ -5,42 +5,42 @@
         <diV class="d-flex justify-center">
           <span class="d-inline-block guide__member__title text-center font-weight-bold">お客様側</span>
         </diV>
-        <h4 class="d-flex justify-center text-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
+        <h4 class="guideTitle__background d-flex justify-center text-md-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
         <slot></slot>
       </div>
       <div v-if="memberType == 'nonmember'" class="guide__background nonmember px-2 px-md-10 pb-10">
         <diV class="d-flex justify-center">
           <span class="d-inline-block guide__nonmember__title text-center font-weight-bold">お客様側</span>
         </diV>
-        <h4 class="d-flex justify-center text-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
+        <h4 class="guideTitle__background d-flex justify-center text-md-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
         <slot></slot>
       </div>
       <div v-if="memberType == 'staff-member--section'" class="guide__background staff__member px-2 px-md-10 pb-10">
         <diV class="d-flex justify-center">
           <span class="d-inline-block guide__staff-member__title text-center font-weight-bold">弊社側</span>
         </diV>
-        <h4 class="d-flex justify-center text-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
+        <h4 class="guideTitle__background d-flex justify-center text-md-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
         <slot></slot>
       </div>
       <div v-if="memberType == 'staff-nonmember--section'" class="guide__background staff__nonmember px-2 px-md-10 pb-10">
         <diV class="d-flex justify-center">
           <span class="d-inline-block guide__staff-nonmember__title text-center font-weight-bold">弊社側</span>
         </diV>
-        <h4 class="d-flex justify-center text-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
+        <h4 class="guideTitle__background d-flex justify-center text-md-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
         <slot></slot>
       </div>
       <div v-if="memberType == 'staff-member'" class="guide__background member-staff px-2 px-md-10 pb-10">
         <diV class="d-flex justify-center">
           <span class="d-inline-block guide__member-staff__title text-center font-weight-bold">弊社側/お客様側</span>
         </diV>
-        <h4 class="d-flex justify-center text-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
+        <h4 class="guideTitle__background d-flex justify-center text-md-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
         <slot></slot>
       </div>
       <div v-if="memberType == 'member-staff'" class="guide__background member-staff px-2 px-md-10 pb-10">
         <diV class="d-flex justify-center">
           <span class="d-inline-block guide__member-staff__title text-center font-weight-bold">お客様側/弊社側</span>
         </diV>
-        <h4 class="d-flex justify-center text-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
+        <h4 class="guideTitle__background d-flex justify-center text-md-h6 font-weight-bold py-4">{{ guidelineRentalTitle }}</h4>
         <slot></slot>
       </div>
     </div>
@@ -124,6 +124,15 @@ export default {
     background-color: #4B5654;
     color: #DDDDDD;
     min-width: 150px;
+  }
+
+  &Title__background {
+    @include mq(md){
+      font-size: 1.3rem;
+    }
+    @include mq(sm){
+      font-size: 1rem;
+    }
   }
 }
 
