@@ -2,7 +2,7 @@
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <!-- <to-top-btn></to-top-btn> -->
     <top-bar title="はじめての方へ" :bread-crumbs="breadCrumbs"></top-bar>
-    <div class="sec__inner pt-10 pb-16 letter-space-01em text-body-2 text-sm-body-1 font-weight-medium">
+    <div class="sec__inner pt-10 pb-16 letter-space-01em text-body-2 text-sm-body-1 font-weight-medium guide__line-height">
       <div>
         <div class="guide_introduce mb-10 d-flex justify-center align-center">
           <img class="guide_introduce_img" src="/img/guide/introduce/introduce_top.svg" alt="はじめての方へ">
@@ -336,6 +336,7 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   width: 95%;
+  line-height: 1.8em;
 }
 
 .w-100 {
@@ -362,6 +363,9 @@ export default {
   }
 }
 .guide{
+  &__line-height {
+    line-height: 1.8em;
+  }
   &__border {
     max-width: 1200px;
     &-top {
