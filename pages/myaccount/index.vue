@@ -107,18 +107,18 @@
       <v-card class="pa-5 text-center">
         <p class="mb-4">ログアウトしますか？</p>
         <v-btn
-          color="primary"
-          class="mx-3"
-          :loading="loading"
-          @click="logout">
-          ログアウトする
-        </v-btn>
-        <v-btn
           color="outline"
           class="mx-3 white--text"
           :disabled="loading"
           @click="logoutDialog=false">
           戻る
+        </v-btn>
+        <v-btn
+          color="primary"
+          class="mx-3"
+          :loading="loading"
+          @click="logout">
+          ログアウトする
         </v-btn>
       </v-card>
     </v-dialog>
@@ -140,18 +140,18 @@
           </ul>
           <div>
             <v-btn
-              color="primary"
-              class="mx-3"
-              :loading="loading"
-              @click="deleteAccount">
-              退会する
-            </v-btn>
-            <v-btn
               color="outline"
               class="mx-3 white--text"
               :disabled="loading"
               @click="deleteDialog=false">
               戻る
+            </v-btn>
+            <v-btn
+              color="primary"
+              class="mx-3"
+              :loading="loading"
+              @click="deleteAccount">
+              退会する
             </v-btn>
           </div>
         </template>

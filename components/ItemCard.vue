@@ -1,5 +1,5 @@
 <template>
-  <div :class="[fav ? 'border' : ''] ">
+  <div class="item-wrap" :class="[fav ? 'border' : '']">
     <div v-if="fav" class="text-right">
       <v-btn
         v-if="favFlg"
@@ -177,6 +177,9 @@ export default {
 }
 .border{
   border: 1px solid $line;
+}
+.item-wrap{
+  width: 100%;
 }
 .item-card {
   width: 100%;
