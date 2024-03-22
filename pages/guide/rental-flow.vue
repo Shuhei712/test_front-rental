@@ -2,7 +2,7 @@
   <section v-if="!$fetchState.pending && !$fetchState.error" id="top">
     <to-top-btn></to-top-btn>
     <top-bar title="レンタル全般 レンタルの手順（詳細版）" :bread-crumbs="breadCrumbs"></top-bar>
-    <div class="sec__inner d-lg-flex py-16">
+    <div class="sec__inner d-lg-flex py-16 guide__line-height">
 
       <!-- サイドメニューコンポーネント -->
       <Guideline-lists></Guideline-lists>
@@ -749,6 +749,9 @@ export default {
 }
 
 .guide{
+  &__line-height p {
+    line-height: 1.8em!important;
+  }
   &__img {
     width: 100%;
     max-width: 550px;
