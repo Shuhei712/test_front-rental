@@ -62,6 +62,7 @@
                     v-model="newPass"
                     outlined
                     dense
+                    autocomplete="none"
                     :error-messages="errors"
                     :append-icon="showNew ? 'mdi-eye':'mdi-eye-off'"
                     :type="showNew ? 'text':'password'"

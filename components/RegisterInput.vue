@@ -235,7 +235,7 @@
 
               <ValidationProvider
                 v-slot="{ errors }"
-                name="email"
+                name="regEmail"
                 rules="required|email|max:50">
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0">
@@ -262,7 +262,7 @@
                 v-if="!loginId"
                 v-slot="{ errors }"
                 rules="required|min:8|max:24|pass"
-                name="password">
+                name="reqPassword">
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0">
                     <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
@@ -275,7 +275,7 @@
                       outlined
                       dense
                       hide-details="auto"
-                      autocomplete="off"
+                      autocomplete="none"
                       :error-messages="errors"
                       :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                       :type="show ? 'text':'password'"

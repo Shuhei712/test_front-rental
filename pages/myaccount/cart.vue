@@ -137,7 +137,7 @@
                           outlined
                           dense
                           hide-details="auto"
-                          placeholder="第××回 ◯◯◯◯展"
+                          placeholder="案件名・イベント名など"
                           counter="50"
                           :error-messages="errors"
                         ></v-text-field>
