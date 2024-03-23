@@ -122,7 +122,7 @@
                 </v-btn>
               </div>
             </div>
-            <div class="info__status mt-sm-3 mt-md-5 mt-lg-8 pa-4 cushion">
+            <div class="info__status mt-3 mt-md-5 mt-lg-8 pa-4 cushion">
               <div class="mb-2 info__status-qty">
                 数量：
                 <v-text-field
