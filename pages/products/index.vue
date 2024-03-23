@@ -285,14 +285,16 @@ export default {
       this.dialog = true
     },
     async searchProducts() {
+      const conditionJSON = JSON.stringify(this.conditionJson)
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('SearchType', this.$route.query.type)
+      param.append('SearchType', this.$route.query.type!=='3'?this.$route.query.type:'0')
       param.append('Keyword', this.$route.query.keyword)
       param.append('CategoryTagID', this.$route.query.categoryID)
       param.append('SearchTagID', this.$route.query.tagID)
-      param.append('ConditionJSON', this.conditionJson)
+      param.append('ConditionJSON', conditionJSON)
       param.append('OrderRelase', this.orderRelease)
       param.append('OrderPrice', this.orderPrice)
       param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
@@ -460,6 +462,7 @@ export default {
     },
     changeOrderPrice() {
       this.orderRelease = ''
+      this.page = 1
       if (this.conditionalSearchFlg) {
         this.searchProductsUsingFilter()
       } else {
@@ -468,6 +471,7 @@ export default {
     },
     changeOrderRelease() {
       this.orderPrice = ''
+      this.page = 1
       if (this.conditionalSearchFlg) {
         this.searchProductsUsingFilter()
       } else {
@@ -523,6 +527,7 @@ export default {
       this.selectedTagLists = tagLists
       this.selectedPriceLists = priceLists
       this.keyword = keyword
+      this.page = 1
       this.setCondisionJson()
       this.searchProductsUsingFilter()
       this.dialog = false

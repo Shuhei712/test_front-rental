@@ -28,7 +28,7 @@
           <v-form>
             <ValidationProvider
               v-slot="{ errors }"
-              name="mail"
+              name="forgetMail"
               rules="required|email|max:50">
               <v-row>
                 <v-col cols="12" md="4" class="pb-0">
@@ -49,7 +49,7 @@
             <ValidationProvider
               v-slot="{ errors }"
               rules="required|min:8|max:24|pass"
-              name="passNew">
+              name="forgetPassNew">
               <v-row>
                 <v-col cols="12" md="4" class="pb-0">
                   <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
@@ -61,6 +61,7 @@
                     v-model="newPass"
                     outlined
                     dense
+                    autocomplete="none"
                     :error-messages="errors"
                     :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                     :type="show ? 'text':'password'"
