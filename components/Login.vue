@@ -24,6 +24,7 @@
                   dense
                   autocomplete="on"
                   autofocus
+                  name="tr_loginId"
                   :error-messages="errors"
                 ></v-text-field>
               </v-col>
@@ -43,6 +44,7 @@
                   outlined
                   dense
                   autocomplete="on"
+                  name="tr_loginPass"
                   :error-messages="errors"
                   :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                   :type="show ? 'text':'password'"
