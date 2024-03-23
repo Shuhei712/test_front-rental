@@ -41,6 +41,8 @@
                     outlined
                     dense
                     type="email"
+                    name="tr_forgetEmail"
+                    autocomplete="new-forgetMail"
                     :error-messages="errors"
                   ></v-text-field>
                 </v-col>
@@ -61,7 +63,8 @@
                     v-model="newPass"
                     outlined
                     dense
-                    autocomplete="none"
+                    autocomplete="new-forgetPassword"
+                    name="tr_forgetPass"
                     :error-messages="errors"
                     :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                     :type="show ? 'text':'password'"
