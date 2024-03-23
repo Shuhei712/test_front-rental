@@ -248,6 +248,7 @@
                       outlined
                       dense
                       hide-details="auto"
+                      name="reqMail"
                       type="email"
                       autocomplete="email"
                       :error-messages="errors"
@@ -276,6 +277,7 @@
                       dense
                       hide-details="auto"
                       autocomplete="none"
+                      name="reqPass"
                       :error-messages="errors"
                       :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                       :type="show ? 'text':'password'"

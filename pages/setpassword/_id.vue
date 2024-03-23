@@ -63,6 +63,7 @@
                     outlined
                     dense
                     autocomplete="none"
+                    name="tr_set_newPass"
                     :error-messages="errors"
                     :append-icon="showNew ? 'mdi-eye':'mdi-eye-off'"
                     :type="showNew ? 'text':'password'"
