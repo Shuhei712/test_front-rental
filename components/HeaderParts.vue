@@ -65,7 +65,7 @@
                 prepend-inner-icon="mdi-magnify"
                 hide-details="auto"
                 @keyup.enter="searchKeyword"></v-text-field>
-              <v-btn color="primary" class="text-white ml-2" :to="'/products?type=3&keyword=' + keyword">
+              <v-btn color="primary" class="text-white ml-2" :href="'/products?type=3&keyword=' + keyword">
                 <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
               </v-btn>
             </v-form>
@@ -139,7 +139,7 @@
             prepend-inner-icon="mdi-magnify"
             hide-details="auto"
             @keyup.enter="searchKeyword"></v-text-field>
-          <v-btn color="primary" class="text-white ml-2" :to="'/products?type=3&keyword=' + keyword">
+          <v-btn color="primary" class="text-white ml-2" :href="'/products?type=3&keyword=' + keyword">
             <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
           </v-btn>
         </v-form>
