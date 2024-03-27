@@ -246,13 +246,19 @@ export default {
       }
     },
     orderPrice(newVal, oldVal) {
-      if(Number(newVal) !== Number(oldVal)) {
-        this.$router.push({query: {...this.$route.query, price: newVal}})
+      if(String(newVal) !== String(oldVal)&&newVal!=='') {
+        const query = Object.assign({}, this.$route.query)
+        delete query.release
+        query.price= newVal
+        this.$router.push({query})
       }
     },
     orderRelease(newVal, oldVal) {
-      if(Number(newVal) !== Number(oldVal)) {
-        this.$router.push({query: {...this.$route.query, release: newVal}})
+      if(String(newVal) !== String(oldVal)&&newVal!=='') {
+        const query = Object.assign({}, this.$route.query)
+        delete query.price
+        query.release= newVal
+        this.$router.push({query})
       }
     },
     // "$route.query": {
