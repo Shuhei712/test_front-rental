@@ -10,16 +10,17 @@ if (process.client) {
 // 戻る位置に[#top]を定義する
 
 const scrollBackButton = () => {
-  gsap.to('.top__back', {
+  gsap.to('.top__back', {x:0,
     scrollTrigger: {
       // trigger: '.back-btn-trigger',
       markers: false,
       start: 'top top',
       end: 'bottom top',
-      toggleClass: {
-        targets: '.top__back',
-        className: 'top__back--active',
-      },
+      toggleActions:'play none none reverse',
+      // toggleClass: {
+      //   targets: '.top__back',
+      //   className: 'top__back--active',
+      // },
     },
   })
 }
