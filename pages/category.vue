@@ -121,11 +121,10 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_category_list_page.php', param)
       this.categoryLists = res.CategoryRootList
-      // console.log(res)
     },
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'カテゴリーから探す', path: '/category' })
+      this.$store.commit('breadCrumbs/addList', { name: 'カテゴリから探す', path: '/category' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     searchKeyword() {

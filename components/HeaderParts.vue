@@ -55,20 +55,57 @@
                 </li>
               </ul>
             </nav>
-            <v-form class="header__search d-flex align-center mt-5 mt-lg-0 ml-lg-2" @submit.prevent>
+            <v-form class="header__search d-flex mt-5 mt-lg-0 ml-lg-2" @submit.prevent>
               <v-text-field
                 v-model="keyword"
                 color="primary"
                 placeholder="キーワード検索"
                 outlined
                 dense
-                prepend-inner-icon="mdi-magnify"
                 hide-details="auto"
                 @keyup.enter="searchKeyword"></v-text-field>
-              <v-btn color="primary" class="text-white ml-2" :to="'/products?type=3&keyword=' + keyword">
-                <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
+              <v-btn color="primary"
+                max-width="40"
+                min-width="53"
+                height="auto"
+                elevation="0"
+                class="text-white ml-2"
+                :href="'/products?type=3&keyword=' + keyword">
+                <v-icon color="#fff">mdi-magnify</v-icon>
               </v-btn>
             </v-form>
+            <div v-if="isLogin" class="header__member d-flex text-center py-6 py-lg-0 ms-2">
+              <a
+                class="d-flex flex-column px-1 hover-opacity"
+                href="/myaccount">
+                <v-icon color="secondary">mdi-account</v-icon>
+                <span class="caption">マイページ</span>
+              </a>
+              <a
+                class="d-flex flex-column px-1 hover-opacity"
+                href="/myaccount/favorite">
+                <v-icon color="secondary">mdi-heart</v-icon>
+                <span class="caption">お気に入り</span>
+              </a>
+              <a
+                class="d-flex flex-column px-1 hover-opacity"
+                href="/myaccount/cart">
+                <!-- offset-x -->
+                <v-badge
+                  color="green"
+                  overlap
+                  :content="cartNum"
+                  :value="cartNum"
+                >
+                  <v-icon color="secondary">mdi-cart</v-icon>
+                </v-badge>
+                <span class="caption">カート</span>
+              </a>
+            </div>
+            <div v-else class="header__signIn ms-3 py-6 py-lg-0">
+              <v-btn outlined small href="/login"> ログイン </v-btn>
+              <v-btn small color="accent" class="text-white" href="/register"> 新規登録 </v-btn>
+            </div>
             <div class="header__corporate--sp">
               <a
                 class="d-flex align-center justify-center hover-opacity mt-10 text-caption"
@@ -128,7 +165,7 @@
             <v-icon large color="lightGray">mdi-close-circle-outline</v-icon>
           </v-btn>
         </div>
-        <v-form class="d-flex align-center" @submit.prevent>
+        <v-form class="d-flex" @submit.prevent>
           <v-text-field
             ref="searchWindow"
             v-model="keyword"
@@ -139,8 +176,11 @@
             prepend-inner-icon="mdi-magnify"
             hide-details="auto"
             @keyup.enter="searchKeyword"></v-text-field>
-          <v-btn color="primary" class="text-white ml-2" :to="'/products?type=3&keyword=' + keyword">
-            <v-icon class="mr-1" color="#fff">mdi-text-search</v-icon>詳細検索
+          <v-btn color="primary" class="text-white ml-2"
+            height="auto" elevation="0"
+            :href="'/products?type=3&keyword=' + keyword"
+          >
+            <v-icon color="#fff">mdi-magnify</v-icon>
           </v-btn>
         </v-form>
       </div>
@@ -159,6 +199,7 @@ export default {
       menuFlg: false,
       subMenuFlg: [],
       searchWindowFlg: false,
+      memberNav: null,
     }
   },
   computed: {
@@ -172,6 +213,12 @@ export default {
       } else {
         return false
       }
+    },
+    isLogin() {
+      return this.$store.getters['auth/getAuthToken']
+    },
+    cartNum() {
+      return this.$store.getters['cart/getCartNum']
     },
   },
   mounted() {
@@ -241,6 +288,9 @@ export default {
     searchKeyword() {
       window.location.href = '/products?type=3&keyword=' + this.keyword
     },
+    logout() {
+      return false
+    },
   },
 }
 </script>
@@ -256,6 +306,7 @@ ul {
   width: 100%;
   position: relative;
   z-index: 500;
+  z-index: 200;
 
   &__inner {
     top: calc(30 / 1920 * 100vw);
@@ -428,7 +479,7 @@ ul {
 
   &__search {
     flex: 1;
-    max-width: 300px;
+    max-width: 220px;
 
     @include mq(lg) {
       flex: none;
@@ -454,9 +505,8 @@ ul {
     transform-origin: right top;
     display: flex;
     align-items: center;
-    @include mq(xl){
+    @include mq(xl) {
       right: 0.3%;
-
     }
     @include mq(lg) {
       display: none;
@@ -467,11 +517,11 @@ ul {
     }
   }
   .corporate__su-logo{
-    .brand-blue{
-      fill:#00225c;
+    .brand-blue {
+      fill: #00225c;
     }
-    .brand-gold{
-      fill:#c0994c;
+    .brand-gold {
+      fill: #c0994c;
     }
     height: 0.8rem;
     fill: #fff;
@@ -579,5 +629,11 @@ ul {
     top: 0;
     transition: top 0.4s;
   }
+}
+.nuxt-link-exact-active {
+  color: $primary !important;
+}
+.nuxt-link-exact-active .v-icon {
+  color: $primary !important;
 }
 </style>

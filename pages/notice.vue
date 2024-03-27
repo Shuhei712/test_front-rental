@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="top">
+    <to-top-btn></to-top-btn>
     <top-bar title="お知らせ一覧" :bread-crumbs="breadCrumbs"></top-bar>
     <section class="news">
       <div class="news__inner px-3 py-16">
@@ -68,13 +69,15 @@ export default {
       ]
     }
   },
+  updated() {
+    this.$scrollBackButton()
+  },
   methods: {
     async getNewsList() {
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_news_list.php', param)
-      // console.log(res)
       this.newsLists = res.NewsReleaseList
     },
     handleToggle(index) {

@@ -385,7 +385,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_info_master.php', param)
-      // console.log(res)
       this.productInfoList = res.ProductInfo
     },
     async getProductItemInfo() {
@@ -394,7 +393,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_item_info.php', param)
-      // console.log(res)
       this.productItemLists = res.SubjectList
     },
     async getProductRefList() {
@@ -403,7 +401,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_ref_product_list.php', param)
-      // console.log(res)
       this.productRefLists = res.CategoryGroupList
     },
     async getProductDocList() {
@@ -412,7 +409,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_doc_list.php', param)
-      // console.log(res)
       this.productDocLists = res.ProductDocumentList
     },
     async getProductTariff(tariffID) {
@@ -423,7 +419,6 @@ export default {
       param.append('TariffID', tariffID)
       param.append('TariffType', 0)
       const res = await this.$axios.$post('get_product_tariff.php', param)
-      // console.log(res)
       this.productTariffList = res
     },
     async getProductCaseInfo() {
@@ -432,7 +427,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_case_info.php', param)
-      // console.log(res)
       this.productCaseInfo = res
     },
     getProductInfo() {

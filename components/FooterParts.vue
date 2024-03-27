@@ -1,13 +1,16 @@
 <template>
   <footer class="footer pt-15">
     <v-container class="footer__inner">
-      <div class="footer__head d-flex align-center flex-column flex-md-row line-height-normal">
-        <a class="head__logo hover-opacity d-flex align-center mr-0 mr-md-10" href="/">
-          <span class="logo__img mr-3 mr-md-5">
-            <img src="/img/footer/tk-logo_white.svg" alt="TAKENAKA the SOLID WATER LOGO" />
-          </span>
-          <span class="logo__service text-body-2 no-wrap text-white line-height-normal">映像 / 音響機材の<br />レンタルサービス</span>
-        </a>
+      <div class="footer__head d-flex align-center align-md-start flex-column flex-md-row line-height-normal">
+        <div class="d-flex flex-column">
+          <a class="head__logo hover-opacity d-flex align-center mr-0 mr-md-10" href="/">
+            <span class="logo__img mr-3 mr-md-5">
+              <img src="/img/footer/tk-logo_white.svg" alt="TAKENAKA the SOLID WATER LOGO" />
+            </span>
+            <span class="logo__service text-body-2 no-wrap text-white line-height-normal">映像 / 音響機材の<br />レンタルサービス</span>
+          </a>
+          <business-hours section-flg="footer"></business-hours>
+        </div>
         <a
           class="head__corporate hover-opacity d-flex align-center mt-5 mt-md-0 text-caption line-height-normal"
           href="https://www.takenaka-co.co.jp/"

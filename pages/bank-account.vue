@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="top">
+    <to-top-btn></to-top-btn>
     <top-bar title="振込先口座" :bread-crumbs="breadCrumbs"></top-bar>
     <section class="bank-account">
       <div class="bank-account__inner px-3 py-16">
@@ -54,6 +55,9 @@ export default {
         });
       }, 100);
     }
+  },
+  updated() {
+    this.$scrollBackButton()
   },
   methods: {
     setBreadCrumbs() {

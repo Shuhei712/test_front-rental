@@ -22,8 +22,8 @@
               </h2>
               <div class="catch__intro my-5 my-md-8">
                 <p class="text-body-2 text-sm-body-1 letter-space-02em lh-crop-25 py-4">
-                  あなたが今実現したいことは<span class="word-keep">何でしょう。</span><br />
-                  配信、イベント、会議…etc<br />
+                  あなたが今実現したいことは<span class="word-keep">何でしょう</span><br />
+                  配信、イベント、会議…etc.<br />
                   大丈夫! タケナカのレンタルに<span class="word-keep">おまかせください</span>
                 </p>
               </div>
@@ -32,7 +32,7 @@
           <v-row class="main__menu pb-5 pr-md-16" no-gutters>
             <v-col cols="6">
               <div class="btn-wrap pr-2">
-                <v-btn color="#fff" to="/guide#enrty" block v-bind="size" class=" letter-space-02em" max-height="40">
+                <v-btn color="#fff" to="/introduce" block v-bind="size" class=" letter-space-02em" max-height="40">
                   <img class="icon mr-1" src="/img/top/beginner-icon.png" /><span class="btn-text lh-crop-12"
                     >はじめての方へ</span
                   >
