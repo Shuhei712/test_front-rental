@@ -330,7 +330,7 @@
       width="580">
       <v-card class="pa-5 text-md-center">
         <p>
-          <span class="note">レンタルのお申込みには、本人確認の登録が必要になります。</span><br>
+          <span class="note">ご注文を確定する場合には、本人確認の登録が必要になります。</span><br>
           <template v-if="rentalFlg===5">
             <span class="red--text">現在、本人確認の登録申請中でございます。</span><br>
             申請が通るまで、もうしばらくお待ちください。

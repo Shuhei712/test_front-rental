@@ -210,7 +210,9 @@ p {
 .word-keep {
   display: inline-block;
 }
-
+.word-break{
+  word-break: break-word;
+}
 .icon {
   width: 24px !important;
 }

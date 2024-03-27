@@ -12,9 +12,8 @@
           outlined
           dense
           hide-details="auto"
-          prepend-icon=""
-          prepend-inner-icon="mdi-paperclip"
           class="pointer"
+          placeholder="ファイルを選択"
           :error-messages="errors"
           @change="setImage($event)"
         >

@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="maker--sp text-body-2">{{ productInfoList.MakerName }}</div>
-        <div class="name--sp mt-2">
+        <div class="name--sp mt-2 word-break">
           <div class="text-subtitle-2 letter-space-015em font-weight-medium">{{ productInfoList.ProductName }}</div>
           <div class="text-subtitle-1 letter-space-015em font-weight-bold">{{ productInfoList.ProductTypeNumber }}</div>
         </div>
@@ -70,7 +70,7 @@
             </div>
             <div class="info__main mt-sm-3 mt-md-5 mt-lg-8">
               <div class="maker text-body-2">{{ productInfoList.MakerName }}</div>
-              <div class="name mt-3 mt-lg-5">
+              <div class="name mt-3 mt-lg-5 word-break">
                 <div class="text-subtitle-1 text-md-h6 letter-space-015em font-weight-medium">
                   {{ productInfoList.ProductName }}
                 </div>

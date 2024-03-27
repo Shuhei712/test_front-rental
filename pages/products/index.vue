@@ -194,6 +194,7 @@ export default {
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
+    if(this.$route.query.page) this.page = this.$route.query.page
     if(this.$route.query.type === '0') {
       this.extractPresentCondition(this.$store.getters['searchCondition/getInfo'])
       this.setSelectedData(this.$store.getters['searchCondition/getInfo'])
@@ -233,6 +234,23 @@ export default {
       },
     },
   },
+  watch: {
+    page(newVal, oldVal) {
+      // console.log(this.$route.query.page,'new=', newVal,'old=', oldVal)
+      // console.log(typeof(this.$route.query.page), typeof(newVal), typeof(oldVal))
+      if(Number(newVal) !== Number(oldVal)) {
+        // console.log('page=',newVal)
+        this.$router.push({query: {...this.$route.query, page: newVal}})
+      }
+    },
+    // "$route.query": {
+    //   handler (query) {
+    //     console.log('watchQuery',query)
+    //     // this.$router.push({ path: this.$route.path, query });
+    //   },
+    // },
+  },
+  // watchQuery: true,
   updated() {
     this.$scrollBackButton()
   },
