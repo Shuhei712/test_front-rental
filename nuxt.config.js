@@ -148,4 +148,7 @@ export default {
   build: {
     transpile: ['gsap'],
   },
+  router: {
+    middleware: 'auth'
+  }
 }

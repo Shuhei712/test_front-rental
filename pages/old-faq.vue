@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <top-bar title="ご利用方法" :bread-crumbs="breadCrumbs"></top-bar>
-    <section class="guide">
-      <div class="guide__inner px-3 py-16">
+  <div id="top">
+    <to-top-btn></to-top-btn>
+    <top-bar title="よくある質問" :bread-crumbs="breadCrumbs"></top-bar>
+    <section class="faq">
+      <div class="faq__inner px-3 py-16">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="content" v-html="html">
         </div>
@@ -30,9 +31,9 @@ export default {
   },
   head () {
     return {
-      title: "ご利用方法",
+      title: "よくある質問",
       meta: [
-        { hid: 'description', name: 'description', content: 'ご利用方法 | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
+        { hid: 'description', name: 'description', content: 'よくある質問 | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
       ]
     }
   },
@@ -55,14 +56,17 @@ export default {
       }, 100);
     }
   },
+  updated() {
+    this.$scrollBackButton()
+  },
   methods: {
     setBreadCrumbs() {
       this.$store.commit('breadCrumbs/deleteList')
-      this.$store.commit('breadCrumbs/addList', { name: 'ご利用方法', path: '/guide' })
+      this.$store.commit('breadCrumbs/addList', { name: 'よくある質問', path: '/faq' })
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async loadHtml() {
-      const res = await this.$axios.$get('https://rental-resource.takenaka-co.co.jp/catalog-page/rental-menu/rental-guide/index.html')
+      const res = await this.$axios.$get('https://rental-resource.takenaka-co.co.jp/catalog-page/rental-menu/faq/index.html')
       this.html = res
     }
   },
