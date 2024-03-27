@@ -351,7 +351,7 @@ export default {
       this.pageMaxLength = res.PageNoMax
       this.extractPresentCondition(this.searchConditionInfo)
       this.setPresentCategoryID()
-      this.$router.push({query: {type:0}})
+      this.$router.push({query: {type:0,page:this.page}})
       await Promise.all([this.getMakerListforSearch(), this.getTagListforSearch()])
       this.$store.commit('loading/changeStatus', false)
     },
