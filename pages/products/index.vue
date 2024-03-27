@@ -195,6 +195,8 @@ export default {
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     if(this.$route.query.page) this.page = this.$route.query.page
+    if(this.$route.query.price||this.$route.query.price===0) this.orderPrice = Number(this.$route.query.price)
+    if(this.$route.query.release||this.$route.query.release===0) this.orderRelease = Number(this.$route.query.release)
     if(this.$route.query.type === '0') {
       this.extractPresentCondition(this.$store.getters['searchCondition/getInfo'])
       this.setSelectedData(this.$store.getters['searchCondition/getInfo'])
@@ -241,6 +243,16 @@ export default {
       if(Number(newVal) !== Number(oldVal)) {
         // console.log('page=',newVal)
         this.$router.push({query: {...this.$route.query, page: newVal}})
+      }
+    },
+    orderPrice(newVal, oldVal) {
+      if(Number(newVal) !== Number(oldVal)) {
+        this.$router.push({query: {...this.$route.query, price: newVal}})
+      }
+    },
+    orderRelease(newVal, oldVal) {
+      if(Number(newVal) !== Number(oldVal)) {
+        this.$router.push({query: {...this.$route.query, release: newVal}})
       }
     },
     // "$route.query": {
@@ -351,7 +363,10 @@ export default {
       this.pageMaxLength = res.PageNoMax
       this.extractPresentCondition(this.searchConditionInfo)
       this.setPresentCategoryID()
-      this.$router.push({query: {type:0,page:this.page}})
+      const query = { type:0, page:this.page }
+      if (this.orderPrice !== '') query.price = this.orderPrice
+      if (this.orderRelease !== '') query.release = this.orderRelease
+      this.$router.push({query})
       await Promise.all([this.getMakerListforSearch(), this.getTagListforSearch()])
       this.$store.commit('loading/changeStatus', false)
     },
