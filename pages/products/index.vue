@@ -238,10 +238,7 @@ export default {
   },
   watch: {
     page(newVal, oldVal) {
-      // console.log(this.$route.query.page,'new=', newVal,'old=', oldVal)
-      // console.log(typeof(this.$route.query.page), typeof(newVal), typeof(oldVal))
       if(Number(newVal) !== Number(oldVal)) {
-        // console.log('page=',newVal)
         this.$router.push({query: {...this.$route.query, page: newVal}})
       }
     },
@@ -261,18 +258,35 @@ export default {
         this.$router.push({query})
       }
     },
-    // "$route.query": {
-    //   handler (query) {
-    //     console.log('watchQuery',query)
-    //     // this.$router.push({ path: this.$route.path, query });
-    //   },
-    // },
   },
-  // watchQuery: true,
+  mounted(){
+    window.addEventListener('popstate', this.popstateHook)
+  },
+  beforeDestroy(){
+    window.removeEventListener('popstate', this.popstateHook)
+  },
   updated() {
     this.$scrollBackButton()
   },
   methods: {
+    popstateHook() {
+      if(this.$route.query.type === '0') return
+      if(this.$route.query.page) this.page = this.$route.query.page
+      this.orderPrice = this.$route.query.price ? Number(this.$route.query.price):''
+      this.orderRelease = this.$route.query.release ? Number(this.$route.query.release):''
+      this.keyword = this.$route.query.keyword ? this.$route.query.keyword:''
+      // if (this.$route.query.type === '0'&&this.conditionalSearchFlg) {
+      //   this.searchProductsUsingFilter()
+      // } else {
+        this.conditionJson.CategoryID = null
+        this.conditionJson.MakerList = null
+        this.conditionJson.FeatureTagList = null
+        this.conditionJson.PriceRangeID = null
+        this.initializePresentConditions()
+        this.conditionalSearchFlg = false
+        this.searchProducts()
+      // }
+    },
     async getCategoryInfo(categoryID) {
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
@@ -367,6 +381,11 @@ export default {
       this.$store.commit('searchCondition/addKeyword', res.KeyWord)
       this.page = res.PageNo
       this.pageMaxLength = res.PageNoMax
+      if(this.$route.query.page&&this.pageMaxLength&&Number(this.$route.query.page) > this.pageMaxLength) {
+        this.page = 1
+        this.searchProductsUsingFilter()
+        return
+      }
       this.extractPresentCondition(this.searchConditionInfo)
       this.setPresentCategoryID()
       const query = { type:0, page:this.page }
