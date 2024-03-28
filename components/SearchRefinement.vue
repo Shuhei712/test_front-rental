@@ -63,7 +63,7 @@
               </v-col>
               <v-col cols="12" class="pb-5">
                 <div class="terms__title d-flex align-center">
-                  カテゴリー
+                  カテゴリ
                   <v-spacer></v-spacer>
                   <v-btn class="text-light-gray" elevation="0" color="cushion" small @click="resetCategoryLists()">
                     <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>選択解除

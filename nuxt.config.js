@@ -5,7 +5,7 @@ export default {
   ssr: false,
   head: {
     titleTemplate: '%s - 映像機材・音響機器のレンタルサービス | 株式会社タケナカ',
-    title: '映像機材・音響機器のレンタルサービス | 株式会社タケナカ',
+    // title: '映像機材・音響機器のレンタルサービス | 株式会社タケナカ',
     htmlAttrs: {
       lang: 'ja',
     },
@@ -42,14 +42,14 @@ export default {
     ],
   },
   server: {
-    port: 3005,
+    port: 3905,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/css/common.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~plugins/vue-scrollto', '~plugins/hooper', '~/plugins/persistedState.client.js', '~/plugins/gsap.js'],
+  plugins: ['~plugins/vue-scrollto', '~plugins/hooper', '~/plugins/persistedState.client.js', '~/plugins/gsap.js', '~/plugins/common', '~/plugins/vee-validate'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -91,7 +91,10 @@ export default {
     ORDER_DESC: process.env.ORDER_DESC,
     PAGE_ROW_COUNT: process.env.PAGE_ROW_COUNT,
     UNDER_NEW_PRODUCT_DAY: process.env.UNDER_NEW_PRODUCT_DAY,
-
+    MEMBER_API_URL: process.env.API_MEMBER_URL,
+    MEMBER_API_BASE_URL: process.env.API_MEMBER_BASE_URL,
+    NONMEMBER_API_URL: process.env.API_NONMEMBER_URL,
+    DEBUG_MODE: process.env.DEBUG_MODE,
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
     },
@@ -146,6 +149,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ['gsap'],
+    transpile: ['gsap','vee-validate/dist/rules'],
   },
+  router: {
+    middleware: 'auth'
+  }
 }

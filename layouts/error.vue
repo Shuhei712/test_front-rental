@@ -7,7 +7,7 @@
       <error-unavailable></error-unavailable>
     </div>
     <div v-else>
-      <error-other></error-other>
+      <error-other :error="error"></error-other>
     </div>
   </v-app>
 </template>

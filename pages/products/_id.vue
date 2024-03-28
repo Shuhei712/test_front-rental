@@ -122,6 +122,52 @@
                 </v-btn>
               </div>
             </div>
+            <div class="info__status mt-3 mt-md-5 mt-lg-8 pa-4 cushion">
+              <div class="mb-2 info__status-qty">
+                数量：
+                <v-text-field
+                  v-model.number="itemNum"
+                  outlined
+                  type="number"
+                  dense
+                  hide-details="auto"
+                  min="1"
+                  max="999"
+                  class="d-inline-block w-70 pointer"
+                  @change="itemNum=changeQuantity($event)"
+                  ></v-text-field>
+              </div>
+              <div class="info__status-cart">
+                <v-btn
+                  color="accent"
+                  width="100%"
+                  class="mb-2"
+                  :loading="loading"
+                  @click="addCart(itemNum)">
+                  <v-icon class="pe-1" size="21">mdi-cart</v-icon>
+                  カートに入れる
+                </v-btn>
+              </div>
+              <div class="info__status-favorite">
+                <v-btn
+                  v-if="favoriteFlg"
+                  color="line"
+                  width="100%"
+                  @click="setFavorite(false)">
+                  <v-icon class="pe-1" size="21">mdi-heart</v-icon>
+                  お気に入り済
+                </v-btn>
+                <v-btn
+                  v-else
+                  color="primary"
+                  width="100%"
+                  @click="setFavorite(true)">
+                  <v-icon class="pe-1" size="21">mdi-heart</v-icon>
+                  お気に入り追加
+                </v-btn>
+              </div>
+
+            </div>
           </div>
         </div>
         <div class="detail__information mt-15">
@@ -303,6 +349,39 @@
         </div>
       </div>
     </div>
+    <v-dialog
+      v-model="addCartDialog"
+      width="400">
+      <v-card class="pa-5 text-center">
+        <p class="mb-4">商品をカートに追加しました。</p>
+        <v-btn
+          color="outline"
+          class="mt-4 mx-1 white--text"
+          @click="addCartDialog=false">
+          戻る
+        </v-btn>
+        <v-btn
+          color="primary"
+          class="mt-4 mx-1 white--text"
+          :to="'/myaccount/cart'">
+          カートを見る
+        </v-btn>
+      </v-card>
+    </v-dialog>
+    <v-dialog
+      v-model="loginDialog"
+      width="700">
+      <v-card class="pa-5 text-center">
+        <p class="mb-4">ログインが必要になります</p>
+        <login></login>
+        <v-btn
+          color="outline"
+          class="mt-4 white--text"
+          @click="loginDialog=false">
+          戻る
+        </v-btn>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
@@ -327,7 +406,13 @@ export default {
       tariffDialog: false,
       caseSizeDialog: false,
       breadCrumbs: [],
-      title: this.$route.query.name
+      title: this.$route.query.name,
+      itemNum: 1,
+      favoriteFlg: false,
+      isLogin: false,
+      loginDialog: false,
+      addCartDialog: false,
+      loading: false,
     }
   },
   async fetch() {
@@ -348,6 +433,12 @@ export default {
     this.getProductDocList()
 
     this.setBreadCrumbs()
+    const loginID = this.$store.getters["auth/getUser"]
+    const token = this.$store.getters["auth/getAccessToken"]
+    if(loginID && token){
+      this.isLogin = true
+      const productFavoriteFlg = await this.getFavorite()
+    }
 
     this.$store.commit('loading/changeStatus', false)
   },
@@ -474,7 +565,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_info_master.php', param)
-      // console.log(res)
       this.productInfoList = res.ProductInfo
       if (this.productInfoList.ProductName === null) {
         this.$nuxt.error({
@@ -488,7 +578,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_item_info.php', param)
-      // console.log(res)
       this.productItemLists = res.SubjectList
     },
     async getProductRefList() {
@@ -497,7 +586,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_ref_product_list.php', param)
-      // console.log(res)
       this.productRefLists = res.CategoryGroupList
     },
     async getProductDocList() {
@@ -506,7 +594,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_doc_list.php', param)
-      // console.log(res)
       this.productDocLists = res.ProductDocumentList
     },
     async getProductTariff(tariffID) {
@@ -517,7 +604,6 @@ export default {
       param.append('TariffID', tariffID)
       param.append('TariffType', 0)
       const res = await this.$axios.$post('get_product_tariff.php', param)
-      // console.log(res)
       this.productTariffList = res
     },
     async getProductCaseInfo() {
@@ -526,7 +612,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('ProductID', this.$route.params.id)
       const res = await this.$axios.$post('get_product_case_info.php', param)
-      // console.log(res)
       this.productCaseInfo = res
     },
     getProductInfo() {
@@ -611,6 +696,85 @@ export default {
           })
         })
       }
+    },
+    async addCart(Qty){
+      if(!this.isLogin){
+        this.loginDialog = true
+        return false
+      }
+      this.loading = true
+      const accessToken = this.$store.getters["auth/getAccessToken"]
+      const loginID = this.$store.getters["auth/getUser"]
+      const param = new URLSearchParams()
+      param.append('LoginID', loginID)
+      param.append('Qty', Qty)
+      param.append('ProductID', this.$route.params.id)
+      const res = await this.$memberBaseAxios.put(`order/setCartProduct/${this.$route.params.id}`, param, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
+      this.$setLog('会員商品詳細', 'カート追加', res.data.Status)
+      if(res.data.Status === 'TRUE'){
+        this.addCartDialog = true
+        await this.$getCartNum()
+      }else if(res.data.ErrorNo === 100002){
+        const res = await this.$getAccessToken()
+        if( res ) return this.addCart(Qty)
+      }
+      this.loading = false
+    },
+    async getFavorite(){
+      const res = await this.favorite('favorite/getStatus/', 'post')
+      if( res ){
+        this.favoriteFlg = res.data.FavoriteStatus
+      }
+    },
+    async setFavorite(flg){
+      if(!this.isLogin){
+        this.loginDialog = true
+        return false
+      }
+      let res
+      if(flg){
+        res = await this.favorite('favorite/registProduct/', 'put')
+      }else{
+        res = await this.favorite('favorite/unregistProduct/', 'put')
+      }
+      if( res ){
+        this.favoriteFlg = flg ? 1 : 0
+      }
+    },
+    async favorite(api, method){
+      const loginID = this.$store.getters["auth/getUser"]
+      const token = this.$store.getters["auth/getAccessToken"]
+      const param = new URLSearchParams()
+      param.append('LoginID', loginID)
+      const axiosMethod = (method==='post') ? this.$memberBaseAxios.post : this.$memberBaseAxios.put
+      const res = await axiosMethod( api + this.$route.params.id, param,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      if (this.$config.DEBUG_MODE) {
+        console.log(res)
+      }
+      if(res.data.Status==='TRUE'){
+        return res
+      }else if(res.data.ErrorNo===100002){
+        const res = await this.$getAccessToken()
+        if( res ) return this.favorite(api, method)
+      }
+    },
+    changeQuantity(Qty){
+      let qty = parseInt(Qty, 10)
+      if( !qty || qty <= 0 || qty > 999 ){
+        qty = 1
+      }
+      return qty
     },
   },
 }
@@ -863,6 +1027,17 @@ $bp_xs: 362px;
             display: none !important;
           }
         }
+      }
+
+      .info__status{
+        max-width: 365px;
+      }
+      .w-70{
+        width: 70px;
+      }
+      ::v-deep .v-autocomplete.v-input .v-input__slot,
+      ::v-deep .v-autocomplete.v-input input{
+        cursor: pointer;
       }
 
       .price {

@@ -129,7 +129,7 @@
               :maker="list.MakerName"
               :category-name01="list.CategoryNmae01"
               :category-name02="list.CategoryNmae02"
-              :price-value="list.PriceValue"
+              :price-value="list.PriceValue||''"
               :price-type="list.PriceType"
               :price-unit="list.PriceUnit"
               :tariff-id="list.TariffID"
@@ -202,7 +202,7 @@ export default {
     } else {
       await this.searchProducts()
     }
-    
+
     this.setBreadCrumbs(this.$route.query.type)
     this.$store.commit('loading/changeStatus', false)
   },
@@ -250,7 +250,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_category_list_search.php', param)
-      // console.log(res)
       this.searchCategoryLists = res.CategoryRootList
     },
     async getMakerListforSearch() {
@@ -259,7 +258,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('CategoryID', this.presentCategoryID === undefined ? '' : this.presentCategoryID)
       const res = await this.$axios.$post('get_maker_list_search.php', param)
-      // console.log(res)
       this.searchMakerLists = res.MakerIndexList
     },
     async getTagListforSearch() {
@@ -268,7 +266,6 @@ export default {
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('CategoryID', this.presentCategoryID === undefined ? '' : this.presentCategoryID)
       const res = await this.$axios.$post('get_tag_list_search.php', param)
-      // console.log(res)
       this.searchTagLists = res.FeatureCategoryList
     },
     async getPriceListforSearch() {
@@ -276,7 +273,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_price_range_list.php', param)
-      // console.log(res)
       this.searchPriceLists = res.PriceRangeList
     },
     async getFilterCondition() {
@@ -289,21 +285,21 @@ export default {
       this.dialog = true
     },
     async searchProducts() {
+      const conditionJSON = JSON.stringify(this.conditionJson)
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
-      param.append('SearchType', this.$route.query.type)
-      param.append('Keyword', this.$route.query.keyword)
+      param.append('SearchType', this.$route.query.type!=='3'?this.$route.query.type:'0')
+      param.append('Keyword', this.$route.query.keyword!=='undefined'?this.$route.query.keyword:"")
       param.append('CategoryTagID', this.$route.query.categoryID)
       param.append('SearchTagID', this.$route.query.tagID)
-      param.append('ConditionJSON', this.conditionJson)
+      param.append('ConditionJSON', conditionJSON)
       param.append('OrderRelase', this.orderRelease)
       param.append('OrderPrice', this.orderPrice)
       param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
       param.append('PageNo', this.page)
       this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
-      // console.log(res)
       this.productLists = res.SearchProductList
       this.searchProductListCount = res.SearchAllCnt
       this.setPresentCategoryID()
@@ -327,7 +323,6 @@ export default {
       param.append('PageNo', this.page)
       this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
-      // console.log(res)
       this.conditionalSearchFlg = true
       this.productLists = res.SearchProductList
       this.searchProductListCount = res.SearchAllCnt
@@ -456,7 +451,7 @@ export default {
       } else {
         this.selectedTagLists = []
       }
-    
+
       if(searchConditionInfo.PriceFlg) {
         this.selectedPriceLists.push({id: searchConditionInfo.PriceRangeID, name: searchConditionInfo.PriceRangeName})
       } else {
@@ -466,6 +461,7 @@ export default {
     },
     changeOrderPrice() {
       this.orderRelease = ''
+      this.page = 1
       if (this.conditionalSearchFlg) {
         this.searchProductsUsingFilter()
       } else {
@@ -474,6 +470,7 @@ export default {
     },
     changeOrderRelease() {
       this.orderPrice = ''
+      this.page = 1
       if (this.conditionalSearchFlg) {
         this.searchProductsUsingFilter()
       } else {
@@ -529,6 +526,7 @@ export default {
       this.selectedTagLists = tagLists
       this.selectedPriceLists = priceLists
       this.keyword = keyword
+      this.page = 1
       this.setCondisionJson()
       this.searchProductsUsingFilter()
       this.dialog = false

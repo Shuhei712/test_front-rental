@@ -1,7 +1,7 @@
 <template>
   <div class="terms__category d-flex flex-column" :class="{ active: categoryFlg }">
     <div class="category__title d-flex align-center text-body-2 text-md-body-1 px-4 px-sm-6 px-lg-8 py-3">
-      <span>カテゴリーを<span class="word-keep">選択</span></span>
+      <span>カテゴリを<span class="word-keep">選択</span></span>
       <v-btn class="text-light-gray ml-5" elevation="0" color="cushion" small @click="resetSelectedCategoryLists()">
         <v-icon class="mr-2" color="lightGray" small>mdi-selection-ellipse</v-icon>
         選択解除

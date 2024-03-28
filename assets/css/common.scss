@@ -19,6 +19,7 @@ $lightGray: #9da5a4;
 
 // ブレイクポイント
 $breakpoints: (
+  'xsm': 'screen and (max-width: 449.9px)',
   'sm': 'screen and (max-width: 599.9px)',
   'md': 'screen and (max-width: 959.9px)',
   'lg': 'screen and (max-width: 1263.9px)',
@@ -74,7 +75,20 @@ $leading-loose: 2 !default;
     scrollbar-color: $primary $bg; // つまみの色 軌道の色
   }
 }
-
+@mixin wordSymbol( $symbol:'・', $left: true, $width: 3px) {
+  position: relative;
+  display: inline-block;
+  &::before{
+    content: $symbol;
+    position: absolute;
+    @if($left){
+      left: $width;
+     }
+     @else {
+      right: $width;
+     }
+  }
+}
 body,
 html {
   font-family: 'Montserrat', 'Noto Sans JP', 'Zen Kaku Gothic Antique', sans-serif !important;
@@ -121,8 +135,18 @@ p {
   background-color: #ffffff !important;
 }
 
+.white-space-normal {
+  white-space: normal !important;
+}
+
+.letter-space-005em {
+  letter-spacing: 0.05em !important;
+}
 .letter-space-015em {
   letter-spacing: 0.15em !important;
+}
+.letter-space-01em {
+  letter-spacing: 0.1em !important;
 }
 .letter-space-02em {
   letter-spacing: 0.2em !important;
@@ -223,12 +247,15 @@ p {
   color: $primary;
 }
 
-.v-list-item--active .v-list-item__title,
-.v-list-item--active .v-icon,
-.v-item--active .v-icon,
-.v-list-item[aria-expanded='true'],
-.v-list-item[aria-expanded='true'] .v-icon {
-  color: $accent !important;
+// メニュー等v-list-groupで開いた時の色をaccentに上書き
+.v-list__color {
+  .v-list-item--active .v-list-item__title,
+  .v-list-item--active .v-icon,
+  .v-item--active .v-icon,
+  .v-list-item[aria-expanded='true'],
+  .v-list-item[aria-expanded='true'] .v-icon {
+    color: $accent !important;
+  }
 }
 
 .v-breadcrumbs {
@@ -289,18 +316,11 @@ p {
 .popup {
   z-index: 600;
 }
+.menuable__content__active:has(.v-picker){ // date-picker
+  z-index: 101 !important;
+}
 
 // 用語集 上書きCSS (Vuetifyと競合のため)
-.blued {
-  color: #0101c9 !important;
-  border-bottom: 1px solid #0101c9 !important;
-}
-
-.blued:visited {
-  color: #00007b !important;
-  border-bottom: 1px solid #00007b !important;
-}
-
 .link {
   color: #0101c9 !important;
   border-bottom: 1px solid #0101c9 !important;
@@ -309,4 +329,32 @@ p {
 .link:visited {
   color: #00007b !important;
   border-bottom: 1px solid #00007b !important;
+}
+
+// ガイドライン
+.guide-table {
+  tr:not(:last-child) .guide-table__td {
+    border-bottom: 1px solid #afbab8 !important;
+  }
+  &__td:nth-child(1) {
+    min-width: 90px;
+  }
+
+  tr:hover {
+    background: transparent !important;
+  }
+
+  &--default {
+    thead {
+      background-color: rgba(#afbab8, 0.5);
+    }
+
+    thead th:not(:last-child) {
+      border-right: 1px solid #afbab8;
+    }
+
+    tr .guide-table__td:not(:last-child) {
+      border-right: 1px solid #afbab8 !important;
+    }
+  }
 }

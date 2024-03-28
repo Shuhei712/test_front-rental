@@ -96,7 +96,6 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       const res = await this.$axios.$post('get_spacial_page_list.php', param)
-      // console.log(res)
       this.pageClassLists = res.PageClassList
     },
     setBreadCrumbs() {
