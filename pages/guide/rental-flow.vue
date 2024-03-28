@@ -46,7 +46,7 @@
               guideline-img="/img/guide/rental_flow/flow_web_member_register.png" 
               guideline-alt="Web会員登録のイメージ"
               attr-width="900" 
-              attr-height="752"
+              attr-height="830"
             ></guideline-image>
             <v-row class="mt-10">
               <v-col cols="12">
