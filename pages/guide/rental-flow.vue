@@ -46,7 +46,7 @@
               guideline-img="/img/guide/rental_flow/flow_web_member_register.png" 
               guideline-alt="Web会員登録のイメージ"
               attr-width="900" 
-              attr-height="752"
+              attr-height="830"
             ></guideline-image>
             <v-row class="mt-10">
               <v-col cols="12">
@@ -121,6 +121,15 @@
               attr-width="900" 
               attr-height="558"
             ></guideline-image>
+            <guideline-footnote
+                :note-list="{
+                  type: 'bold-note',
+                  items: [
+                    'ご注文を確定する場合には、本人確認登録が必要となります。'
+                  ]
+                }"
+                class="mt-6"
+              ></guideline-footnote>
             <guideline-footnote
                 :note-list="{
                   type: 'bold-note',
