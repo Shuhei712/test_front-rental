@@ -286,6 +286,15 @@
           <template #[`item.SubTotal`]="{ item }">
             {{ getPrice(item.PriceType, item.SubTotal) }}
           </template>
+          <template #[`item.ProductComment`]="{ item }">
+            <v-btn
+              v-if="item.ProductComment"
+              small
+              color="primary"
+              @click="showComment(item.ProductComment)">確認
+            </v-btn>
+            <span v-else>－</span>
+          </template>
         </v-data-table>
 
         <v-divider></v-divider>
@@ -325,6 +334,21 @@
         </template>
       </div>
     </div>
+    <v-dialog v-model="commentDialog"
+      width="580">
+      <v-card class="pa-5 text-md-center">
+        回答コメント
+        <v-divider></v-divider>
+        <p class="order__item-comment mt-2">{{ comment }}</p>
+        <v-card-actions class="justify-center">
+          <v-btn
+            class="mt-3"
+            color="secondary"
+            @click="commentDialog=false">閉じる
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-dialog v-model="idDialog"
       width="580">
@@ -370,8 +394,10 @@ export default {
         { text: '日数掛率', value: 'DayRate', sortable: false, width: '84px' },
         { text: '数量', value: 'Qty', sortable: false, width: '60px' },
         { text: '小計(円)', value: 'SubTotal', sortable: false, align: 'right' },
-        { text: '回答コメント', value: 'ProductComment', sortable: false, width: '120px' },
+        { text: '回答コメント', value: 'ProductComment', sortable: false, width: '110px',align: 'center' },
       ],
+      commentDialog: false,
+      comment: null,
       cancelDialog: false,
       cancelID: null,
       branchDialog: false,
@@ -455,6 +481,10 @@ export default {
       if(t) dateTime += "  " + t
       return dateTime
     },
+    showComment(comment){
+      this.commentDialog = true
+      this.comment = comment
+    },
     setCancelDialog(){
       this.cancelDialog = true
     },
@@ -491,6 +521,12 @@ export default {
 }
 .pre-wrap{
   white-space: pre-wrap;
+}
+.order__item{
+  &-comment{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
 }
 .order__status{
   &-status{

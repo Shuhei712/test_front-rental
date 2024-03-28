@@ -62,7 +62,7 @@
               color="secondary"
               :disabled="loading"
               @click="$router.go(-2)"
-            >戻る</v-btn>
+            >入力画面に戻る</v-btn>
             <v-btn
               class="my-4 mx-2"
               color="primary"
