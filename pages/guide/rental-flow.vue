@@ -125,6 +125,15 @@
                 :note-list="{
                   type: 'bold-note',
                   items: [
+                    'ご注文を確定する場合には、本人確認登録が必要となります。'
+                  ]
+                }"
+                class="mt-6"
+              ></guideline-footnote>
+            <guideline-footnote
+                :note-list="{
+                  type: 'bold-note',
+                  items: [
                     'お見積りの有効期限内に回答が無い場合、レンタル商品の予約が無効になる場合があります。ご注意ください。'
                   ]
                 }"

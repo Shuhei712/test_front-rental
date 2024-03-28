@@ -713,13 +713,7 @@
         "contents": [
           {
             "items": [{
-              "texts": ["レンタルの<span class=\"font-weight-bold\">お見積りは無料</span>です。"],
-              "noteList": {
-                "type": "bold-note",
-                "items": [
-                  "お申込みの際には本人確認登録が必要となります。"
-                ]
-              }
+              "texts": ["レンタルの<span class=\"font-weight-bold\">お見積りは無料</span>です。"]
             }]
           }
         ]
