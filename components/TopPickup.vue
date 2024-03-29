@@ -22,7 +22,7 @@
           </div>
           <v-divider class="heading__line hidden-md-and-down" color="line"></v-divider>
           <v-btn
-            :to="'/products?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
+            :to="'/products?type=1&page=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
             class="ml-lg-5 mt-4 mt-lg-0"
             color="headingText"
             elevation="2"
@@ -42,7 +42,7 @@
           </div>
           <v-divider class="heading__line hidden-md-and-down" color="line"></v-divider>
           <v-btn
-            :to="'/products?type=2&categoryID=' + list.CategoryID + '&categoryName=' + list.CategoryName"
+            :to="'/products?type=2&page=1&categoryID=' + list.CategoryID + '&categoryName=' + list.CategoryName"
             class="ml-lg-5 mt-4 mt-lg-0"
             color="headingText"
             elevation="2"

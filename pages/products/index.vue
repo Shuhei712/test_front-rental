@@ -144,7 +144,6 @@
         <div class="product__pagination text-center mt-15">
           <v-pagination
             v-model="pageNumber"
-            v-scroll-to="{ el: '#top', offset: -200 }"
             :length="pageMaxLength"
             @input="changePage"></v-pagination>
         </div>
@@ -542,6 +541,7 @@ export default {
       } else {
         this.searchProducts()
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     },
     extractPresentCondition(searchConditionInfo) {
       this.initializePresentConditions()
@@ -615,7 +615,7 @@ export default {
     async resetConditions() {
       const categoryInfo = await this.getCategoryInfo(this.presentCategoryID)
       window.location.href =
-        '/products?type=2&categoryID=' + categoryInfo.CategoryID + '&categoryName=' + categoryInfo.CategoryName
+        '/products?type=2&page=1&categoryID=' + categoryInfo.CategoryID + '&categoryName=' + categoryInfo.CategoryName
     },
   },
 }

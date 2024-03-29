@@ -70,7 +70,7 @@
                 height="auto"
                 elevation="0"
                 class="text-white ml-2"
-                :href="'/products?type=3&keyword=' + keyword">
+                :href="'/products?type=3&page=1&keyword=' + keyword">
                 <v-icon color="#fff">mdi-magnify</v-icon>
               </v-btn>
             </v-form>
@@ -178,7 +178,7 @@
             @keyup.enter="searchKeyword"></v-text-field>
           <v-btn color="primary" class="text-white ml-2"
             height="auto" elevation="0"
-            :href="'/products?type=3&keyword=' + keyword"
+            :href="'/products?type=3&page=1&keyword=' + keyword"
           >
             <v-icon color="#fff">mdi-magnify</v-icon>
           </v-btn>
@@ -286,7 +286,7 @@ export default {
       this.scrollPosition = scroll
     },
     searchKeyword() {
-      window.location.href = '/products?type=3&keyword=' + this.keyword
+      window.location.href = '/products?type=3&page=1&keyword=' + this.keyword
     },
     logout() {
       return false

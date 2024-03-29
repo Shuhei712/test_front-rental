@@ -29,6 +29,7 @@
                   v-model="mail"
                   outlined
                   dense
+                  autocomplete="email"
                   type="email"
                   :error-messages="errors"
                 ></v-text-field>
