@@ -90,7 +90,7 @@
                           <div class="box__right ml-3">
                             <v-btn
                               class="text-body-2"
-                              :href="'/products/?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
+                              :href="'/products/?type=1&page=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
                               :elevation="0"
                               >詳細へ</v-btn
                             >

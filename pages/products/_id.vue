@@ -106,7 +106,7 @@
                   v-for="(list, index) in productInfoList.FeatureTagList"
                   :key="index"
                   class="product-tag text-lg-body-1 px-3 py-1 mr-2 mb-2"
-                  :to="'/products?type=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
+                  :to="'/products?type=1&page=1&tagID=' + list.TagID + '&tagName=' + list.TagName"
                   elevation="0"
                   tile
                   small>
@@ -322,7 +322,7 @@
         <div class="back-btn d-flex flex-column flex-sm-row flex-wrap align-start align-sm-center justify-center mt-15">
           <a
             :href="
-              '/products?type=2&categoryID=' +
+              '/products?type=2&page=1&categoryID=' +
               productInfoList.CategoryNmae01 +
               '&categoryName=' +
               productInfoList.CategoryTagID01
@@ -335,7 +335,7 @@
           </a>
           <a
             :href="
-              '/products?type=2&categoryID=' +
+              '/products?type=2&page=1&categoryID=' +
               productInfoList.CategoryNmae02 +
               '&categoryName=' +
               productInfoList.CategoryTagID02
@@ -540,7 +540,7 @@ export default {
       this.$store.commit('breadCrumbs/addList', {
         name: this.productInfoList.CategoryTagID01,
         path:
-          '/products?type=2&categoryID=' +
+          '/products?type=2&page=1&categoryID=' +
           this.productInfoList.CategoryNmae01 +
           '&categoryName=' +
           this.productInfoList.CategoryTagID01,
@@ -548,7 +548,7 @@ export default {
       this.$store.commit('breadCrumbs/addList', {
         name: this.productInfoList.CategoryTagID02,
         path:
-          '/products?type=2&categoryID=' +
+          '/products?type=2&page=1&categoryID=' +
           this.productInfoList.CategoryNmae02 +
           '&categoryName=' +
           this.productInfoList.CategoryTagID02,

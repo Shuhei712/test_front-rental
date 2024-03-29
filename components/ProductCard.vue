@@ -239,7 +239,7 @@ export default {
     },
     searchTag(tagID, tagName) {
       event.preventDefault()
-      window.location.href = '/products?type=1&tagID=' + tagID + '&tagName=' + tagName
+      window.location.href = '/products?type=1&page=1&tagID=' + tagID + '&tagName=' + tagName
     },
     isNew(date) {
       const now = new Date()
