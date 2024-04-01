@@ -347,14 +347,14 @@ export default {
       param.append('OrderPrice', this.orderPrice)
       param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
       param.append('PageNo', this.page)
-      this.$store.commit('loading/changeStatus', true)
+      // this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
       this.productLists = res.SearchProductList
       this.searchProductListCount = res.SearchAllCnt
       this.setPresentCategoryID()
       this.page = res.PageNo
       this.pageMaxLength = res.PageNoMax
-      this.$store.commit('loading/changeStatus', false)
+      // this.$store.commit('loading/changeStatus', false)
     },
     async searchProductsUsingFilter() {
       const conditionJSON = JSON.stringify(this.conditionJson)
@@ -362,7 +362,7 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('SearchType', '0')
-      param.append('Keyword', this.keyword)
+      param.append('Keyword', this.keyword||'')
       // param.append('CategoryTagID', '')
       // param.append('SearchTagID', '')
       param.append('ConditionJSON', conditionJSON)
@@ -370,7 +370,7 @@ export default {
       param.append('OrderPrice', this.orderPrice)
       param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
       param.append('PageNo', this.page)
-      this.$store.commit('loading/changeStatus', true)
+      // this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
       this.conditionalSearchFlg = true
       this.productLists = res.SearchProductList
@@ -392,7 +392,8 @@ export default {
       if (this.orderRelease !== '') query.release = this.orderRelease
       this.$router.push({query})
       await Promise.all([this.getMakerListforSearch(), this.getTagListforSearch()])
-      this.$store.commit('loading/changeStatus', false)
+      this.setBreadCrumbs(this.$route.query.type)
+      // this.$store.commit('loading/changeStatus', false)
     },
     initializeCondisionJson() {
       this.conditionJson.CategoryID = ''
@@ -534,14 +535,14 @@ export default {
         this.searchProducts()
       }
     },
-    changePage(page) {
+    async changePage(page) {
       this.page = Number(page)
       if (this.conditionalSearchFlg) {
-        this.searchProductsUsingFilter()
+        await this.searchProductsUsingFilter()
       } else {
-        this.searchProducts()
+        await this.searchProducts()
       }
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      window.scrollTo({ top: 0 })
     },
     extractPresentCondition(searchConditionInfo) {
       this.initializePresentConditions()
