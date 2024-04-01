@@ -128,7 +128,7 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     searchKeyword() {
-      window.location.href = '/products?type=3&keyword=' + this.keyword
+      window.location.href = '/products?type=3&page=1&keyword=' + this.keyword
     },
   },
 }
