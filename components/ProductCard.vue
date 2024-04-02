@@ -25,13 +25,13 @@
             <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}
           </div>
         </div>
-        <div class="name mt-2 mt-md-5">
+        <div class="name mt-2 mt-md-5 word-break">
           <div class="name__maker text-caption text-sm-body-2">{{ maker }}</div>
           <div class="name__product mt-1">
             <div class="text-subtitle-2 text-sm-subtitle-1 letter-space-015em font-weight-medium">
               <nuxt-link :to="'/products/' + id + '?name=' + name">{{ name }}</nuxt-link>
             </div>
-            <div class="text-subtitle-1 text-sm-h6 letter-space-015em font-weight-bold">
+            <div class="text-subtitle-1 text-sm-h6 letter-space-015em font-weight-bold name__product-model">
               <nuxt-link :to="'/products/' + id + '?name=' + name">{{ typeNumber }}</nuxt-link>
             </div>
           </div>
@@ -239,7 +239,7 @@ export default {
     },
     searchTag(tagID, tagName) {
       event.preventDefault()
-      window.location.href = '/products?type=1&tagID=' + tagID + '&tagName=' + tagName
+      window.location.href = '/products?type=1&page=1&tagID=' + tagID + '&tagName=' + tagName
     },
     isNew(date) {
       const now = new Date()
@@ -428,6 +428,10 @@ $bp_xs: 362px;
 
   .product-tag {
     color: $primary !important;
+  }
+  .name__product-model{
+    line-height: 1.5;
+    margin-top: 0.3rem;
   }
 
   // レスポンシブ用のクラス

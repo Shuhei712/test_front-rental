@@ -21,7 +21,7 @@
         <img :src="isNullCheckImageURL" />
       </div>
       <v-card-title class="item__maker text-body-2 mb-2 px-0">{{ maker }}</v-card-title>
-      <v-card-subtitle class="text-caption text-sm-body-2 pa-0" color="text">
+      <v-card-subtitle class="text-caption text-sm-body-2 pa-0 word-break" color="text">
         <span class="item__name">{{ name }}</span>
         &ensp;
         <span class="item__maker item__model word-keep">{{ model }}</span>

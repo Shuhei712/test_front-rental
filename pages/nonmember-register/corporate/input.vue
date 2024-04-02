@@ -11,6 +11,7 @@
           <div class="text-center mt-6">
             <v-btn large
               :disabled="ObserverProps.invalid||isValid"
+              :loading="loading"
               class="my-4 mx-2 white--text"
               color="primary"
               @click="confirm()"
@@ -34,6 +35,7 @@ export default {
       userJson: {"BUSS_CONTENT":[],"invoiceFlg": 'あり','BILLING_ACCEPT':''},
       fileArr: [],
       read: false,
+      loading: false,
       isValid: false
     }
   },
@@ -65,6 +67,7 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     confirm() {
+      this.loading = true
       this.$store.commit('register/setFormInfo', this.userJson)
       this.$store.commit('register/setFormFile', this.fileArr)
       this.$router.push('/nonmember-register/corporate/confirm')

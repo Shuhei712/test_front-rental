@@ -62,8 +62,8 @@
               @click="login()"
             >ログイン</v-btn>
             <div class="text-gray text-decoration-underline">
-              <router-link class="d-block my-2" :to="'/forgetpassword'">パスワードを忘れた方はこちら</router-link>
-              <router-link class="d-block" :to="'/register'">新規会員登録</router-link>
+              <div class="my-2"><router-link class="hover-opacity" :to="'/forgetpassword'">パスワードを忘れた方はこちら</router-link></div>
+              <div><router-link class="hover-opacity" :to="'/register'">新規会員登録</router-link></div>
             </div>
           </div>
         </v-form>
