@@ -144,7 +144,6 @@
         <div class="product__pagination text-center mt-15">
           <v-pagination
             v-model="pageNumber"
-            v-scroll-to="{ el: '#top', offset: -200 }"
             :length="pageMaxLength"
             @input="changePage"></v-pagination>
         </div>
@@ -194,6 +193,9 @@ export default {
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
+    if(this.$route.query.page) this.page = this.$route.query.page
+    if(this.$route.query.price||this.$route.query.price===0) this.orderPrice = Number(this.$route.query.price)
+    if(this.$route.query.release||this.$route.query.release===0) this.orderRelease = Number(this.$route.query.release)
     if(this.$route.query.type === '0') {
       this.extractPresentCondition(this.$store.getters['searchCondition/getInfo'])
       this.setSelectedData(this.$store.getters['searchCondition/getInfo'])
@@ -233,10 +235,57 @@ export default {
       },
     },
   },
+  watch: {
+    page(newVal, oldVal) {
+      if(Number(newVal) !== Number(oldVal)) {
+        this.$router.push({query: {...this.$route.query, page: newVal}})
+      }
+    },
+    orderPrice(newVal, oldVal) {
+      if(String(newVal) !== String(oldVal)&&newVal!=='') {
+        const query = Object.assign({}, this.$route.query)
+        delete query.release
+        query.price= newVal
+        this.$router.push({query})
+      }
+    },
+    orderRelease(newVal, oldVal) {
+      if(String(newVal) !== String(oldVal)&&newVal!=='') {
+        const query = Object.assign({}, this.$route.query)
+        delete query.price
+        query.release= newVal
+        this.$router.push({query})
+      }
+    },
+  },
+  mounted(){
+    window.addEventListener('popstate', this.popstateHook)
+  },
+  beforeDestroy(){
+    window.removeEventListener('popstate', this.popstateHook)
+  },
   updated() {
     this.$scrollBackButton()
   },
   methods: {
+    popstateHook() {
+      if(this.$route.query.type === '0') return
+      if(this.$route.query.page) this.page = this.$route.query.page
+      this.orderPrice = this.$route.query.price ? Number(this.$route.query.price):''
+      this.orderRelease = this.$route.query.release ? Number(this.$route.query.release):''
+      this.keyword = this.$route.query.keyword ? this.$route.query.keyword:''
+      // if (this.$route.query.type === '0'&&this.conditionalSearchFlg) {
+      //   this.searchProductsUsingFilter()
+      // } else {
+        this.conditionJson.CategoryID = null
+        this.conditionJson.MakerList = null
+        this.conditionJson.FeatureTagList = null
+        this.conditionJson.PriceRangeID = null
+        this.initializePresentConditions()
+        this.conditionalSearchFlg = false
+        this.searchProducts()
+      // }
+    },
     async getCategoryInfo(categoryID) {
       const param = new URLSearchParams()
       param.append('ProjectKey', this.$config.PROJECT_KEY)
@@ -298,14 +347,14 @@ export default {
       param.append('OrderPrice', this.orderPrice)
       param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
       param.append('PageNo', this.page)
-      this.$store.commit('loading/changeStatus', true)
+      // this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
       this.productLists = res.SearchProductList
       this.searchProductListCount = res.SearchAllCnt
       this.setPresentCategoryID()
       this.page = res.PageNo
       this.pageMaxLength = res.PageNoMax
-      this.$store.commit('loading/changeStatus', false)
+      // this.$store.commit('loading/changeStatus', false)
     },
     async searchProductsUsingFilter() {
       const conditionJSON = JSON.stringify(this.conditionJson)
@@ -313,7 +362,7 @@ export default {
       param.append('ProjectKey', this.$config.PROJECT_KEY)
       param.append('LangType', this.$config.LANG_JAPANESE)
       param.append('SearchType', '0')
-      param.append('Keyword', this.keyword)
+      param.append('Keyword', this.keyword||'')
       // param.append('CategoryTagID', '')
       // param.append('SearchTagID', '')
       param.append('ConditionJSON', conditionJSON)
@@ -321,7 +370,7 @@ export default {
       param.append('OrderPrice', this.orderPrice)
       param.append('PageRowCnt', this.$config.PAGE_ROW_COUNT)
       param.append('PageNo', this.page)
-      this.$store.commit('loading/changeStatus', true)
+      // this.$store.commit('loading/changeStatus', true)
       const res = await this.$axios.$post('search_product.php', param)
       this.conditionalSearchFlg = true
       this.productLists = res.SearchProductList
@@ -331,11 +380,20 @@ export default {
       this.$store.commit('searchCondition/addKeyword', res.KeyWord)
       this.page = res.PageNo
       this.pageMaxLength = res.PageNoMax
+      if(this.$route.query.page&&this.pageMaxLength&&Number(this.$route.query.page) > this.pageMaxLength) {
+        this.page = 1
+        this.searchProductsUsingFilter()
+        return
+      }
       this.extractPresentCondition(this.searchConditionInfo)
       this.setPresentCategoryID()
-      this.$router.push({query: {type:0}})
+      const query = { type:0, page:this.page }
+      if (this.orderPrice !== '') query.price = this.orderPrice
+      if (this.orderRelease !== '') query.release = this.orderRelease
+      this.$router.push({query})
       await Promise.all([this.getMakerListforSearch(), this.getTagListforSearch()])
-      this.$store.commit('loading/changeStatus', false)
+      this.setBreadCrumbs(this.$route.query.type)
+      // this.$store.commit('loading/changeStatus', false)
     },
     initializeCondisionJson() {
       this.conditionJson.CategoryID = ''
@@ -477,13 +535,14 @@ export default {
         this.searchProducts()
       }
     },
-    changePage(page) {
+    async changePage(page) {
       this.page = Number(page)
       if (this.conditionalSearchFlg) {
-        this.searchProductsUsingFilter()
+        await this.searchProductsUsingFilter()
       } else {
-        this.searchProducts()
+        await this.searchProducts()
       }
+      window.scrollTo({ top: 0 })
     },
     extractPresentCondition(searchConditionInfo) {
       this.initializePresentConditions()
@@ -557,7 +616,7 @@ export default {
     async resetConditions() {
       const categoryInfo = await this.getCategoryInfo(this.presentCategoryID)
       window.location.href =
-        '/products?type=2&categoryID=' + categoryInfo.CategoryID + '&categoryName=' + categoryInfo.CategoryName
+        '/products?type=2&page=1&categoryID=' + categoryInfo.CategoryID + '&categoryName=' + categoryInfo.CategoryName
     },
   },
 }

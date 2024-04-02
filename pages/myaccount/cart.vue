@@ -151,18 +151,19 @@
                       連絡方法
                     </v-col>
                     <v-col cols="12" md="8">
+                      <p class="text-caption">レンタルスタッフよりご質問や確認がある場合の連絡方法をご指定ください。<br>通常のご連絡は、メールまたはマイメニューの「注文履歴」にてご確認ください。</p>
                       <v-radio-group v-model.number="rentJson.ContactType"
                         hide-details="auto"
                         mandatory
                         row
                         class="mt-0 mb-4">
                         <v-radio
-                          label="お電話"
-                          :value="0"
-                        ></v-radio>
-                        <v-radio
                           label="メール"
                           :value="1"
+                        ></v-radio>
+                        <v-radio
+                          label="お電話"
+                          :value="0"
                         ></v-radio>
 
                       </v-radio-group>
@@ -213,18 +214,21 @@
                         hide-details="auto"
                         mandatory
                         row
-                        class="mt-0 mb-4">
+                        class="mt-0">
                         <v-radio label="ご来社"
                           :value="0"
+                          class="mb-2"
                         ></v-radio>
                         <v-radio label="宅配(混載)便"
                           :value="1"
+                          class="mb-2"
                         ></v-radio>
                         <v-radio label="チャーター便"
                           :value="2"
+                          class="mb-2"
                         ></v-radio>
                       </v-radio-group>
-                      <div class="notes my-4">
+                      <div class="notes mt-1 mb-4">
                         <p class="note caption">お引渡し日は営業日のみとなります。</p><br>
                         <p class="note caption">大型機材のイベント会場や施設への直接配送、発送到着のお時間指定ご希望の場合はチャーター便となります。</p>
                         <p class="note caption">宅配送料及びチャーター費はお客様ご負担となります。</p>
@@ -472,21 +476,24 @@
                         hide-details="auto"
                         mandatory
                         row
-                        class="mt-0 mb-4">
+                        class="mt-0">
                         <v-radio
                           label="ご来社"
                           :value="0"
+                          class="mb-2"
                         ></v-radio>
                         <v-radio
                           label="宅配(混載)便"
                           :value="1"
+                          class="mb-2"
                         ></v-radio>
                         <v-radio
                           label="チャーター便"
                           :value="2"
+                          class="mb-2"
                         ></v-radio>
                       </v-radio-group>
-                      <div class="my-4">
+                      <div class="mt-1 mb-4">
                         <p class="note caption">ご返却日は営業日のみとなります。</p><br>
                         <p class="note caption">ご返送料及びチャーター費はお客様ご負担となります。</p>
                       </div>
@@ -716,7 +723,8 @@ export default {
         DeliveryType:0,
         ReturnType:0,
         DeliveryTime: '時間未定',
-        ReturnTime: '時間未定'
+        ReturnTime: '時間未定',
+        ContactType: 1,
       },
       estJson: {},
       userInfo: null,

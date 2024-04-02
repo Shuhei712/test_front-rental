@@ -228,7 +228,7 @@
             color="outline"
             class="ma-2 px-6 white--text"
             :disabled="loading"
-            @click="backInput()">戻る
+            @click="backInput()">入力画面に戻る
           </v-btn>
           <v-btn
             elevation="0"

@@ -248,9 +248,8 @@
                       outlined
                       dense
                       hide-details="auto"
-                      name="reqMail"
                       type="email"
-                      autocomplete="new-regEmail"
+                      autocomplete="email"
                       :error-messages="errors"
                       @change="checkEmail"
                     ></v-text-field>
@@ -276,8 +275,7 @@
                       outlined
                       dense
                       hide-details="auto"
-                      autocomplete="new-regPassword"
-                      name="reqPass"
+                      autocomplete="new-password"
                       :error-messages="errors"
                       :append-icon="show ? 'mdi-eye':'mdi-eye-off'"
                       :type="show ? 'text':'password'"

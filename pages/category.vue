@@ -14,7 +14,7 @@
             prepend-inner-icon="mdi-magnify"
             hide-details="auto"
             @keyup.enter="searchKeyword"></v-text-field>
-          <v-btn color="primary" class="text-white ml-2 ml-md-5" :href="'/products?type=3&keyword=' + keyword">
+          <v-btn color="primary" class="text-white ml-2 ml-md-5" :href="'/products?type=3&page=1&keyword=' + keyword">
             <v-icon class="mr-1">mdi-text-search</v-icon>詳細検索
           </v-btn>
         </v-form>
@@ -69,7 +69,7 @@
                 <a
                   class="cat-group__btn text-caption text-sm-body-2 text-md-body-1 font-heading bold px-2 px-sm-3 py-2"
                   :href="
-                    '/products?type=2&categoryID=' + grandChild.CategoryID + '&categoryName=' + grandChild.CategoryName
+                    '/products?type=2&page=1&categoryID=' + grandChild.CategoryID + '&categoryName=' + grandChild.CategoryName
                   ">
                   <span class="cat-group__btn-name">{{ grandChild.CategoryName }}</span>
                   <span
@@ -128,7 +128,7 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     searchKeyword() {
-      window.location.href = '/products?type=3&keyword=' + this.keyword
+      window.location.href = '/products?type=3&page=1&keyword=' + this.keyword
     },
   },
 }
