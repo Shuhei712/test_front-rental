@@ -11,8 +11,7 @@
               :user.sync="userUpInfo"
               :result.sync="result"
               :login-id="loginID"
-              :member-id="userInfo.MemberID"
-              :member-email="userInfo.Email"
+              :member-info="userInfo"
               @mail-duplicate="mailDuplicateErr=$event"
             ></register-input>
             <div class="text-center mt-6">

@@ -2,19 +2,58 @@
   <div class="popup text-center">
     <v-dialog
       v-model="orderDialog"
-      width="900" scrollable
+      width="700" scrollable
       persistent>
       <ValidationObserver v-slot="ObserverProps" ref="observer">
-        <v-card class="pa-5">
+        <v-card>
           <v-card-title>注文内容</v-card-title>
-          <v-card-text>
+          <v-divider></v-divider>
+          <v-card-text class="text-body-1 text--text px-6 ">
             <v-form>
-              <v-row>
-                <v-col cols="12" md="3" class="pb-0">
+              <v-row class="border-bottom">
+                <v-col cols="12" md="4" class="pb-0">
+                  お支払い方法
+                </v-col>
+                <v-col cols="12" md="8" class="pt-1 pt-md-3">
+                  <template v-if="payMethod===0">事前お振込</template>
+                  <template v-else-if="payMethod===1">現金店頭お支払い</template>
+                  <template v-else-if="payMethod===2">後払い（請求払い）</template>
+                  <!-- <v-radio-group v-model.number="json.PayMethod"
+                    hide-details="auto"
+                    mandatory
+                    row
+                    class="mt-0 mb-4">
+                    <v-radio label="事前お振込"
+                      :value="0"
+                    ></v-radio> -->
+                    <!-- <v-radio v-if="userType"
+                      label="店頭お支払い(現金)"
+                      :disabled="deliveryType!==0"
+                      :value="1"
+                    ></v-radio> -->
+                  <!-- </v-radio-group> -->
+                  <!-- <p v-if="userType" class="caption note">来社お引取りの方のみ店頭お支払いが可能です。</p> -->
+                  <v-card color="cushion" elevation="0" class="mt-2">
+                    <v-card-text class="pa-2">
+                      <dl class="d-flex flex-column flex-md-row align-start">
+                        <dt class="font-weight-bold colon">事前お振込の場合</dt>
+                        <dd class="ps-md-4">お引き取り予定5営業日前までにお振り込み</dd>
+                      </dl>
+                      <!-- <dl v-if="userType" class="d-flex flex-column flex-md-row align-start pt-1">
+                        <dt class="font-weight-bold colon">店頭お支払い</dt>
+                        <dd class="ps-md-4">お引き取り時に現金でご精算</dd>
+                      </dl> -->
+
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+              <v-row class="border-bottom">
+                <v-col cols="12" md="4" class="pb-0">
                   <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
                   見積番号
                 </v-col>
-                <v-col cols="12" md="9">
+                <v-col cols="12" md="8" class="pt-1 pt-md-2">
                   <ValidationProvider
                     v-slot="{ errors }"
                     name="no"
@@ -28,55 +67,20 @@
                       :error-messages="errors"
                     ></v-text-field>
                   </ValidationProvider>
-                  <p>注文する回答見積書の見積番号を記載下さい。</p>
+                  <p class="text-caption">注文する回答見積書の見積番号を記載下さい。</p>
                 </v-col>
               </v-row>
 
               <v-row class="border-bottom">
-                <v-col cols="12" md="3" class="pb-0">
-                  <span class="white--text red darken-1 px-2 py-1 rounded body-2 body-2">必須</span> お支払い方法
-                </v-col>
-                <v-col cols="12" md="9">
-                  <v-radio-group v-model.number="json.PayMethod"
-                    hide-details="auto"
-                    mandatory
-                    row
-                    class="mt-0 mb-4">
-                    <v-radio label="事前お振込"
-                      :value="0"
-                    ></v-radio>
-                    <!-- <v-radio v-if="userType"
-                      label="店頭お支払い(現金)"
-                      :disabled="deliveryType!==0"
-                      :value="1"
-                    ></v-radio> -->
-                  </v-radio-group>
-                  <!-- <p v-if="userType" class="caption note">来社お引取りの方のみ店頭お支払いが可能です。</p> -->
-                  <v-card color="cushion" elevation="0">
-                    <v-card-text>
-                      <dl class="d-flex flex-column flex-md-row align-start">
-                        <dt class="font-weight-bold colon">事前お振込</dt>
-                        <dd class="ps-md-4">お引き取り予定5営業日前までにお振り込み</dd>
-                      </dl>
-                      <!-- <dl v-if="userType" class="d-flex flex-column flex-md-row align-start pt-1">
-                        <dt class="font-weight-bold colon">店頭お支払い</dt>
-                        <dd class="ps-md-4">お引き取り時に現金でご精算</dd>
-                      </dl> -->
-
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-              </v-row>
-              <v-row class="border-bottom">
-                <v-col cols="12" md="3" class="pb-0">
+                <v-col cols="12" md="4" class="pb-0">
                   <span class="white--text red darken-1 px-2 py-1 rounded body-2 body-2">必須</span> 請求書
                 </v-col>
-                <v-col cols="12" md="9">
+                <v-col cols="12" md="8" class="pt-1 pt-md-2">
                   <v-radio-group v-model.number="json.InvoiceFlg"
                     hide-details="auto"
                     mandatory
                     row
-                    class="mt-0 mb-4">
+                    class="mt-0">
                     <v-radio label="不要"
                       :value="0"
                     ></v-radio>
@@ -86,12 +90,12 @@
                   </v-radio-group>
                 </v-col>
               </v-row>
-              <v-row v-if="json.InvoiceFlg">
-                <v-col cols="12" md="3" class="pb-0">
+              <v-row v-if="json.InvoiceFlg" class="border-bottom">
+                <v-col cols="12" md="4" class="pb-0">
                   <span class="white--text secondary px-2 py-1 rounded body-2">任意</span>
                   請求書記載 注文番号
                 </v-col>
-                <v-col cols="12" md="9">
+                <v-col cols="12" md="8" class="pt-1 pt-md-2">
                   <ValidationProvider
                     v-slot="{ errors }"
                     name="invoiceNo"
@@ -109,7 +113,7 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <v-card-actions class="justify-center">
+          <v-card-actions class="justify-center py-5">
             <v-btn
               class="mx-2"
               dark
@@ -231,5 +235,11 @@ export default {
 .note{
   padding-left: 1.4rem;
   @include wordSymbol('※')
+}
+
+.border-bottom{
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
 }
 </style>
