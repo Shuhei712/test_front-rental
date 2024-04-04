@@ -9,14 +9,12 @@
               <!-- <p v-if="result==='120107'||result==='120108'||result==='120201'" class="red--text mb-5">
                 ご記入のメールアドレスは既に使用されています。
               </p> -->
-              <v-row v-if="memberId" class="my-1">
-                <v-col cols="12" md="4" class="pb-0">会員番号</v-col>
-                <v-col cols="12" md="8">{{ memberId }}</v-col>
-              </v-row>
-              <v-row v-if="loginId" class="my-1">
-                <v-col cols="12" md="4" class="pb-0">ログインID</v-col>
-                <v-col cols="12" md="8">{{ loginId }}</v-col>
-              </v-row>
+              <template v-if="memberInfo">
+                <v-row class="my-1">
+                  <v-col cols="12" md="4" class="pb-0">会員番号</v-col>
+                  <v-col cols="12" md="8">{{ memberInfo.MemberID }}</v-col>
+                </v-row>
+              </template>
               <v-row class="my-1">
                 <v-col cols="12" md="4" class="pb-0">会員タイプ</v-col>
                 <v-col cols="12" md="8">
@@ -28,6 +26,16 @@
                   </template>
                 </v-col>
               </v-row>
+              <template v-if="memberInfo">
+                <v-row class="my-1">
+                  <v-col cols="12" md="4" class="pb-0">ログインID</v-col>
+                  <v-col cols="12" md="8">{{ loginId }}</v-col>
+                </v-row>
+                <v-row class="my-1">
+                  <v-col cols="12" md="4" class="pb-0">お支払い方法</v-col>
+                  <v-col cols="12" md="8">{{ memberInfo.PaymentMethodDisp }}</v-col>
+                </v-row>
+              </template>
               <div v-if="syncedUser.MemberType===0">
                 <ValidationProvider
                   v-slot="{ errors }"
@@ -253,7 +261,7 @@
                       :error-messages="errors"
                       @change="checkEmail"
                     ></v-text-field>
-                    <p v-if="mailDuplicateErr" class="red--text text-caption">このメールアドレスはすでに使用されています</p>
+                    <p v-if="mailDuplicateErr" class="red--text text-caption pl-3">このメールアドレスはすでに使用されています</p>
                   </v-col>
                 </v-row>
               </ValidationProvider>
@@ -400,16 +408,11 @@ export default {
       required: false,
       default: null
     },
-    memberId:{
-      type: Number,
+    memberInfo:{
+      type: Object,
       required: false,
-      default: null
+      default: () => {},
     },
-    memberEmail:{
-      type: String,
-      required: false,
-      default: null
-    }
   },
 
   data() {
@@ -471,7 +474,7 @@ export default {
     //   this.$refs.observer.reset()
     // },
     async checkEmail(email){
-      if (!email||this.memberEmail===email) {
+      if (!email||this.memberInfo.Email===email) {
         this.mailDuplicateErr = false
         return
       }

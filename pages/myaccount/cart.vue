@@ -623,20 +623,7 @@
                       <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お支払い方法
                     </v-col>
                     <v-col cols="12" md="8">
-                      <v-radio-group v-model.number="rentJson.PayMethod"
-                        hide-details="auto"
-                        mandatory
-                        row
-                        class="mt-0 mb-4">
-                        <v-radio label="事前お振込"
-                          :value="0"
-                        ></v-radio>
-                        <!-- <v-radio v-if="userInfo.MemberType"
-                          label="店頭お支払い(現金)"
-                          :disabled="rentJson.DeliveryType!==0"
-                          :value="1"
-                        ></v-radio> -->
-                      </v-radio-group>
+                      <span v-text="userInfo.PaymentMethodDisp"></span>
                       <!-- <p v-if="userInfo.MemberType" class="caption note">来社お引取りの方のみ店頭お支払いが可能です。</p> -->
                     </v-col>
                   </v-row>
@@ -778,9 +765,6 @@ export default {
       if(this.$refs.deliveryTime){
         this.$refs.deliveryTime.reset()
         this.$set(this.rentJson, "DeliveryTime", '時間未定')
-      }
-      if(value!==0){
-        this.$set(this.rentJson, "PayMethod", 0)
       }
     },
     'rentJson.ReturnType'(){ // 時間リセット

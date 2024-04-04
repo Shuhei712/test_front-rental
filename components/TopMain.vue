@@ -62,7 +62,7 @@
                   dense
                   prepend-inner-icon="mdi-magnify"
                   hide-details="auto"
-                  @keyup.enter="$router.push('/products?type=3&page=1&keyword=' + keyword)"></v-text-field>
+                  @keydown.enter="$router.push('/products?type=3&page=1&keyword=' + keyword)"></v-text-field>
               </div>
             </v-col>
             <v-col cols="6" md="4">

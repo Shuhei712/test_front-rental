@@ -204,7 +204,8 @@
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border width-s">
                       <template v-if="rentJson.PayMethod===0">事前お振込</template>
-                      <template v-else-if="rentJson.PayMethod===1">お支払い(現金)</template>
+                      <template v-else-if="rentJson.PayMethod===1">現金店頭お支払い</template>
+                      <template v-else-if="rentJson.PayMethod===2">後払い（請求払い）</template>
                     </v-card>
                   </v-col>
                 </v-row>
