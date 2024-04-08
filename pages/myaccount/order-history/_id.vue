@@ -60,12 +60,14 @@
             <dd>{{getDate(order.OrderCancelCommitDate)}}</dd>
           </dl>
           <!-- //「レンタル申込中」の場合は表示しない -->
-          <dl v-if="order.OrderStatus!==0 && order.OrderResponse" class="mt-4">
+          <dl v-if="order.OrderStatus!==0" class="mt-4">
             <dt class="font-weight-bold">回答内容</dt>
             <dd class="flex-grow-1">
               <v-card outlined color="cushion" min-width="100%">
                 <v-card-text class="text--text">
-                  {{getDate(order.OrderResponseDate)}}
+                  <template v-if="order.OrderResponseDate">
+                    {{getDate(order.OrderResponseDate)}}
+                  </template>
                   <p class="pre-wrap">{{order.OrderResponse}}</p>
                 </v-card-text>
                 <v-card-actions v-if="order.ResponseQuotationURL" class="flex-wrap">

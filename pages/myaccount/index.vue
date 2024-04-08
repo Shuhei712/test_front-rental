@@ -136,7 +136,7 @@
         <template v-else>
           <p class="mb-4">退会しますか？</p>
           <ul class="d-inline-block mb-4">
-            <li>お気に入りや購入履歴が消失します。</li>
+            <li>お気に入りや注文履歴が消失します。</li>
           </ul>
           <div>
             <v-btn
