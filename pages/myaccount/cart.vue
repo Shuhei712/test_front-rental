@@ -339,6 +339,9 @@
                             </set-address>
                           </v-col>
                         </v-row>
+                        <p class="note caption mt-2 error--text">
+                          ご入力いただく発送先のお宛名が、会員様と異なる場合は、<br>申し訳ございませんが、ページ下部の備考欄にお名前・会社名をご記入ください。
+                        </p>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">発送先 電話番号</v-col>
