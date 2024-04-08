@@ -9,7 +9,9 @@
 |2023/03/27|v1.1.2|・ファーストビューのデザイン変更|
 |2023/06/20|v1.1.3|・ファーストビューのデザイン変更(PickUpの型番)|
 |2023/12/22|v1.2.0|・ファーストビューのデザイン・機能変更<br>・機材が見つからない時の404ページ対応<br>・アンカーリンク不具合対応<br>・ローディング消去＆代替の対策|
-
+|2024/03/28|v2.0.0|・会員機能追加
+|2024/02/04|v2.0.1|・添付フィールドのUI<br>・検索結果：クエリ追加、ページネーション/パンくず不具合、絞り込みキーワードを×でリセットした際Nullが入る、ページ変更でトップにスクロールしない(FF)<br>・カート：連絡方法 補足・初期値　等
+|2024/02/08|v2.0.2|・keyup.enterのブラウザによる挙動の違い対応<br>・支払方法はお客情報に合わせる、/infoに支払方法を表示<br>・注文状況「注文取消し」を赤文字<br>・注文回答欄を出す条件変更　等
 
 ### nodejs のバージョン `v16.13.0`
 
@@ -61,19 +63,40 @@ For detailed explanation on how things work, check out the [documentation](https
 
 ```
 1. masterからdevelopを切る。
-2. masterからreleaseを切る。
-3. developからfeatureを切る。（機能ごとにブランチを切るので、複数のfeatureを切ることがほとんど）
-4. feature内で作業し、変更内容をdevelopにマージ。
-5. 全てのfeatureをdevelopにマージできたら、developをreleaseにマージ。
-6. releaseを本番環境にデプロイして、問題が無ければreleaseをmasterにマージ。
-7. masterをdevelopにマージ。
+2. developからfeatureを切る。（機能ごとにブランチを切るので、複数のfeatureを切ることがほとんど）
+3. feature内で作業し、変更内容をdevelopにマージ。
+4. 全てのfeatureをdevelopにマージできたら、developからreleaseを切る。
+5. releaseを本番環境にデプロイして、問題が無ければreleaseをmasterにマージ。
+6. masterでバージョンのタグを付ける
+7. 以降、2番の手順に戻って繰り返し。
+```
+バグが発生した場合
+```
 8. 本番運用中にバグが発生した場合は、masterからhotfixを切る。
 9. hotfixでバグ修正を行い、hotfixをデプロイ。
 10. 問題なければhotfixをmasterにマージ。
 11. masterをdevelopにマージ。
 12. 次のリリースに向けてmasterからreleaseを切る。
-13. 以降、3番の手順に戻って繰り返し。
+
 ```
+## サーバ の運用方法
+### 運用手順
+#### 本番 (masterで運用)
+```
+sudo git pull origin master
+sudo npm run build
+pm2 restart [id]
+```
+#### 緊急時に元のversionに戻すとき (releaseで運用)
+```
+sudo git fetch
+sudo git checkout -b [branch名] [remote名/branch名]
+// release/0000 origin/release/0000
+sudo npm run build
+pm2 restart [id]
+```
+
+
 
 ## Special Directories
 

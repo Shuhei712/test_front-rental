@@ -31,6 +31,9 @@
         <template #[`item.RentalTotal`]="{ item }">
           {{ item.RentalTotal ? item.RentalTotal.toLocaleString() : '' }}
         </template>
+        <template #[`item.OrderStatusDisp`]="{ item }">
+          <span :class="item.OrderStatus===9?'error--text':''">{{ item.OrderStatusDisp }}</span>
+        </template>
         <template #[`item.actions`]="{ item }">
           <td class="px-0 order-hx__table-actions py-1">
             <v-btn

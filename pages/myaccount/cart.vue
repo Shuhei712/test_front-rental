@@ -151,7 +151,7 @@
                       連絡方法
                     </v-col>
                     <v-col cols="12" md="8">
-                      <p class="text-caption">レンタルスタッフよりご質問や確認がある場合の連絡方法をご指定ください。<br>通常のご連絡は、メールまたはマイメニューの「注文履歴」にてご確認ください。</p>
+                      <p class="text-caption">レンタルスタッフよりご質問や確認がある場合の連絡方法をご指定ください。<br>通常のご連絡は、メールまたはマイページの「注文履歴」にてご確認ください。</p>
                       <v-radio-group v-model.number="rentJson.ContactType"
                         hide-details="auto"
                         mandatory
