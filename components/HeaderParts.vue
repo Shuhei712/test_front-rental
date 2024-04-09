@@ -63,7 +63,7 @@
                 outlined
                 dense
                 hide-details="auto"
-                @keyup.enter="searchKeyword"></v-text-field>
+                @keydown.enter="searchKeyword"></v-text-field>
               <v-btn color="primary"
                 max-width="40"
                 min-width="53"
@@ -175,7 +175,7 @@
             dense
             prepend-inner-icon="mdi-magnify"
             hide-details="auto"
-            @keyup.enter="searchKeyword"></v-text-field>
+            @keydown.enter="searchKeyword"></v-text-field>
           <v-btn color="primary" class="text-white ml-2"
             height="auto" elevation="0"
             :href="'/products?type=3&page=1&keyword=' + keyword"

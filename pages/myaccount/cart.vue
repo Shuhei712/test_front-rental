@@ -151,7 +151,7 @@
                       連絡方法
                     </v-col>
                     <v-col cols="12" md="8">
-                      <p class="text-caption">レンタルスタッフよりご質問や確認がある場合の連絡方法をご指定ください。<br>通常のご連絡は、メールまたはマイメニューの「注文履歴」にてご確認ください。</p>
+                      <p class="text-caption">レンタルスタッフよりご質問や確認がある場合の連絡方法をご指定ください。<br>通常のご連絡は、メールまたはマイページの「注文履歴」にてご確認ください。</p>
                       <v-radio-group v-model.number="rentJson.ContactType"
                         hide-details="auto"
                         mandatory
@@ -339,6 +339,9 @@
                             </set-address>
                           </v-col>
                         </v-row>
+                        <p class="note caption mt-2 error--text">
+                          ご入力いただく発送先のお宛名が、会員様と異なる場合は、<br>申し訳ございませんが、ページ下部の備考欄にお名前・会社名をご記入ください。
+                        </p>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">発送先 電話番号</v-col>
@@ -623,20 +626,7 @@
                       <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お支払い方法
                     </v-col>
                     <v-col cols="12" md="8">
-                      <v-radio-group v-model.number="rentJson.PayMethod"
-                        hide-details="auto"
-                        mandatory
-                        row
-                        class="mt-0 mb-4">
-                        <v-radio label="事前お振込"
-                          :value="0"
-                        ></v-radio>
-                        <!-- <v-radio v-if="userInfo.MemberType"
-                          label="店頭お支払い(現金)"
-                          :disabled="rentJson.DeliveryType!==0"
-                          :value="1"
-                        ></v-radio> -->
-                      </v-radio-group>
+                      <span v-text="userInfo.PaymentMethodDisp"></span>
                       <!-- <p v-if="userInfo.MemberType" class="caption note">来社お引取りの方のみ店頭お支払いが可能です。</p> -->
                     </v-col>
                   </v-row>
@@ -778,9 +768,6 @@ export default {
       if(this.$refs.deliveryTime){
         this.$refs.deliveryTime.reset()
         this.$set(this.rentJson, "DeliveryTime", '時間未定')
-      }
-      if(value!==0){
-        this.$set(this.rentJson, "PayMethod", 0)
       }
     },
     'rentJson.ReturnType'(){ // 時間リセット
