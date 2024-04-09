@@ -426,6 +426,7 @@ export default {
     ])
 
     const productTariffLists = await this.getProductTariff(this.productInfoList.TariffID)
+    if(!this.title) this.title = this.productInfoList.ProductName
 
     this.getProductInfo()
     this.getProductSpec()
@@ -714,9 +715,6 @@ export default {
           Authorization: `Bearer ${accessToken}`
         }
       })
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       this.$setLog('会員商品詳細', 'カート追加', res.data.Status)
       if(res.data.Status === 'TRUE'){
         this.addCartDialog = true
@@ -759,9 +757,6 @@ export default {
           Authorization: `Bearer ${token}`
         }
       })
-      if (this.$config.DEBUG_MODE) {
-        console.log(res)
-      }
       if(res.data.Status==='TRUE'){
         return res
       }else if(res.data.ErrorNo===100002){
