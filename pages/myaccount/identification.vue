@@ -112,7 +112,7 @@ export default {
       if(res) {
         if (res.RentalFlg===1||res.RentalFlg===5) this.$router.push('/myaccount')
         this.userInfo = res
-        const arr = ['MemberType','Representative','HOfficeTel','HOfficeFax','HOfficeZipCode','HOfficePrefect','HOfficeAddress','Incorporation','CorpNumber','CorpType','PaymentMethod','PayeeName','BillingEmail']
+        const arr = ['MemberType','Representative','HOfficeTel','HOfficeFax','HOfficeZipCode','HOfficePrefect','HOfficeAddress','Incorporation','CorpNumber','CorpType','PaymentMethod','PayeeName','BillingEmail','CorpKind','Industry','SameIndustry']
         arr.forEach((item) => {
           this.$set(this.user, item, this.userInfo[item])
         })
