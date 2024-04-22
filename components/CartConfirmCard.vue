@@ -55,17 +55,17 @@
                 class="py-12 px-md-10 px-5">
 
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">
+                  <v-col cols="12" md="4" class="pb-0 pt-5">
                     注文件名
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                    <v-card elevation="0" min-height="2rem" class="pa-2 border">{{ rentJson.OrderTitle }}</v-card>
+                    <v-card elevation="0" min-height="2.3rem" class="pa-2 border">{{ rentJson.OrderTitle }}</v-card>
                   </v-col>
                 </v-row>
 
                 <v-divider class="my-4"></v-divider>
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">連絡方法
+                  <v-col cols="12" md="4" class="pb-0 pt-5">連絡方法
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card v-if="rentJson.ContactType" elevation="0" class="pa-2 border">メール：{{ rentJson.ContactEmail }}</v-card>
@@ -77,7 +77,7 @@
                 <v-divider class="my-4"></v-divider>
 
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">お引渡し方法
+                  <v-col cols="12" md="4" class="pb-0 pt-5">お引渡し方法
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border width-s">
@@ -88,7 +88,7 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">
+                  <v-col cols="12" md="4" class="pb-0 pt-5">
                     <template v-if="rentJson.DeliveryType===0">
                       お引取り日時
                     </template>
@@ -109,14 +109,14 @@
                   </v-col>
                 </v-row>
                 <v-row v-if="rentJson.DeliveryType===0">
-                  <v-col cols="12" md="4" class="pb-0">お引取り店舗
+                  <v-col cols="12" md="4" class="pb-0 pt-5">お引取り店舗
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                    <v-card elevation="0" min-height="2rem" class="pa-2 border width-s">{{ rentJson.DeliveryShop }}</v-card>
+                    <v-card elevation="0" min-height="2.3rem" class="pa-2 border width-s">{{ rentJson.DeliveryShop }}</v-card>
                   </v-col>
                 </v-row>
                 <v-row v-else>
-                  <v-col cols="12" md="4" class="pb-0">
+                  <v-col cols="12" md="4" class="pb-0 pt-5">
                     <template v-if="rentJson.DeliveryType===1">発送先 住所</template>
                     <template v-else>搬入場所</template>
                   </v-col>
@@ -128,8 +128,16 @@
                 </v-row>
 
                 <v-row v-if="rentJson.DeliveryType===1">
-                  <v-col cols="12" md="4" class="pb-0">発送先 電話番号
+
+                  <v-col cols="12" md="4" class="pb-0 pt-5">発送先 お名前</v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border">{{ rentJson.DeliveryDestName }}</v-card>
                   </v-col>
+                  <v-col cols="12" md="4" class="pb-0 pt-5">発送先 会社名</v-col>
+                  <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                    <v-card elevation="0" class="pa-2 border" min-height="2.3rem">{{ rentJson.DeliveryDestComp }}</v-card>
+                  </v-col>
+                  <v-col cols="12" md="4" class="pb-0 pt-5">発送先 電話番号</v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border">{{ rentJson.DeliveryTel }}</v-card>
                   </v-col>
@@ -138,7 +146,7 @@
                 <v-divider class="my-4"></v-divider>
 
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">ご使用期間(リハーサル含む)
+                  <v-col cols="12" md="4" class="pb-0 pt-5">ご使用期間(リハーサル含む)
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border">{{ concatRentRange }}</v-card>
@@ -149,7 +157,7 @@
                 <v-divider class="my-4"></v-divider>
 
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">ご返却方法
+                  <v-col cols="12" md="4" class="pb-0 pt-5">ご返却方法
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border width-s">
@@ -160,12 +168,12 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">
+                  <v-col cols="12" md="4" class="pb-0 pt-5">
                     <template v-if="rentJson.ReturnType===0">
                       ご返却日時
                     </template>
                     <template v-else-if="rentJson.ReturnType===1">
-                      商品到着日
+                      お客様発送日
                     </template>
                     <template v-else>搬出日時</template>
                   </v-col>
@@ -181,14 +189,14 @@
                   </v-col>
                 </v-row>
                 <v-row v-if="rentJson.ReturnType!==2">
-                  <v-col cols="12" md="4" class="pb-0">ご返却店舗
+                  <v-col cols="12" md="4" class="pb-0 pt-5">ご返却店舗
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                    <v-card elevation="0" min-height="2rem" class="pa-2 border width-s">{{ rentJson.ReturnShop }}</v-card>
+                    <v-card elevation="0" min-height="2.3rem" class="pa-2 border width-s">{{ rentJson.ReturnShop }}</v-card>
                   </v-col>
                 </v-row>
                 <v-row v-else>
-                  <v-col cols="12" md="4" class="pb-0">搬出場所
+                  <v-col cols="12" md="4" class="pb-0 pt-5">搬出場所
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border width-s mb-1">〒{{ rentJson.ReturnZipCode }}</v-card>
@@ -199,7 +207,7 @@
 
                 <v-divider class="my-4"></v-divider>
                 <v-row>
-                  <v-col cols="12" md="4" class="pb-0">お支払い方法
+                  <v-col cols="12" md="4" class="pb-0 pt-5">お支払い方法
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
                     <v-card elevation="0" class="pa-2 border width-s">
@@ -212,10 +220,10 @@
 
                 <v-divider class="my-4"></v-divider>
                 <v-row class="border-bottom">
-                  <v-col cols="12" md="4" class="pb-0">備考
+                  <v-col cols="12" md="4" class="pb-0 pt-5">備考
                   </v-col>
                   <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                    <v-card elevation="0" min-height="2rem" class="pa-2 border pre-wrap">{{ rentJson.OrderComment }}</v-card>
+                    <v-card elevation="0" min-height="2.3rem" class="pa-2 border pre-wrap">{{ rentJson.OrderComment }}</v-card>
                   </v-col>
                 </v-row>
               </v-card>
@@ -242,7 +250,7 @@
         </v-card-actions>
       </v-card>
       <v-dialog v-model="resultDialog"
-        width="780"
+        width="700"
         max-width="90%"
         persistent>
         <v-card class="pa-5 text-center">
@@ -372,11 +380,11 @@ export default {
     deleteUnnecessaryData(postRentJson){
       const arr = []
       if (postRentJson.DeliveryType===0) {
-        arr.push('DeliveryTel', 'DeliveryZipCode', 'DeliveryPrefect', 'DeliveryAddress')
+        arr.push('DeliveryTel', 'DeliveryZipCode', 'DeliveryPrefect', 'DeliveryAddress', 'DeliveryDestName','DeliveryDestComp' )
       }else if (postRentJson.DeliveryType===1) {
         arr.push('DeliveryTime', 'DeliveryShop')
       }else if (postRentJson.DeliveryType===2) {
-        arr.push('DeliveryTel', 'DeliveryShop')
+        arr.push('DeliveryTel', 'DeliveryShop', 'DeliveryDestName','DeliveryDestComp')
       }
       if (postRentJson.ReturnType===0) {
         arr.push('ReturnZipCode', 'ReturnPrefect', 'ReturnAddress')

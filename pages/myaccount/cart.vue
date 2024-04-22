@@ -277,7 +277,7 @@
                               scrollable
                               :events="today"
                               :event-color="todayColor"
-                              :allowed-dates="allowedBusinessDates"
+                              :allowed-dates="allowedDatesDeliver"
                               :max="deliverMax"
                               @input="datePick[0] = false"
                             ></v-date-picker>
@@ -330,6 +330,42 @@
                       <div v-else-if="rentJson.DeliveryType===1">
                         <v-divider class="my-4"></v-divider>
                         <v-row>
+                          <v-col cols="12" md="3" class="pb-0">発送先 お名前</v-col>
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
+                            <ValidationProvider
+                              v-slot="{ errors }"
+                              name="deliveryName"
+                              rules="required|max:150">
+                              <v-text-field
+                                v-model="rentJson.DeliveryDestName"
+                                outlined
+                                dense
+                                hide-details="auto"
+                                :error-messages="errors">
+                              </v-text-field>
+                            </ValidationProvider>
+                          </v-col>
+                        </v-row>
+                        <v-divider class="my-4"></v-divider>
+                        <v-row>
+                          <v-col cols="12" md="3" class="pb-0">発送先 会社名</v-col>
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
+                            <ValidationProvider
+                              v-slot="{ errors }"
+                              name="deliveryCompany"
+                              rules="max:150">
+                              <v-text-field
+                                v-model="rentJson.DeliveryDestComp"
+                                outlined
+                                dense
+                                hide-details="auto"
+                                :error-messages="errors">
+                              </v-text-field>
+                            </ValidationProvider>
+                          </v-col>
+                        </v-row>
+                        <v-divider class="my-4"></v-divider>
+                        <v-row>
                           <v-col cols="12" md="3" class="pb-0">発送先 住所</v-col>
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <set-address
@@ -339,9 +375,6 @@
                             </set-address>
                           </v-col>
                         </v-row>
-                        <p class="note caption mt-2 error--text">
-                          ご入力いただく発送先のお宛名が、会員様と異なる場合は、<br>申し訳ございませんが、ページ下部の備考欄にお名前・会社名をご記入ください。
-                        </p>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">発送先 電話番号</v-col>
@@ -439,7 +472,7 @@
                           :picker-date.sync="rentRangeInitial"
                           :events="today"
                           :event-color="todayColor"
-                          :allowed-dates="allowedDates"
+                          :allowed-dates="allowedDatesRange"
                           :min="rentRangeMin"
                           :max="rentRangeMax"
                         >
@@ -507,7 +540,7 @@
                             ご返却日
                           </template>
                           <template v-else-if="rentJson.ReturnType===1">
-                            商品到着日
+                            お客様発送日
                           </template>
                           <template v-else>搬出日</template>
                         </v-col>
@@ -545,7 +578,7 @@
                               :picker-date.sync="returnInitial"
                               :events="today"
                               :event-color="todayColor"
-                              :allowed-dates="allowedBusinessDates"
+                              :allowed-dates="allowedDatesReturn"
                               :min="returnMin"
                               @input="datePick[2] = false"
                             ></v-date-picker>
@@ -731,6 +764,7 @@ export default {
       deleteRow: null,
       deleteLoading: false,
       datePick: [ false,false,false],
+      rentMinDate: null,
       rentRange: [],
       rentDate: [],
       rentRangeDays: null,
@@ -740,7 +774,11 @@ export default {
       returnMin: null,
       rentRangeInitial: null,
       returnInitial: null,
-      today: [this.getToday()],
+      currentDateDeliver: null,
+      currentDateReturn: null,
+      closeDeliverArr: [],
+      closeReturnArr: [],
+      today: [],
       todayColor: 'primary',
       concatRentRange: null,
       confirmDialog: false,
@@ -752,6 +790,7 @@ export default {
     this.$store.commit('loading/changeStatus', true)
     this.setBreadCrumbs()
     await this.getCartInfo()
+    await this.getMinDate()
     if(this.cartInfo) await this.inputUserInfo()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -764,16 +803,24 @@ export default {
     }
   },
   watch: {
-    'rentJson.DeliveryType'(value){ // 時間リセット
-      if(this.$refs.deliveryTime){
+    async 'rentJson.DeliveryType'(value){
+      if(this.$refs.deliveryTime){ // 時間リセット
         this.$refs.deliveryTime.reset()
         this.$set(this.rentJson, "DeliveryTime", '時間未定')
       }
+      if(value===0&&this.rentDate[0]){
+        const closeDate = await this.setCloseDates(this.rentDate[0], '')
+        if(closeDate) this.$set(this.rentDate, '0', '')
+      }
     },
-    'rentJson.ReturnType'(){ // 時間リセット
-      if(this.$refs.returnTime){
+    async 'rentJson.ReturnType'(value){
+      if(this.$refs.returnTime){ // 時間リセット
         this.$refs.returnTime.reset()
         this.$set(this.rentJson, "ReturnTime", '時間未定')
+      }
+      if(value!==2&&this.rentDate[1]){
+        const closeDate = await this.setCloseDates(this.rentDate[1], '')
+        if(closeDate) this.$set(this.rentDate, '1', '')
       }
     },
     'rentJson.UseDay'(newVal, oldVal){
@@ -826,6 +873,10 @@ export default {
   updated() {
     this.$scrollBackButton()
   },
+  created() {
+    const { year, month, day } = this.getToday()
+    this.today.push(`${year}-${month}-${day}`)
+  },
   methods: {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
@@ -864,6 +915,8 @@ export default {
         this.$set(this.estJson, 'Organization', res.Organization)
         this.$set(this.rentJson, 'ContactEmail', res.Email)
         this.$set(this.rentJson, 'ContactTel', res.Tel)
+        this.$set(this.rentJson, 'DeliveryDestName', res.MemberName)
+        this.$set(this.rentJson, 'DeliveryDestComp', res.Organization)
         this.$set(this.rentJson, 'DeliveryZipCode', res.ZipCode)
         this.$set(this.rentJson, 'DeliveryPrefect', res.Prefect)
         this.$set(this.rentJson, 'DeliveryAddress', res.Address)
@@ -968,33 +1021,80 @@ export default {
       const year = today.getFullYear()
       const month = String(today.getMonth() + 1).padStart(2, '0')
       const day = String(today.getDate()).padStart(2, '0')
-      return `${year}-${month}-${day}`
+      return {year, month, day}
     },
-    allowedBusinessDates(date) {
-      const allowedDates = this.allowedDates(date)
-      const holiday = new Date(date).getDay()===0 || new Date(date).getDay()===6
-      return allowedDates && !holiday
-    },
-    allowedDates(date) {
-      let today = new Date()
-      today = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate()
-      )
-      let maxAllowedDay = new Date()
-      maxAllowedDay.setDate(
-        today.getDate() + 365*5
-      )
-      maxAllowedDay = new Date(
-        maxAllowedDay.getFullYear(),
-        maxAllowedDay.getMonth(),
-        maxAllowedDay.getDate()
-      )
+    async getMinDate(){
+      const accessToken = this.$store.getters["auth/getAccessToken"]
+      const loginID = this.$store.getters["auth/getUser"]
+      const param = new URLSearchParams()
+      param.append('LoginID', loginID)
+      param.append('SalesDate', '5')
+      const res = await this.$memberBaseAxios.post(`comm/getDateAfterSalesDay`, param, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      if(res.data.Status === 'TRUE'){
+        const date = res.data.GetDate
+        this.rentMinDate = new Date(`${date.slice(0,4)}/${date.slice(4,6)}/${date.slice(6)}`)
+      }else if(res.data.ErrorNo === 100002){
+        const res = await this.$getAccessToken()
+        if( res ) return this.getMinDate()
+      }
 
-      return today <= new Date(date)
-        && new Date(date) <= maxAllowedDay
+    },
+    async setCloseDates(date, type) {
+      const accessToken = this.$store.getters["auth/getAccessToken"]
+      const loginID = this.$store.getters["auth/getUser"]
+      const param = new URLSearchParams()
+      const year = date.slice(0, 4)
+      const month = date.slice(5, 7)
+      param.append('LoginID', loginID)
+      param.append('Year', year)
+      param.append('Month', month)
+      const res = await this.$memberBaseAxios.post(`comm/getHolidDay`, param, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      if(res.data.Status === 'TRUE'){
+        const arr = []
+        const resArr = res.data.DayArr.split(',')
+        for(let i=0; i<resArr.length; i++){
+          arr.push(`${year}-${month}-${resArr[i]}`)
+        }
+        if(type === 'return') this.closeReturnArr = arr
+        else if(type === 'deliver') this.closeDeliverArr = arr
+        else return arr.includes(date)
+      }else if(res.data.ErrorNo === 100002){
+        const res = await this.$getAccessToken()
+        if( res ) return this.setCloseDates(date)
+      }
+    },
+    allowedDatesDeliver(date) {
+      if(this.rentJson.DeliveryType!==0) return this.rentMinDate <= new Date(date)
+
+      const nowDate = date.slice(0, 7)
+      if(this.currentDateDeliver !== nowDate) {
+        this.currentDateDeliver = nowDate
+        this.setCloseDates(nowDate, 'deliver')
+      }
+      return !this.closeDeliverArr.includes(date)&&this.rentMinDate <= new Date(date)
      },
+    allowedDatesReturn(date) {
+      if(this.rentJson.ReturnType===2) return this.rentMinDate <= new Date(date)
+
+      const nowDate = date.slice(0, 7)
+      if(this.currentDateReturn !== nowDate) {
+        this.currentDateReturn = nowDate
+        this.setCloseDates(nowDate, 'return')
+      }
+      return !this.closeReturnArr.includes(date)&&this.rentMinDate <= new Date(date)
+
+    },
+    allowedDatesRange(date) {
+      return this.rentMinDate <= new Date(date)
+    },
     setRange(){
       if( this.rentRange.length ){
         if( this.rentRange.length === 1 ) this.rentRange[1] = this.rentRange[0]
