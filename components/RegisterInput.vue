@@ -82,9 +82,9 @@
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="companyKana"
-                  rules="kana|max:150">
+                  rules="kana|required|max:150">
                   <v-row class="my-1">
-                    <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> 会社名(フリガナ)</v-col>
+                    <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> 会社名(フリガナ)</v-col>
                     <v-col cols="12" md="8">
                       <v-text-field
                         v-model="syncedUser.OrganizationKana"
@@ -140,9 +140,9 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="nameKana"
-                rules="kana|max:100">
+                rules="kana|required|max:100">
                 <v-row class="my-1">
-                  <v-col cols="12" md="4" class="pb-0"><span class="white--text secondary px-2 py-1 rounded body-2">任意</span> お名前(フリガナ)</v-col>
+                  <v-col cols="12" md="4" class="pb-0"><span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span> お名前(フリガナ)</v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
                       v-model="syncedUser.MemberKana"
@@ -182,7 +182,7 @@
                 <v-row class="my-1">
                   <v-col cols="12" md="4" class="pb-0">
                     <span class="white--text red darken-1 px-2 py-1 rounded body-2">必須</span>
-                  <template v-if="syncedUser.MemberType===1">勤務先</template>電話番号
+                    <template v-if="syncedUser.MemberType === 1">勤務先</template>電話番号
                   </v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
@@ -358,9 +358,7 @@
                     <id-card :user.sync="syncedUser" :file.sync="syncedFile"></id-card>
                   </v-card>
                 </v-col>
-
               </v-row>
-              <!-- {{ObserverProps}} -->
               <div v-if="!loginId" class="text-center mt-6">
                 <!-- <v-btn large
                   class="my-4 mx-2"
@@ -450,8 +448,8 @@ export default {
   },
   watch: {
     mailDuplicateErr(val){
-      if (this.memberId) this.$emit('mail-duplicate', val)
-    }
+      if (this.loginId) this.$emit('mail-duplicate', val)
+    },
   },
   methods: {
     confirm(){
@@ -463,7 +461,7 @@ export default {
       this.syncedFile = []
       if (this.syncedUser.MemberType===0) return
       const item = [
-        'HOfficeZipCode', 'HOfficePrefect', 'HOfficeAddress', 'HOfficeTel', 'HOfficeFax', 'Representative', 'Incorporation', 'CorpNumber', 'CorpType', 'PaymentMethod', 'PayeeName', 'BillingEmail'
+        'HOfficeZipCode', 'HOfficePrefect', 'HOfficeAddress', 'HOfficeTel', 'HOfficeFax', 'Representative', 'Incorporation', 'CorpNumber', 'CorpType', 'CorpKind', 'Industry', 'SameIndustry', 'PaymentMethod', 'PayeeName', 'BillingEmail',
       ]
       item.forEach((key) => {
         this.$delete(this.syncedUser, key)
@@ -474,7 +472,7 @@ export default {
     //   this.$refs.observer.reset()
     // },
     async checkEmail(email){
-      if (!email||this.memberInfo.Email===email) {
+      if (!email || (this.loginId&&this.memberInfo.Email === email)) {
         this.mailDuplicateErr = false
         return
       }

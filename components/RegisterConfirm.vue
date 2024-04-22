@@ -202,6 +202,19 @@
                     </v-col>
                   </v-row>
                   <v-row>
+                    <v-col cols="12" md="4" class="pb-0">法人種別</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.CorpKind}}</v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="4" class="pb-0">業種</v-col>
+                    <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                      <v-card elevation="0" class="px-2 py-1 border">{{syncedUser.Industry}}</v-card>
+                      <v-card v-if="syncedUser.SameIndustry" elevation="0" class="px-2 py-1 border mt-1">{{syncedUser.SameIndustry}}</v-card>
+                    </v-col>
+                  </v-row>
+                  <v-row>
                     <v-col cols="12" md="4" class="pb-0">お支払い方法</v-col>
                     <v-col cols="12" md="8" class="pt-0 pt-md-3">
                       <v-card elevation="0" class="px-2 py-1 border">
