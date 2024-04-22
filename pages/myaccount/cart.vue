@@ -231,7 +231,8 @@
                       <div class="notes mt-1 mb-4">
                         <p class="note caption">お引渡し日は営業日のみとなります。</p><br>
                         <p class="note caption">大型機材のイベント会場や施設への直接配送、発送到着のお時間指定ご希望の場合はチャーター便となります。</p>
-                        <p class="note caption">宅配送料及びチャーター費はお客様ご負担となります。</p>
+                        <p class="note caption">宅配送料及びチャーター費はお客様ご負担となります。</p><br>
+                        <p v-if="rentJson.DeliveryType===1" class="note caption">弊社機材出庫日は基本的に前営業日となります。 </p>
                       </div>
                       <v-divider class="mb-4"></v-divider>
                       <v-row>
@@ -362,6 +363,7 @@
                                 :error-messages="errors">
                               </v-text-field>
                             </ValidationProvider>
+                            <span class="caption">※会社宛ての場合のみ</span>
                           </v-col>
                         </v-row>
                         <v-divider class="my-4"></v-divider>
@@ -397,10 +399,6 @@
                             </ValidationProvider>
                           </v-col>
                         </v-row>
-
-                        <p class="note caption mt-2">
-                          弊社機材出庫日は基本的に前営業日となります。
-                        </p>
                       </div>
 
                       <div v-else>
