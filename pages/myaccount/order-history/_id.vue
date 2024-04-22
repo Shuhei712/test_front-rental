@@ -113,17 +113,17 @@
           class="py-6">
           <v-container>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">
+              <v-col cols="12" md="3" class="pb-0 pt-4">
                 注文件名
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{order.OrderTitle}}</v-card>
+                <v-card elevation="0" min-height="2.3rem" class="px-2 py-1 border">{{order.OrderTitle}}</v-card>
               </v-col>
             </v-row>
 
             <v-divider class="my-4"></v-divider>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">連絡方法
+              <v-col cols="12" md="3" class="pb-0 pt-4">連絡方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card v-if="order.ContactType" elevation="0" class="px-2 py-1 border">メール： {{order.ContactEmail}}</v-card>
@@ -135,14 +135,14 @@
             <v-divider class="my-4"></v-divider>
 
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">お引渡し方法
+              <v-col cols="12" md="3" class="pb-0 pt-4">お引渡し方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border">{{order.DeliveryTypeDisp}}</v-card>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">
+              <v-col cols="12" md="3" class="pb-0 pt-4">
                 <template v-if="order.DeliveryType===0">
                   お引取り日時
                 </template>
@@ -156,9 +156,9 @@
               </v-col>
             </v-row>
             <v-row v-if="order.DeliveryType===0">
-              <v-col cols="12" md="4" class="pb-0">お引取り店舗</v-col>
+              <v-col cols="12" md="3" class="pb-0 pt-4">お引取り店舗</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" min-height="2rem" class="px-2 py-1 border mb-1 width-s">{{order.DeliveryShop}}</v-card>
+                <v-card elevation="0" min-height="2.3rem" class="px-2 py-1 border mb-1 width-s">{{order.DeliveryShop}}</v-card>
                 <v-btn
                   small outlined
                   class="mt-1"
@@ -167,18 +167,26 @@
               </v-col>
             </v-row>
             <v-row v-else>
-              <v-col cols="12" md="4" class="pb-0">
+              <v-col cols="12" md="3" class="pb-0 pt-4">
                 <template v-if="order.DeliveryType===1">発送先 住所</template>
                 <template v-else>搬入場所</template>
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">〒{{order.DeliveryZipCode}}</v-card>
-                <v-card v-if="order.DeliveryPrefect" elevation="0" class="px-2 py-1 border mb-1">{{order.DeliveryPrefect}}</v-card>
+                <v-card v-if="order.DeliveryPrefect" elevation="0" class="px-2 py-1 border mb-1 width-s">{{order.DeliveryPrefect}}</v-card>
                 <v-card v-if="order.DeliveryAddress" elevation="0" class="px-2 py-1 border">{{order.DeliveryAddress}}</v-card>
               </v-col>
             </v-row>
             <v-row v-if="order.DeliveryType===1">
-              <v-col cols="12" md="4" class="pb-0">発送先 電話番号</v-col>
+              <v-col cols="12" md="3" class="pb-0 pt-4">発送先 お名前</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" class="px-2 py-1 border mb-1">{{order.DeliveryDestName}}</v-card>
+              </v-col>
+              <v-col cols="12" md="3" class="pb-0 pt-4">発送先 会社名</v-col>
+              <v-col cols="12" md="8" class="pt-0 pt-md-3">
+                <v-card elevation="0" class="px-2 py-1 border mb-1" min-height="2.3rem">{{order.DeliveryDestComp}}</v-card>
+              </v-col>
+              <v-col cols="12" md="3" class="pb-0 pt-4">発送先 電話番号</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">{{order.DeliveryTel}}</v-card>
               </v-col>
@@ -187,7 +195,7 @@
             <v-divider class="my-4"></v-divider>
 
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">ご使用日
+              <v-col cols="12" md="3" class="pb-0 pt-4">ご使用日
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border">{{`${getDate(order.UseStartDate,order.UseStartTime)} ~ ${getDate(order.UseEndDate,order.UseEndTime)}`}}</v-card>
@@ -198,19 +206,19 @@
             <v-divider class="my-4"></v-divider>
 
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">ご返却方法
+              <v-col cols="12" md="3" class="pb-0 pt-4">ご返却方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border">{{order.ReturnTypeDisp}}</v-card>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">
+              <v-col cols="12" md="3" class="pb-0 pt-4">
                 <template v-if="order.ReturnType===0">
                   ご返却日時
                 </template>
                 <template v-else-if="order.ReturnType===1">
-                  商品到着日
+                  お客様発送日
                 </template>
                 <template v-else>搬出日時</template>
               </v-col>
@@ -219,9 +227,9 @@
               </v-col>
             </v-row>
             <v-row v-if="order.ReturnType!==2">
-              <v-col cols="12" md="4" class="pb-0">ご返却店舗</v-col>
+              <v-col cols="12" md="3" class="pb-0 pt-4">ご返却店舗</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" min-height="2rem" class="px-2 py-1 border pre-wrap width-s">{{ order.ReturnShop }}</v-card>
+                <v-card elevation="0" min-height="2.3rem" class="px-2 py-1 border pre-wrap width-s">{{ order.ReturnShop }}</v-card>
                 <v-btn
                   small outlined
                   class="mt-1"
@@ -230,7 +238,7 @@
               </v-col>
             </v-row>
             <v-row v-else>
-              <v-col cols="12" md="4" class="pb-0">搬出場所</v-col>
+              <v-col cols="12" md="3" class="pb-0 pt-4">搬出場所</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
                 <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">〒{{order.ReturnZipCode}}</v-card>
                 <v-card v-if="order.ReturnPrefect" elevation="0" class="px-2 py-1 border mb-1">{{order.ReturnPrefect}}</v-card>
@@ -239,20 +247,20 @@
             </v-row>
             <v-divider class="my-4"></v-divider>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">お支払い方法
+              <v-col cols="12" md="3" class="pb-0 pt-4">お支払い方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border width-s">
+                <v-card elevation="0" min-height="2.3rem" class="px-2 py-1 border width-s">
                   {{ order.PayMethodDisp }}
                 </v-card>
               </v-col>
             </v-row>
             <v-divider class="my-4"></v-divider>
             <v-row>
-              <v-col cols="12" md="4" class="pb-0">備考
+              <v-col cols="12" md="3" class="pb-0 pt-4">備考
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" min-height="2rem" class="pa-2 border pre-wrap">{{ order.OrderComment }}</v-card>
+                <v-card elevation="0" min-height="2.3rem" class="pa-2 border pre-wrap">{{ order.OrderComment }}</v-card>
               </v-col>
             </v-row>
           </v-container>
