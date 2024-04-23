@@ -617,9 +617,4 @@ export default {
 .width-s{
   max-width: 6rem;
 }
-::v-deep{
-  .v-input--is-readonly {
-    pointer-events: none;
-  }
-}
 </style>

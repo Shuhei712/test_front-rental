@@ -402,4 +402,11 @@ export default {
 .width-s{
   max-width: 225px;
 }
+.confirm{
+  ::v-deep{
+    .v-input--is-readonly.v-input--checkbox {
+      pointer-events: none;
+    }
+  }
+}
 </style>
