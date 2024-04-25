@@ -180,7 +180,7 @@
             <v-row v-if="order.DeliveryType===1">
               <v-col cols="12" md="3" class="pb-0 pt-4">発送先 お名前</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border mb-1">{{order.DeliveryDestName}}</v-card>
+                <v-card elevation="0" class="px-2 py-1 border mb-1" min-height="2.3rem">{{order.DeliveryDestName}}</v-card>
               </v-col>
               <v-col cols="12" md="3" class="pb-0 pt-4">発送先 会社名</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
