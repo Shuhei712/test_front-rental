@@ -155,7 +155,7 @@
                   class="my-4 mx-2 white--text"
                   color="primary"
                   @click="confirm()"
-                >確認</v-btn>
+                >お問い合わせ内容を確認</v-btn>
               </div>
             </v-container>
           </v-form>

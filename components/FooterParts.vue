@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer pt-15">
+  <footer id="footer" class="footer pt-15">
     <v-container class="footer__inner">
       <div class="footer__head d-flex align-center align-md-start flex-column flex-md-row line-height-normal">
         <div class="d-flex flex-column">

@@ -9,8 +9,17 @@
         <p v-else>
           {{action}}を承りました。
           <template v-if="action==='レンタル申し込み'">
-            <br>お申し込みいただいたレンタル商品の空き状況を確認の上、指定いただいた連絡方法にて、<span class="d-inline-block">レンタルの可否をご連絡させていただきます。</span><br>
-            <span class="red--text">（※注文はまだ確定しておりません）</span>
+            <br><br>
+            <span class="red--text">
+              <span class="font-weight-bold">
+                ■ご注意■<br>
+                レンタルのご注文は確定しておりません。<br>
+              </span>
+              レンタル商品の在庫を確認の上、メールまたはマイページの「注文履歴」にて、<span class="d-inline-block">レンタルの可否</span>をご連絡させていただきます。<br>
+              <!-- 在庫を確認後、ご指定の連絡方法にてご連絡いたします。<br> -->
+              ご連絡内容をご確認の上、ご注文を確定してください。<br>
+            </span>
+            <NuxtLink :to="{ path: '/guide/rental-flow', hash: '#flow-member-2' }" class="link" target="_blank">レンタルの手順はこちら</NuxtLink>
           </template>
           <template v-if="action==='注文依頼'">
             <!-- <br>ご登録いただいたメールアドレスに、確認メールを送信しました。<br>
