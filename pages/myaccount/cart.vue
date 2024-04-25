@@ -42,7 +42,7 @@
             hide-default-footer
             mobile-breakpoint="890">
             <template #[`item.ProductName`]="{ item }">
-              <nuxt-link :to="`/products/${item.ProductID}?name=${item.ProductName}`" tag="a" class="d-flex align-center text-left flex-column flex-sm-row">
+              <nuxt-link :to="`/products/${item.ProductID}?name=${item.ProductName}`" tag="a" class="d-flex align-center text-left flex-column flex-sm-row" target="_blank">
               <!-- <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row"> -->
                 <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
                 <div class="table__txt text-truncate">
@@ -116,6 +116,7 @@
         </div>
 
         <div class="cart__user mt-15">
+          <p class="red--text note">レンタル商品のお引渡し日は、5営業日後からご指定が可能です。<br>お急ぎの場合は、最寄りの営業所まで<v-btn x-large height="20" plain elevation="0" class="link px-0" @click="toFooter">メールまたはお電話</v-btn>にてお問い合わせください。</p>
           <h2 class="mt-4 text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み記入欄</h2>
           <v-card
             outlined
@@ -279,6 +280,7 @@
                               :events="today"
                               :event-color="todayColor"
                               :allowed-dates="allowedDatesDeliver"
+                              :picker-date.sync="deliveryInitial"
                               :max="deliverMax"
                               @input="datePick[0] = false"
                             ></v-date-picker>
@@ -331,6 +333,17 @@
                       <div v-else-if="rentJson.DeliveryType===1">
                         <v-divider class="my-4"></v-divider>
                         <v-row>
+                          <v-col cols="12" md="3" class="pb-0">発送先 住所</v-col>
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
+                            <set-address
+                              :set-zip-code.sync="rentJson.DeliveryZipCode"
+                              :set-prefect.sync="rentJson.DeliveryPrefect"
+                              :set-address.sync="rentJson.DeliveryAddress">
+                            </set-address>
+                          </v-col>
+                        </v-row>
+                        <v-divider class="my-4"></v-divider>
+                        <v-row>
                           <v-col cols="12" md="3" class="pb-0">発送先 お名前</v-col>
                           <v-col cols="12" md="9" class="pt-0 pt-md-3">
                             <ValidationProvider
@@ -364,17 +377,6 @@
                               </v-text-field>
                             </ValidationProvider>
                             <span class="caption">※会社宛ての場合のみ</span>
-                          </v-col>
-                        </v-row>
-                        <v-divider class="my-4"></v-divider>
-                        <v-row>
-                          <v-col cols="12" md="3" class="pb-0">発送先 住所</v-col>
-                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
-                            <set-address
-                              :set-zip-code.sync="rentJson.DeliveryZipCode"
-                              :set-prefect.sync="rentJson.DeliveryPrefect"
-                              :set-address.sync="rentJson.DeliveryAddress">
-                            </set-address>
                           </v-col>
                         </v-row>
                         <v-divider class="my-4"></v-divider>
@@ -581,6 +583,7 @@
                               @input="datePick[2] = false"
                             ></v-date-picker>
                           </v-menu>
+                          <span v-if="rentJson.ReturnType===1" class="note caption">到着日は、弊社営業日でお願いします。<span class="d-inline-block">(平日10:00~18:00、土日祝除く)</span></span>
                         </v-col>
                       </v-row>
                       <div v-if="rentJson.ReturnType===0">
@@ -675,6 +678,23 @@
                       ></v-textarea>
                     </v-col>
                   </v-row>
+                  <v-row class="pt-5">
+                    <v-col cols="12">
+                      <p class="text-center red--text">注意事項</p>
+                      <v-card elevation="0" max-width="700" class="mx-auto" outlined>
+                        <v-card-text class="text--text">
+                          お申し込み内容に沿って、在庫を確認させていただきます。<br>
+                          在庫を確認後、メールまたはマイページの「注文履歴」にて、お見積りについてご連絡いたします。<br>
+                          <!-- （お申し込みからおよそ〇営業日以内にご連絡いたします。）<br> -->
+                          ご提示したお見積りの内容でよろしければ、ご注文を確定してください。<br>
+                          また、お申し込み内容によりお断りする場合がございますこと、あらかじめご了承ください。<br><br>
+                          ご注文の流れについては、<NuxtLink :to="{ path: '/guide/rental-flow', hash: '#flow-member-2' }" class="link" target="_blank">レンタルの手順</NuxtLink>をご確認ください。
+                        </v-card-text>
+                      </v-card>
+                      <p class="text-center">
+                      <v-checkbox v-model="agree" class="d-inline-block" label="上記、注意事項の内容を確認しました"></v-checkbox></p>
+                    </v-col>
+                  </v-row>
                 </v-container>
               </v-form>
               <!-- {{ObserverProps.fields}} -->
@@ -691,8 +711,8 @@
                   color="primary"
                   large
                   class="ml-0 my-1 text-h6 px-6"
-                  :disabled="ObserverProps.invalid"
-                  @click="confirm()">確認する
+                  :disabled="ObserverProps.invalid||!agree"
+                  @click="confirm()">お申し込み内容を確認
                 </v-btn>
               </div>
             </ValidationObserver>
@@ -770,6 +790,7 @@ export default {
       rentRangeMax: null,
       deliverMax: null,
       returnMin: null,
+      deliveryInitial: null,
       rentRangeInitial: null,
       returnInitial: null,
       currentDateDeliver: null,
@@ -781,7 +802,8 @@ export default {
       concatRentRange: null,
       confirmDialog: false,
       branchDialog: false,
-      branchList: null
+      branchList: null,
+      agree: false,
     }
   },
   async fetch() {
@@ -816,7 +838,7 @@ export default {
         this.$refs.returnTime.reset()
         this.$set(this.rentJson, "ReturnTime", '時間未定')
       }
-      if(value!==2&&this.rentDate[1]){
+      if(value===0&&this.rentDate[1]){
         const closeDate = await this.setCloseDates(this.rentDate[1], '')
         if(closeDate) this.$set(this.rentDate, '1', '')
       }
@@ -1035,6 +1057,13 @@ export default {
       if(res.data.Status === 'TRUE'){
         const date = res.data.GetDate
         this.rentMinDate = new Date(`${date.slice(0,4)}/${date.slice(4,6)}/${date.slice(6)}`)
+        const { year, month } = this.getToday()
+        if( month !== date.slice(4,6)){
+          const minDay = `${date.slice(0,4)}-${date.slice(4,6)}-${date.slice(6)}`
+          this.deliveryInitial = minDay
+          this.rentRangeInitial = minDay
+          this.returnInitial = minDay
+        }
       }else if(res.data.ErrorNo === 100002){
         const res = await this.$getAccessToken()
         if( res ) return this.getMinDate()
@@ -1080,7 +1109,7 @@ export default {
       return !this.closeDeliverArr.includes(date)&&this.rentMinDate <= new Date(date)
      },
     allowedDatesReturn(date) {
-      if(this.rentJson.ReturnType===2) return this.rentMinDate <= new Date(date)
+      if(this.rentJson.ReturnType!==0) return this.rentMinDate <= new Date(date)
 
       const nowDate = date.slice(0, 7)
       if(this.currentDateReturn !== nowDate) {
@@ -1119,6 +1148,12 @@ export default {
     confirm(){
       this.confirmDialog = true
       history.pushState(null, '', null)
+    },
+    toFooter(){
+      const element = document.getElementById('footer');
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
     },
     getBranch(obj){
       this.branchList = obj
@@ -1193,6 +1228,10 @@ li{
 .note{
   margin-bottom: 0;
   padding-left: 1.2rem;
-  @include wordSymbol('※')
+  line-height: 1.6;
+  @include wordSymbol('※');
+  .link{
+    transform: translateY(-2.5px);
+  }
 }
 </style>
