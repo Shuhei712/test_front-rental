@@ -683,10 +683,9 @@
                       <p class="text-center red--text">注意事項</p>
                       <v-card elevation="0" max-width="700" class="mx-auto" outlined>
                         <v-card-text class="text--text">
-                          お申し込み内容に沿って、在庫を確認させていただきます。<br>
-                          在庫を確認後、メールまたはマイページの「注文履歴」にて、お見積りについてご連絡いたします。<br>
+                          ご希望機材の在庫を確認し、ご回答をメールまたはマイページの「注文履歴」にてご連絡いたします。<br>
+                          ご回答内容を確認の上、「注文履歴」からご注文を確定してください。<br>
                           <!-- （お申し込みからおよそ〇営業日以内にご連絡いたします。）<br> -->
-                          ご提示したお見積りの内容でよろしければ、ご注文を確定してください。<br>
                           また、お申し込み内容によりお断りする場合がございますこと、あらかじめご了承ください。<br><br>
                           ご注文の流れについては、<NuxtLink :to="{ path: '/guide/rental-flow', hash: '#flow-member-2' }" class="link" target="_blank">レンタルの手順</NuxtLink>をご確認ください。
                         </v-card-text>

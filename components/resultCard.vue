@@ -15,9 +15,8 @@
                 ■ご注意■<br>
                 レンタルのご注文は確定しておりません。<br>
               </span>
-              レンタル商品の在庫を確認の上、メールまたはマイページの「注文履歴」にて、<span class="d-inline-block">レンタルの可否</span>をご連絡させていただきます。<br>
-              <!-- 在庫を確認後、ご指定の連絡方法にてご連絡いたします。<br> -->
-              ご連絡内容をご確認の上、ご注文を確定してください。<br>
+              ご希望機材の在庫を確認し、<span class="d-inline-block">ご回答をメールまたはマイページの「注文履歴」にてご連絡いたします。</span><br>
+              ご回答内容を確認の上、「注文履歴」からご注文を確定してください。<br>
             </span>
             <NuxtLink :to="{ path: '/guide/rental-flow', hash: '#flow-member-2' }" class="link" target="_blank">レンタルの手順はこちら</NuxtLink>
           </template>
