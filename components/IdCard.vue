@@ -5,6 +5,7 @@
       v-model="userJson.TransFlg"
       label="過去に弊社とお取引あり (本人確認書類の提出は不要となります。)"
       hide-details
+      class="d-inline-block"
       :readonly="read"
       :false-value="0"
       :true-value="1"
@@ -616,5 +617,11 @@ export default {
 }
 .width-s{
   max-width: 6rem;
+}
+::v-deep{
+  .v-input--checkbox .theme--light.v-label{
+    color: $text;
+    transform: rotate(0deg);
+  }
 }
 </style>
