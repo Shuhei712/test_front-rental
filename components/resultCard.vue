@@ -11,7 +11,7 @@
           <template v-if="action==='レンタル申し込み'">
             <br><br>
             <span class="red--text">
-              <span class="font-weight-bold">
+              <span class="font-weight-bold text-h6">
                 ■ご注意■<br>
                 レンタルのご注文は確定しておりません。<br>
               </span>

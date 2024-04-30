@@ -138,7 +138,7 @@
               <v-col cols="12" md="3" class="pb-0 pt-4">お引渡し方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border">{{order.DeliveryTypeDisp}}</v-card>
+                <v-card elevation="0" class="px-2 py-1 border" min-height="2.3rem">{{order.DeliveryTypeDisp}}</v-card>
               </v-col>
             </v-row>
             <v-row>
@@ -152,7 +152,7 @@
                 <template v-else>搬入日時</template>
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border">{{getDate(order.DeliveryDate,order.DeliveryTime)}}</v-card>
+                <v-card elevation="0" class="px-2 py-1 border" min-height="2.3rem">{{getDate(order.DeliveryDate,order.DeliveryTime)}}</v-card>
               </v-col>
             </v-row>
             <v-row v-if="order.DeliveryType===0">
@@ -172,7 +172,7 @@
                 <template v-else>搬入場所</template>
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">〒{{order.DeliveryZipCode}}</v-card>
+                <v-card elevation="0" class="px-2 py-1 border mb-1 width-s" min-height="2.3rem">〒{{order.DeliveryZipCode}}</v-card>
                 <v-card v-if="order.DeliveryPrefect" elevation="0" class="px-2 py-1 border mb-1 width-s">{{order.DeliveryPrefect}}</v-card>
                 <v-card v-if="order.DeliveryAddress" elevation="0" class="px-2 py-1 border">{{order.DeliveryAddress}}</v-card>
               </v-col>
@@ -188,7 +188,7 @@
               </v-col>
               <v-col cols="12" md="3" class="pb-0 pt-4">発送先 電話番号</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">{{order.DeliveryTel}}</v-card>
+                <v-card elevation="0" class="px-2 py-1 border mb-1 width-s" min-height="2.3rem">{{order.DeliveryTel}}</v-card>
               </v-col>
             </v-row>
 
@@ -198,7 +198,7 @@
               <v-col cols="12" md="3" class="pb-0 pt-4">ご使用日
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border">{{`${getDate(order.UseStartDate,order.UseStartTime)} ~ ${getDate(order.UseEndDate,order.UseEndTime)}`}}</v-card>
+                <v-card elevation="0" class="px-2 py-1 border" min-height="2.3rem">{{`${getDate(order.UseStartDate,order.UseStartTime)} ~ ${getDate(order.UseEndDate,order.UseEndTime)}`}}</v-card>
                 ({{ order.UseDay }}日間)
               </v-col>
             </v-row>
@@ -209,7 +209,7 @@
               <v-col cols="12" md="3" class="pb-0 pt-4">ご返却方法
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border">{{order.ReturnTypeDisp}}</v-card>
+                <v-card elevation="0" class="px-2 py-1 border" min-height="2.3rem">{{order.ReturnTypeDisp}}</v-card>
               </v-col>
             </v-row>
             <v-row>
@@ -223,7 +223,7 @@
                 <template v-else>搬出日時</template>
               </v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border">{{getDate(order.ReturnDate,order.ReturnTime)}}</v-card>
+                <v-card elevation="0" class="px-2 py-1 border" min-height="2.3rem">{{getDate(order.ReturnDate,order.ReturnTime)}}</v-card>
               </v-col>
             </v-row>
             <v-row v-if="order.ReturnType!==2">
@@ -240,7 +240,7 @@
             <v-row v-else>
               <v-col cols="12" md="3" class="pb-0 pt-4">搬出場所</v-col>
               <v-col cols="12" md="8" class="pt-0 pt-md-3">
-                <v-card elevation="0" class="px-2 py-1 border mb-1 width-s">〒{{order.ReturnZipCode}}</v-card>
+                <v-card elevation="0" class="px-2 py-1 border mb-1 width-s" min-height="2.3rem">〒{{order.ReturnZipCode}}</v-card>
                 <v-card v-if="order.ReturnPrefect" elevation="0" class="px-2 py-1 border mb-1">{{order.ReturnPrefect}}</v-card>
                 <v-card v-if="order.ReturnAddress" elevation="0" class="px-2 py-1 border">{{order.ReturnAddress}}</v-card>
               </v-col>
@@ -479,7 +479,7 @@ export default {
       }
     },
     getDate(date, time){
-      if(!date) return
+      if(!date) return ''
       const year = date.substring(0, 4)
       const month = date.substring(4, 6)
       const day = date.substring(6, 8)
