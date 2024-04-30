@@ -42,7 +42,7 @@
             hide-default-footer
             mobile-breakpoint="890">
             <template #[`item.ProductName`]="{ item }">
-              <nuxt-link :to="`/products/${item.ProductID}?name=${item.ProductName}`" tag="a" class="d-flex align-center text-left flex-column flex-sm-row">
+              <nuxt-link :to="`/products/${item.ProductID}?name=${item.ProductName}`" tag="a" class="d-flex align-center text-left flex-column flex-sm-row" target="_blank">
               <!-- <a :href="`https://rental.takenaka-co.co.jp/products/${item.ProductID}`" class="d-flex align-center text-left flex-column flex-sm-row"> -->
                 <img :src=item.ProductImage alt="商品イメージ" class="table__img mr-4 my-2">
                 <div class="table__txt text-truncate">
@@ -116,6 +116,7 @@
         </div>
 
         <div class="cart__user mt-15">
+          <p class="red--text note">レンタル商品のお引渡し日は、5営業日後からご指定が可能です。<br>お急ぎの場合は、最寄りの営業所まで<v-btn x-large height="20" plain elevation="0" class="link px-0" @click="toFooter">メールまたはお電話</v-btn>にてお問い合わせください。</p>
           <h2 class="mt-4 text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み記入欄</h2>
           <v-card
             outlined
@@ -231,7 +232,8 @@
                       <div class="notes mt-1 mb-4">
                         <p class="note caption">お引渡し日は営業日のみとなります。</p><br>
                         <p class="note caption">大型機材のイベント会場や施設への直接配送、発送到着のお時間指定ご希望の場合はチャーター便となります。</p>
-                        <p class="note caption">宅配送料及びチャーター費はお客様ご負担となります。</p>
+                        <p class="note caption">宅配送料及びチャーター費はお客様ご負担となります。</p><br>
+                        <p v-if="rentJson.DeliveryType===1" class="note caption">弊社機材出庫日は基本的に前営業日となります。 </p>
                       </div>
                       <v-divider class="mb-4"></v-divider>
                       <v-row>
@@ -277,7 +279,8 @@
                               scrollable
                               :events="today"
                               :event-color="todayColor"
-                              :allowed-dates="allowedBusinessDates"
+                              :allowed-dates="allowedDatesDeliver"
+                              :picker-date.sync="deliveryInitial"
                               :max="deliverMax"
                               @input="datePick[0] = false"
                             ></v-date-picker>
@@ -339,9 +342,43 @@
                             </set-address>
                           </v-col>
                         </v-row>
-                        <p class="note caption mt-2 error--text">
-                          ご入力いただく発送先のお宛名が、会員様と異なる場合は、<br>申し訳ございませんが、ページ下部の備考欄にお名前・会社名をご記入ください。
-                        </p>
+                        <v-divider class="my-4"></v-divider>
+                        <v-row>
+                          <v-col cols="12" md="3" class="pb-0">発送先 お名前</v-col>
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
+                            <ValidationProvider
+                              v-slot="{ errors }"
+                              name="deliveryName"
+                              rules="required|max:150">
+                              <v-text-field
+                                v-model="rentJson.DeliveryDestName"
+                                outlined
+                                dense
+                                hide-details="auto"
+                                :error-messages="errors">
+                              </v-text-field>
+                            </ValidationProvider>
+                          </v-col>
+                        </v-row>
+                        <v-divider class="my-4"></v-divider>
+                        <v-row>
+                          <v-col cols="12" md="3" class="pb-0">発送先 会社名</v-col>
+                          <v-col cols="12" md="9" class="pt-0 pt-md-3">
+                            <ValidationProvider
+                              v-slot="{ errors }"
+                              name="deliveryCompany"
+                              rules="max:150">
+                              <v-text-field
+                                v-model="rentJson.DeliveryDestComp"
+                                outlined
+                                dense
+                                hide-details="auto"
+                                :error-messages="errors">
+                              </v-text-field>
+                            </ValidationProvider>
+                            <span class="caption">※会社宛ての場合のみ</span>
+                          </v-col>
+                        </v-row>
                         <v-divider class="my-4"></v-divider>
                         <v-row>
                           <v-col cols="12" md="3" class="pb-0">発送先 電話番号</v-col>
@@ -364,10 +401,6 @@
                             </ValidationProvider>
                           </v-col>
                         </v-row>
-
-                        <p class="note caption mt-2">
-                          弊社機材出庫日は基本的に前営業日となります。
-                        </p>
                       </div>
 
                       <div v-else>
@@ -439,7 +472,7 @@
                           :picker-date.sync="rentRangeInitial"
                           :events="today"
                           :event-color="todayColor"
-                          :allowed-dates="allowedDates"
+                          :allowed-dates="allowedDatesRange"
                           :min="rentRangeMin"
                           :max="rentRangeMax"
                         >
@@ -507,7 +540,7 @@
                             ご返却日
                           </template>
                           <template v-else-if="rentJson.ReturnType===1">
-                            商品到着日
+                            お客様発送日
                           </template>
                           <template v-else>搬出日</template>
                         </v-col>
@@ -545,11 +578,12 @@
                               :picker-date.sync="returnInitial"
                               :events="today"
                               :event-color="todayColor"
-                              :allowed-dates="allowedBusinessDates"
+                              :allowed-dates="allowedDatesReturn"
                               :min="returnMin"
                               @input="datePick[2] = false"
                             ></v-date-picker>
                           </v-menu>
+                          <span v-if="rentJson.ReturnType===1" class="note caption">到着日は、弊社営業日でお願いします。<span class="d-inline-block">(平日10:00~18:00、土日祝除く)</span></span>
                         </v-col>
                       </v-row>
                       <div v-if="rentJson.ReturnType===0">
@@ -644,6 +678,22 @@
                       ></v-textarea>
                     </v-col>
                   </v-row>
+                  <v-row class="pt-5">
+                    <v-col cols="12">
+                      <p class="text-center red--text">注意事項</p>
+                      <v-card elevation="0" max-width="700" class="mx-auto" outlined>
+                        <v-card-text class="text--text">
+                          ご希望機材の在庫を確認し、ご回答をメールまたはマイページの「注文履歴」にてご連絡いたします。<br>
+                          ご回答内容を確認の上、「注文履歴」からご注文を確定してください。<br>
+                          <!-- （お申し込みからおよそ〇営業日以内にご連絡いたします。）<br> -->
+                          また、お申し込み内容によりお断りする場合がございますこと、あらかじめご了承ください。<br><br>
+                          ご注文の流れについては、<NuxtLink :to="{ path: '/guide/rental-flow', hash: '#flow-member-2' }" class="link" target="_blank">レンタルの手順</NuxtLink>をご確認ください。
+                        </v-card-text>
+                      </v-card>
+                      <p class="text-center">
+                      <v-checkbox v-model="agree" class="d-inline-block" label="上記、注意事項の内容を確認しました"></v-checkbox></p>
+                    </v-col>
+                  </v-row>
                 </v-container>
               </v-form>
               <!-- {{ObserverProps.fields}} -->
@@ -660,8 +710,8 @@
                   color="primary"
                   large
                   class="ml-0 my-1 text-h6 px-6"
-                  :disabled="ObserverProps.invalid"
-                  @click="confirm()">確認する
+                  :disabled="ObserverProps.invalid||!agree"
+                  @click="confirm()">お申し込み内容を確認
                 </v-btn>
               </div>
             </ValidationObserver>
@@ -731,6 +781,7 @@ export default {
       deleteRow: null,
       deleteLoading: false,
       datePick: [ false,false,false],
+      rentMinDate: null,
       rentRange: [],
       rentDate: [],
       rentRangeDays: null,
@@ -738,20 +789,27 @@ export default {
       rentRangeMax: null,
       deliverMax: null,
       returnMin: null,
+      deliveryInitial: null,
       rentRangeInitial: null,
       returnInitial: null,
-      today: [this.getToday()],
+      currentDateDeliver: null,
+      currentDateReturn: null,
+      closeDeliverArr: [],
+      closeReturnArr: [],
+      today: [],
       todayColor: 'primary',
       concatRentRange: null,
       confirmDialog: false,
       branchDialog: false,
-      branchList: null
+      branchList: null,
+      agree: false,
     }
   },
   async fetch() {
     this.$store.commit('loading/changeStatus', true)
     this.setBreadCrumbs()
     await this.getCartInfo()
+    await this.getMinDate()
     if(this.cartInfo) await this.inputUserInfo()
     this.$store.commit('loading/changeStatus', false)
   },
@@ -764,16 +822,24 @@ export default {
     }
   },
   watch: {
-    'rentJson.DeliveryType'(value){ // 時間リセット
-      if(this.$refs.deliveryTime){
+    async 'rentJson.DeliveryType'(value){
+      if(this.$refs.deliveryTime){ // 時間リセット
         this.$refs.deliveryTime.reset()
         this.$set(this.rentJson, "DeliveryTime", '時間未定')
       }
+      if(value===0&&this.rentDate[0]){
+        const closeDate = await this.setCloseDates(this.rentDate[0], '')
+        if(closeDate) this.$set(this.rentDate, '0', '')
+      }
     },
-    'rentJson.ReturnType'(){ // 時間リセット
-      if(this.$refs.returnTime){
+    async 'rentJson.ReturnType'(value){
+      if(this.$refs.returnTime){ // 時間リセット
         this.$refs.returnTime.reset()
         this.$set(this.rentJson, "ReturnTime", '時間未定')
+      }
+      if(value===0&&this.rentDate[1]){
+        const closeDate = await this.setCloseDates(this.rentDate[1], '')
+        if(closeDate) this.$set(this.rentDate, '1', '')
       }
     },
     'rentJson.UseDay'(newVal, oldVal){
@@ -826,6 +892,10 @@ export default {
   updated() {
     this.$scrollBackButton()
   },
+  created() {
+    const { year, month, day } = this.getToday()
+    this.today.push(`${year}-${month}-${day}`)
+  },
   methods: {
     setBreadCrumbs() {
       this.$store.commit("breadCrumbs/deleteList");
@@ -864,6 +934,8 @@ export default {
         this.$set(this.estJson, 'Organization', res.Organization)
         this.$set(this.rentJson, 'ContactEmail', res.Email)
         this.$set(this.rentJson, 'ContactTel', res.Tel)
+        this.$set(this.rentJson, 'DeliveryDestName', res.MemberName)
+        this.$set(this.rentJson, 'DeliveryDestComp', res.Organization)
         this.$set(this.rentJson, 'DeliveryZipCode', res.ZipCode)
         this.$set(this.rentJson, 'DeliveryPrefect', res.Prefect)
         this.$set(this.rentJson, 'DeliveryAddress', res.Address)
@@ -968,33 +1040,87 @@ export default {
       const year = today.getFullYear()
       const month = String(today.getMonth() + 1).padStart(2, '0')
       const day = String(today.getDate()).padStart(2, '0')
-      return `${year}-${month}-${day}`
+      return {year, month, day}
     },
-    allowedBusinessDates(date) {
-      const allowedDates = this.allowedDates(date)
-      const holiday = new Date(date).getDay()===0 || new Date(date).getDay()===6
-      return allowedDates && !holiday
-    },
-    allowedDates(date) {
-      let today = new Date()
-      today = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate()
-      )
-      let maxAllowedDay = new Date()
-      maxAllowedDay.setDate(
-        today.getDate() + 365*5
-      )
-      maxAllowedDay = new Date(
-        maxAllowedDay.getFullYear(),
-        maxAllowedDay.getMonth(),
-        maxAllowedDay.getDate()
-      )
+    async getMinDate(){
+      const accessToken = this.$store.getters["auth/getAccessToken"]
+      const loginID = this.$store.getters["auth/getUser"]
+      const param = new URLSearchParams()
+      param.append('LoginID', loginID)
+      param.append('SalesDate', '5')
+      const res = await this.$memberBaseAxios.post(`comm/getDateAfterSalesDay`, param, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      if(res.data.Status === 'TRUE'){
+        const date = res.data.GetDate
+        this.rentMinDate = new Date(`${date.slice(0,4)}/${date.slice(4,6)}/${date.slice(6)}`)
+        const { year, month } = this.getToday()
+        if( month !== date.slice(4,6)){
+          const minDay = `${date.slice(0,4)}-${date.slice(4,6)}-${date.slice(6)}`
+          this.deliveryInitial = minDay
+          this.rentRangeInitial = minDay
+          this.returnInitial = minDay
+        }
+      }else if(res.data.ErrorNo === 100002){
+        const res = await this.$getAccessToken()
+        if( res ) return this.getMinDate()
+      }
 
-      return today <= new Date(date)
-        && new Date(date) <= maxAllowedDay
+    },
+    async setCloseDates(date, type) {
+      const accessToken = this.$store.getters["auth/getAccessToken"]
+      const loginID = this.$store.getters["auth/getUser"]
+      const param = new URLSearchParams()
+      const year = date.slice(0, 4)
+      const month = date.slice(5, 7)
+      param.append('LoginID', loginID)
+      param.append('Year', year)
+      param.append('Month', month)
+      const res = await this.$memberBaseAxios.post(`comm/getHolidDay`, param, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      if(res.data.Status === 'TRUE'){
+        const arr = []
+        const resArr = res.data.DayArr.split(',')
+        for(let i=0; i<resArr.length; i++){
+          arr.push(`${year}-${month}-${resArr[i]}`)
+        }
+        if(type === 'return') this.closeReturnArr = arr
+        else if(type === 'deliver') this.closeDeliverArr = arr
+        else return arr.includes(date)
+      }else if(res.data.ErrorNo === 100002){
+        const res = await this.$getAccessToken()
+        if( res ) return this.setCloseDates(date)
+      }
+    },
+    allowedDatesDeliver(date) {
+      if(this.rentJson.DeliveryType!==0) return this.rentMinDate <= new Date(date)
+
+      const nowDate = date.slice(0, 7)
+      if(this.currentDateDeliver !== nowDate) {
+        this.currentDateDeliver = nowDate
+        this.setCloseDates(nowDate, 'deliver')
+      }
+      return !this.closeDeliverArr.includes(date)&&this.rentMinDate <= new Date(date)
      },
+    allowedDatesReturn(date) {
+      if(this.rentJson.ReturnType!==0) return this.rentMinDate <= new Date(date)
+
+      const nowDate = date.slice(0, 7)
+      if(this.currentDateReturn !== nowDate) {
+        this.currentDateReturn = nowDate
+        this.setCloseDates(nowDate, 'return')
+      }
+      return !this.closeReturnArr.includes(date)&&this.rentMinDate <= new Date(date)
+
+    },
+    allowedDatesRange(date) {
+      return this.rentMinDate <= new Date(date)
+    },
     setRange(){
       if( this.rentRange.length ){
         if( this.rentRange.length === 1 ) this.rentRange[1] = this.rentRange[0]
@@ -1021,6 +1147,12 @@ export default {
     confirm(){
       this.confirmDialog = true
       history.pushState(null, '', null)
+    },
+    toFooter(){
+      const element = document.getElementById('footer');
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
     },
     getBranch(obj){
       this.branchList = obj
@@ -1095,6 +1227,10 @@ li{
 .note{
   margin-bottom: 0;
   padding-left: 1.2rem;
-  @include wordSymbol('※')
+  line-height: 1.6;
+  @include wordSymbol('※');
+  .link{
+    transform: translateY(-2.5px);
+  }
 }
 </style>
