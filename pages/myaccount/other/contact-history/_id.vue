@@ -53,18 +53,6 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="3" class="pb-0">お名前</v-col>
-            <v-col cols="12" md="9" class="pt-0 pt-md-4">
-              <v-card elevation="0" class="px-2 py-1 border">{{contactLists.Name }}</v-card>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="3" class="pb-0">お名前(フリガナ)</v-col>
-            <v-col cols="12" md="9" class="pt-0 pt-md-4">
-              <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{contactLists.NameKana}}</v-card>
-            </v-col>
-          </v-row>
-          <v-row>
             <v-col cols="12" md="3" class="pb-0">メールアドレス</v-col>
             <v-col cols="12" md="9" class="pt-0 pt-md-4">
               <v-card elevation="0" class="px-2 py-1 border">{{contactLists.Email}}</v-card>
