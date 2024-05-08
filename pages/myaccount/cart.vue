@@ -583,7 +583,7 @@
                               @input="datePick[2] = false"
                             ></v-date-picker>
                           </v-menu>
-                          <span v-if="rentJson.ReturnType===1" class="note caption">到着日は、弊社営業日でお願いします。<span class="d-inline-block">(平日10:00~18:00、土日祝除く)</span></span>
+                          <span v-if="rentJson.ReturnType===1" class="note caption pt-1">到着日は、弊社営業日でお願いします。<span class="d-block">平日10:00~18:00 (土日祝除く)</span></span>
                         </v-col>
                       </v-row>
                       <div v-if="rentJson.ReturnType===0">

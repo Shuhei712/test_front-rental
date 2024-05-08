@@ -382,6 +382,25 @@
         </v-btn>
       </v-card>
     </v-dialog>
+    <v-dialog
+      v-model="existCartDialog"
+      width="700">
+      <v-card class="pa-5 text-center">
+        <p class="mb-4"><span class="error--text">既にカートに追加されています。</span><br>数量を変更される場合は、カートから変更をお願いいたします。</p>
+        <v-btn
+          color="outline"
+          class="mt-4 mx-1 white--text"
+          @click="existCartDialog=false">
+          戻る
+        </v-btn>
+        <v-btn
+          color="primary"
+          class="mt-4 mx-1 white--text"
+          :to="'/myaccount/cart'">
+          カートを見る
+        </v-btn>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
@@ -411,6 +430,7 @@ export default {
       favoriteFlg: false,
       isLogin: false,
       loginDialog: false,
+      existCartDialog: false,
       addCartDialog: false,
       loading: false,
     }
@@ -698,10 +718,35 @@ export default {
         })
       }
     },
+    async checkCart(){
+      const accessToken = this.$store.getters["auth/getAccessToken"]
+      const loginID = this.$store.getters["auth/getUser"]
+      const param = new URLSearchParams()
+      param.append('LoginID', loginID)
+      param.append('ProductID', this.$route.params.id)
+      const res = await this.$memberBaseAxios.post(`order/existCartProduct`, param, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      if (res.data.Status === 'TRUE') {
+        return true
+      }else if (res.data.ErrorNo === 100002) {
+        const res = await this.$getAccessToken()
+        if( res ) return this.checkCart()
+      }else{
+        return false
+      }
+    },
     async addCart(Qty){
       if(!this.isLogin){
         this.loginDialog = true
         return false
+      }
+      const existCart = await this.checkCart()
+      if (existCart) {
+        this.existCartDialog = true
+        return
       }
       this.loading = true
       const accessToken = this.$store.getters["auth/getAccessToken"]
