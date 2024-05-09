@@ -8,23 +8,29 @@
         class="py-6">
         <v-container>
           <v-row class="my-1">
-            <v-col cols="12" md="4" class="pb-0">お問い合わせの種類</v-col>
-            <v-col cols="12" md="8" class="pt-0 pt-md-3">
-              <v-card elevation="0" class="px-2 py-1 border">{{ user.ContactType }}</v-card>
+            <v-col cols="12" md="4" class="pb-0">会員番号</v-col>
+            <v-col cols="12" md="8" class="pt-2 pt-md-3">
+              <v-card elevation="0">{{ loginInfo.MemberID }}</v-card>
             </v-col>
           </v-row>
 
           <v-row class="my-1">
             <v-col cols="12" md="4" class="pb-0">お名前</v-col>
-            <v-col cols="12" md="8" class="pt-0 pt-md-3">
-              <v-card elevation="0" class="px-2 py-1 border">{{ user.Name }}</v-card>
+            <v-col cols="12" md="8" class="pt-2 pt-md-3">
+              <v-card elevation="0">{{ user.Name }}</v-card>
             </v-col>
           </v-row>
 
           <v-row class="my-1">
             <v-col cols="12" md="4" class="pb-0">お名前(フリガナ)</v-col>
+            <v-col cols="12" md="8" class="pt-2 pt-md-3">
+              <v-card elevation="0">{{ user.NameKana }}</v-card>
+            </v-col>
+          </v-row>
+          <v-row class="my-1">
+            <v-col cols="12" md="4" class="pb-0">お問い合わせの種類</v-col>
             <v-col cols="12" md="8" class="pt-0 pt-md-3">
-              <v-card elevation="0" min-height="2rem" class="px-2 py-1 border">{{ user.NameKana }}</v-card>
+              <v-card elevation="0" class="px-2 py-1 border">{{ user.ContactType }}</v-card>
             </v-col>
           </v-row>
 
@@ -97,6 +103,10 @@ export default {
       type: Object,
       required: true,
       default: () => {},
+    },
+    loginInfo:{
+      type: Object,
+      required: true
     },
   },
   data() {

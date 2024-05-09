@@ -1,7 +1,7 @@
 <template>
   <section id="top">
     <to-top-btn></to-top-btn>
-    <component :is="child" :user.sync="user"></component>
+    <component :is="child" :user.sync="user" :login-info="loginInfo"></component>
   </section>
 </template>
 <script>
@@ -9,7 +9,11 @@ export default {
   data() {
     return {
       user: {},
+      loginInfo: {}
     }
+  },
+  async fetch() {
+    this.loginInfo = await this.$getLoginInfo()
   },
   head() {
     return {
