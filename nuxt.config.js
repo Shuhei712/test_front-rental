@@ -139,7 +139,7 @@ export default {
           catalog: '#c19c49',
           sns: '#638bba',
           sales: '#af69aa',
-          twitter: '#00ACED',
+          twitter: '#000000',
           facebook: '#3B5998',
           lightGray: '#9da5a4',
         },
