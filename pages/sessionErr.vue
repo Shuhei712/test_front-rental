@@ -13,3 +13,14 @@
     </section>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: "セッションタイムアウト",
+      meta: [
+        { hid: "robots", name: "robots", content: "noindex" }
+      ]
+    };
+  },
+}
