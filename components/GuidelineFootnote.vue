@@ -16,6 +16,7 @@
           'footnote-list',
           noteList.type === 'bold-note' ? 'type--note is-accent' :
           noteList.type === 'attention-note' ? 'type--note is-accent is-attention' :
+          noteList.type === 'small-note' ? 'type--note is-accent is-small' : 'type--list',
           noteList.type === 'note' ? 'type--note' : 'type--list']">
           <li
             v-for="(note, index) in noteList.items"
@@ -23,6 +24,7 @@
             :class="[
               'pl-6',
               noteList.type === 'bold-note' && noteList.items.length - 1 !== index ? 'mb-5' :
+              noteList.type === 'small-note' && noteList.items.length - 1 !== index ? 'mb-2' :
               noteList.type === 'list' && noteList.items.length - 1 !== index ? 'mb-2' : '' ]"
             v-html="note"></li>
         </ul>
@@ -92,6 +94,10 @@ ul {
         color: $accent;
       }
     }
+  }
+
+  .is-small {
+    font-size: 0.9em;
   }
 }
 
