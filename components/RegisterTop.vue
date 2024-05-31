@@ -7,7 +7,7 @@
           会員登録の前に、必ず以下の「レンタル規約」をご確認ください。
         </p>
         <v-card class="mt-3 overflow-y-auto" height="40vh" min-height="280">
-          <v-card-title>レンタル規約（2017年6月改定）</v-card-title>
+          <v-card-title>レンタル規約（2024年6月改定）</v-card-title>
           <v-card-text>
             <ul>
               <li class="list-style-none">
@@ -69,20 +69,20 @@
                       原則として、次の相当額をキャンセル料として申し受けます。
                       <ul class="pt-2">
                         <li class="list-style-none"><dl class="d-flex">
-                          <dt class="flex-shrink-0">当日：</dt>
+                          <dt class="flex-shrink-0">出庫当日/出庫後：</dt>
+                          <dd>レンタル料金の100%</dd>
+                        </dl></li>
+                        <li class="list-style-none"><dl class="d-flex">
+                          <dt class="flex-shrink-0">出庫当日/出庫前：</dt>
                           <dd>レンタル料金の80%</dd>
                         </dl></li>
                         <li class="list-style-none"><dl class="d-flex">
-                          <dt class="flex-shrink-0">前日：</dt>
-                          <dd>レンタル料金の50%</dd>
+                          <dt class="flex-shrink-0">出庫前日：</dt>
+                          <dd>レンタル料金の60%</dd>
                         </dl></li>
                         <li class="list-style-none"><dl class="d-flex">
-                          <dt class="flex-shrink-0">2日～3日前：</dt>
+                          <dt class="flex-shrink-0">出庫2日前：</dt>
                           <dd>レンタル料金の40%</dd>
-                        </dl></li>
-                        <li class="list-style-none"><dl class="d-flex">
-                          <dt class="flex-shrink-0">4日～5日前：</dt>
-                          <dd>レンタル料金の20%</dd>
                         </dl></li>
                       </ul>
                     </div>
