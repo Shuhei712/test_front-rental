@@ -97,7 +97,7 @@ export default {
   position: relative;
   width: 100%;
   height: auto;
-  background-image: url('https://rental-resource.takenaka-co.co.jp/catalog-img/top/sp/first-view.jpg');
+  background-image: url('https://rental-resource-sw.symunity.co.jp/catalog-img/top/sp/first-view.jpg');
   background-position: 25% center;
   background-size: cover;
   padding-top: calc(5px + 60px + 32px);
