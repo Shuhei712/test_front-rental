@@ -110,7 +110,7 @@ export default {
         if(type === this.TYPE_FEATURE){
           return { 'background-image': 'url(' + url + ')'}
         }else{
-          return { 'background-image': 'url(https://rental-resource.takenaka-co.co.jp/catalog-img/top/sp/first-view.jpg)'}
+          return { 'background-image': 'url(https://rental-resource-sw.symunity.co.jp/catalog-img/top/sp/first-view.jpg)'}
         }
       }
     }
