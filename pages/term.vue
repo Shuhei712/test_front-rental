@@ -34,7 +34,7 @@ export default {
         { hid: 'description', name: 'description', content: '用語集 | 大阪 東京 名古屋 京都での映像機器・音響機器のレンタルや学会・展示会・式典・試写会などのイベント制作・運営/HDV映像・音楽制作/VJ機器・HDVカメラなどクリエイターに向けの映像設備のプランニング・施工/デジタルサイネージやITネットワーク構築など映像・音響・レンタル・販売・設備に関することは80年の歴史を持つ(株)タケナカにご相談下さい。' }
       ],
       script: [
-        { src: 'https://rental-resource.takenaka-co.co.jp/catalog-page/rental-menu/rental-term/index.js'}
+        { src: 'https://rental-resource-sw.symunity.co.jp/catalog-page/rental-menu/rental-term/index.js'}
       ]
     }
   },
@@ -64,7 +64,7 @@ export default {
       this.breadCrumbs = this.$store.getters['breadCrumbs/getLists']
     },
     async loadHtml() {
-      const res = await this.$axios.$get('https://rental-resource.takenaka-co.co.jp/catalog-page/rental-menu/rental-term/index.html')
+      const res = await this.$axios.$get('https://rental-resource-sw.symunity.co.jp/catalog-page/rental-menu/rental-term/index.html')
       this.html = res
     }
   },

@@ -271,11 +271,11 @@ export default {
       link: [
         {
           rel: 'stylesheet',
-          href: 'https://rental-resource.takenaka-co.co.jp/catalog-page/detail/css/old-rental.css',
+          href: 'https://rental-resource-sw.symunity.co.jp/catalog-page/detail/css/old-rental.css',
         },
         {
           rel: 'stylesheet',
-          href: 'https://rental-resource.takenaka-co.co.jp/catalog-page/detail/css/product-info.css',
+          href: 'https://rental-resource-sw.symunity.co.jp/catalog-page/detail/css/product-info.css',
         },
       ],
     }

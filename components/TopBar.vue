@@ -31,13 +31,13 @@ export default {
   width: 100%;
   height: auto;
   max-height: 280px;
-  background-image: url('https://rental-resource.takenaka-co.co.jp/catalog-img/top_bar/main.png');
+  background-image: url('https://rental-resource-sw.symunity.co.jp/catalog-img/top_bar/main.png');
   background-position: center;
   background-size: cover;
   padding-top: calc(80px + 32px);
 
   @include mq(sm) {
-    background-image: url('https://rental-resource.takenaka-co.co.jp/catalog-img/top_bar/sp/main.png');
+    background-image: url('https://rental-resource-sw.symunity.co.jp/catalog-img/top_bar/sp/main.png');
     padding-top: calc(60px + 16px);
   }
 
