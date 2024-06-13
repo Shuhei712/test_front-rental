@@ -54,16 +54,18 @@
             </template>
 
             <!-- 営業時間 -->
-            <business-hours v-if="item.businessHours"></business-hours>
+            <div v-if="item.businessHours" class="mt-2 d-flex">
+              （<business-hours></business-hours>）
+            </div>
 
             <!-- 画像 -->
             <template v-for="(img, imgIndex) in item.imgs">
               <div :key="`guide-img_${imgIndex}`">
                 <guideline-image
                   :guideline-img="img.src"
-                  :guideline-alt="img.alt" 
-                  :attr-width="img.width" 
-                  :attr-height="img.height" 
+                  :guideline-alt="img.alt"
+                  :attr-width="img.width"
+                  :attr-height="img.height"
                   :figure-flg="img.figureFlg">
                 </guideline-image>
               </div>
