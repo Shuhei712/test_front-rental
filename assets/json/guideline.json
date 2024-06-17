@@ -206,7 +206,7 @@
                 "texts": ["お客様の最寄りの営業所で直接商品を引き渡し/返却する場合（東京/大阪/名古屋/京都）引き渡し/受け取りは弊社営業時間内となります。"],
                 "noteList": {
                   "type": "note",
-                  "items": ["別営業所での引き渡し、返却も可能です。 アクセスマップは<a href=\"https://www.takenaka-co.co.jp/company/map.html\" target=\"_blank\" class=\"primary--text font-weight-bold text-decoration-underline\">こちら</a>"]
+                  "items": ["別営業所での引き渡し、返却も可能です。 <a href=\"https://www.takenaka-co.co.jp/company/map.html\" target=\"_blank\"  aria-label=\"アクセスマップはこちら\" class=\"primary--text font-weight-bold text-decoration-underline\">アクセスマップはこちら</a>"]
                 }
               },
               {
