@@ -43,6 +43,20 @@
                       </li>
                     </ul>
                   </div>
+                  <div v-else-if="root.MenuTitle ==='お問い合わせ'">
+                    <a
+                      class="main-menu__text d-flex justify-space-between text-body-2 text-gray py-4 py-lg-2 px-2"
+                      :href="contactUrl"
+                      :target="isLogin ? '':'_blank'">
+                      <span class="d-flex align-center">
+                        <v-icon class="mr-1" color="primary">mdi-email-outline</v-icon>
+                        お問い合わせ
+                      </span>
+                      <span class="main-menu__trigger">
+                        <v-icon>mdi-chevron-right</v-icon>
+                      </span>
+                    </a>
+                  </div>
                   <!-- サブメニューなし -->
                   <div v-else>
                     <no-sub-menu
@@ -215,7 +229,11 @@ export default {
       }
     },
     isLogin() {
-      return this.$store.getters['auth/getAuthToken']
+      return this.$store.getters['auth/getAuthToken'] ? 1 : 0
+    },
+
+    contactUrl(){
+      return this.isLogin ? '/myaccount/other/contact' : 'https://www.takenaka-co.co.jp/contact/'
     },
     cartNum() {
       return this.$store.getters['cart/getCartNum']

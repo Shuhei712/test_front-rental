@@ -116,7 +116,7 @@
         </div>
 
         <div class="cart__user mt-15">
-          <p class="red--text note">レンタル商品のお引渡し日は、5営業日後からご指定が可能です。<br>お急ぎの場合は、最寄りの営業所まで<v-btn x-large height="20" plain elevation="0" class="link px-0" @click="toFooter">メールまたはお電話</v-btn>にてお問い合わせください。</p>
+          <p class="red--text note">レンタル商品のお引渡し日は、5営業日後からご指定が可能です。<br>お急ぎの場合は、最寄りの営業所まで<v-btn x-large height="20" plain elevation="0" class="link px-0" :to="'/myaccount/other/contact'">お問い合わせ</v-btn>ください。</p>
           <h2 class="mt-4 text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み記入欄</h2>
           <v-card
             outlined
@@ -687,7 +687,7 @@
                           ご回答内容を確認の上、「注文履歴」からご注文を確定してください。<br>
                           <!-- （お申し込みからおよそ〇営業日以内にご連絡いたします。）<br> -->
                           また、お申し込み内容によりお断りする場合がございますこと、あらかじめご了承ください。<br><br>
-                          ご注文の流れについては、<NuxtLink :to="{ path: '/guide/rental-flow', hash: '#flow-member-2' }" class="link" target="_blank">レンタルの手順</NuxtLink>をご確認ください。
+                          ご注文の流れについては、<NuxtLink :to="{ path: '/guide/rental-flow', hash: '#flow-member-2' }" class="primary--text" target="_blank">レンタルの手順</NuxtLink>をご確認ください。
                         </v-card-text>
                       </v-card>
                       <p class="text-center">
@@ -1148,12 +1148,12 @@ export default {
       this.confirmDialog = true
       history.pushState(null, '', null)
     },
-    toFooter(){
-      const element = document.getElementById('footer');
-      element.scrollIntoView({
-        behavior: 'smooth'
-      });
-    },
+    // toFooter(){
+    //   const element = document.getElementById('footer');
+    //   element.scrollIntoView({
+    //     behavior: 'smooth'
+    //   });
+    // },
     getBranch(obj){
       this.branchList = obj
     }

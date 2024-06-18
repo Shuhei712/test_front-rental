@@ -29,7 +29,7 @@
       </li>
       <li class="red--text note">
         書類の提出等で対応できない場合は、
-        <a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="text-decoration-underline red--text">お問い合わせ</a>からご相談ください。
+        <a :href="contactUrl" target="_blank" class="link">お問い合わせ</a>からご相談ください。
       </li>
     </ul>
     <div class="px-2">
@@ -490,6 +490,9 @@ export default {
       set(val){
         this.$emit('update:user', val)
       }
+    },
+    contactUrl() {
+      return this.$store.getters['auth/getAuthToken'] ? '/myaccount/other/contact' : 'https://www.takenaka-co.co.jp/contact/'
     },
     fileJson: {
       get(){

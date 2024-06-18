@@ -170,6 +170,10 @@ export default {
         await this.getContactInfo()
       }else{
         await this.getUserInfo()
+        if (this.$route.query.orderId) {
+          this.syncedUser.OrderNo = this.$route.query.orderId
+          this.syncedUser.ContactType = "ご注文について"
+        }
       }
     }
     this.setBreadCrumbs()
