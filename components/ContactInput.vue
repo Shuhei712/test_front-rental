@@ -2,9 +2,35 @@
   <div v-if="!$fetchState.pending && !$fetchState.error">
     <top-bar title="お問い合わせ 入力" :bread-crumbs="breadCrumbs"></top-bar>
     <div class="register__inner py-16 px-3 px-lg-0">
+      <v-card color="grey lighten-4" class="pt-3 pb-3 px-6 mb-4" elevation="0" height="100%">
+        <div class="d-flex align-center register__tel">
+          <div class="pb-5 pb-md-0 pe-md-6">
+            <div class="d-flex align-center pb-1 justify-center">
+              <v-icon class="mr-1" color="primary" large>mdi-phone</v-icon>
+              <span class="text-h6 font-heading font-weight-regular letter-space-01em">電話番号</span>
+              &emsp;&emsp;
+            </div>
+            <span class="text-caption d-flex">
+              <business-hours></business-hours>
+            </span>
+          </div>
+          <v-row class="tel__branch">
+            <v-col v-for="item in branchTel" :key="item.branch" cols="12" sm="6" class="py-1">
+              <dl class="d-flex align-center">
+                <dt class="tel__branch-dt"><v-chip label outlined small color="accent" class="d-block">{{item.branch}}</v-chip></dt>
+                <dd><a :href="`tel:${item.tel}`" class="tel__link">{{item.tel}}</a></dd>
+              </dl>
+            </v-col>
+          </v-row>
+        </div>
+      </v-card>
+      <p class="mb-2 text-right">
+        <v-icon class="mb-1" color="orange lighten-3">mdi-lightbulb</v-icon>
+        <NuxtLink to="/faq" class="primary--text">よくある質問はこちら</NuxtLink>
+      </p>
       <v-card
         outlined
-        class="py-6">
+        class="py-4">
         <ValidationObserver v-slot="ObserverProps" ref="observer">
           <v-form ref="form">
             <v-container>
@@ -156,6 +182,12 @@ export default {
     return {
       breadCrumbs: [],
       displayLists: {},
+      branchTel: [
+        { branch: '東京', tel: '03-6690-3457' },
+        { branch: '名古屋', tel: '052-526-2872' },
+        { branch: '大阪', tel: '06-6571-5132' },
+        { branch: '京都', tel: '075-647-3111' },
+      ]
     }
   },
 
@@ -255,14 +287,39 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import 'assets/css/common.scss';
 .register{
+  &__tel{
+    // max-width: 720px;
+    @include mq(md){
+      flex-direction: column;
+    }
+    .tel__link {
+      cursor: default;
+    }
+    .tel__branch {
+      max-width: 500px;
+      @include mq(md){
+        border-top: solid 1px $primary;
+        padding: 0.5rem 0;
+      }
+      &-dt {
+        width: 4rem;
+        text-align: center;
+        margin-right: 0.4rem;
+        .v-chip:hover::before {
+          opacity: 0;
+        }
+      }
+    }
+  }
   &__inner{
     max-width: 1000px;
     margin: 0 auto;
     width: 100%;
   }
 }
-.row{
+.row:not(.tel__branch){
   border-bottom: 1px solid #dddddd;
   padding-bottom: 0.5rem;
   padding-top: 0.2rem;
