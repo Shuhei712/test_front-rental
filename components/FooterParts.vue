@@ -187,7 +187,7 @@ export default {
     .head__logo {
       .logo__img {
         display: inherit;
-        max-width: 400px;
+        max-width: 220px;
 
         @include mq(md) {
           max-width: 200px;
