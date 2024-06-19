@@ -353,10 +353,10 @@ ul {
   &__logo {
     .logo__img {
       display: flex;
-      max-width: 200px;
+      width: 200px;
 
       @include mq(sm) {
-        max-width: 55px;
+        width: 55px;
       }
     }
     img {

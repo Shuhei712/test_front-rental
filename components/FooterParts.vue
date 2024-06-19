@@ -187,14 +187,14 @@ export default {
     .head__logo {
       .logo__img {
         display: inherit;
-        max-width: 220px;
+        width: 220px;
 
         @include mq(md) {
-          max-width: 200px;
+          width: 200px;
         }
 
         @include mq(sm) {
-          max-width: 180px;
+          width: 180px;
         }
 
         img {
