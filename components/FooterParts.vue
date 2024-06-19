@@ -93,7 +93,7 @@
         <img class="ml-0 ml-lg-5 mb-4 mb-lg-0" src="/img/footer/symunity_logo.svg" alt="SYMUNITY GROUP" />
       </div>
       <div class="footer__copy-light text-center text-caption text-sm-body-2 mb-5">
-        <span class="montserrat">2022</span> © Takenaka All Rights Reserved.
+        ©<span class="montserrat">2022</span> TAKENAKA Co., Ltd.
       </div>
     </v-container>
   </footer>
