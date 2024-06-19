@@ -322,16 +322,19 @@ p {
   z-index: 101 !important;
 }
 
-// 用語集 上書きCSS (Vuetifyと競合のため)
+// リンク
 .link {
-  color: #0101c9 !important;
-  border-bottom: 1px solid #0101c9 !important;
+  color: $primary !important;
+  border-bottom: 1px solid $primary !important;
   border-radius: 0 !important;
+  .v-btn__content{
+    opacity: 1 !important;
+  }
 }
 
 .link:visited {
-  color: #00007b !important;
-  border-bottom: 1px solid #00007b !important;
+  color: $primary !important;
+  border-bottom: 1px solid $primary !important;
 }
 
 // ガイドライン
