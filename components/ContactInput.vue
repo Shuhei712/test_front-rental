@@ -150,6 +150,7 @@
                   @click="reset()"
                 >リセット</v-btn> -->
                 <v-btn
+                  large
                   :disabled="ObserverProps.invalid"
                   class="my-4 mx-2 white--text"
                   color="primary"
