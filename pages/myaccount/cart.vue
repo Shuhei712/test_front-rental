@@ -116,7 +116,7 @@
         </div>
 
         <div class="cart__user mt-15">
-          <p class="red--text note">レンタル商品のお引渡し日は、5営業日後からご指定が可能です。<br>お急ぎの場合は、最寄りの営業所まで<v-btn x-large height="20" plain elevation="0" class="link px-0" :to="'/myaccount/other/contact'">お問い合わせ</v-btn>ください。</p>
+          <p class="red--text note">レンタル商品のお引渡し日は、5営業日後からご指定が可能です。<br>お急ぎの場合は、最寄りの営業所まで<v-btn x-large height="20" plain elevation="0" class="link px-0" :to="'/myaccount/other/contact'" target="_blank">お問い合わせ</v-btn>ください。</p>
           <h2 class="mt-4 text-h6 outline white--text py-1 px-3 rounded-sm">レンタル申し込み記入欄</h2>
           <v-card
             outlined
