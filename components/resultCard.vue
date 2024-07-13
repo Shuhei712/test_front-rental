@@ -50,7 +50,7 @@
           <span class="text-caption text-left d-inline-block">
             <br>
             通知メールが届かない場合、迷惑メールフォルダに届いているか、処理が正常に行われていない可能性があります。<br>
-            大変お手数ですが、再度お試しいただくか、<a href="https://www.takenaka-co.co.jp/contact/" target="_blank" class="link">お問い合わせ</a>ください。<br>
+            大変お手数ですが、再度お試しいただくか、<a :href="contactUrl" target="_blank" class="link">お問い合わせ</a>ください。<br>
             ※「takenaka-co.co.jp」からのメールを受信出来るように設定をお願いします。
           </span>
         </p>
@@ -101,7 +101,7 @@
       <v-btn
         color="primary"
         class="mx-3 white--text"
-        href="https://www.takenaka-co.co.jp/contact/" target="_blank">
+        :href="contactUrl" target="_blank">
         お問い合わせ
       </v-btn>
     </template>
@@ -142,7 +142,10 @@ export default {
       set(val){
         this.$emit('update:dialog', val)
       }
-    }
+    },
+    contactUrl() {
+      return this.$store.getters['auth/getAuthToken'] && this.$route.path !== '/myaccount/other/contact' ? '/myaccount/other/contact' : 'https://www.takenaka-co.co.jp/contact/'
+    },
   },
   toLogin(){
     this.$store.dispatch('auth/resetUser')

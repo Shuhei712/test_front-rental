@@ -20,9 +20,9 @@
               type="checkbox"
               :value="{ id: child.CategoryID, name: child.CategoryName }"
               @change="sendCategoryLists()" />
-              <div class="checkbox d-flex align-flex-start">
-                <span class="checkbox__parts"></span>
-                <span class="text-body-2 text-gray pt-1 px-3">{{ child.CategoryName }}</span>
+              <div class="checkbox d-flex align-center">
+                <span class="radio__parts"></span>
+                <span class="text-body-2 text-gray px-3">{{ child.CategoryName }}</span>
               </div>
           </label>
           <div v-for="grandChild in child.SubCategoryList" :key="grandChild.CategoryID" cols="11" class="category-list">
@@ -33,9 +33,9 @@
                 type="checkbox"
                 :value="{ id: grandChild.CategoryID, name: grandChild.CategoryName }"
                 @change="sendCategoryLists()" />
-              <div class="checkbox d-flex align-flex-start">
-                <span class="checkbox__parts"></span>
-                <span class="text-body-2 text-gray pt-1 px-3">{{ grandChild.CategoryName }}</span>
+              <div class="checkbox d-flex align-center">
+                <span class="radio__parts"></span>
+                <span class="text-body-2 text-gray px-3">{{ grandChild.CategoryName }}</span>
               </div>
             </label>
           </div>
@@ -113,6 +113,7 @@ export default {
 .terms__label {
   display: inline-block;
   margin-bottom: 20px;
+  margin-top: 4px;
 
   .terms__checkbox {
     display: none;
@@ -122,37 +123,38 @@ export default {
     cursor: pointer;
   }
 
-  .checkbox__parts {
+  .radio__parts {
     display: block;
     flex-shrink: 0;
-    width: 30px;
-    height: 30px;
+    width: 22px;
+    height: 22px;
     background-color: $cushion;
-    border: 1px solid $outline;
-    border-radius: 5px;
+    border: 2px solid $line;
+    border-radius: 50%;
     position: relative;
   }
 
-  .checkbox__parts::after {
+  .radio__parts::after {
     content: '';
     display: block;
     position: absolute;
-    top: 2px;
-    left: 9px;
-    width: 10px;
-    height: 18px;
-    transform: rotate(40deg);
-    border-bottom: 3px solid $line;
-    border-right: 3px solid $line;
+    top: 50%;
+    left: 50%;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
   }
 
-  .terms__checkbox:checked + .checkbox .checkbox__parts {
+  .terms__checkbox:checked + .checkbox .radio__parts {
     background-color: #ffffff;
   }
 
-  .terms__checkbox:checked + .checkbox .checkbox__parts::after {
-    border-bottom: 3px solid $primary;
-    border-right: 3px solid $primary;
+  .terms__checkbox:checked + .checkbox .radio__parts{
+    border-color: $primary;
+    &::after {
+      background-color: $primary;
+    }
   }
 }
 </style>

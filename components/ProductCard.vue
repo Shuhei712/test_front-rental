@@ -1,10 +1,10 @@
 <template>
   <v-card class="product mt-8 mt-sm-10 mt-lg-13" elevation="0">
     <div class="categories categories--sp d-flex flex-wrap px-3 py-1 mb-3">
-      <div class="search-tag d-flex text-caption mr-4">
+      <div class="search-tag d-flex text-body-2 mr-4">
         <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName01 }}
       </div>
-      <div v-if="isCategoryName2" class="search-tag d-flex text-caption">
+      <div v-if="isCategoryName2" class="search-tag d-flex text-body-2">
         <v-icon class="mr-2" small>mdi-check</v-icon>{{ categoryName02 }}
       </div>
     </div>
