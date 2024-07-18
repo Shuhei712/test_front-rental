@@ -185,8 +185,8 @@ export default {
       displayLists: {},
       branchTel: [
         { branch: '東京', tel: '03-6690-3457' },
-        { branch: '名古屋', tel: '052-526-2872' },
-        { branch: '大阪', tel: '06-6571-5132' },
+        { branch: '名古屋', tel: '052-526-2871' },
+        { branch: '大阪', tel: '06-7174-8990' },
         { branch: '京都', tel: '075-647-3111' },
       ]
     }
